@@ -11,11 +11,14 @@ assignees: ''
 
 **Welche Teammitglieder waren anwesend?**
 
-| sl | ed | sd | pb | ts |
-|:--:|:--:|:--:|:--:|:--:|
-|    |    |    |    |    |
+- [ ] Mit Sebastian
+- [ ] Mit Eddi
+- [ ] Mit Simon
+- [ ] Mit Philipp
+- [ ] Mit Tanaro
 
-- [ ] Mit Jens?
+
+- [ ] Mit Jens
 
 **Art des Treffen**
 <!-- mehrfachauswahl auch möglich -->
