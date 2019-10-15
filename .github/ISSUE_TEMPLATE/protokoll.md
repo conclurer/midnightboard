@@ -2,7 +2,7 @@
 name: Protokoll
 about: Notizen aus Teammeetings
 title: ''
-labels: ''
+labels: protokoll
 assignees: ''
 
 ---
