@@ -1,0 +1,13 @@
+version: '2.1'
+
+services:
+  sails-test:
+    image: sails-test
+    build: .
+    environment:
+      NODE_ENV: development
+    ports:
+      - 1337:1337
+      - 9229:9229
+    ## set your startup file here
+    command: sails lift

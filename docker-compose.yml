@@ -1,0 +1,10 @@
+version: '2.1'
+
+services:
+  sails-vue-test:
+    image: sails-vue-test
+    build: .
+    environment:
+      NODE_ENV: development
+    ports:
+      - 1337:1337

@@ -1,0 +1,37 @@
+{
+    "name": "sails",
+    "private": true,
+    "version": "0.1.0",
+    "description": "midnightboard backend",
+    "keywords": [],
+    "dependencies": {
+        "sails": "^1.2.3",
+        "grunt": "^1.0.4",
+        "sails-hook-grunt": "^4.0.1",
+        "sails-hook-orm": "^2.1.1",
+        "sails-hook-sockets": "^2.0.0",
+        "@sailshq/lodash": "^3.10.4"
+    },
+    "devDependencies": {
+        "eslint": "^6.7.2",
+        "eslint-plugin-jest": "^23.1.1",
+        "jest": "^24.9.0"
+    },
+    "scripts": {
+        "start-dev": "node app.js",
+        "start-prod": "NODE_ENV=production node app.js",
+        "test": "npm run lint && npm run custom-tests",
+        "lint": "eslint .",
+        "custom-tests": "jest"
+    },
+    "main": "app.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/conclurer/midnightboard.git"
+    },
+    "author": "conclurer",
+    "license": "MIT",
+    "engines": {
+        "node": "^12.13"
+    }
+}
