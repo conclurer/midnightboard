@@ -5,23 +5,18 @@ import Home from '../views/Home.vue';
 Vue.use(VueRouter);
 
 const routes = [{
-  path: '/',
-  name: 'home',
-  component: Home
-},
-{
-  path: '/about',
-  name: 'about',
-  // route level code-splitting
-  // this generates a separate chunk (about.[hash].js) for this route
-  // which is lazy-loaded when the route is visited.
-  component: () =>
-            import ('../views/About.vue') /* webpackChunkName: "about" */
-}
+        path: '/',
+        name: 'demo',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ('../views/DemoBoard.vue')
+    }
 ];
 
 const router = new VueRouter({
-  routes
+    routes
 });
 
 export default router;
