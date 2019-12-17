@@ -129,5 +129,4 @@ module.exports.routes = {
         skipAssets: true,
         skipRegex: /^\/api\/.*$/
     }
-
 };

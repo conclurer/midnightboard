@@ -2,16 +2,17 @@
     "name": "midnightboard",
     "private": true,
     "version": "1.0.0",
-    "description": "midnightboard",
+    "description": "midnightboard application",
     "keywords": [],
     "scripts": {
         "setup": "cd vue && npm install && cd ../sails && npm install",
         "vue-lint": "cd vue && npm run lint",
-        "vue-build": "cd vue && npm run build && cp -a dist/. ../sails/vue",
-        "sails-test-start": "cd sails && npm run test && npm run start-dev",
-        "start": "npm run setup && npm run vue-lint && npm run vue-build && npm run sails-test-start"
+        "vue-build": "cd vue && npm run build && cp -a dist/. ../sails/assets",
+        "sails-test": "cd sails && npm run test",
+        "sails-start-dev": "npm run sails-test && npm run start-dev",
+        "test": "npm run vue-lint && npm run sails-test",
+        "start": "npm run setup && npm run vue-lint && npm run vue-build && npm runsails-start-dev"
     },
-    "main": "app.js",
     "repository": {
         "type": "git",
         "url": "https://github.com/conclurer/midnightboard.git"

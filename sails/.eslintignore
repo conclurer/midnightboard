@@ -2,5 +2,3 @@ assets/**
 config/**
 views/**
 node_modules/**
-vue/**
-api/controllers/**
