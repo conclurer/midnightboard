@@ -10,7 +10,8 @@
 
 module.exports.routes = {
 
-    /*//  ╦ ╦╔═╗╔╗ ╔═╗╔═╗╔═╗╔═╗╔═╗
+/*
+    //  ╦ ╦╔═╗╔╗ ╔═╗╔═╗╔═╗╔═╗╔═╗
     //  ║║║║╣ ╠╩╗╠═╝╠═╣║ ╦║╣ ╚═╗
     //  ╚╩╝╚═╝╚═╝╩  ╩ ╩╚═╝╚═╝╚═╝
     'GET /':                   { action: 'view-homepage-or-redirect' },
@@ -46,22 +47,82 @@ module.exports.routes = {
     //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝
     // …
 
+    */
 
+    //
     //  ╔═╗╔═╗╦  ╔═╗╔╗╔╔╦╗╔═╗╔═╗╦╔╗╔╔╦╗╔═╗
     //  ╠═╣╠═╝║  ║╣ ║║║ ║║╠═╝║ ║║║║║ ║ ╚═╗
     //  ╩ ╩╩  ╩  ╚═╝╝╚╝═╩╝╩  ╚═╝╩╝╚╝ ╩ ╚═╝
-    // Note that, in this app, these API endpoints may be accessed using the `Cloud.*()` methods
-    // from the Parasails library, or by using those method names as the `action` in <ajax-form>.
-    '/api/v1/account/logout':                           { action: 'account/logout' },
-    'PUT   /api/v1/account/update-password':            { action: 'account/update-password' },
-    'PUT   /api/v1/account/update-profile':             { action: 'account/update-profile' },
-    'PUT   /api/v1/account/update-billing-card':        { action: 'account/update-billing-card' },
-    'PUT   /api/v1/entrance/login':                        { action: 'entrance/login' },
-    'POST  /api/v1/entrance/signup':                       { action: 'entrance/signup' },
-    'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },
-    'POST  /api/v1/entrance/update-password-and-login':    { action: 'entrance/update-password-and-login' },
-    'POST  /api/v1/deliver-contact-form-message':          { action: 'deliver-contact-form-message' },*/
+    //#region APIs
+    //USER
+    'GET    /api/users/:userID': {
+        controller: 'users/User',
+        action: 'getUser',
+        skipAssets: true
+    },
+    'POST   /api/users/register': {
+        controller: 'users/User',
+        action: 'registerUser',
+        skipAssets: true
+    },
+    'DELETE   /api/users/:userID': {
+        controller: 'users/User',
+        action: 'deleteUser',
+        skipAssets: true
+    },
+    'PUT   /api/users/:userID': {
+        controller: 'users/User',
+        action: 'updateUser',
+        skipAssets: true
+    },
 
+    //BOARDS
+    'GET    /api/boards/:boardID': {
+        controller: 'boards/Board',
+        action: 'getBoard',
+        skipAssets: true
+    },
+    'POST   /api/boards/create': {
+        controller: 'boards/Board',
+        action: 'createBoard',
+        skipAssets: true
+    },
+    'DELETE   /api/boards/:boardID': {
+        controller: 'boards/Board',
+        action: 'deleteBoard',
+        skipAssets: true
+    },
+    'PUT   /api/boardss/:boardID': {
+        controller: 'boards/Board',
+        action: 'updateBoard',
+        skipAssets: true
+    },
+
+
+    //POSTS
+    'POST   /api/boards/:boardID/new': {
+        controller: 'posts/Post',
+        action: 'newPost',
+        skipAssets: true
+    },
+    'GET   /api/posts/:postID': {
+        controller: 'posts/Post',
+        action: 'getPost',
+        skipAssets: true
+    },
+    'DELETE   /api/posts/:postID': {
+        controller: 'posts/Post',
+        action: 'deletePost',
+        skipAssets: true
+    },
+    'PUT   /api/posts/:postID': {
+        controller: 'posts/Post',
+        action: 'updatePost',
+        skipAssets: true
+    },
+    //#endregion
+
+    //Default
     '/*': {
         controller: 'App',
         action: 'serve',
