@@ -32,26 +32,25 @@ module.exports.datastores = {
   *                                                                          *
   ***************************************************************************/
 
+  /***************************************************************************
+  * Manual database setup (not recommended):
+  *
+  * Without the zipped docker image, you need to pull postgres:
+  * $ docker pull postgres:latest
+  * And run the following lines together:
+  * $ docker run --name postgres-db -p 5432:5432 -e POSTGRES_USER=dev -e POSTGRES_PASSWORD=secret2020
+  *   -e POSTGRES_DB=midnightboard -d postgres
+  ***************************************************************************/
+
+  /***************************************************************************
+  * RECOMMENDED database setup:
+  * Just load the zipped docker image:
+  * $ docker load < midnightboard-db.tar
+  * And run the image:
+  * $ docker run midnightboard/postgres:v1 // use manual setup temporary
+  ***************************************************************************/
   default: {
-
-    /***************************************************************************
-    *                                                                          *
-    * Want to use a different database during development?                     *
-    *                                                                          *
-    * 1. Choose an adapter:                                                    *
-    *    https://sailsjs.com/plugins/databases                                 *
-    *                                                                          *
-    * 2. Install it as a dependency of your Sails app.                         *
-    *    (For example:  npm install sails-mysql --save)                        *
-    *                                                                          *
-    * 3. Then pass it in, along with a connection URL.                         *
-    *    (See https://sailsjs.com/config/datastores for help.)                 *
-    *                                                                          *
-    ***************************************************************************/
-    // adapter: 'sails-mysql',
-    // url: 'mysql://user:password@host:port/database',
-
-  },
-
-
+    adapter: 'sails-postgresql',
+    url: 'postgresql://dev:secret2020@127.0.0.1:5432/midnightboard'
+  }
 };

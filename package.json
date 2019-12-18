@@ -9,7 +9,8 @@
         "vue-lint": "cd vue && npm run lint",
         "vue-build": "cd vue && npm run build && cp -a dist/. ../sails/assets",
         "sails-test": "cd sails && npm run test",
-        "sails-start-dev": "npm run sails-test && npm run start-dev",
+        "sails-start-dev": "cd sails && npm run start-dev",
+        "sails-start-prod": "cd sails && npm run start-prod",
         "test": "npm run vue-lint && npm run sails-test",
         "start": "npm run setup && npm run vue-lint && npm run vue-build && npm runsails-start-dev"
     },
