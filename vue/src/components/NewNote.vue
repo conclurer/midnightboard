@@ -5,11 +5,14 @@
                 <input type="text" v-model="title" name="title" placeholder="Title" />
             </div>
             <div class="newNoteBody">
-                <!--<input type="text" v-model="body" name="body" placeholder="Text" />-->
-                <textarea rows="15" cols="20" v-model="body" name="body" placeholder="Text" style="resize: none"></textarea>
-            </div>
-            <div class="submitButton">
-                <input type="submit" value="Add" />
+                <table>
+                    <tr>
+                        <td><textarea rows="13" cols="20" v-model="body" name="body" placeholder="Text" style="resize: none"></textarea></td>
+                    </tr>
+                    <tr>
+                        <input type="submit" value="Add" />
+                    </tr>
+                </table>
             </div>
         </form>
     </div>
