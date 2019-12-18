@@ -14,8 +14,6 @@
  */
 
 module.exports.datastores = {
-
-
   /***************************************************************************
   *                                                                          *
   * Your app's default datastore.                                            *
@@ -33,13 +31,14 @@ module.exports.datastores = {
   ***************************************************************************/
 
   /***************************************************************************
-  * Manual database setup (not recommended):
-  *
+  * Manual database setup (NOT RECOMMENDED):
   * Without the zipped docker image, you need to pull postgres:
   * $ docker pull postgres:latest
   * And run the following lines together:
   * $ docker run --name postgres-db -p 5432:5432 -e POSTGRES_USER=dev -e POSTGRES_PASSWORD=secret2020
   *   -e POSTGRES_DB=midnightboard -d postgres
+  * Restore backup:
+  * $ docker exec -i postgres-db psql -U dev midnightboard < db/backup.sql
   ***************************************************************************/
 
   /***************************************************************************
@@ -47,10 +46,14 @@ module.exports.datastores = {
   * Just load the zipped docker image:
   * $ docker load < midnightboard-db.tar
   * And run the image:
-  * $ docker run midnightboard/postgres:v1 // use manual setup temporary
+  * $ docker run --name postgres-db -p 5432:5432 midnightboard/postgres:v1
+  * Restore backup:
+  * $ docker exec -i postgres-db psql -U dev midnightboard < db/backup.sql
   ***************************************************************************/
   default: {
     adapter: 'sails-postgresql',
     url: 'postgresql://dev:secret2020@127.0.0.1:5432/midnightboard'
   }
+  // Backup tables with: 
+  // $ docker exec -it postgres-db pg_dump -U dev midnightboard > db/backup.sql
 };
