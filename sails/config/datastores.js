@@ -14,8 +14,6 @@
  */
 
 module.exports.datastores = {
-
-
   /***************************************************************************
   *                                                                          *
   * Your app's default datastore.                                            *
@@ -32,26 +30,30 @@ module.exports.datastores = {
   *                                                                          *
   ***************************************************************************/
 
+  /***************************************************************************
+  * Manual database setup (NOT RECOMMENDED):
+  * Without the zipped docker image, you need to pull postgres:
+  * $ docker pull postgres:latest
+  * And run the following lines together:
+  * $ docker run --name postgres-db -p 5432:5432 -e POSTGRES_USER=dev -e POSTGRES_PASSWORD=secret2020
+  *   -e POSTGRES_DB=midnightboard -d postgres
+  * Restore backup:
+  * $ docker exec -i postgres-db psql -U dev midnightboard < db/backup.sql
+  ***************************************************************************/
+
+  /***************************************************************************
+  * RECOMMENDED database setup:
+  * Just load the zipped docker image:
+  * $ docker load < midnightboard-db.tar
+  * And run the image:
+  * $ docker run --name postgres-db -p 5432:5432 midnightboard/postgres:v1
+  * Restore backup:
+  * $ docker exec -i postgres-db psql -U dev midnightboard < db/backup.sql
+  ***************************************************************************/
   default: {
-
-    /***************************************************************************
-    *                                                                          *
-    * Want to use a different database during development?                     *
-    *                                                                          *
-    * 1. Choose an adapter:                                                    *
-    *    https://sailsjs.com/plugins/databases                                 *
-    *                                                                          *
-    * 2. Install it as a dependency of your Sails app.                         *
-    *    (For example:  npm install sails-mysql --save)                        *
-    *                                                                          *
-    * 3. Then pass it in, along with a connection URL.                         *
-    *    (See https://sailsjs.com/config/datastores for help.)                 *
-    *                                                                          *
-    ***************************************************************************/
-    // adapter: 'sails-mysql',
-    // url: 'mysql://user:password@host:port/database',
-
-  },
-
-
+    adapter: 'sails-postgresql',
+    url: 'postgresql://dev:secret2020@127.0.0.1:5432/midnightboard'
+  }
+  // Backup tables with: 
+  // $ docker exec -it postgres-db pg_dump -U dev midnightboard > db/backup.sql
 };
