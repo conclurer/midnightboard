@@ -17,4 +17,8 @@ h1 {
   color: #fff;
   font-size: 28px;
 }
+
+:root {
+  background: #333;
+}
 </style>

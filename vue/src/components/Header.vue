@@ -1,5 +1,5 @@
 <template>
-    <header class="header" style="height: 75px;">
+    <header class="header">
         <table width="100%">
             <tr>
                 <td width="33%">
@@ -16,7 +16,7 @@
                     <h1 align="center">IT department</h1>
                 </td>
                 <td width="33%">
-                    <div v-on:click="addNote">
+                    <div v-on:click="newNote">
                         <img
                         alt="add-button"
                         src="../assets/newNote.png"
@@ -35,13 +35,9 @@ import uuid from 'uuid';
 export default {
     name: "Header",
     methods: {
-        addNote() {
-            const newNote = {
-                id: uuid.v4(),
-            }
-
+        newNote() {
             //Send up to parent
-            this.$emit('add-note', newNote);
+            this.$emit('new-note', true);
         }
     }
 }
@@ -49,8 +45,8 @@ export default {
 
 <style scoped>
     .header {
-        background: #333;
+        height: 80px;
         color: #fff;
-        text-align: center;   
+        text-align: center;
     }
 </style>

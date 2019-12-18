@@ -1,0 +1,74 @@
+<template>
+    <div class="newNote">
+        <form @submit="addTodo">
+            <div class="newNoteHeader">
+                <input type="text" v-model="title" name="title" placeholder="Title" />
+            </div>
+            <div class="newNoteBody">
+                <!--<input type="text" v-model="body" name="body" placeholder="Text" />-->
+                <textarea rows="15" cols="20" v-model="body" name="body" placeholder="Text" style="resize: none"></textarea>
+            </div>
+            <div class="submitButton">
+                <input type="submit" value="Add" />
+            </div>
+        </form>
+    </div>
+</template>
+
+<script>
+import uuid from 'uuid';
+export default {
+    name: "NewNote",
+    data() {
+        return {
+            title: '',
+            body: ''
+        }
+    },
+    methods: {
+        addTodo(e) {
+            e.preventDefault();
+            if(this.body !== '') {
+                const newNote = {
+                    id: uuid.v4(),
+                    title: this.title,
+                    text: this.body,
+                    xPosition: 0,
+                    yPosition: 0,
+                    width: 200,
+                    height: 300
+                }
+
+                //Send up to parent
+                this.$emit('add-note', newNote);
+            }
+        }
+    }
+}
+</script>
+
+<style scoped>
+    .newNote {
+        z-index: 1;
+    }
+
+    .newNoteHeader {
+        height: 30px;
+        background: #ffeb81;
+        color: #000;
+        text-align: center;
+        display : flex;
+        align-items : center;
+        justify-content: center;
+    }
+
+    .newNoteBody {
+        height: 270px;
+        background: #fff2ab;
+        color: #000;
+        text-align: center;
+        display : flex;
+        align-items : center;
+        justify-content: center;
+    }
+</style>
