@@ -20,6 +20,8 @@
 
 <script>
 import uuid from 'uuid';
+import axios from 'axios';
+
 export default {
     name: "NewNote",
     data() {

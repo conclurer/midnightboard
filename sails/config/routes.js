@@ -92,7 +92,7 @@ module.exports.routes = {
         action: 'deleteBoard',
         skipAssets: true
     },
-    'PUT   /api/boardss/:boardID': {
+    'PUT   /api/boards/:boardID': {
         controller: 'boards/Board',
         action: 'updateBoard',
         skipAssets: true
@@ -108,6 +108,11 @@ module.exports.routes = {
     'GET   /api/posts/:postID': {
         controller: 'posts/Post',
         action: 'getPost',
+        skipAssets: true
+    },
+    'GET   /api/posts/:boardID/all': {
+        controller: 'posts/Post',
+        action: 'searchPost',
         skipAssets: true
     },
     'DELETE   /api/posts/:postID': {

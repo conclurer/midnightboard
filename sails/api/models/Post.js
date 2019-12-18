@@ -9,6 +9,7 @@ module.exports = {
       isIn: ['note','pdf','poll','survey','calendar','image'],
       required: true
     },
+    board: { type: 'number', required: true },
     content: {type: 'string'},
   },
 };

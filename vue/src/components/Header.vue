@@ -13,7 +13,7 @@
                     </router-link>
                 </td>
                 <td width="33%">
-                    <h1 align="center">IT department</h1>
+                    <h1 align="center">Quality Assurance</h1>
                 </td>
                 <td width="33%">
                     <div v-on:click="newNote">
