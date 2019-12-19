@@ -1,10 +1,18 @@
-version: '2.1'
+version: '3.7'
 
 services:
-  sails-vue-test:
-    image: sails-vue-test
+  midnightboard:
+    image: midnightboard
     build: .
     environment:
       NODE_ENV: development
     ports:
       - 1337:1337
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=dev
+      - POSTGRES_PASSWORD=secret2020
+      - POSTGRES_DB=midnightboard
+    ports:
+      - 5432:5432

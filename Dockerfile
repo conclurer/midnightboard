@@ -9,14 +9,5 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 # Copy project to /usr/src/app/
 COPY . /usr/src/app/
-# Install Sails.js and packages
-RUN cd sails && npm install sails -g && npm install
-# Install Vue packages and build
-RUN cd vue && npm install && npm run build
-# Copy Vue components to Sails.js folder
-WORKDIR /usr/src/app/vue/dist
-COPY . /sails/vue/
-# Change working directory to Sails folder
-WORKDIR /usr/src/app/sails
-# Run Sails app
-CMD sails lift
+# Install & run
+RUN npm run start
