@@ -1,6 +1,6 @@
 <template>
     <div class="noteBody">
-        {{note.text}}
+        {{note.content.text}}
     </div>
 </template>
 

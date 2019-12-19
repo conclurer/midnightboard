@@ -1,6 +1,6 @@
 <template>
     <div class="newNote">
-        <form @submit="addTodo">
+        <form @submit="addTodo" autocomplete="off">
             <div class="newNoteHeader">
                 <input type="text" v-model="title" name="title" placeholder="Title" />
             </div>
