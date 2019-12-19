@@ -48,7 +48,7 @@ export default {
 
       //post request to api
       axios
-        .post('http://localhost:1337/api/boards/' + this.boardID + '/new', note.title, 'note', note.body, this.boardID)
+        .post('http://localhost:1337/api/boards/' + this.boardID + '/new', note.title, 'note', '{ text: ' + note.body + ' }', this.boardID)
         .then(res => {this.notes = this.notes})
         .catch(err => console.log(err));
 
