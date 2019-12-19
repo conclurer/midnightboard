@@ -9,6 +9,7 @@ module.exports = {
     newPost: async function(req, res){
         sails.log('Creating new Post');
         await Post.create({
+            id: req.param('id'),
             title: req.param('title'),
             typeOfPost: req.param('type'),
             content: req.param('content'),
