@@ -1,0 +1,72 @@
+# CircleCI configuration for
+# conclurer/midnightboard
+
+# CircleCI version
+version: 2.1
+
+# CircleCI jobs
+jobs:
+  # Test configuration
+  test:
+    # Node.js Docker image for VM
+    docker:
+    - image: circleci/node:erbium
+    # All steps for test
+    steps:
+      # Checkout branch to VM
+      - checkout
+      # Run Jest
+      - run:
+          name: Run tests
+          command: |
+            npm setup
+            npm run test
+  
+  # Build and deploy configuration
+  build-deploy:
+    # Node.js Docker image for VM
+    docker:
+      - image: circleci/node:erbium
+    
+    # All steps for build
+    steps:
+      # Checkout branch to VM
+      - checkout
+      
+      # Allow running docker on VM
+      - setup_remote_docker:
+          docker_layer_caching: false
+
+      # Install Docker client on VM
+      - run:
+          name: Install Docker client
+          command: |
+            set -x
+            VER="18.06.3-ce"
+            curl -L -o /tmp/docker-$VER.tgz https://download.docker.com/linux/static/stable/x86_64/docker-$VER.tgz
+            tar -xz -C /tmp -f /tmp/docker-$VER.tgz
+            sudo mv /tmp/docker/* /usr/bin
+
+      # Build Docker image on VM and push it to Docker Hub
+      - run:
+          name: Build and push Docker image
+          command: |
+            TAG=0.0.$CIRCLE_BUILD_NUM
+            docker build -t tvsjsdock/midnightboard-test:$TAG .
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            docker push tvsjsdock/midnightboard-test:$TAG
+
+# Running tests always and build-deploy only if changes (pull requests) happen on master
+workflows:
+   version: 2
+   test-build-deploy:
+     jobs:
+      # Run test job
+      - test
+      # Run build-deploy job
+      - build-deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
