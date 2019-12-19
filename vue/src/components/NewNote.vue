@@ -1,6 +1,6 @@
 <template>
     <div class="newNote">
-        <form @submit="addTodo" autocomplete="off">
+        <form @submit="addNote" autocomplete="off">
             <div class="newNoteHeader">
                 <input type="text" v-model="title" name="title" placeholder="Title" />
             </div>
@@ -31,7 +31,7 @@ export default {
         }
     },
     methods: {
-        addTodo(e) {
+        addNote(e) {
             e.preventDefault();
             if(this.body !== '') {
                 const newNote = {
