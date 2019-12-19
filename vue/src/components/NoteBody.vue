@@ -1,14 +1,14 @@
 <template>
-    <div class="noteBody">
-        {{note.content.text}}
-    </div>
+  <div class="noteBody">
+    {{ note.content.text }}
+  </div>
 </template>
 
 <script>
 export default {
-    name: "NoteBody",
-    props: ["note"]
-}
+  name: 'NoteBody',
+  props: ['note']
+};
 </script>
 
 <style scoped>
