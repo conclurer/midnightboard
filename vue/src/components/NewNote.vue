@@ -1,27 +1,8 @@
 <template>
-<<<<<<< HEAD
-    <div class="newNote">
-        <form @submit="addNote" autocomplete="off">
-            <div class="newNoteHeader">
-                <input type="text" v-model="title" name="title" placeholder="Title" />
-            </div>
-            <div class="newNoteBody">
-                <table>
-                    <tr>
-                        <td><textarea rows="13" cols="20" v-model="body" name="body" placeholder="Text" style="resize: none"></textarea></td>
-                    </tr>
-                    <tr>
-                        <input type="submit" value="Add" />
-                    </tr>
-                </table>
-            </div>
-        </form>
-    </div>
-=======
   <div class="newNote">
     <form
       autocomplete="off"
-      @submit="addTodo"
+      @submit="addNote"
     >
       <div class="newNoteHeader">
         <input
@@ -55,7 +36,6 @@
       </div>
     </form>
   </div>
->>>>>>> 0ef6e1ebd6d17e287b28babd3ec21cf2fb16e75e
 </template>
 
 <script>
@@ -63,28 +43,6 @@ import uuid from 'uuid';
 import axios from 'axios';
 
 export default {
-<<<<<<< HEAD
-    name: "NewNote",
-    data() {
-        return {
-            title: '',
-            body: ''
-        }
-    },
-    methods: {
-        addNote(e) {
-            e.preventDefault();
-            if(this.body !== '') {
-                const newNote = {
-                    id: uuid.v4(),
-                    title: this.title,
-                    text: this.body,
-                    xPosition: 0,
-                    yPosition: 0,
-                    width: 200,
-                    height: 300
-                }
-=======
   name: 'NewNote',
   data() {
     return {
@@ -93,7 +51,7 @@ export default {
     };
   },
   methods: {
-    addTodo(e) {
+    addNote(e) {
       e.preventDefault();
       if(this.body !== '') {
         const newNote = {
@@ -105,7 +63,6 @@ export default {
           width: 200,
           height: 300
         };
->>>>>>> 0ef6e1ebd6d17e287b28babd3ec21cf2fb16e75e
 
         //Send up to parent
         this.$emit('add-note', newNote);

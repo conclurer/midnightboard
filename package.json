@@ -5,9 +5,9 @@
     "description": "midnightboard application",
     "keywords": [],
     "scripts": {
-        "setup": "cd vue && npm install && cd ../sails && npm install",
+        "setup": "cd vue && npm install && cd ../sails && npm install && npm audit fix",
         "vue-lint": "cd vue && npm run lint",
-        "vue-build": "cd vue && npm run build && cp -a dist/. ../sails/assets",
+        "vue-build": "cd vue && npm run build && rm -r ../sails/assets/ && cp -a dist/. ../sails/assets && type NUL > ../sails/assets/.gitkeep",
         "sails-test": "cd sails && npm run test",
         "sails-start-dev": "cd sails && npm run start-dev",
         "sails-start-prod": "cd sails && npm run start-prod",
