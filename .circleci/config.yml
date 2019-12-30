@@ -19,7 +19,7 @@ jobs:
       - run:
           name: Run tests
           command: |
-            npm setup
+            npm run setup
             npm run test
   
   # Build and deploy configuration
