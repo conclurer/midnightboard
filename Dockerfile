@@ -9,5 +9,5 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 # Copy project to /usr/src/app/
 COPY . /usr/src/app/
-# Install & run
-RUN npm run start
+# Setup project
+RUN npm install && npm run setup

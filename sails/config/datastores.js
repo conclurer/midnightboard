@@ -31,15 +31,15 @@ module.exports.datastores = {
   ***************************************************************************/
 
   /******************************************************************************
-  * Database setup for PRODUCTION                                               *
+  * Database setup for PRODUCTION (check docker-compose)                        *
   * - Change username and password here and in the url part below               *
   * $ docker pull postgres:latest                                               *
   * - And run the following lines together                                      *
-  * $ docker run --name postgres-db -p 5432:5432 -e POSTGRES_USER=dev           *
+  * $ docker run --name db -p 5432:5432 -e POSTGRES_USER=dev           *
   *   -e POSTGRES_PASSWORD=secret2020 -e POSTGRES_DB=midnightboard -d postgres  *
   *                                                                             *
   * - Restore backup                                                            *
-  * $ docker exec -i postgres-db psql -U dev midnightboard < db/backup.sql      *
+  * $ docker exec -i db psql -U dev midnightboard < db/backup.sql      *
   ******************************************************************************/
   default: {
     adapter: 'sails-postgresql',
@@ -49,12 +49,12 @@ module.exports.datastores = {
   * Database setup for FAST DEVELOPMENT                                             *
   * $ docker pull tvsjsdock/midnightboard-db:latest                                 *
   * - Then run the image                                                            *
-  * $ docker run --name postgres-db -p 5432:5432 tvsjsdock/midnightboard-db:latest  *
+  * $ docker run --name db -p 5432:5432 tvsjsdock/midnightboard-db:latest  *
   * - Restore backup                                                                *
-  * $ docker exec -i postgres-db psql -U dev midnightboard < db/backup.sql          *
+  * $ docker exec -i db psql -U dev midnightboard < db/backup.sql          *
   **********************************************************************************/
   /******************************************************************************
   * Backup tables with                                                          *
-  * $ docker exec -it postgres-db pg_dump -U dev midnightboard > db/backup.sql  *
+  * $ docker exec -it db pg_dump -U dev midnightboard > db/backup.sql  *
   ******************************************************************************/
 };
