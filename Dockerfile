@@ -11,3 +11,5 @@ WORKDIR /usr/src/app
 COPY . /usr/src/app/
 # Setup project
 RUN npm install && npm run setup
+# Start application with $ docker run ...
+CMD npm run sails-start-dev

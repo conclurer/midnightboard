@@ -18,7 +18,6 @@ services:
       dockerfile: Dockerfile
     container_name: midnightboard
     image: tvsjsdock/midnightboard-test:latest
-    command: npm run sails-start-dev
     environment:
       NODE_ENV: development
     ports:

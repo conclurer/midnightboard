@@ -8,9 +8,10 @@ version: 2.1
 jobs:
   # Test configuration
   test:
-    # Node.js Docker image for VM
+    # Node.js & PostgreSQL Docker image for VM
     docker:
     - image: circleci/node:erbium
+    - image: circleci/postgres:latest
     # All steps for test
     steps:
       # Checkout branch to VM
@@ -25,9 +26,10 @@ jobs:
   
   # Build and deploy configuration
   build-deploy:
-    # Node.js Docker image for VM
+    # Node.js & PostgreSQL Docker image for VM
     docker:
       - image: circleci/node:erbium
+      - image: circleci/postgres:latest
     
     # All steps for build
     steps:
