@@ -24,6 +24,13 @@ jobs:
             npm run setup
             npm run test
   
+    # Danger configuration
+    danger:
+      # Run Danger JS
+      - run:
+        name: Danger
+        command: yarn danger ci
+          
   # Build and deploy configuration
   build-deploy:
     # Node.js & PostgreSQL Docker image for VM
@@ -67,10 +74,17 @@ workflows:
      jobs:
       # Run test job
       - test
+      # Run danger job
+      - danger:
+          requires:
+            - test
+            filters:
+              branches:
+                only: master
       # Run build-deploy job
       - build-deploy:
           requires:
-            - test
+            - danger
           filters:
             branches:
               only: master

@@ -4,6 +4,9 @@
     "version": "1.0.0",
     "description": "midnightboard application",
     "keywords": [],
+    "devDependencies": {
+        "danger": "^9.2.10"
+    },
     "scripts": {
         "setup": "cd vue && npm install && cd ../sails && npm install && npm audit fix && cd .. && npm run vue-build",
         "vue-lint": "cd vue && npm run lint",
