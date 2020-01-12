@@ -13,6 +13,11 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 import {VueMasonryPlugin} from 'vue-masonry';
 Vue.use(VueMasonryPlugin)
 
+// import scrollbar
+import PerfectScrollbar from 'vue2-perfect-scrollbar'
+import 'vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css'
+Vue.use(PerfectScrollbar)
+
 Vue.config.productionTip = false;
 
 new Vue({

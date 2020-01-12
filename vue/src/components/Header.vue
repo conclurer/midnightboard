@@ -1,37 +1,5 @@
 <template>
   <header class="header">
-    <!--<table cellpadding="0" cellspacing="0">
-      <tr>
-        <td width="auto">
-          <router-link to="/">
-            <span id="image">
-              <img
-                alt="Conclurer"
-                src="../assets/logo.png"
-                align="left"
-                height="100%"
-             >
-            </span>
-          </router-link>
-        </td>
-        <td>
-        </td>
-        
-        <td width="34%">
-          <span id="headline" align="center" style="vertical-align:middle">
-            Quality Assurance
-          </span>
-        </td>
-        <td width="31%">
-          <div @click="newNote">
-            <font-awesome-icon icon="plus" size="2x" pull="right" />
-          </div>
-        </td>
-        <td width="2%">
-        </td>
-      </tr>
-    </table>
-    -->
     <div id="logo">
       <span id="image">
         <router-link to="/">
@@ -49,8 +17,10 @@
         Quality Assurance
       </span>
     </div>
-    <div id="plus" @click="newNote">
-      <font-awesome-icon icon="plus" pull="right" />
+    <div id="buttons">
+      <span id="plus" @click="newNote">
+        <font-awesome-icon icon="plus" pull="right" style="vertical-align:middle" />
+      </span>
     </div>
   </header>
 </template>
@@ -63,9 +33,19 @@ import uuid from 'uuid';
 export default {
   name: 'Header',
   methods: {
-    newNote() {
+    /*newNote() {
       //Send up to parent
       this.$emit('new-note', true);
+    }*/
+    newNote(e) {
+      e.preventDefault();
+      const newNote = {
+        id: uuid.v4(),
+        text: "Hallo"
+      }
+
+      //Send up to parent
+      this.$emit('new-note', newNote);
     }
   }
 };
@@ -79,17 +59,17 @@ export default {
         color: #fff;
       }
 
-      #image {
-        height: 7vh;
-        width: auto;
-        display: block;
-      }
-
       #logo {
         position: absolute;
         top: 0px;
         left: 0px;
         width: 25%;
+      }
+
+      #image {
+        height: 7vh;
+        width: auto;
+        display: block;
       }
     
       #title {
@@ -111,11 +91,19 @@ export default {
         vertical-align: center;
       }
 
-      #plus {
+      #buttoms {
         position: absolute;
-        bottom: 0px;
         left: 75%;
         width: 25%;
+        height: 7vh;
+        text-align: right;
+      }
+
+      #plus {
+        position: absolute;
+        left: 0px;
+        bottom: 0px;
+        width: 100%;
         height: 90%;
         font-size: 5vh;
       }
@@ -128,17 +116,17 @@ export default {
         color: #fff;
       }
 
-      #image {
-        height: 7vh;
-        width: auto;
-        display: block;
-      }
-
       #logo {
         position: absolute;
         top: 0px;
         left: 0px;
         width: 25%;
+      }
+
+      #image {
+        height: 7vh;
+        width: auto;
+        display: block;
       }
     
       #title {
@@ -159,11 +147,19 @@ export default {
         vertical-align: center;
       }
 
-      #plus {
+      #buttoms {
         position: absolute;
-        bottom: 0px;
         left: 75%;
         width: 25%;
+        height: 7vh;
+        text-align: right;
+      }
+
+      #plus {
+        position: absolute;
+        left: 0px;
+        bottom: 0px;
+        width: 100%;
         height: 90%;
         font-size: 5vh;
       }

@@ -5,10 +5,10 @@
       @new-note="createNote"
     />
     <Board
+      :notes="notes"
       :new-note="newNote"
       @add-note="addNote"
     />
-    <!--:notes="notes"-->
   </div>
 </template>
 
@@ -47,29 +47,33 @@ export default {
       .catch(err => console.log(err));
   },
   methods: {
-    createNote(b) {
-      this.newNote.active = b;
+    createNote(newNote) {
+      //this.newNote.active = b;
+      this.notes = [...this.notes, newNote];
     },
-    addNote(note) {
-      this.newNote.active = false;
+    addNote(newNote) {
+      //this.newNote.active = false;
 
       //post request to api
-      axios
+      /*axios
         .post('http://localhost:1337/api/boards/' + this.boardID + '/new', 0, note.title, 'note', '{ text: ' + note.body + ' }', this.boardID)
         .then(res => {this.notes = this.notes;})
         .catch(err => console.log(err));
+      */
 
       //post-request to api
-      axios
+      /*axios
         .get('http://localhost:1337/api/posts/' + this.boardID + '/all')
         .then(response => {this.notes = response;})
         .catch(err => console.log(err));
+      */
     }
   }
 };
 </script>
 
 <style scoped>
+
   @media (max-width: 719px) {
     #titlebar {
       height: 12vh;
