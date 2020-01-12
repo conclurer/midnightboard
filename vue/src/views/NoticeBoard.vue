@@ -71,18 +71,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-
-  @media (max-width: 719px) {
-    #titlebar {
-      height: 12vh;
-    }
-  }
-
-  @media (min-width: 720px) {
-    #titlebar {
-      height: 8vh;
-    }
-  }
-</style>

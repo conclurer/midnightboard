@@ -55,7 +55,7 @@ export default {
     @media (max-width: 719px) {
       .header {
         width: 100%;
-        height: 100%;
+        height: 12vh;
         color: #fff;
       }
 
@@ -112,7 +112,7 @@ export default {
     @media (min-width: 720px) {
       .header {
         width: 100%;
-        height: 100%;
+        height: 8vh;
         color: #fff;
       }
 
