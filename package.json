@@ -25,5 +25,11 @@
     "license": "MIT",
     "engines": {
         "node": "^12.13"
+    },
+    "dependencies": {
+        "@fortawesome/fontawesome-svg-core": "^1.2.26",
+        "@fortawesome/free-solid-svg-icons": "^5.12.0",
+        "@fortawesome/vue-fontawesome": "^0.1.9",
+        "vue-masonry": "^0.11.8"
     }
 }

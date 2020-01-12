@@ -28,8 +28,8 @@ CREATE TABLE public.board (
     board_id integer NOT NULL,
     board_name character varying(50) NOT NULL,
     department integer,
-    created_at integer NOT NULL,
-    updated_at integer NOT NULL
+    created_at bigint NOT NULL,
+    updated_at bigint NOT NULL
 );
 
 
