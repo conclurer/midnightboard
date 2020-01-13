@@ -16,6 +16,7 @@ jobs:
     steps:
       # Checkout branch to VM
       - checkout
+
       # Run Jest
       - run:
           name: Run tests
@@ -24,12 +25,22 @@ jobs:
             npm run setup
             npm run test
   
-    # Danger configuration
-    danger:
-      # Run Danger JS
+  # Danger configuration
+  danger:
+    # Node.js Docker image for VM
+    docker:
+      - image: circleci/node:erbium
+    # All steps for Danger JS
+    steps:
+      # Checkout branch to VM
+      - checkout
+
+      # Run Danger
       - run:
-        name: Danger
-        command: yarn danger ci
+          name: Danger
+          command: |
+            npm install
+            yarn danger ci
           
   # Build and deploy configuration
   build-deploy:
@@ -70,7 +81,7 @@ jobs:
 # Running tests always and build-deploy only if changes (pull requests) happen on master
 workflows:
    version: 2
-   test-build-deploy:
+   test-danger-build-deploy:
      jobs:
       # Run test job
       - test
@@ -78,9 +89,9 @@ workflows:
       - danger:
           requires:
             - test
-            filters:
-              branches:
-                only: master
+          filters:
+            branches:
+              only: master
       # Run build-deploy job
       - build-deploy:
           requires:
