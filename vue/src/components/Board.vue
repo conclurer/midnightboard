@@ -55,7 +55,7 @@ export default {
 
   .slot {
     display: inline-block;
-    width: 300px;
+    width: 450px;
     height: 300px;
     background: #333;
     margin: 10px 10px;
