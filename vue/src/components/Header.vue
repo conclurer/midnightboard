@@ -18,16 +18,24 @@
       </span>
     </div>
     <div id="buttons">
-      <span id="plus" @click="newNote">
-        <font-awesome-icon icon="plus" pull="right" style="vertical-align:middle" />
-      </span>
+      <div id="plus" @click="newNote">
+        <font-awesome-icon icon="plus" pull="right" />
+      </div>
+      <div id="file" @click="newNote">
+        <font-awesome-icon icon="file-medical" pull="right" />
+      </div>
+      <div id="profile">
+        <font-awesome-icon icon="user-circle" pull="right" />
+      </div>
+      <div id="settings">
+        <font-awesome-icon icon="cog" pull="right" />
+      </div>
     </div>
   </header>
 </template>
 
 <script>
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import uuid from 'uuid';
 export default {
@@ -93,17 +101,45 @@ export default {
 
       #buttoms {
         position: absolute;
-        left: 75%;
+        top: 0px;
+        right: 25%;
         width: 25%;
         height: 7vh;
         text-align: right;
       }
-
+      
       #plus {
         position: absolute;
-        left: 0px;
+        right: 32vh;
         bottom: 0px;
-        width: 100%;
+        width: 5vh;
+        height: 90%;
+        font-size: 5vh;
+      }
+
+      #file {
+        position: absolute;
+        right: 25vh;
+        bottom: 0px;
+        width: 5vh;
+        height: 90%;
+        font-size: 5vh;
+      }
+
+      #profile {
+        position: absolute;
+        right: 7vh;
+        bottom: 0px;
+        width: 5vh;
+        height: 90%;
+        font-size: 5vh;
+      }
+
+      #settings {
+        position: absolute;
+        right: 0px;
+        bottom: 0px;
+        width: 5vh;
         height: 90%;
         font-size: 5vh;
       }
@@ -149,7 +185,8 @@ export default {
 
       #buttoms {
         position: absolute;
-        left: 75%;
+        top: 0px;
+        right: 25%;
         width: 25%;
         height: 7vh;
         text-align: right;
@@ -157,9 +194,36 @@ export default {
 
       #plus {
         position: absolute;
-        left: 0px;
+        right: 32vh;
         bottom: 0px;
-        width: 100%;
+        width: 5vh;
+        height: 90%;
+        font-size: 5vh;
+      }
+
+      #file {
+        position: absolute;
+        right: 25vh;
+        bottom: 0px;
+        width: 5vh;
+        height: 90%;
+        font-size: 5vh;
+      }
+
+      #profile {
+        position: absolute;
+        right: 7vh;
+        bottom: 0px;
+        width: 5vh;
+        height: 90%;
+        font-size: 5vh;
+      }
+
+      #settings {
+        position: absolute;
+        right: 0px;
+        bottom: 0px;
+        width: 5vh;
         height: 90%;
         font-size: 5vh;
       }
