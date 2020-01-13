@@ -1,0 +1,26 @@
+version: '3.7'
+services:
+  db:
+    build: 
+      context: db
+      dockerfile: Dockerfile
+    container_name: midnightboard-db
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=dev
+      - POSTGRES_PASSWORD=secret2020
+      - POSTGRES_DB=midnightboard
+    ports:
+      - "5432:5432"
+  midnightboard:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: midnightboard
+    image: tvsjsdock/midnightboard-test:latest
+    environment:
+      NODE_ENV: development
+    ports:
+      - "1337:1337"
+    depends_on:
+      - db

@@ -25,10 +25,11 @@ You checkout the current development branch and create a new branch from it via 
 And all changes you make are commited to this branch.
 ```
 
-### Pull Requests 
+### Pull Requests & Reviews
 
 When you are done with your implementation and have all of your changes committed you should create a pull request to add your features to the `development` branch.
-But before you can contribute your pull requests needs to be reviewed by another team member.
+But before you can contribute your pull requests needs to be reviewed by another team member.  
+[Check out our pull request and review template](.github/PULL_REQUEST_TEMPLATE/pull_request_template.md).
 
 ### Commits
 

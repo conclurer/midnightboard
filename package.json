@@ -1,0 +1,35 @@
+{
+    "name": "midnightboard",
+    "private": true,
+    "version": "1.0.0",
+    "description": "midnightboard application",
+    "keywords": [],
+    "devDependencies": {
+        "danger": "^9.2.10"
+    },
+    "scripts": {
+        "setup": "cd vue && npm install && cd ../sails && npm install && npm audit fix && cd .. && npm run vue-build",
+        "vue-lint": "cd vue && npm run lint",
+        "vue-build": "cd vue && npm run build && rm -rf ../sails/assets/ && cp -a dist/. ../sails/assets && touch ../sails/assets/.gitkeep",
+        "sails-test": "cd sails && npm run test",
+        "sails-start-dev": "cd sails && npm run start-dev",
+        "sails-start-prod": "cd sails && npm run start-prod",
+        "test": "npm run vue-lint && npm run sails-test",
+        "start": "npm run setup && npm run vue-lint && npm run vue-build && npm run sails-start-dev"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/conclurer/midnightboard.git"
+    },
+    "author": "conclurer",
+    "license": "MIT",
+    "engines": {
+        "node": "^12.13"
+    },
+    "dependencies": {
+        "@fortawesome/fontawesome-svg-core": "^1.2.26",
+        "@fortawesome/free-solid-svg-icons": "^5.12.0",
+        "@fortawesome/vue-fontawesome": "^0.1.9",
+        "vue-masonry": "^0.11.8"
+    }
+}
