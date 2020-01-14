@@ -1,9 +1,20 @@
 <template>
   <div class="board">
     <div id="content">
-      <div v-masonry="containerId" transition-duration="0s" item-selector=".item">
-        <div v-masonry-tile class="item" v-for="note in notes" v-bind:key="note.index">
-          <div class="slot"></div>
+      <div
+        v-masonry="containerId"
+        transition-duration="0s"
+        item-selector=".item"
+      >
+        <div
+          v-for="note in notes"
+          :key="note.index"
+          v-masonry-tile
+          class="item"
+        >
+          <div class="slot">
+            {{ note.id }}<br>{{ note.text }}
+          </div>
         </div>
       </div>
     </div>
@@ -25,6 +36,10 @@ export default {
     addNote(newNote) {
       //Send up to parent
       this.$emit('add-note', newNote);
+    },
+    randomText() {
+
+      return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
     }
   }
 };
@@ -55,9 +70,11 @@ export default {
 
   .slot {
     display: inline-block;
-    width: 450px;
-    height: 300px;
+    width: 400px;
     background: #333;
+    color: #fff;
+    white-space: pre-line;
     margin: 10px 10px;
+    padding: 5px;
   }
 </style>

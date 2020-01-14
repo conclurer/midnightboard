@@ -16,7 +16,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 // import ES6 style
 import {VueMasonryPlugin} from 'vue-masonry';
-Vue.use(VueMasonryPlugin)
+Vue.use(VueMasonryPlugin);
 
 Vue.config.productionTip = false;
 

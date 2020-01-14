@@ -12,32 +12,56 @@
         </router-link>
       </span>
     </div>
-    <div id="title" align="center">
-      <span id="headline" align="center" style="vertical-align:middle">
+    <div
+      id="title"
+      align="center"
+    >
+      <span
+        id="headline"
+        align="center"
+        style="vertical-align:middle"
+      >
         Quality Assurance
       </span>
     </div>
     <div id="buttons">
-      <div id="plus" @click="newNote">
-        <font-awesome-icon icon="plus" pull="right" />
+      <div
+        id="plus"
+        @click="newNote"
+      >
+        <font-awesome-icon
+          icon="plus"
+          pull="right"
+        />
       </div>
-      <div id="file" @click="newNote">
-        <font-awesome-icon icon="file-medical" pull="right" />
+      <div
+        id="file"
+        @click="newNote"
+      >
+        <font-awesome-icon
+          icon="file-medical"
+          pull="right"
+        />
       </div>
       <div id="profile">
-        <font-awesome-icon icon="user-circle" pull="right" />
+        <font-awesome-icon
+          icon="user-circle"
+          pull="right"
+        />
       </div>
       <div id="settings">
-        <font-awesome-icon icon="cog" pull="right" />
+        <font-awesome-icon
+          icon="cog"
+          pull="right"
+        />
       </div>
     </div>
   </header>
 </template>
 
 <script>
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import uuid from 'uuid';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 export default {
   name: 'Header',
   methods: {
@@ -48,9 +72,8 @@ export default {
     newNote(e) {
       e.preventDefault();
       const newNote = {
-        id: uuid.v4(),
-        text: "Hallo"
-      }
+        text: 'New note'
+      };
 
       //Send up to parent
       this.$emit('new-note', newNote);
@@ -79,7 +102,7 @@ export default {
         width: auto;
         display: block;
       }
-    
+
       #title {
         position: absolute;
         top: 45%;
@@ -107,7 +130,7 @@ export default {
         height: 7vh;
         text-align: right;
       }
-      
+
       #plus {
         position: absolute;
         right: 32vh;
@@ -164,7 +187,7 @@ export default {
         width: auto;
         display: block;
       }
-    
+
       #title {
         position: absolute;
         left: 25%;
