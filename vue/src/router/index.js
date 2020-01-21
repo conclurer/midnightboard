@@ -3,6 +3,7 @@ import Router from 'vue-router';
 
 import RouterView from '@/views/RouterView.vue';
 import { i18n } from '@/main.js';
+import { i18n_LANGUAGES } from '@/lang/index.js';
 
 Vue.use(Router);
 
@@ -10,17 +11,17 @@ export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [{
-    //check for language prefix (i.e /en/ or /de/). Default to /en/ if no valid prefix was found
-    path: '/:lang/',
-    component: RouterView, //empty router object. Do not delete.
+    path: '/',
+    component: RouterView, // Empty router object. Do not delete.
     beforeEnter(to,from,next){
-      const lang = to.params.lang;
-      //redirect to empty /en page
-      //TODO replace '/en' with usefull language info or 404 page
-      if (!['en', 'de'].includes(lang)) { return next('/en'); }
-      if (i18n.locale !== lang) {
-        i18n.locale = lang;
+      // Retrieve browser locale
+      var lang = window.navigator.userLanguage || window.navigator.language;
+      // Check if browser locale is supported. Change to 'en-GB' if not.
+      if(!i18n_LANGUAGES.includes(lang)) { i18n.locale = 'en-GB'; }
+      else {
+        if (i18n.locale !== lang) { i18n.locale = lang; }
       }
+      //alert('lang: ' + lang + '  i18n: ' + i18n.locale);
       return next();
     },
 
@@ -38,10 +39,10 @@ export default new Router({
     ]
 
   },
-  //Redirect to 404 page if trying to visit invalid path
+  // Redirect to 404 page if trying to visit invalid path
   {
-    path: '*',
-    //redirect: '/en/home'
+    path: '*',    
+    //redirect: '/home'
     component: () => import ('../views/404.vue')
   }
   ]
