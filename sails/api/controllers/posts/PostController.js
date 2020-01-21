@@ -8,13 +8,17 @@
 module.exports = {
     newPost: async function(req, res){
         sails.log('Creating new Post');
-        await Post.create({
-            id: req.param('id'),
+        var createdPost = await Post.create({
             title: req.param('title'),
             typeOfPost: req.param('type'),
             content: req.param('content'),
-            board: req.param('board'),
-        });
+            dueDate: 0,
+            interactiveDueDate: 0
+        }).fetch();
+        await post_location.create({
+            boardId: req.param('boardID'),
+            postId: createdPost.id
+        })
         return res.ok();
     },
 
@@ -26,11 +30,15 @@ module.exports = {
 
     searchPost: async function(req, res){
         sails.log('Fetching Posts from board #' + req.param('boardID'));
-        var pst = await Post.var.find({
-                                 where: {board: req.param('boardID')},
-                                 select: ['id', 'title', 'typeOfPost', 'content']
-                                });
-        return res.json(JSON.stringify(pst));
+        var idList = await post_location.find({
+                                 where: {boardId: req.param('boardID')},
+                                 select: ['postId']
+        });
+        var postList = [];
+        for(var i=0;i<idList.length;i++){
+            postList[i] = await Post.findOne({id: idList[i].postId});
+        }
+        return res.json(JSON.stringify(postList));
     },
 
     deletePost: async function(req, res) {

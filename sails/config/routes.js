@@ -110,7 +110,7 @@ module.exports.routes = {
         action: 'getPost',
         skipAssets: true
     },
-    'GET   /api/posts/:boardID/all': {
+    'GET   /api/posts/all/:boardID': {
         controller: 'posts/Post',
         action: 'searchPost',
         skipAssets: true

@@ -8,7 +8,7 @@
 module.exports = {
     getBoard: async function(req, res) {
         sails.log('Searching board ' + req.param('boardID'));
-        var brd = await Board.findOne({boardName: req.param('boardID')});
+        var brd = await Board.findOne({id: req.param('boardID')});
         return res.json(JSON.stringify(brd));
     },
 
