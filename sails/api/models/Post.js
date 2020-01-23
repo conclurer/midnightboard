@@ -1,18 +1,20 @@
 module.exports = {
   primaryKey: 'id',
   attributes: {
-    id: { type: 'number', required: true, unique: true, columnName: 'post_id' },
-    title: { type: 'string', allowNull: true},
+    id: { type: 'number', autoIncrement: true, unique: true, columnName: 'post_id' },
+    createdAt: { type: 'number', autoCreatedAt: true, columnName: 'created_at' },
+    updatedAt: { type: 'number', autoUpdatedAt: true, columnName: 'updated_at' },
+    creatorID: { type: 'number', allowNull:true, columnName: 'creator_id'},
     typeOfPost: {
       type: 'string',
       isIn: ['note','pdf','poll','survey','calendar','image'],
       required: true,
       columnName: 'type_of_post'
     },
-    board: { type: 'number', required: true },
-    content: {type: 'string'},
-    createdAt: { type: 'number', columnName: 'created_at' },
-    updatedAt: { type: 'number', columnName: 'updated_at' }
+    title: { type: 'string' },
+    dueDate: { type: 'number', columnName: 'due_date' },
+    interactiveDueDate:{ type: 'number', columnName: 'interactive_due_date' },
+    content: {type: 'string', columnName: 'content'}
   },
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
