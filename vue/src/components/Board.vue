@@ -3,25 +3,31 @@
     <!-- Empty space behind header -->
     <div id="empty">
       <nav class="navbar navbar-inverse bg-dark">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <span class="navbar-brand" href="#"><img src="../assets/logo.png" height="40px"></span>
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <span
+              class="navbar-brand"
+              href="#"
+            ><img
+              src="../assets/logo.png"
+              height="40px"
+            ></span>
+          </div>
+          <span class="navbar-text">
+            Quality Assurance
+          </span>
+          <ul class="nav navbar-nav navbar-right">
+            <li><table><tr><td><span style="margin-right: 40px;"><font-awesome-icon icon="plus" /> Add</span></td><td><span><font-awesome-icon icon="user-circle" /> Profile</span></td></tr></table></li>
+          </ul>
         </div>
-        <span class="navbar-text">
-          Quality Assurance
-        </span>
-        <ul class="nav navbar-nav navbar-right">
-          <li><table><tr><td><span style="margin-right: 40px;"><font-awesome-icon icon="plus" /> Add</span></td><td><span><font-awesome-icon icon="user-circle" /> Profile</span></td></tr></table></li>
-        </ul>
-      </div>
-    </nav>
+      </nav>
     </div>
 
     <!-- Space for content -->
     <div id="content">
       <div
-        v-masonry="containerId"
-        transition-duration="0s"
+        v-masonry
+        transition-duration="0.4s"
         item-selector=".item"
       >
         <div
@@ -30,9 +36,14 @@
           v-masonry-tile
           class="item"
         >
-          <b-card class="note" bg-variant="dark" text-variant="white" title="Title">
+          <b-card
+            class="note"
+            bg-variant="dark"
+            text-variant="white"
+            v-bind:title="note.title"
+          >
             <b-card-text>
-              {{ note.text }}
+              {{ note.content }}
             </b-card-text>
           </b-card>
           <!--<b-card

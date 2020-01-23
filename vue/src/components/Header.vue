@@ -1,9 +1,19 @@
 <template>
-  <header class="header"  bg-variant="dark" text-variant="white" >
+  <header
+    class="header"
+    bg-variant="dark"
+    text-variant="white"
+  >
     <nav class="navbar navbar-inverse bg-dark fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#"><img src="../assets/logo.png" height="40px"></a>
+          <a
+            class="navbar-brand"
+            href="#"
+          ><img
+            src="../assets/logo.png"
+            height="40px"
+          ></a>
         </div>
         <span class="navbar-text">
           Quality Assurance

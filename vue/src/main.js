@@ -5,7 +5,7 @@ import store from './store';
 
 // Import Bootstrap
 //import Bootstrap from 'bootstrap';
-import BootstrapVue from 'bootstrap-vue'
+import BootstrapVue from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 //Vue.use(Bootstrap);
