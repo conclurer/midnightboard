@@ -40,7 +40,7 @@
             class="note"
             bg-variant="dark"
             text-variant="white"
-            v-bind:title="note.title"
+            :title="note.title"
           >
             <b-card-text>
               {{ note.content }}

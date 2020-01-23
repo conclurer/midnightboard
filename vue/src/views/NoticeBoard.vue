@@ -34,7 +34,7 @@ export default {
   created() {
     axios
       .get('http://localhost:1337/api/posts/all/' + this.boardID)
-      .then(response => { this.notes = JSON.parse(response.data) })
+      .then(response => { this.notes = JSON.parse(response.data); })
       .catch(err => console.log(err));
   },
   methods: {
