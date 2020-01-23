@@ -1,7 +1,6 @@
 <template>
   <div
     class="home"
-    style="position: relative;"
   >
     <Header
       id="titlebar"
@@ -9,7 +8,6 @@
     />
     <Board
       :notes="notes"
-      :new-note="newNote"
       @add-note="addNote"
     />
   </div>
@@ -71,9 +69,6 @@ export default {
           text: 'Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.'
         },
       ],
-      newNote: {
-        'active': false
-      },
       boardID: 0
     };
   },
@@ -85,10 +80,25 @@ export default {
       .catch(err => console.log(err));*/
 
     //post-request to api
-    axios
+    /*axios
       .get('http://localhost:1337/api/posts/' + this.boardID + '/all')
       .then(response => {this.notes = response;})
+      .catch(err => console.log(err));*/
+
+    var note0 = {};
+
+    axios
+      .get('http://localhost:1337/api/posts/0')
+      .then(response => {note0 = response.data;})
       .catch(err => console.log(err));
+
+    const newNote = {
+      id: note0.id,
+      title: note0.title,
+      text: note0.content,
+    };
+
+    this.notes = [...this.notes, newNote];
   },
   methods: {
     createNote(newNote) {
@@ -115,3 +125,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+  .home {
+    position: relative;
+  }
+</style>

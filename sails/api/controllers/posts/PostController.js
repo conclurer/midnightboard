@@ -19,8 +19,8 @@ module.exports = {
     },
 
     getPost: async function(req, res){
-        sails.log('Fetching Post #' + req.param('postID'));
-        var pst = await Post.findOne({id: req.param('postID')});
+        sails.log('Fetching Post #' + req.param('post_id'));
+        var pst = await Post.findOne({post_id: req.param('post_id')});
         return res.json(JSON.stringify(pst));
     },
 
