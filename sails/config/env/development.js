@@ -70,7 +70,7 @@ module.exports = {
              * https://sailsjs.com/config/datastores                                     *
              *                                                                           *
              ****************************************************************************/
-            // ssl: true,
+            ssl: true // For Heroku
 
         },
 
@@ -221,7 +221,7 @@ module.exports = {
          *                                                                          *
          ***************************************************************************/
         cookie: {
-            // secure: true,
+            secure: true, // For Heroku
             maxAge: 24 * 60 * 60 * 1000, // 24 hours
         },
 
@@ -251,7 +251,9 @@ module.exports = {
          *                                                                          *
          ***************************************************************************/
         onlyAllowOrigins: [
-            'http://localhost:1337'
+            'http://localhost:1337',
+            'http://midnightboard-test.herokuapp.com', // For Heroku
+            'https://midnightboard-test.herokuapp.com' // For Heroku
         ]
 
 
@@ -321,8 +323,7 @@ module.exports = {
          * (https://sailsjs.com/config/http)                                        *
          *                                                                          *
          ***************************************************************************/
-        // trustProxy: true,
-
+        trustProxy: true // For Heroku
     },
 
 
@@ -336,7 +337,7 @@ module.exports = {
      * this, just try deploying without setting it and see if it works.)       *
      *                                                                         *
      ***************************************************************************/
-    // port: 80,
+    port: process.env.PORT || 1337, // For Heroku
 
 
 

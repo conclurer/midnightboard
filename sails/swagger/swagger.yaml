@@ -1,0 +1,563 @@
+swagger: '2.0'
+info:
+  title: Swagger JSON
+  description: This is a generated swagger json (sails-hook-swagger-generator)
+  version: 1.0.0
+host: 'localhost:1337'
+basePath: /
+tags:
+  - name: Board
+  - name: Board_Subscription
+  - name: Member
+  - name: Post
+  - name: post_location
+  - name: Team
+  - name: Team_Membership
+definitions:
+  board:
+    properties:
+      id:
+        type: string
+      createdAt:
+        type: string
+      updatedAt:
+        type: string
+      creatorID:
+        type: string
+      boardName:
+        type: string
+    required:
+      - boardName
+  board_subscription:
+    properties:
+      boardId:
+        type: string
+      memberId:
+        type: string
+  member:
+    properties:
+      id:
+        type: string
+      createdAt:
+        type: string
+      updatedAt:
+        type: string
+      username:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      avatar:
+        type: string
+      languagePreference:
+        type: string
+      hideLastName:
+        type: boolean
+    required:
+      - username
+      - email
+      - password
+  post:
+    properties:
+      id:
+        type: string
+      createdAt:
+        type: string
+      updatedAt:
+        type: string
+      creatorID:
+        type: string
+      typeOfPost:
+        type: string
+      title:
+        type: string
+      dueDate:
+        type: string
+      interactiveDueDate:
+        type: string
+      content:
+        type: string
+    required:
+      - typeOfPost
+  post_location:
+    properties:
+      id:
+        type: string
+      boardId:
+        type: string
+      postId:
+        type: string
+  team:
+    properties:
+      id:
+        type: string
+      createdAt:
+        type: string
+      updatedAt:
+        type: string
+      teamLeaderID:
+        type: string
+      teamName:
+        type: string
+    required:
+      - teamName
+  team_membership:
+    properties:
+      teamId:
+        type: string
+      memberId:
+        type: string
+parameters:
+  WhereQueryParam:
+    in: query
+    name: where
+    required: false
+    type: string
+    description: 'This follows the standard from http://sailsjs.com/documentation/reference/blueprint-api/find-where'
+  LimitQueryParam:
+    in: query
+    name: limit
+    required: false
+    type: integer
+    description: The maximum number of records to send back (useful for pagination). Defaults to undefined
+  SkipQueryParam:
+    in: query
+    name: skip
+    required: false
+    type: integer
+    description: The number of records to skip (useful for pagination).
+  SortQueryParam:
+    in: query
+    name: sort
+    required: false
+    type: string
+    description: 'The sort order. By default, returned records are sorted by primary key value in ascending order. e.g. ?sort=lastName%20ASC'
+  PopulateQueryParam:
+    in: query
+    name: populate
+    required: false
+    type: string
+    description: 'check for better understanding -> http://sailsjs.com/documentation/reference/blueprint-api/find-where'
+  PageQueryParam:
+    in: query
+    name: page
+    required: false
+    type: integer
+    description: This helps with pagination and when the limit is known
+  SelectQueryParam:
+    in: query
+    name: select
+    required: false
+    type: string
+    description: 'This helps with what to return for the user and its "," delimited'
+  TokenHeaderParam:
+    in: header
+    name: token
+    required: false
+    type: string
+    description: Incase we want to send header information along our request
+  IDPathParam:
+    in: path
+    name: id
+    required: true
+    type: string
+    description: This is to identify a particular object out
+  PerPageQueryParam:
+    in: query
+    name: perPage
+    required: false
+    type: integer
+    description: This helps with pagination and when the limit is known for pagify
+paths:
+  '/api/users/{userID}':
+    get:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          name: userID
+          required: true
+          type: string
+          description: This is a path param for userID
+        - $ref: '#/parameters/TokenHeaderParam'
+      responses:
+        '200':
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+    delete:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          name: userID
+          required: true
+          type: string
+          description: This is a path param for userID
+        - $ref: '#/parameters/TokenHeaderParam'
+      responses:
+        '200':
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+    put:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          name: userID
+          required: true
+          type: string
+          description: This is a path param for userID
+        - $ref: '#/parameters/TokenHeaderParam'
+      responses:
+        '200':
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+  /api/users/register:
+    post:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/TokenHeaderParam'
+      responses:
+        '200':
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+  '/api/boards/{boardID}':
+    get:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          name: boardID
+          required: true
+          type: string
+          description: This is a path param for boardID
+        - $ref: '#/parameters/TokenHeaderParam'
+      responses:
+        '200':
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+    delete:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          name: boardID
+          required: true
+          type: string
+          description: This is a path param for boardID
+        - $ref: '#/parameters/TokenHeaderParam'
+      responses:
+        '200':
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+    put:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          name: boardID
+          required: true
+          type: string
+          description: This is a path param for boardID
+        - $ref: '#/parameters/TokenHeaderParam'
+      responses:
+        '200':
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+  /api/boards/create:
+    post:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/TokenHeaderParam'
+      responses:
+        '200':
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+  '/api/boards/{boardID}/new':
+    post:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          name: boardID
+          required: true
+          type: string
+          description: This is a path param for boardID
+        - $ref: '#/parameters/TokenHeaderParam'
+      responses:
+        '200':
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+  '/api/posts/{postID}':
+    get:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          name: postID
+          required: true
+          type: string
+          description: This is a path param for postID
+        - $ref: '#/parameters/TokenHeaderParam'
+      responses:
+        '200':
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+    delete:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          name: postID
+          required: true
+          type: string
+          description: This is a path param for postID
+        - $ref: '#/parameters/TokenHeaderParam'
+      responses:
+        '200':
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+    put:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          name: postID
+          required: true
+          type: string
+          description: This is a path param for postID
+        - $ref: '#/parameters/TokenHeaderParam'
+      responses:
+        '200':
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+  '/api/posts/all/{boardID}':
+    get:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          name: boardID
+          required: true
+          type: string
+          description: This is a path param for boardID
+        - $ref: '#/parameters/TokenHeaderParam'
+      responses:
+        '200':
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+  /*:
+    post:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/TokenHeaderParam'
+      responses:
+        '200':
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+    get:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/TokenHeaderParam'
+      responses:
+        '200':
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+    put:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/TokenHeaderParam'
+      responses:
+        '200':
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+    delete:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/TokenHeaderParam'
+      responses:
+        '200':
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+    patch:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/TokenHeaderParam'
+      responses:
+        '200':
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
