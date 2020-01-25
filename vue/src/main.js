@@ -3,18 +3,23 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 
-// import Font Awesome icons
+// Import Bootstrap
+//import Bootstrap from 'bootstrap';
+import BootstrapVue from 'bootstrap-vue';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
+//Vue.use(Bootstrap);
+Vue.use(BootstrapVue);
+
+// Import Font Awesome icons
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faPlus, faFileMedical, faUserCircle, faCog } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 library.add(faPlus);
-library.add(faFileMedical);
 library.add(faUserCircle);
-library.add(faCog);
-
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
-// import ES6 style
+// Import ES6 style
 import {VueMasonryPlugin} from 'vue-masonry';
 Vue.use(VueMasonryPlugin);
 

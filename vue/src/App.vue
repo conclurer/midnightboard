@@ -14,15 +14,5 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-}
-
-h1 {
-  color: #fff;
-  font-size: 28px;
-}
-
-:root {
-  background: #333;
 }
 </style>
