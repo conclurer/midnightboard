@@ -7,12 +7,12 @@ host: 'localhost:1337'
 basePath: /
 tags:
   - name: Board
-  - name: Board_Subscription
+  - name: BoardSubscription
   - name: Member
   - name: Post
-  - name: post_location
+  - name: postLocation
   - name: Team
-  - name: Team_Membership
+  - name: TeamMembership
 definitions:
   board:
     properties:
@@ -28,7 +28,7 @@ definitions:
         type: string
     required:
       - boardName
-  board_subscription:
+  boardSubscription:
     properties:
       boardId:
         type: string
@@ -84,7 +84,7 @@ definitions:
         type: string
     required:
       - typeOfPost
-  post_location:
+  postLocation:
     properties:
       id:
         type: string
@@ -106,7 +106,7 @@ definitions:
         type: string
     required:
       - teamName
-  team_membership:
+  teamMembership:
     properties:
       teamId:
         type: string
