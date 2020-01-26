@@ -13,6 +13,7 @@
         "font-awesome": "^4.7.0",
         "jquery": "^3.4.1",
         "tiptap": "^1.26.6",
+        "tiptap-extensions": "^1.28.6",
         "typescript": "^3.7.3",
         "vue": "^2.6.10",
         "vue-masonry": "^0.11.8",

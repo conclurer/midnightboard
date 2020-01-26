@@ -16,22 +16,22 @@ module.exports = {
       interactiveDueDate: 0
     }).fetch();
     await PostLocation.create({
-      boardId: req.param('boardID'),
+      boardId: req.param('boardId'),
       postId: createdPost.id
     });
     return res.ok();
   },
 
   getPost: async function(req, res){
-    sails.log('Fetching Post #' + req.param('post_id'));
-    var pst = await Post.findOne({postId: req.param('post_id')});
+    sails.log('Fetching Post #' + req.param('postId'));
+    var pst = await Post.findOne({postId: req.param('postId')});
     return res.json(JSON.stringify(pst));
   },
 
   searchPost: async function(req, res){
-    sails.log('Fetching Posts from board #' + req.param('boardID'));
+    sails.log('Fetching Posts from board #' + req.param('boardId'));
     var idList = await PostLocation.find({
-      where: {boardId: req.param('boardID')},
+      where: {boardId: req.param('boardId')},
       select: ['postId']
     });
     var postList = [];
@@ -42,8 +42,8 @@ module.exports = {
   },
 
   deletePost: async function(req, res) {
-    sails.log('Trying to delete post #' + req.param('postID'));
-    await Post.destroy({id: req.param('postID')});
+    sails.log('Trying to delete post #' + req.param('postId'));
+    await Post.destroy({id: req.param('postId')});
     return res.ok();
   },
 

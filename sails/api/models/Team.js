@@ -1,4 +1,5 @@
 module.exports = {
+  tableName: 'team',
   primaryKey: 'id',
   attributes: {
     id: { type: 'number', autoIncrement: true, unique: true, columnName: 'team_id' },

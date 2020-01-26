@@ -14,9 +14,40 @@ Vue.use(BootstrapVue);
 // Import Font Awesome icons
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faPlus, faUserCircle } from '@fortawesome/free-solid-svg-icons';
-library.add(faPlus);
-library.add(faUserCircle);
+import { 
+  faPlus, 
+  faUser,
+  faUserCircle, 
+  faBold, 
+  faItalic, 
+  faStrikethrough,
+  faUnderline,
+  faCode,
+  faParagraph,
+  faListUl,
+  faListOl,
+  faQuoteRight,
+  faTerminal,
+  faUndo,
+  faRedo
+} from '@fortawesome/free-solid-svg-icons';
+library.add(
+  faPlus,
+  faUser,
+  faUserCircle, 
+  faBold, 
+  faItalic, 
+  faStrikethrough,
+  faUnderline,
+  faCode,
+  faParagraph,
+  faListUl,
+  faListOl,
+  faQuoteRight,
+  faTerminal,
+  faUndo,
+  faRedo
+);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 // Import ES6 style

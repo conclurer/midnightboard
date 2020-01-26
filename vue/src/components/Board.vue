@@ -46,6 +46,7 @@
               {{ note.content }}
             </b-card-text>
           </b-card>
+          
           <!--<b-card
             title="Title"
             tag="note"
@@ -68,8 +69,7 @@
 <script>
 export default {
   name: 'Board',
-  components: {
-  },
+  components: { },
   props: ['notes'],
   methods: {
     addNote(newNote) {

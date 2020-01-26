@@ -70,7 +70,7 @@ module.exports = {
              * https://sailsjs.com/config/datastores                                     *
              *                                                                           *
              ****************************************************************************/
-            ssl: true // For Heroku
+            //ssl: true
 
         },
 
@@ -221,7 +221,7 @@ module.exports = {
          *                                                                          *
          ***************************************************************************/
         cookie: {
-            secure: true, // For Heroku
+            //secure: true,
             maxAge: 24 * 60 * 60 * 1000, // 24 hours
         },
 
@@ -323,7 +323,7 @@ module.exports = {
          * (https://sailsjs.com/config/http)                                        *
          *                                                                          *
          ***************************************************************************/
-        trustProxy: true // For Heroku
+        //trustProxy: true
     },
 
 

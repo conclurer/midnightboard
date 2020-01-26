@@ -39,8 +39,9 @@
 </template>
 
 <script>
-import uuid from 'uuid';
 import axios from 'axios';
+import uuid from 'uuid';
+import NoteEditor from '@/components/NoteEditor.vue';
 
 export default {
   name: 'NewNote',
@@ -57,7 +58,7 @@ export default {
         const newNote = {
           id: uuid.v4(),
           title: this.title,
-          text: this.body,
+          text: NoteEditor, //this.body
           xPosition: 0,
           yPosition: 0,
           width: 200,

@@ -10,20 +10,23 @@
       :notes="notes"
       @add-note="addNote"
     />
+    <NoteEditor />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Header from '@/components/Header.vue';
-import Board from '@/components/Board.vue';
 import axios from 'axios';
+import Board from '@/components/Board.vue';
+import Header from '@/components/Header.vue';
+import NoteEditor from '@/components/NoteEditor.vue';
 
 export default {
   name: 'NoticeBoard',
   components: {
     Header,
-    Board
+    Board,
+    NoteEditor
   },
   data() {
     return {
