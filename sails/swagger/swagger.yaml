@@ -1,18 +1,32 @@
 swagger: '2.0'
 info:
-  title: Swagger JSON
-  description: This is a generated swagger json (sails-hook-swagger-generator)
-  version: 1.0.0
+  title: Swagger midnightboard
+  description: API for [midnightboard](https://github.com/conclurer/midnightboard).<br>
+    Generated as JSON by [sails-hook-swagger-generator](https://github.com/theo4u/sails-hook-swagger-generator).<br>
+    Converted to YAML by [Swagger Editor](https://editor.swagger.io).
+  version: 0.0.2
+  license:
+    name: MIT License
+    url: 'https://github.com/conclurer/midnightboard/blob/master/LICENSE'
 host: 'localhost:1337'
+schemes:
+  - http
 basePath: /
 tags:
   - name: Board
+    description: Notice board
   - name: BoardSubscription
+    description: Subscribed to a notice board
   - name: Member
+    description: Members of the application
   - name: Post
-  - name: postLocation
+    description: Posts on a notice board
+  - name: PostLocation
+    description: Location of posts on a notice board
   - name: Team
+    description: Teams
   - name: TeamMembership
+    description: Membership of the teams
 definitions:
   board:
     properties:
@@ -84,7 +98,7 @@ definitions:
         type: string
     required:
       - typeOfPost
-  postLocation:
+  PostLocation:
     properties:
       id:
         type: string
