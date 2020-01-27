@@ -1,10 +1,11 @@
 module.exports = {
+  tableName: 'member',
   primaryKey: 'id',
   attributes: {
     id: { type: 'number', autoIncrement: true, unique: true, columnName: 'member_id' },
     createdAt: { type: 'number', autoCreatedAt: true, columnName: 'created_at' },
     updatedAt: { type: 'number', autoUpdatedAt: true, columnName: 'updated_at' },
-    username: { type: 'string', required: true, unique: true, columnName: 'username'},
+    userName: { type: 'string', required: true, unique: true, columnName: 'username'},
     firstName: { type: 'string', allowNull: true, columnName: 'first_name' },
     lastName: { type: 'string', allowNull: true, columnName: 'last_name' },
     email: { type: 'string', required:true, unique:true, columnName: 'email'},

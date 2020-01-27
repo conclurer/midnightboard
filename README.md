@@ -34,3 +34,12 @@ $ npm run sails-start-dev
 
 ## Run
 [http://localhost:1337/](http://localhost:1337/)
+
+## Swagger API
+[API Documentation](https://github.com/conclurer/midnightboard/blob/development/sails/swagger/swagger.html)
+
+# DockerHub
+[Build docker images](https://hub.docker.com/r/tvsjsdock/midnightboard-test/tags)
+
+# Demo page (WIP)
+[On heroku](https://midnightboard-test.herokuapp.com)

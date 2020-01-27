@@ -1,0 +1,13 @@
+{
+    "about":{
+        "message":"This is an About page"
+    },
+    "profile":{
+        "email":"E-Mail",
+        "username":"Username",
+        "password":"Password"
+    },
+
+
+    "HelloWorld": "Hello World!"
+}

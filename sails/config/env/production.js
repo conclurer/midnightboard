@@ -251,7 +251,7 @@ module.exports = {
          *                                                                          *
          ***************************************************************************/
         onlyAllowOrigins: [
-            'http://localhost:*'
+            'http://localhost:1337' // default port
         ],
 
 
