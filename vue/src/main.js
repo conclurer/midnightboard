@@ -11,6 +11,17 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 //Vue.use(Bootstrap);
 Vue.use(BootstrapVue);
 
+//import i18n
+import VueI18n from 'vue-i18n';
+import messages from './lang';
+
+Vue.use(VueI18n);
+export const i18n = new VueI18n({
+  locale: 'en',
+  fallbacklocale: 'en',
+  messages
+});
+
 // Import Font Awesome icons
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -59,5 +70,6 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   store,
-  render: h => h(App)
+  i18n,
+  render: h => h(App),
 }).$mount('#app');
