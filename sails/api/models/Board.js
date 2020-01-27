@@ -1,11 +1,12 @@
 module.exports = {
+  tableName: 'board',
   primaryKey: 'id',
   attributes: {
-    id: { type: 'number', unique: true, autoIncrement: true, columnName: 'board_id' },
-    boardName: { type: 'string', required: true, unique: true, columnName: 'board_name' },
-    department: { type: 'number', allowNull: true },
+    id: { type: 'number', autoIncrement: true, unique: true, columnName: 'board_id' },
     createdAt: { type: 'number', autoCreatedAt: true, columnName: 'created_at' },
-    updatedAt: { type: 'number', autoUpdatedAt: true, columnName: 'updated_at' }
+    updatedAt: { type: 'number', autoUpdatedAt: true, columnName: 'updated_at' },
+    creatorId: { type: 'number', allowNull: true, columnName: 'creator_id'},
+    boardName: { type: 'string', required: true, unique: true, columnName: 'board_name' }
   },
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

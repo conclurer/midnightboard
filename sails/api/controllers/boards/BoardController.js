@@ -6,26 +6,26 @@
  */
 
 module.exports = {
-    getBoard: async function(req, res) {
-        sails.log('Searching board ' + req.param('boardID'));
-        var brd = await Board.findOne({boardName: req.param('boardID')});
-        return res.json(JSON.stringify(brd));
-    },
+  getBoard: async function(req, res) {
+    sails.log('Searching board ' + req.param('boardId'));
+    var brd = await Board.findOne({id: req.param('boardId')});
+    return res.json(JSON.stringify(brd));
+  },
 
-    createBoard: async function(req, res) {
-        sails.log('Trying to create board ' + req.param('boardname'));
-        await Board.create({boardName: req.param('boardname')});
-        return res.ok(); 
-    },
+  createBoard: async function(req, res) {
+    sails.log('Trying to create board ' + req.param('boardName'));
+    await Board.create({boardName: req.param('boardName')});
+    return res.ok();
+  },
 
-    deleteBoard: async function(req, res) {
-        sails.log('Trying to delete board ' + req.param('boardID'));
-        await Board.destroy({boardName: req.param('boardID')})
-        return res.ok(); 
-    },
+  deleteBoard: async function(req, res) {
+    sails.log('Trying to delete board ' + req.param('boardId'));
+    await Board.destroy({boardName: req.param('boardId')});
+    return res.ok();
+  },
 
-    updateBoard: async function(req, res){
-        
-        return res.ok();
-    },
+  updateBoard: async function(req, res){
+
+    return res.ok();
+  },
 };

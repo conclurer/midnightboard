@@ -20,10 +20,11 @@
         "jest": "^24.9.0"
     },
     "scripts": {
-        "start-dev": "node app.js",
-        "start-prod": "NODE_ENV=production node app.js",
+        "start-dev": "env NODE_ENV=development node app.js",
+        "start-prod": "env NODE_ENV=production node app.js",
         "test": "npm run lint && npm run custom-tests",
         "lint": "eslint .",
+        "lint-fix": "eslint . --fix",
         "custom-tests": "jest"
     },
     "main": "app.js",
