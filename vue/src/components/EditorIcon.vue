@@ -19,6 +19,5 @@ export default {
       default: true
     }
   }
-  // created: function() {}
 }
 </script>

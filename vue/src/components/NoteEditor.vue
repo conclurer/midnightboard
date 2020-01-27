@@ -1,8 +1,14 @@
 <template>
   <div class="editor">
-    <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
-      <div class="menubar">
+    
+    <!-- Text fields -->
+    <editor-content class="editor__title" :editor="titleEditor" />
+    <editor-content class="editor__content" :editor="contentEditor" />
+    <br />
 
+    <!-- Formatting tools -->
+    <editor-menu-bar :editor="contentEditor" v-slot="{ commands, isActive }">
+      <div class="menubar">
         <button
           class="menubar__button"
           :class="{ 'is-active': isActive.bold() }"
@@ -21,18 +27,18 @@
 
         <button
           class="menubar__button"
-          :class="{ 'is-active': isActive.strike() }"
-          @click="commands.strike"
-        >
-          <icon name="strikethrough" />
-        </button>
-
-        <button
-          class="menubar__button"
           :class="{ 'is-active': isActive.underline() }"
           @click="commands.underline"
         >
           <icon name="underline" />
+        </button>
+
+        <button
+          class="menubar__button"
+          :class="{ 'is-active': isActive.strike() }"
+          @click="commands.strike"
+        >
+          <icon name="strikethrough" />
         </button>
 
         <button
@@ -45,34 +51,18 @@
 
         <button
           class="menubar__button"
-          :class="{ 'is-active': isActive.paragraph() }"
-          @click="commands.paragraph"
-        >
-          <icon name="paragraph" />
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.heading({ level: 1 }) }"
-          @click="commands.heading({ level: 1 })"
+          :class="{ 'is-active': isActive.heading({ level: 3 }) }"
+          @click="commands.heading({ level: 3 })"
         >
           <b>H1</b>
         </button>
 
         <button
           class="menubar__button"
-          :class="{ 'is-active': isActive.heading({ level: 2 }) }"
-          @click="commands.heading({ level: 2 })"
+          :class="{ 'is-active': isActive.heading({ level: 4 }) }"
+          @click="commands.heading({ level: 4 })"
         >
           <b>H2</b>
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.heading({ level: 3 }) }"
-          @click="commands.heading({ level: 3 })"
-        >
-          <b>H3</b>
         </button>
         <br>
         <button
@@ -111,7 +101,7 @@
           class="menubar__button"
           @click="commands.horizontal_rule"
         >
-          <b>-----</b>
+          <b>—</b>
         </button>
 
         <button
@@ -127,11 +117,8 @@
         >
           <icon name="redo" />
         </button>
-
       </div>
     </editor-menu-bar>
-
-    <editor-content class="editor__content" :editor="editor" />
   </div>
 </template>
 
@@ -166,13 +153,23 @@ export default {
   },
   data() {
     return {
-      editor: new Editor({
+      titleEditor: new Editor({
+        extensions: [
+          new Heading({ levels: [2] }),
+        ],
+        content: `
+          <h2>
+            Insert title here
+          </h2>
+        `,
+      }),
+      contentEditor: new Editor({
         extensions: [
           new Blockquote(),
           new BulletList(),
           new CodeBlock(),
           new HardBreak(),
-          new Heading({ levels: [1, 2, 3] }),
+          new Heading({ levels: [3, 4] }),
           new HorizontalRule(),
           new ListItem(),
           new OrderedList(),
@@ -187,32 +184,37 @@ export default {
           new History(),
         ],
         content: `
-          <h2>
-            Hi there,
-          </h2>
           <p>
-            this is a very <em>basic</em> example of tiptap.
+            Insert content here
           </p>
-          <pre><code>body { display: none; }</code></pre>
           <ul>
             <li>
-              A regular list
-            </li>
-            <li>
-              With regular items
+              Start a bulleted list
             </li>
           </ul>
-          <blockquote>
-            It's amazing 👏
-            <br />
-            – mom
-          </blockquote>
+          <ol>
+            <li>
+              Or start a numerical list
+            </li>
+          </ol>
         `,
       }),
     }
   },
   beforeDestroy() {
-    this.editor.destroy()
+    this.titleEditor.destroy()
+    this.contentEditor.destroy()
   },
 }
 </script>
+
+<style scoped>
+  button {
+    width: 43px;
+  }
+
+  .editor {
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+</style>
