@@ -119,6 +119,12 @@
         </button>
       </div>
     </editor-menu-bar>
+    <div class="gap">
+    </div>
+    <b-button class="button"
+    v-on:click="$emit('create-note', titleContent, json)">
+    Create
+    </b-button>
   </div>
 </template>
 
@@ -153,6 +159,8 @@ export default {
   },
   data() {
     return {
+      titleContent: 'Insert title here',
+      json: {},
       titleEditor: new Editor({
         extensions: [
           new Heading({ levels: [2] }),
@@ -162,6 +170,10 @@ export default {
             Insert title here
           </h2>
         `,
+        onUpdate: ({ getHTML }) => {
+          this.titleContent = getHTML()
+          this.titleContent = this.titleContent.replace(/<[^>]*>?/gm, '');
+        }
       }),
       contentEditor: new Editor({
         extensions: [
@@ -198,6 +210,9 @@ export default {
             </li>
           </ol>
         `,
+        onUpdate: ({ getJSON }) => {
+          this.json = getJSON()
+        }
       }),
     }
   },
@@ -212,9 +227,18 @@ export default {
   button {
     width: 43px;
   }
-
   .editor {
     margin-left: 12px;
     margin-right: 12px;
+  }
+  .gap {
+        position: relative;
+        top: 0px;
+        left: 0px;
+        height: 10px;
+        width: 100%;
+  }
+  .button {
+        width: auto;
   }
 </style>

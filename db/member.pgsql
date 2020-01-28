@@ -2,7 +2,7 @@ CREATE TABLE public.member (
     member_id serial NOT NULL PRIMARY KEY,
     created_at bigint NOT NULL,
     updated_at bigint NOT NULL,
-    username VARCHAR(30) NOT NULL UNIQUE,
+    user_name VARCHAR(30) NOT NULL UNIQUE,
     first_name VARCHAR(20),
     last_name VARCHAR(20),
     email TEXT NOT NULL UNIQUE,
