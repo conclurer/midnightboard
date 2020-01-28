@@ -4,13 +4,15 @@
   >
     <Header
       id="titlebar"
-      @new-note="createNote"
+      @plus-clicked="plusClicked"
     />
     <Board
       :notes="notes"
       @add-note="addNote"
     />
-    <NoteEditor />
+    <div class="rightBar" v-if="this.editorActive">
+      <EditorSidebar />
+    </div>
   </div>
 </template>
 
@@ -19,24 +21,25 @@
 import axios from 'axios';
 import Board from '@/components/Board.vue';
 import Header from '@/components/Header.vue';
-import NoteEditor from '@/components/NoteEditor.vue';
+import EditorSidebar from '@/components/EditorSidebar.vue';
 
 export default {
   name: 'NoticeBoard',
   components: {
     Header,
     Board,
-    NoteEditor
+    EditorSidebar
   },
   data() {
     return {
       notes: [],
-      boardID: 1
+      boardId: 1,
+      editorActive: false
     };
   },
   created() {
     axios
-      .get('http://localhost:1337/api/posts/all/' + this.boardID)
+      .get('http://localhost:1337/api/posts/all/' + this.boardId)
       .then(response => { this.notes = JSON.parse(response.data); })
       .catch(err => console.log(err));
   },
@@ -61,6 +64,9 @@ export default {
         .then(response => {this.notes = response;})
         .catch(err => console.log(err));
       */
+    },
+    plusClicked() {
+      this.editorActive = !this.editorActive;
     }
   }
 };
@@ -69,5 +75,14 @@ export default {
 <style scoped>
   .home {
     position: relative;
+  }
+
+  .rightBar {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 375px;
+    height: 100vh;
+    background: #fff;
   }
 </style>
