@@ -11,7 +11,9 @@
       @add-note="addNote"
     />
     <div class="rightBar" v-if="this.editorActive">
-      <EditorSidebar />
+      <EditorSidebar
+        @add-note="addNote"
+      />
     </div>
   </div>
 </template>
@@ -33,7 +35,7 @@ export default {
   data() {
     return {
       notes: [],
-      boardId: 1,
+      boardId: 4,
       editorActive: false
     };
   },
@@ -44,28 +46,15 @@ export default {
       .catch(err => console.log(err));
   },
   methods: {
-    createNote(newNote) {
-      //this.newNote.active = b;
-      this.notes = [...this.notes, newNote];
-    },
-    addNote(newNote) {
-      //this.newNote.active = false;
-
-      //post request to api
-      /*axios
-        .post('http://localhost:1337/api/boards/' + this.boardID + '/new', 0, note.title, 'note', '{ text: ' + note.body + ' }', this.boardID)
-        .then(res => {this.notes = this.notes;})
+    addNote() {
+      // Refresh notice board
+      axios
+        .get('http://localhost:1337/api/posts/all/' + this.boardId)
+        .then(response => { this.notes = JSON.parse(response.data); })
         .catch(err => console.log(err));
-      */
-
-      //post-request to api
-      /*axios
-        .get('http://localhost:1337/api/posts/' + this.boardID + '/all')
-        .then(response => {this.notes = response;})
-        .catch(err => console.log(err));
-      */
     },
     plusClicked() {
+      // Show/hide editor sidebar
       this.editorActive = !this.editorActive;
     }
   }

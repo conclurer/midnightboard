@@ -42,8 +42,11 @@
             text-variant="white"
             :title="note.title"
           >
+            <hr />
             <b-card-text>
-              {{ note.content }}
+              <div v-html="renderText(note.content)">
+              </div>
+              <!--{{ note.content }}-->
             </b-card-text>
           </b-card>
           
@@ -72,10 +75,10 @@ export default {
   components: { },
   props: ['notes'],
   methods: {
-    addNote(newNote) {
-      //Send up to parent
-      this.$emit('add-note', newNote);
-    }
+    // Returns important parts of integrated HTML code
+    renderText: function(text) {
+      return text.slice(1, text.length - 1);
+    },
   }
 };
 </script>

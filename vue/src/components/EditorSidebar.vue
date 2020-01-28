@@ -1,9 +1,9 @@
 <template>
   <div class="editorSidebar">
-    <div class="gap">
+    <div class="upperGap">
     </div>
     <NoteEditor 
-    v-on:create-note="createNote"
+      v-on:create-note="createNote"
     />
   </div>
 </template>
@@ -18,19 +18,20 @@ export default {
   },
   data() {
     return {
-      boardId: 1
+      boardId: 4
     };
   },
   methods: {
-    createNote: function(titleContent, jsonContent) {
+    createNote: async function(titleContent, jsonContent) {
       const jsonBody = JSON.stringify({
         title: titleContent,
         type: 'note',
         content: jsonContent
       })
       console.log(jsonBody)
+
       // Post request to api
-      axios
+      await axios
         .post('http://localhost:1337/api/boards/' + this.boardId + '/new', jsonBody, {
             headers: {
               'Content-Type': 'application/json'
@@ -39,17 +40,20 @@ export default {
         )
         .then(res => {})
         .catch(err => console.log(err));
+      
+        // Notify notice board
+        this.$emit('add-note');
     }
   }
 }
 </script>
 
 <style scoped>
-    .gap {
-        position: relative;
-        top: 0px;
-        left: 0px;
-        height: 100px;
-        width: 100%;
-    }
+  .upperGap {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    height: 100px;
+    width: 100%;
+  }
 </style>

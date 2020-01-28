@@ -3,6 +3,7 @@
     
     <!-- Text fields -->
     <editor-content class="editor__title" :editor="titleEditor" />
+    <hr />
     <editor-content class="editor__content" :editor="contentEditor" />
     <br />
 
@@ -119,11 +120,13 @@
         </button>
       </div>
     </editor-menu-bar>
-    <div class="gap">
+
+    <div class="lowerGap">
     </div>
+
     <b-button class="button"
-    v-on:click="$emit('create-note', titleContent, json)">
-    Create
+      v-on:click="$emit('create-note', titleContent, textContent)">
+      Create
     </b-button>
   </div>
 </template>
@@ -160,7 +163,7 @@ export default {
   data() {
     return {
       titleContent: 'Insert title here',
-      json: {},
+      textContent: {},
       titleEditor: new Editor({
         extensions: [
           new Heading({ levels: [2] }),
@@ -210,8 +213,8 @@ export default {
             </li>
           </ol>
         `,
-        onUpdate: ({ getJSON }) => {
-          this.json = getJSON()
+        onUpdate: ({ getHTML }) => {
+          this.textContent = getHTML()
         }
       }),
     }
@@ -231,11 +234,11 @@ export default {
     margin-left: 12px;
     margin-right: 12px;
   }
-  .gap {
+  .lowerGap {
         position: relative;
         top: 0px;
         left: 0px;
-        height: 10px;
+        height: 35px;
         width: 100%;
   }
   .button {
