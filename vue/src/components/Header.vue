@@ -19,7 +19,24 @@
           Quality Assurance
         </span>
         <ul class="nav navbar-nav navbar-right">
-          <li><table><tr><td><span class="unselectable" unselectable="on" style="margin-right: 40px;"><a @click="plusClicked"><font-awesome-icon icon="plus" /> Add</a></span></td><td><span class="unselectable" unselectable="on"><font-awesome-icon icon="user-circle" /> Profile</span></td></tr></table></li>
+          <li>
+            <table>
+              <tr>
+                <td>
+                  <span
+                    class="unselectable"
+                    unselectable="on"
+                    style="margin-right: 40px;"
+                  ><a @click="plusClicked"><font-awesome-icon icon="plus" /> Add</a></span>
+                </td><td>
+                  <span
+                    class="unselectable"
+                    unselectable="on"
+                  ><font-awesome-icon icon="user-circle" /> Profile</span>
+                </td>
+              </tr>
+            </table>
+          </li>
         </ul>
       </div>
     </nav>
@@ -30,23 +47,23 @@
 export default {
   name: 'Header',
   methods: {
-    plusClicked(e) {
-      e.preventDefault();
+    plusClicked (e) {
+      e.preventDefault()
 
-      //Send up to parent
-      this.$emit('plus-clicked');
+      // Send up to parent
+      this.$emit('plus-clicked')
     },
-    newNote(e) {
-      e.preventDefault();
+    newNote (e) {
+      e.preventDefault()
       const newNote = {
         text: 'New note'
-      };
+      }
 
-      //Send up to parent
-      this.$emit('new-note', newNote);
+      // Send up to parent
+      this.$emit('new-note', newNote)
     }
   }
-};
+}
 </script>
 
 <style scoped>

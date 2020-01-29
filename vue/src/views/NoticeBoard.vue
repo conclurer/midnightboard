@@ -8,9 +8,11 @@
     />
     <Board
       :notes="notes"
-      @add-note="addNote"
     />
-    <div class="rightBar" v-if="this.editorActive">
+    <div
+      v-if="this.editorActive"
+      class="rightBar"
+    >
       <EditorSidebar
         @add-note="addNote"
       />
@@ -20,10 +22,10 @@
 
 <script>
 // @ is an alias to /src
-import axios from 'axios';
-import Board from '@/components/Board.vue';
-import Header from '@/components/Header.vue';
-import EditorSidebar from '@/components/EditorSidebar.vue';
+import axios from 'axios'
+import Board from '@/components/Board.vue'
+import Header from '@/components/Header.vue'
+import EditorSidebar from '@/components/EditorSidebar.vue'
 
 export default {
   name: 'NoticeBoard',
@@ -32,33 +34,35 @@ export default {
     Board,
     EditorSidebar
   },
-  data() {
+  data () {
     return {
       notes: [],
       boardId: 4,
       editorActive: false
-    };
+    }
   },
-  created() {
+  created () {
     axios
       .get('http://localhost:1337/api/posts/all/' + this.boardId)
-      .then(response => { this.notes = JSON.parse(response.data); })
-      .catch(err => console.log(err));
+      .then(response => { this.notes = JSON.parse(response.data) })
+      .catch(err => console.log(err))
   },
   methods: {
-    addNote() {
+    addNote () {
       // Refresh notice board
       axios
         .get('http://localhost:1337/api/posts/all/' + this.boardId)
-        .then(response => { this.notes = JSON.parse(response.data); })
-        .catch(err => console.log(err));
+        .then(response => { this.notes = JSON.parse(response.data) })
+        .catch(err => console.log(err))
+
+      this.editorActive = false
     },
-    plusClicked() {
+    plusClicked () {
       // Show/hide editor sidebar
-      this.editorActive = !this.editorActive;
+      this.editorActive = !this.editorActive
     }
   }
-};
+}
 </script>
 
 <style scoped>
@@ -67,7 +71,7 @@ export default {
   }
 
   .rightBar {
-    position: absolute;
+    position: fixed;
     top: 0px;
     right: 0px;
     width: 375px;
