@@ -27,7 +27,7 @@ CREATE TABLE public.post (
     creator_id integer REFERENCES member (member_id) ON DELETE SET NULL,
     type_of_post VARCHAR(10) NOT NULL,
     title VARCHAR(50),
-    content jsonb,
+    content text,
     due_date bigint NOT NULL,
     interactive_due_date bigint
 );
