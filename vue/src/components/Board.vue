@@ -8,10 +8,12 @@
             <span
               class="navbar-brand"
               href="#"
-            ><img
-              src="../assets/logo.png"
-              height="40px"
-            ></span>
+            >
+              <img
+                src="../assets/logo.png"
+                height="40px"
+              >
+            </span>
           </div>
           <span class="navbar-text">
             Quality Assurance
@@ -31,7 +33,7 @@
         item-selector=".item"
       >
         <div
-          v-for="note in notes"
+          v-for="note in notes.slice().reverse()"
           :key="note.index"
           v-masonry-tile
           class="item"
@@ -42,11 +44,13 @@
             text-variant="white"
             :title="note.title"
           >
+            <hr>
             <b-card-text>
-              {{ note.content }}
+              <div v-html="renderText(note.content)" />
+              <!--{{ note.content }}-->
             </b-card-text>
           </b-card>
-          
+
           <!--<b-card
             title="Title"
             tag="note"
@@ -72,12 +76,12 @@ export default {
   components: { },
   props: ['notes'],
   methods: {
-    addNote(newNote) {
-      //Send up to parent
-      this.$emit('add-note', newNote);
+    // Returns important parts of integrated HTML code
+    renderText: function (text) {
+      return text.slice(1, text.length - 1)
     }
   }
-};
+}
 </script>
 
 <style scoped>

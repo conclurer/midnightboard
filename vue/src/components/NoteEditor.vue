@@ -1,20 +1,29 @@
 <template>
   <div class="editor">
-    
     <!-- Text fields -->
-    <editor-content class="editor__title" :editor="titleEditor" />
-    <editor-content class="editor__content" :editor="contentEditor" />
-    <br />
+    <editor-content
+      class="editor__title"
+      :editor="titleEditor"
+    />
+    <hr>
+    <editor-content
+      class="editor__content"
+      :editor="contentEditor"
+    />
+    <br>
 
     <!-- Formatting tools -->
-    <editor-menu-bar :editor="contentEditor" v-slot="{ commands, isActive }">
+    <editor-menu-bar
+      v-slot="{ commands, isActive }"
+      :editor="contentEditor"
+    >
       <div class="menubar">
         <button
           class="menubar__button"
           :class="{ 'is-active': isActive.bold() }"
           @click="commands.bold"
         >
-          <icon name="bold"/>
+          <icon name="bold" />
         </button>
 
         <button
@@ -119,17 +128,20 @@
         </button>
       </div>
     </editor-menu-bar>
-    <div class="gap">
-    </div>
-    <b-button class="button"
-    v-on:click="$emit('create-note', titleContent, json)">
-    Create
+
+    <div class="lowerGap" />
+
+    <b-button
+      class="button"
+      @click="$emit('create-note', titleContent, textContent)"
+    >
+      Create
     </b-button>
   </div>
 </template>
 
 <script>
-import Icon from '@/components/EditorIcon.vue';
+import Icon from '@/components/EditorIcon.vue'
 import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
 import {
   Blockquote,
@@ -148,22 +160,22 @@ import {
   Link,
   Strike,
   Underline,
-  History,
+  History
 } from 'tiptap-extensions'
 
 export default {
   components: {
     EditorContent,
     EditorMenuBar,
-    Icon,
+    Icon
   },
-  data() {
+  data () {
     return {
       titleContent: 'Insert title here',
-      json: {},
+      textContent: '<p>Insert content here</p><ul><li>Start a bulleted list</li></ul><ol><li>Or start a numerical list</li></ol>',
       titleEditor: new Editor({
         extensions: [
-          new Heading({ levels: [2] }),
+          new Heading({ levels: [2] })
         ],
         content: `
           <h2>
@@ -172,7 +184,7 @@ export default {
         `,
         onUpdate: ({ getHTML }) => {
           this.titleContent = getHTML()
-          this.titleContent = this.titleContent.replace(/<[^>]*>?/gm, '');
+          this.titleContent = this.titleContent.replace(/<[^>]*>?/gm, '')
         }
       }),
       contentEditor: new Editor({
@@ -193,7 +205,7 @@ export default {
           new Italic(),
           new Strike(),
           new Underline(),
-          new History(),
+          new History()
         ],
         content: `
           <p>
@@ -210,16 +222,16 @@ export default {
             </li>
           </ol>
         `,
-        onUpdate: ({ getJSON }) => {
-          this.json = getJSON()
+        onUpdate: ({ getHTML }) => {
+          this.textContent = getHTML()
         }
-      }),
+      })
     }
   },
-  beforeDestroy() {
+  beforeDestroy () {
     this.titleEditor.destroy()
     this.contentEditor.destroy()
-  },
+  }
 }
 </script>
 
@@ -231,11 +243,11 @@ export default {
     margin-left: 12px;
     margin-right: 12px;
   }
-  .gap {
+  .lowerGap {
         position: relative;
         top: 0px;
         left: 0px;
-        height: 10px;
+        height: 35px;
         width: 100%;
   }
   .button {
