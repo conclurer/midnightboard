@@ -12,18 +12,18 @@ assignees: ''
 **Welche Teammitglieder waren anwesend?**
 
 - [ ] Mit Sebastian
-- [ ] Mit Eddi
 - [ ] Mit Simon
 - [ ] Mit Philipp
-- [ ] Mit Tanaro
 
 
 - [ ] Mit Jens
 
 **Art des Treffen**
 <!-- mehrfachauswahl auch möglich -->
+- [ ] Weekly Scrum Meeting
 - [ ] Sprint Planning
 - [ ] Sprint Review
+- [ ] Sprint Retrospektive
 - [ ] Sonstiges
 
 **Was wurde besprochen?** 
