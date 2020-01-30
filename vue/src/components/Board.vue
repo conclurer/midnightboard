@@ -46,8 +46,7 @@
           >
             <hr>
             <b-card-text>
-              <div v-html="renderText(note.content)" />
-              <!--{{ note.content }}-->
+              <div v-html="note.content" />
             </b-card-text>
           </b-card>
 
@@ -74,13 +73,7 @@
 export default {
   name: 'Board',
   components: { },
-  props: ['notes'],
-  methods: {
-    // Returns important parts of integrated HTML code
-    renderText: function (text) {
-      return text.slice(1, text.length - 1)
-    }
-  }
+  props: ['notes']
 }
 </script>
 
