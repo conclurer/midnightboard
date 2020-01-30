@@ -37,7 +37,7 @@ export default {
   data () {
     return {
       notes: [],
-      boardId: 4,
+      boardId: 1,
       editorActive: false
     }
   },

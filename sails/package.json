@@ -5,12 +5,13 @@
     "description": "midnightboard backend",
     "keywords": [],
     "dependencies": {
-        "sails": "^1.2.3",
+        "@sailshq/lodash": "^3.10.4",
+        "core-js": "^3.6.4",
         "grunt": "^1.0.4",
+        "sails": "^1.2.3",
         "sails-hook-grunt": "^4.0.1",
         "sails-hook-orm": "^2.1.1",
         "sails-hook-sockets": "^2.0.0",
-        "@sailshq/lodash": "^3.10.4",
         "sails-postgresql": "^1.0.2",
         "typescript": "^3.7.3"
     },

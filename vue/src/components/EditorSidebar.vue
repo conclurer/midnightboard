@@ -17,7 +17,7 @@ export default {
   },
   data () {
     return {
-      boardId: 4
+      boardId: 1
     }
   },
   methods: {
