@@ -2,7 +2,7 @@ CREATE TABLE public.member (
     member_id serial NOT NULL PRIMARY KEY,
     created_at bigint NOT NULL,
     updated_at bigint NOT NULL,
-    username VARCHAR(30) NOT NULL UNIQUE,
+    user_name VARCHAR(30) NOT NULL UNIQUE,
     first_name VARCHAR(20),
     last_name VARCHAR(20),
     email TEXT NOT NULL UNIQUE,
@@ -27,7 +27,7 @@ CREATE TABLE public.post (
     creator_id integer REFERENCES member (member_id) ON DELETE SET NULL,
     type_of_post VARCHAR(10) NOT NULL,
     title VARCHAR(50),
-    content TEXT,
+    content text,
     due_date bigint NOT NULL,
     interactive_due_date bigint
 );

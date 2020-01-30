@@ -55,7 +55,7 @@ module.exports.routes = {
     //  ╩ ╩╩  ╩  ╚═╝╝╚╝═╩╝╩  ╚═╝╩╝╚╝ ╩ ╚═╝
     //#region APIs
     //USER
-    'GET    /api/users/:userID': {
+    'GET    /api/users/:userId': {
         controller: 'users/User',
         action: 'getUser',
         skipAssets: true
@@ -65,19 +65,19 @@ module.exports.routes = {
         action: 'registerUser',
         skipAssets: true
     },
-    'DELETE   /api/users/:userID': {
+    'DELETE   /api/users/:userId': {
         controller: 'users/User',
         action: 'deleteUser',
         skipAssets: true
     },
-    'PUT   /api/users/:userID': {
+    'PUT   /api/users/:userId': {
         controller: 'users/User',
         action: 'updateUser',
         skipAssets: true
     },
 
     //BOARDS
-    'GET    /api/boards/:boardID': {
+    'GET    /api/boards/:boardId': {
         controller: 'boards/Board',
         action: 'getBoard',
         skipAssets: true
@@ -87,12 +87,12 @@ module.exports.routes = {
         action: 'createBoard',
         skipAssets: true
     },
-    'DELETE   /api/boards/:boardID': {
+    'DELETE   /api/boards/:boardId': {
         controller: 'boards/Board',
         action: 'deleteBoard',
         skipAssets: true
     },
-    'PUT   /api/boards/:boardID': {
+    'PUT   /api/boards/:boardId': {
         controller: 'boards/Board',
         action: 'updateBoard',
         skipAssets: true
@@ -100,27 +100,27 @@ module.exports.routes = {
 
 
     //POSTS
-    'POST   /api/boards/:boardID/new': {
+    'POST   /api/boards/:boardId/new': {
         controller: 'posts/Post',
         action: 'newPost',
         skipAssets: true
     },
-    'GET   /api/posts/:postID': {
+    'GET   /api/posts/:postId': {
         controller: 'posts/Post',
         action: 'getPost',
         skipAssets: true
     },
-    'GET   /api/posts/all/:boardID': {
+    'GET   /api/posts/all/:boardId': {
         controller: 'posts/Post',
         action: 'searchPost',
         skipAssets: true
     },
-    'DELETE   /api/posts/:postID': {
+    'DELETE   /api/posts/:postId': {
         controller: 'posts/Post',
         action: 'deletePost',
         skipAssets: true
     },
-    'PUT   /api/posts/:postID': {
+    'PUT   /api/posts/:postId': {
         controller: 'posts/Post',
         action: 'updatePost',
         skipAssets: true

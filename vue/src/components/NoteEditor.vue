@@ -1,14 +1,29 @@
 <template>
   <div class="editor">
-    <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
-      <div class="menubar">
+    <!-- Text fields -->
+    <editor-content
+      class="editor__title"
+      :editor="titleEditor"
+    />
+    <hr>
+    <editor-content
+      class="editor__content"
+      :editor="contentEditor"
+    />
+    <br>
 
+    <!-- Formatting tools -->
+    <editor-menu-bar
+      v-slot="{ commands, isActive }"
+      :editor="contentEditor"
+    >
+      <div class="menubar">
         <button
           class="menubar__button"
           :class="{ 'is-active': isActive.bold() }"
           @click="commands.bold"
         >
-          <icon name="bold"/>
+          <icon name="bold" />
         </button>
 
         <button
@@ -21,18 +36,18 @@
 
         <button
           class="menubar__button"
-          :class="{ 'is-active': isActive.strike() }"
-          @click="commands.strike"
-        >
-          <icon name="strikethrough" />
-        </button>
-
-        <button
-          class="menubar__button"
           :class="{ 'is-active': isActive.underline() }"
           @click="commands.underline"
         >
           <icon name="underline" />
+        </button>
+
+        <button
+          class="menubar__button"
+          :class="{ 'is-active': isActive.strike() }"
+          @click="commands.strike"
+        >
+          <icon name="strikethrough" />
         </button>
 
         <button
@@ -45,34 +60,18 @@
 
         <button
           class="menubar__button"
-          :class="{ 'is-active': isActive.paragraph() }"
-          @click="commands.paragraph"
-        >
-          <icon name="paragraph" />
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.heading({ level: 1 }) }"
-          @click="commands.heading({ level: 1 })"
+          :class="{ 'is-active': isActive.heading({ level: 3 }) }"
+          @click="commands.heading({ level: 3 })"
         >
           <b>H1</b>
         </button>
 
         <button
           class="menubar__button"
-          :class="{ 'is-active': isActive.heading({ level: 2 }) }"
-          @click="commands.heading({ level: 2 })"
+          :class="{ 'is-active': isActive.heading({ level: 4 }) }"
+          @click="commands.heading({ level: 4 })"
         >
           <b>H2</b>
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.heading({ level: 3 }) }"
-          @click="commands.heading({ level: 3 })"
-        >
-          <b>H3</b>
         </button>
         <br>
         <button
@@ -111,7 +110,7 @@
           class="menubar__button"
           @click="commands.horizontal_rule"
         >
-          <b>-----</b>
+          <b>—</b>
         </button>
 
         <button
@@ -127,16 +126,22 @@
         >
           <icon name="redo" />
         </button>
-
       </div>
     </editor-menu-bar>
 
-    <editor-content class="editor__content" :editor="editor" />
+    <div class="lowerGap" />
+
+    <b-button
+      class="button"
+      @click="$emit('create-note', titleContent, textContent)"
+    >
+      Create
+    </b-button>
   </div>
 </template>
 
 <script>
-import Icon from '@/components/EditorIcon.vue';
+import Icon from '@/components/EditorIcon.vue'
 import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
 import {
   Blockquote,
@@ -155,24 +160,40 @@ import {
   Link,
   Strike,
   Underline,
-  History,
+  History
 } from 'tiptap-extensions'
 
 export default {
   components: {
     EditorContent,
     EditorMenuBar,
-    Icon,
+    Icon
   },
-  data() {
+  data () {
     return {
-      editor: new Editor({
+      titleContent: 'Insert title here',
+      textContent: '<p>Insert content here</p><ul><li>Start a bulleted list</li></ul><ol><li>Or start a numerical list</li></ol>',
+      titleEditor: new Editor({
+        extensions: [
+          new Heading({ levels: [2] })
+        ],
+        content: `
+          <h2>
+            Insert title here
+          </h2>
+        `,
+        onUpdate: ({ getHTML }) => {
+          this.titleContent = getHTML()
+          this.titleContent = this.titleContent.replace(/<[^>]*>?/gm, '')
+        }
+      }),
+      contentEditor: new Editor({
         extensions: [
           new Blockquote(),
           new BulletList(),
           new CodeBlock(),
           new HardBreak(),
-          new Heading({ levels: [1, 2, 3] }),
+          new Heading({ levels: [3, 4] }),
           new HorizontalRule(),
           new ListItem(),
           new OrderedList(),
@@ -184,35 +205,52 @@ export default {
           new Italic(),
           new Strike(),
           new Underline(),
-          new History(),
+          new History()
         ],
         content: `
-          <h2>
-            Hi there,
-          </h2>
           <p>
-            this is a very <em>basic</em> example of tiptap.
+            Insert content here
           </p>
-          <pre><code>body { display: none; }</code></pre>
           <ul>
             <li>
-              A regular list
-            </li>
-            <li>
-              With regular items
+              Start a bulleted list
             </li>
           </ul>
-          <blockquote>
-            It's amazing 👏
-            <br />
-            – mom
-          </blockquote>
+          <ol>
+            <li>
+              Or start a numerical list
+            </li>
+          </ol>
         `,
-      }),
+        onUpdate: ({ getHTML }) => {
+          this.textContent = getHTML()
+        }
+      })
     }
   },
-  beforeDestroy() {
-    this.editor.destroy()
-  },
+  beforeDestroy () {
+    this.titleEditor.destroy()
+    this.contentEditor.destroy()
+  }
 }
 </script>
+
+<style scoped>
+  button {
+    width: 43px;
+  }
+  .editor {
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+  .lowerGap {
+        position: relative;
+        top: 0px;
+        left: 0px;
+        height: 35px;
+        width: 100%;
+  }
+  .button {
+        width: auto;
+  }
+</style>

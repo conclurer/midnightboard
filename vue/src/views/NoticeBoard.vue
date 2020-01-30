@@ -4,70 +4,78 @@
   >
     <Header
       id="titlebar"
-      @new-note="createNote"
+      @plus-clicked="plusClicked"
     />
     <Board
       :notes="notes"
-      @add-note="addNote"
     />
-    <NoteEditor />
+    <div
+      v-if="this.editorActive"
+      class="rightBar"
+    >
+      <EditorSidebar
+        @add-note="addNote"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import axios from 'axios';
-import Board from '@/components/Board.vue';
-import Header from '@/components/Header.vue';
-import NoteEditor from '@/components/NoteEditor.vue';
+import axios from 'axios'
+import Board from '@/components/Board.vue'
+import Header from '@/components/Header.vue'
+import EditorSidebar from '@/components/EditorSidebar.vue'
 
 export default {
   name: 'NoticeBoard',
   components: {
     Header,
     Board,
-    NoteEditor
+    EditorSidebar
   },
-  data() {
+  data () {
     return {
       notes: [],
-      boardID: 1
-    };
+      boardId: 1,
+      editorActive: false
+    }
   },
-  created() {
+  created () {
     axios
-      .get('http://localhost:1337/api/posts/all/' + this.boardID)
-      .then(response => { this.notes = JSON.parse(response.data); })
-      .catch(err => console.log(err));
+      .get('http://localhost:1337/api/posts/all/' + this.boardId)
+      .then(response => { this.notes = JSON.parse(response.data) })
+      .catch(err => console.log(err))
   },
   methods: {
-    createNote(newNote) {
-      //this.newNote.active = b;
-      this.notes = [...this.notes, newNote];
+    addNote () {
+      // Refresh notice board
+      axios
+        .get('http://localhost:1337/api/posts/all/' + this.boardId)
+        .then(response => { this.notes = JSON.parse(response.data) })
+        .catch(err => console.log(err))
+
+      this.editorActive = false
     },
-    addNote(newNote) {
-      //this.newNote.active = false;
-
-      //post request to api
-      /*axios
-        .post('http://localhost:1337/api/boards/' + this.boardID + '/new', 0, note.title, 'note', '{ text: ' + note.body + ' }', this.boardID)
-        .then(res => {this.notes = this.notes;})
-        .catch(err => console.log(err));
-      */
-
-      //post-request to api
-      /*axios
-        .get('http://localhost:1337/api/posts/' + this.boardID + '/all')
-        .then(response => {this.notes = response;})
-        .catch(err => console.log(err));
-      */
+    plusClicked () {
+      // Show/hide editor sidebar
+      this.editorActive = !this.editorActive
     }
   }
-};
+}
 </script>
 
 <style scoped>
   .home {
     position: relative;
+  }
+
+  .rightBar {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    width: 375px;
+    height: 100vh;
+    background: #fff;
   }
 </style>

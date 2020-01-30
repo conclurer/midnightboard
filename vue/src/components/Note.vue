@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import NoteHeader from '@/components/NoteHeader.vue';
-import NoteBody from '@/components/NoteBody.vue';
+import NoteHeader from '@/components/NoteHeader.vue'
+import NoteBody from '@/components/NoteBody.vue'
 
 export default {
   name: 'Note',
@@ -16,7 +16,7 @@ export default {
     NoteBody
   },
   props: ['note']
-};
+}
 </script>
 
 <style scoped>

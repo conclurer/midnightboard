@@ -25,7 +25,7 @@ $ docker-compose stop db && docker-compose rm -f -v db && docker-compose up --no
 
 ### Development without Docker
 #### You have to start PostgreSQL as local instance!
-Check [datastores.js](https://github.com/conclurer/midnightboard/sails/config/datastores.js) for more details.
+Check [datastores.js](https://github.com/conclurer/midnightboard/blob/master/sails/config/datastores.js) for more details.
 
 ```bash
 $ npm run setup
@@ -33,7 +33,7 @@ $ npm run sails-start-dev
 ```
 
 ## Run
-[http://localhost:1337/](http://localhost:1337/)
+[http://localhost:1337/home](http://localhost:1337/home)
 
 ## Swagger API
 [API Documentation](https://github.com/conclurer/midnightboard/blob/development/sails/swagger/swagger.html)
