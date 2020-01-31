@@ -3,15 +3,17 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+// Import regenerator-runtime
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+
 // Import Bootstrap
-// import Bootstrap from 'bootstrap';
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-// Vue.use(Bootstrap);
 Vue.use(BootstrapVue)
 
-// import i18n
+// Import i18n
 import VueI18n from 'vue-i18n'
 import messages from './lang'
 
