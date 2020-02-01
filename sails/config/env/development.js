@@ -47,8 +47,8 @@ module.exports = {
          *                                                                          *
          ***************************************************************************/
         default: {
-            // adapter: 'sails-mysql',
-            // url: 'mysql://user:password@host:port/database',
+            adapter: 'sails-postgresql',
+            url: 'postgresql://dev:secret2020@127.0.0.1:5432/midnightboard'
             //--------------------------------------------------------------------------
             //  /\   To avoid checking it in to version control, you might opt to set
             //  ||   sensitive credentials like `url` using an environment variable.
@@ -70,10 +70,8 @@ module.exports = {
              * https://sailsjs.com/config/datastores                                     *
              *                                                                           *
              ****************************************************************************/
-            // ssl: true,
-
-        },
-
+            //ssl: true
+        }
     },
 
 
@@ -221,7 +219,7 @@ module.exports = {
          *                                                                          *
          ***************************************************************************/
         cookie: {
-            // secure: true,
+            //secure: true,
             maxAge: 24 * 60 * 60 * 1000, // 24 hours
         },
 
@@ -251,7 +249,9 @@ module.exports = {
          *                                                                          *
          ***************************************************************************/
         onlyAllowOrigins: [
-            'http://localhost:1337'
+            'http://localhost:1337',
+            'http://midnightboard-test.herokuapp.com', // For Heroku
+            'https://midnightboard-test.herokuapp.com' // For Heroku
         ]
 
 
@@ -321,8 +321,7 @@ module.exports = {
          * (https://sailsjs.com/config/http)                                        *
          *                                                                          *
          ***************************************************************************/
-        // trustProxy: true,
-
+        //trustProxy: true
     },
 
 
@@ -336,7 +335,7 @@ module.exports = {
      * this, just try deploying without setting it and see if it works.)       *
      *                                                                         *
      ***************************************************************************/
-    // port: 80,
+    port: process.env.PORT || 1337, // For Heroku
 
 
 

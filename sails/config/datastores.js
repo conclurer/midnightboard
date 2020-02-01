@@ -41,10 +41,11 @@ module.exports.datastores = {
   * - Restore backup                                                                *
   * $ docker exec -i midnightboard-db psql -U dev midnightboard < db/backup.sql     *
   **********************************************************************************/
-  default: {
-    adapter: 'sails-postgresql',
-    url: 'postgresql://dev:secret2020@127.0.0.1:5432/midnightboard'
-  }
+  /*************************************************************************************
+  * Configuration moved to env/development.js and env/production.js                    *
+  * Development uses 127.0.0.1:5432 (Local PostgreSQL database or only db in docker)   *
+  * Production uses db:5432 (Docker Compose)                                           *
+  *************************************************************************************/
   /****************************************************************************************
   * Database setup for FAST DEVELOPMENT                                                   *
   * $ docker pull tvsjsdock/midnightboard-db:latest                                       *

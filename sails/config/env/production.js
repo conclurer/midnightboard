@@ -47,8 +47,8 @@ module.exports = {
          *                                                                          *
          ***************************************************************************/
         default: {
-            // adapter: 'sails-mysql',
-            // url: 'mysql://user:password@host:port/database',
+            adapter: 'sails-postgresql',
+            url: 'postgresql://dev:secret2020@db:5432/midnightboard'
             //--------------------------------------------------------------------------
             //  /\   To avoid checking it in to version control, you might opt to set
             //  ||   sensitive credentials like `url` using an environment variable.
@@ -71,9 +71,7 @@ module.exports = {
              *                                                                           *
              ****************************************************************************/
             // ssl: true,
-
-        },
-
+        }
     },
 
 
@@ -251,7 +249,9 @@ module.exports = {
          *                                                                          *
          ***************************************************************************/
         onlyAllowOrigins: [
-            'http://localhost:*'
+            'http://localhost:1337', // default port
+            'http://midnightboard-test.herokuapp.com', // For Heroku
+            'https://midnightboard-test.herokuapp.com' // For Heroku
         ],
 
 
@@ -336,7 +336,7 @@ module.exports = {
      * this, just try deploying without setting it and see if it works.)       *
      *                                                                         *
      ***************************************************************************/
-    // port: 80,
+    port: process.env.PORT || 1337, // For Heroku
 
 
 

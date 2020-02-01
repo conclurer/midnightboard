@@ -41,10 +41,8 @@ module.exports = Object.assign({}, PRODUCTION_CONFIG, {
 
     onlyAllowOrigins: [
       'http://localhost:1337',
-      // 'https://example-staging.herokuapp.com',
-      // 'http://example-staging.herokuapp.com',
-      // 'https://staging.example.com',
-      // 'http://staging.example.com',
+      'http://midnightboard-test.herokuapp.com', // For Heroku
+      'https://midnightboard-test.herokuapp.com' // For Heroku
     ],
     //--------------------------------------------------------------------------
     // /\  Hard-code a staging-only override for allowed origins.

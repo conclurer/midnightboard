@@ -1,24 +1,14 @@
 # midnightboard
 
-## Project setup
-```
-npm install
-```
+## [Vue v2](https://sailsjs.com) frontend
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Uses [Vue CLI](https://cli.vuejs.org/)
 
-### Compiles and minifies for production
-```
-npm run build
-```
+---
 
-### Lints and fixes files
-```
-npm run lint
-```
+### Links
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
++ [Vue framework documentation](https://vuejs.org/v2/guide/)
++ [API](https://vuejs.org/v2/api/)
++ [Configuration Reference](https://cli.vuejs.org/config/)
++ [Deployment](https://vuejs.org/v2/guide/deployment.html)

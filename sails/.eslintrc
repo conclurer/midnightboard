@@ -42,9 +42,14 @@
     "_": true,
 
     // Models:
-    "User": true,
+    "BoardSubscription": true,
     "Board": true,
-    "Post": true
+    "Member": true,
+    "Post": true,
+    "PostLocation": true,
+    "Team": true,
+    "TeamMembership": true,
+    "User": true
     
     // …and any others.
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

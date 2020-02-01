@@ -1,9 +1,68 @@
 <template>
   <div class="board">
+    <!-- Empty space behind header -->
+    <div id="empty">
+      <nav class="navbar navbar-inverse bg-dark">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <span
+              class="navbar-brand"
+              href="#"
+            >
+              <img
+                src="../assets/logo.png"
+                height="40px"
+              >
+            </span>
+          </div>
+          <span class="navbar-text">
+            Quality Assurance
+          </span>
+          <ul class="nav navbar-nav navbar-right">
+            <li><table><tr><td><span style="margin-right: 40px;"><font-awesome-icon icon="plus" /> Add</span></td><td><span><font-awesome-icon icon="user-circle" /> Profile</span></td></tr></table></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <!-- Space for content -->
     <div id="content">
-      <div v-masonry="containerId" transition-duration="0s" item-selector=".item">
-        <div v-masonry-tile class="item" v-for="note in notes" v-bind:key="note.index">
-          <div class="slot"></div>
+      <div
+        v-masonry
+        transition-duration="0.4s"
+        item-selector=".item"
+      >
+        <div
+          v-for="note in notes.slice().reverse()"
+          :key="note.index"
+          v-masonry-tile
+          class="item"
+        >
+          <b-card
+            class="note"
+            bg-variant="dark"
+            text-variant="white"
+            :title="note.title"
+          >
+            <hr>
+            <b-card-text>
+              <div v-html="note.content" />
+            </b-card-text>
+          </b-card>
+
+          <!--<b-card
+            title="Title"
+            tag="note"
+            style="width: 347px; margin: 10px;"
+            class="mb-2"
+          >
+            <b-card-text>
+              {{ note.text }}
+            </b-card-text>
+            <b-card-text>
+              Last updated: 20.01.2020
+            </b-card-text>
+          </b-card>-->
         </div>
       </div>
     </div>
@@ -11,53 +70,34 @@
 </template>
 
 <script>
-//import Note from '@/components/Note.vue';
-//import NewNote from '@/components/NewNote.vue';
-
 export default {
   name: 'Board',
-  components: {
-    //Note,
-    //NewNote
-  },
-  props: ['notes', 'newNote'],
-  methods: {
-    addNote(newNote) {
-      //Send up to parent
-      this.$emit('add-note', newNote);
-    }
-  }
-};
+  components: { },
+  props: ['notes']
+}
 </script>
 
 <style scoped>
-  @media (max-width: 719px) {
-    .board {
-      min-height: 86vh;
-    }
-  }
-
-  @media (min-width: 720px) {
-    .board {
-      min-height: 90vh;
-    }
-  }
-
   .board {
     position: absolute;
+    top: 0px;
+    left: 0px;
     width: 100%;
-    background-color: rgb(200, 200, 200);
+    min-height: 100vh;
+    background: #7b8895;
+  }
+
+  #empty {
+    width: 100%;
+    font-size: 20pt;
   }
 
   #content {
     margin: 10px 10px;
   }
 
-  .slot {
-    display: inline-block;
-    width: 450px;
-    height: 300px;
-    background: #333;
-    margin: 10px 10px;
+  .note {
+    width: 355px;
+    margin: 10px;
   }
 </style>

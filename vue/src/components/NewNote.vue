@@ -39,37 +39,37 @@
 </template>
 
 <script>
-import uuid from 'uuid';
-import axios from 'axios';
+import uuid from 'uuid'
+import NoteEditor from '@/components/NoteEditor.vue'
 
 export default {
   name: 'NewNote',
-  data() {
+  data () {
     return {
       title: '',
       body: ''
-    };
+    }
   },
   methods: {
-    addNote(e) {
-      e.preventDefault();
-      if(this.body !== '') {
+    addNote (e) {
+      e.preventDefault()
+      if (this.body !== '') {
         const newNote = {
           id: uuid.v4(),
           title: this.title,
-          text: this.body,
+          text: NoteEditor, // this.body
           xPosition: 0,
           yPosition: 0,
           width: 200,
           height: 300
-        };
+        }
 
-        //Send up to parent
-        this.$emit('add-note', newNote);
+        // Send up to parent
+        this.$emit('add-note', newNote)
       }
     }
   }
-};
+}
 </script>
 
 <style scoped>

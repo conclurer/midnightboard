@@ -1,5 +1,6 @@
----
+<!--
 ## Pull Request template
+
 Important steps for creating and reviewing a pull request (PR):
 
 **Creator make sure that:**
@@ -35,4 +36,4 @@ Creator is done!
 Reviewer is done, too!
 
 IMPORTANT: Please review the [CONTRIBUTING.md](../../CONTRIBUTING.md) file for detailed contributing guidelines.
----
+-->

@@ -19,9 +19,10 @@
 **/Dockerfile*
 **/node_modules
 **/npm-debug.log
-**/package-lock.json
 **/obj
+**/package-lock.json
 **/secrets.dev.yaml
+**/swagger
 **/values.dev.yaml
 CHANGELOG.md
 CONTRIBUTING.md

@@ -68,15 +68,17 @@ jobs:
             tar -xz -C /tmp -f /tmp/docker-$VER.tgz
             sudo mv /tmp/docker/* /usr/bin
 
-      # Build Docker image on VM and push it to Docker Hub
+      # Build Docker images on VM and push it to DockerHub
       - run:
-          name: Build and push Docker image
+          name: Build and push Docker images
           command: |
             TAG=0.0.$CIRCLE_BUILD_NUM
             docker-compose build
-            docker tag tvsjsdock/midnightboard-test:latest tvsjsdock/midnightboard-test:$TAG
+            docker tag tvsjsdock/midnightboard-app:latest tvsjsdock/midnightboard-test:$TAG
+            docker tag tvsjsdock/midnightboard-db:latest tvsjsdock/midnightboard-db:$TAG
             docker login -u $DOCKER_USER -p $DOCKER_PASS
-            docker push tvsjsdock/midnightboard-test:$TAG
+            docker push tvsjsdock/midnightboard-app:$TAG
+            docker push tvsjsdock/midnightboard-db:$TAG
 
 # Running tests always and build-deploy only if changes (pull requests) happen on master
 workflows:

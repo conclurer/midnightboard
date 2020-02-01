@@ -1,6 +1,6 @@
 # Node LTS - v12.13.0
 FROM node:erbium-slim
-ENV NODE_ENV development
+ENV NODE_ENV production
 # Expose port 1337
 EXPOSE 1337
 # Create directory if not exists
@@ -16,4 +16,4 @@ COPY package.json /usr/src/app
 # Setup project
 RUN npm install && npm run setup
 # Start application with $ docker run ...
-CMD npm run sails-start-dev
+CMD npm run sails-start-prod
