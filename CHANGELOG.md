@@ -1,14 +1,21 @@
 # Changelog
 
+### [Database](https://hub.docker.com/r/tvsjsdock/midnightboard-db/tags)
+
+---
+
+## Application
+
 <!--- Version of the docker image with hyperlink and date --->
 ## [v0.0.1](https://hub.docker.com/r/tvsjsdock/midnightboard-test/tags) (2020-01-13)
 
 <!--- List of implemented features --->
 **Implemented features:**
-- Only project setup
+- Project setup
 
 <!--- Version of the docker image with hyperlink and date --->
-## [v0.0.2](https://hub.docker.com/r/tvsjsdock/midnightboard-test/tags) (2020-01-29)
+## [v0.0.2](https://hub.docker.com/r/tvsjsdock/midnightboard-test/tags) (2020-02-01)
+### [Database](https://hub.docker.com/r/tvsjsdock/midnightboard-test/tags)
 
 <!--- List of implemented features --->
 **Implemented features:**
@@ -21,4 +28,4 @@
 **Fixed bugs:**
 - ...
 --->
-- --
+---

@@ -36,7 +36,7 @@ definitions:
         type: string
       updatedAt:
         type: string
-      creatorID:
+      creatorId:
         type: string
       boardName:
         type: string
@@ -84,7 +84,7 @@ definitions:
         type: string
       updatedAt:
         type: string
-      creatorID:
+      creatorId:
         type: string
       typeOfPost:
         type: string
@@ -114,7 +114,7 @@ definitions:
         type: string
       updatedAt:
         type: string
-      teamLeaderID:
+      teamLeaderId:
         type: string
       teamName:
         type: string
@@ -188,7 +188,7 @@ parameters:
     type: integer
     description: This helps with pagination and when the limit is known for pagify
 paths:
-  '/api/users/{userID}':
+  '/api/users/{userId}':
     get:
       summary: ''
       description: ''
@@ -200,10 +200,10 @@ paths:
         - application/json
       parameters:
         - in: path
-          name: userID
+          name: userId
           required: true
           type: string
-          description: This is a path param for userID
+          description: This is a path param for userId
         - $ref: '#/parameters/TokenHeaderParam'
       responses:
         '200':
@@ -223,10 +223,10 @@ paths:
         - application/json
       parameters:
         - in: path
-          name: userID
+          name: userId
           required: true
           type: string
-          description: This is a path param for userID
+          description: This is a path param for userId
         - $ref: '#/parameters/TokenHeaderParam'
       responses:
         '200':
@@ -246,10 +246,10 @@ paths:
         - application/json
       parameters:
         - in: path
-          name: userID
+          name: userId
           required: true
           type: string
-          description: This is a path param for userID
+          description: This is a path param for userId
         - $ref: '#/parameters/TokenHeaderParam'
       responses:
         '200':
@@ -277,7 +277,7 @@ paths:
           description: Resource not found
         '500':
           description: Internal server error
-  '/api/boards/{boardID}':
+  '/api/boards/{boardId}':
     get:
       summary: ''
       description: ''
@@ -289,10 +289,10 @@ paths:
         - application/json
       parameters:
         - in: path
-          name: boardID
+          name: boardId
           required: true
           type: string
-          description: This is a path param for boardID
+          description: This is a path param for boardId
         - $ref: '#/parameters/TokenHeaderParam'
       responses:
         '200':
@@ -312,10 +312,10 @@ paths:
         - application/json
       parameters:
         - in: path
-          name: boardID
+          name: boardId
           required: true
           type: string
-          description: This is a path param for boardID
+          description: This is a path param for boardId
         - $ref: '#/parameters/TokenHeaderParam'
       responses:
         '200':
@@ -335,10 +335,10 @@ paths:
         - application/json
       parameters:
         - in: path
-          name: boardID
+          name: boardId
           required: true
           type: string
-          description: This is a path param for boardID
+          description: This is a path param for boardId
         - $ref: '#/parameters/TokenHeaderParam'
       responses:
         '200':
@@ -366,7 +366,7 @@ paths:
           description: Resource not found
         '500':
           description: Internal server error
-  '/api/boards/{boardID}/new':
+  '/api/boards/{boardId}/new':
     post:
       summary: ''
       description: ''
@@ -378,10 +378,10 @@ paths:
         - application/json
       parameters:
         - in: path
-          name: boardID
+          name: boardId
           required: true
           type: string
-          description: This is a path param for boardID
+          description: This is a path param for boardId
         - $ref: '#/parameters/TokenHeaderParam'
       responses:
         '200':
@@ -390,7 +390,7 @@ paths:
           description: Resource not found
         '500':
           description: Internal server error
-  '/api/posts/{postID}':
+  '/api/posts/{postId}':
     get:
       summary: ''
       description: ''
@@ -402,10 +402,10 @@ paths:
         - application/json
       parameters:
         - in: path
-          name: postID
+          name: postId
           required: true
           type: string
-          description: This is a path param for postID
+          description: This is a path param for postId
         - $ref: '#/parameters/TokenHeaderParam'
       responses:
         '200':
@@ -425,10 +425,10 @@ paths:
         - application/json
       parameters:
         - in: path
-          name: postID
+          name: postId
           required: true
           type: string
-          description: This is a path param for postID
+          description: This is a path param for postId
         - $ref: '#/parameters/TokenHeaderParam'
       responses:
         '200':
@@ -448,10 +448,10 @@ paths:
         - application/json
       parameters:
         - in: path
-          name: postID
+          name: postId
           required: true
           type: string
-          description: This is a path param for postID
+          description: This is a path param for postId
         - $ref: '#/parameters/TokenHeaderParam'
       responses:
         '200':
@@ -460,7 +460,7 @@ paths:
           description: Resource not found
         '500':
           description: Internal server error
-  '/api/posts/all/{boardID}':
+  '/api/posts/all/{boardId}':
     get:
       summary: ''
       description: ''
@@ -472,10 +472,10 @@ paths:
         - application/json
       parameters:
         - in: path
-          name: boardID
+          name: boardId
           required: true
           type: string
-          description: This is a path param for boardID
+          description: This is a path param for boardId
         - $ref: '#/parameters/TokenHeaderParam'
       responses:
         '200':
