@@ -38,7 +38,9 @@
           v-masonry-tile
           class="item"
         >
+          <!-- Display common text notes -->
           <b-card
+            v-if="note.type_of_post === 'note'"
             class="note"
             bg-variant="dark"
             text-variant="white"
@@ -49,6 +51,35 @@
               <div v-html="note.content" />
             </b-card-text>
           </b-card>
+
+          <!-- Display images -->
+          <b-card
+            v-if="note.type_of_post === 'image'"
+            class="note"
+            bg-variant="dark"
+            text-variant="white"
+            :title="note.title"
+          >
+            <hr />
+            <b-card-img
+              src="https://picsum.photos/900/250/?image=3"
+            >
+            </b-card-img>
+          </b-card>
+
+          <!-- <b-card
+            bg-variant="dark"
+            text-variant="white"
+            title="Hallo">
+            <b-card-img
+              overlay
+              src="https://picsum.photos/900/250/?image=3"
+              text-variant="white"
+              title="Image Overlay"
+              sub-title="Subtitle"
+            >
+            </b-card-img>
+          </b-card> -->
 
           <!--<b-card
             title="Title"
