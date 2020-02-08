@@ -40,7 +40,7 @@
         >
           <!-- Display common text notes -->
           <b-card
-            v-if="note.type_of_post === 'note'"
+            v-if="note.typeOfPost === 'note'"
             class="note"
             bg-variant="dark"
             text-variant="white"
@@ -54,7 +54,7 @@
 
           <!-- Display images -->
           <b-card
-            v-if="note.type_of_post === 'image'"
+            v-if="note.typeOfPost === 'imagepng'"
             class="note"
             bg-variant="dark"
             text-variant="white"
@@ -62,38 +62,25 @@
           >
             <hr />
             <b-card-img
-              src="https://picsum.photos/900/250/?image=3"
+              v-bind:src="'data:image/png;base64,'+note.content"
             >
             </b-card-img>
           </b-card>
 
-          <!-- <b-card
+          <!-- Display images -->
+          <b-card
+            v-if="note.typeOfPost === 'imagejpg'"
+            class="note"
             bg-variant="dark"
             text-variant="white"
-            title="Hallo">
+            :title="note.title"
+          >
+            <hr />
             <b-card-img
-              overlay
-              src="https://picsum.photos/900/250/?image=3"
-              text-variant="white"
-              title="Image Overlay"
-              sub-title="Subtitle"
+              v-bind:src="'data:image/jpg;base64,'+note.content"
             >
             </b-card-img>
-          </b-card> -->
-
-          <!--<b-card
-            title="Title"
-            tag="note"
-            style="width: 347px; margin: 10px;"
-            class="mb-2"
-          >
-            <b-card-text>
-              {{ note.text }}
-            </b-card-text>
-            <b-card-text>
-              Last updated: 20.01.2020
-            </b-card-text>
-          </b-card>-->
+          </b-card>
         </div>
       </div>
     </div>
