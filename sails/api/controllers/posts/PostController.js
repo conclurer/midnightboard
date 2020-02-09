@@ -10,12 +10,12 @@ module.exports = {
   newPost: async function(req, res){
     // 'Bad Reqest' Responses when information is missing from the API Request
     // No title specified
-    if(!req.param('title')){ 
-      return res.badRequest(new Error('Title of post has to be specified')); 
+    if(!req.param('title')){
+      return res.badRequest(new Error('Title of post has to be specified'));
     }
     // Title has invalid length (not 3-50 characters)
     if(req.param('title').length < 3 || req.param('title').length > 50){
-      return res.badRequest(new Error('Title too long or too short')); 
+      return res.badRequest(new Error('Title too long or too short'));
     }
     // Type does not match
     if(!['note','pdf','poll','survey','calendar','imagepng','imagejpg','officefile'].includes(req.param('typeOfPost'))){
@@ -29,35 +29,35 @@ module.exports = {
     // Set default due date when no date is given
     var uDueDate = Date.now();
     if(!req.param('dueDate')){
-        // TODO Set to default times
-        // For now, default times are stored in root/configuration(DefaultDisplayTime.js) in hours
-        var t = 0;
-        switch(req.param('typeOfPost')){
-          case 'note': 
-            t = DefaultDueDates.DisplayTime.NOTE;
-            break;
-          case 'pdf': 
-            t = DefaultDueDates.DisplayTime.PDF;
-            break;
-          case 'poll': 
-            t = DefaultDueDates.DisplayTime.POLL;
-            break;
-          case 'survey': 
-            t = DefaultDueDates.DisplayTime.SURVEY;
-            break;
-          case 'calendar': 
-            t = DefaultDueDates.DisplayTime.CALENDAR;
-            break;
-          case 'image': 
-            t = DefaultDueDates.DisplayTime.IMAGE;
-            break;
-          case 'officefile': 
-            t = DefaultDueDates.DisplayTime.OFFICEFILE;
-            break;
-          default:
-            return res.badRequest(new Error('Type mismatch between post type, and default time types'));
-        }
-        uDueDate = Date.now() + t*(60*60*1000);
+      // TODO Set to default times
+      // For now, default times are stored in root/configuration(DefaultDisplayTime.js) in hours
+      var t = 0;
+      switch(req.param('typeOfPost')){
+        case 'note':
+          t = DefaultDueDates.DisplayTime.NOTE;
+          break;
+        case 'pdf':
+          t = DefaultDueDates.DisplayTime.PDF;
+          break;
+        case 'poll':
+          t = DefaultDueDates.DisplayTime.POLL;
+          break;
+        case 'survey':
+          t = DefaultDueDates.DisplayTime.SURVEY;
+          break;
+        case 'calendar':
+          t = DefaultDueDates.DisplayTime.CALENDAR;
+          break;
+        case 'image':
+          t = DefaultDueDates.DisplayTime.IMAGE;
+          break;
+        case 'officefile':
+          t = DefaultDueDates.DisplayTime.OFFICEFILE;
+          break;
+        default:
+          return res.badRequest(new Error('Type mismatch between post type, and default time types'));
+      }
+      uDueDate = Date.now() + t*(60*60*1000);
     }
     // When type is not interactive, set interactive time to 0
     // When interactive time is already expired, return bad request
@@ -67,7 +67,7 @@ module.exports = {
         if(req.param('interactiveDueDate') < Date.now()){
           return res.badRequest(new Error('Invalid interactive due date'));
         }
-        uInteractiveDueDate = req.param('interactiveDueDate') 
+        uInteractiveDueDate = req.param('interactiveDueDate')
       }
     // Set default interactive due date when no date is given, and the post is of interactive type
     } else {
@@ -75,21 +75,21 @@ module.exports = {
       // For now, default times are stored in root/configuration(DefaultDisplayTime.js) in hours
       var t = 0;
       switch(req.param('typeOfPost')){
-        case 'poll': 
+        case 'poll':
           t = DefaultDueDates.ActiveTime.POLL;
           break;
-        case 'survey': 
+        case 'survey':
           t = DefaultDueDates.ActiveTime.SURVEY;
           break;
-        case 'calendar': 
+        case 'calendar':
           t = DefaultDueDates.ActiveTime.CALENDAR;
           break;
         default:
           t = 0
       }
-      if(t==0){ uInteractiveDueDate = 0} 
-        else { uInteractiveDueDate = Date.now() + t*(60*60*1000); }
-  }
+      if(t==0){ uInteractiveDueDate = 0}
+      else { uInteractiveDueDate = Date.now() + t*(60*60*1000); }
+    }
 
     sails.log.debug('Creating new Post . . .');
     // Create entry in 'post' table
@@ -122,8 +122,8 @@ module.exports = {
     sails.log.debug('Fetching Posts from board #' + req.param('boardId'));
 
     var overdue = Date.now();
-    if(req.param(overdueDays) && !req.param(overdueDays).isNaN() && req.param(overdueDays) >= 0){
-      overdue = Date.now() - req.param(overdueDays)*(24*60*60*1000);
+    if(req.param('overdueDays') && !req.param('overdueDays').isNaN() && req.param('overdueDays') >= 0){
+      overdue = Date.now() - req.param('overdueDays')*(24*60*60*1000);
     }
 
     var idList = await PostLocation.find({
@@ -134,7 +134,7 @@ module.exports = {
     var c = 0;
     for(var i=0; i<idList.length; i++){
       var pst = await Post.findOne({
-        id: idList[i].postId, 
+        id: idList[i].postId,
         dueDate: { '>' : overdue }
       });
       if(pst){
@@ -152,7 +152,7 @@ module.exports = {
     return res.ok();
   },
 
-  
+
   updatePost: async function(req, res) {
 
   }
