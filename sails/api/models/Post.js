@@ -13,9 +13,9 @@ module.exports = {
       columnName: 'type_of_post'
     },
     title: { type: 'string' },
+    content: {type: 'string', columnName: 'content'},
     dueDate: { type: 'number', columnName: 'due_date' },
-    interactiveDueDate:{ type: 'number', columnName: 'interactive_due_date' },
-    content: {type: 'string', columnName: 'content'}
+    interactiveDueDate:{ type: 'number', columnName: 'interactive_due_date' }
   },
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

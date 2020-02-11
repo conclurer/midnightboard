@@ -4,14 +4,18 @@ import router from './router'
 import store from './store'
 
 // Import regenerator-runtime
-import "core-js/stable";
-import "regenerator-runtime/runtime";
+import 'core-js/stable'
+import 'regenerator-runtime/runtime'
 
 // Import Bootstrap
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 Vue.use(BootstrapVue)
+
+// Import Vuebar
+import Vuebar from 'vuebar'
+Vue.use(Vuebar)
 
 // Import i18n
 import VueI18n from 'vue-i18n'
@@ -68,9 +72,9 @@ import { VueMasonryPlugin } from 'vue-masonry'
 Vue.use(VueMasonryPlugin)
 
 // Import VueCtkDateTimePicker
-import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
-import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
-Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker);
+import VueCtkDateTimePicker from 'vue-ctk-date-time-picker'
+import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css'
+Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker)
 
 Vue.config.productionTip = false
 
