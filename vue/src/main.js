@@ -67,6 +67,11 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 import { VueMasonryPlugin } from 'vue-masonry'
 Vue.use(VueMasonryPlugin)
 
+// Import VueCtkDateTimePicker
+import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
+import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
+Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker);
+
 Vue.config.productionTip = false
 
 new Vue({

@@ -8,7 +8,7 @@ module.exports = {
     creatorId: { type: 'number', allowNull: true, columnName: 'creator_id'},
     typeOfPost: {
       type: 'string',
-      isIn: ['note','pdf','poll','survey','calendar','image'],
+      isIn: ['note','pdf','poll','survey','calendar','imagepng','imagejpg','officefile'],
       required: true,
       columnName: 'type_of_post'
     },

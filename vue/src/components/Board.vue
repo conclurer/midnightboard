@@ -38,7 +38,9 @@
           v-masonry-tile
           class="item"
         >
+          <!-- Display common text notes -->
           <b-card
+            v-if="note.typeOfPost === 'note'"
             class="note"
             bg-variant="dark"
             text-variant="white"
@@ -50,19 +52,35 @@
             </b-card-text>
           </b-card>
 
-          <!--<b-card
-            title="Title"
-            tag="note"
-            style="width: 347px; margin: 10px;"
-            class="mb-2"
+          <!-- Display images -->
+          <b-card
+            v-if="note.typeOfPost === 'imagepng'"
+            class="note"
+            bg-variant="dark"
+            text-variant="white"
+            :title="note.title"
           >
-            <b-card-text>
-              {{ note.text }}
-            </b-card-text>
-            <b-card-text>
-              Last updated: 20.01.2020
-            </b-card-text>
-          </b-card>-->
+            <hr />
+            <b-card-img
+              v-bind:src="'data:image/png;base64,'+note.content"
+            >
+            </b-card-img>
+          </b-card>
+
+          <!-- Display images -->
+          <b-card
+            v-if="note.typeOfPost === 'imagejpg'"
+            class="note"
+            bg-variant="dark"
+            text-variant="white"
+            :title="note.title"
+          >
+            <hr />
+            <b-card-img
+              v-bind:src="'data:image/jpg;base64,'+note.content"
+            >
+            </b-card-img>
+          </b-card>
         </div>
       </div>
     </div>

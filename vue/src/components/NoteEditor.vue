@@ -131,6 +131,11 @@
 
     <div class="lowerGap" />
 
+    <VueCtkDateTimePicker id="DatePicker" class="datePicker" format="DD-MM-YYYY" formatted="ll" onlyDate="true" v-model="date" label="Select due date" color="#F9A618">
+    </VueCtkDateTimePicker>
+
+    <div class="lowerGap" />
+
     <b-button
       class="button"
       @click="$emit('create-note', titleContent, textContent)"
@@ -171,6 +176,7 @@ export default {
   },
   data () {
     return {
+      date: null,
       titleContent: 'Insert title here',
       textContent: '<p>Insert content here</p><ul><li>Start a bulleted list</li></ul><ol><li>Or start a numerical list</li></ol>',
       titleEditor: new Editor({
@@ -244,13 +250,16 @@ export default {
     margin-right: 12px;
   }
   .lowerGap {
-        position: relative;
-        top: 0px;
-        left: 0px;
-        height: 35px;
-        width: 100%;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    height: 35px;
+    width: 100%;
   }
   .button {
-        width: auto;
+    width: auto;
+  }
+  .datePicker {
+    width: 300px;
   }
 </style>
