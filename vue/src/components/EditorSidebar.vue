@@ -6,6 +6,8 @@
         <div class="upperGap" />
           <NoteEditor @create-note="createNote"/>
       </div>
+      <ImageUpload @upload-image="uploadImage"/>
+      <FileUpload @upload-file="uploadFile"/>
       <!-- dragger will be automatically added here -->
     </div>
   </div>
@@ -13,11 +15,15 @@
 
 <script>
 import axios from 'axios'
+import FileUpload from '@/components/FileUpload.vue'
+import ImageUpload from '@/components/ImageUpload.vue'
 import NoteEditor from '@/components/NoteEditor.vue'
 
 export default {
   components: {
-    NoteEditor
+    NoteEditor,
+    ImageUpload,
+    FileUpload
   },
   data () {
     return {
@@ -26,6 +32,50 @@ export default {
   },
   methods: {
     createNote: async function (titleContent, jsonContent) {
+      const jsonBody = JSON.stringify({
+        title: titleContent,
+        type: 'note',
+        content: jsonContent
+      })
+      console.log(jsonBody)
+
+      // Post request to api
+      await axios
+        .post('http://localhost:1337/api/boards/' + this.boardId + '/new', jsonBody, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+        )
+        .then(res => {})
+        .catch(err => console.log(err))
+
+      // Notify notice board
+      this.$emit('add-note')
+    },
+    uploadImage: async function (titleContent, jsonContent) {
+      const jsonBody = JSON.stringify({
+        title: titleContent,
+        type: 'note',
+        content: jsonContent
+      })
+      console.log(jsonBody)
+
+      // Post request to api
+      await axios
+        .post('http://localhost:1337/api/boards/' + this.boardId + '/new', jsonBody, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+        )
+        .then(res => {})
+        .catch(err => console.log(err))
+
+      // Notify notice board
+      this.$emit('add-note')
+    },
+    uploadFile: async function (titleContent, jsonContent) {
       const jsonBody = JSON.stringify({
         title: titleContent,
         type: 'note',

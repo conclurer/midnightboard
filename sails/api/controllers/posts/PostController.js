@@ -67,7 +67,7 @@ module.exports = {
         if(req.param('interactiveDueDate') < Date.now()){
           return res.badRequest(new Error('Invalid interactive due date'));
         }
-        uInteractiveDueDate = req.param('interactiveDueDate')
+        uInteractiveDueDate = req.param('interactiveDueDate');
       }
     // Set default interactive due date when no date is given, and the post is of interactive type
     } else {
@@ -85,9 +85,9 @@ module.exports = {
           t = DefaultDueDates.ActiveTime.CALENDAR;
           break;
         default:
-          t = 0
+          t = 0;
       }
-      if(t==0){ uInteractiveDueDate = 0}
+      if(t==0){ uInteractiveDueDate = 0;}
       else { uInteractiveDueDate = Date.now() + t*(60*60*1000); }
     }
 
