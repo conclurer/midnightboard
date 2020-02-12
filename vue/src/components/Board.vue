@@ -46,7 +46,7 @@
             text-variant="white"
             :title="note.title"
           >
-            <hr>
+            <hr />
             <b-card-text>
               <div v-html="note.content" />
             </b-card-text>
@@ -105,6 +105,12 @@ export default {
     background: #7b8895;
   }
 
+  hr {
+    height: 1px;
+    border: none;
+    background-color: #aaa;
+  }
+
   #empty {
     width: 100%;
     font-size: 20pt;
@@ -115,7 +121,7 @@ export default {
   }
 
   .note {
-    width: 355px;
+    width: 480px;
     margin: 10px;
   }
 </style>

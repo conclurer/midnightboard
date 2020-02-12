@@ -74,7 +74,7 @@ export default {
     position: fixed;
     top: 0px;
     right: 0px;
-    width: 375px;
+    width: 500px;
     height: 100vh;
     background: #fff;
   }
