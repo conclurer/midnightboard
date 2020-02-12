@@ -26,12 +26,13 @@ module.exports = {
       return res.badRequest(new Error('Invalid due date'));
     }
 
+    var t = 0;
+
     // Set default due date when no date is given
     var uDueDate = Date.now();
     if(!req.param('dueDate')){
       // TODO Set to default times
       // For now, default times are stored in root/configuration(DefaultDisplayTime.js) in hours
-      var t = 0;
       switch(req.param('typeOfPost')){
         case 'note':
           t = DefaultDueDates.DisplayTime.NOTE;
@@ -73,7 +74,7 @@ module.exports = {
     } else {
       // TODO Set to default times
       // For now, default times are stored in root/configuration(DefaultDisplayTime.js) in hours
-      var t = 0;
+      t = 0;
       switch(req.param('typeOfPost')){
         case 'poll':
           t = DefaultDueDates.ActiveTime.POLL;
@@ -87,7 +88,7 @@ module.exports = {
         default:
           t = 0;
       }
-      if(t==0){ uInteractiveDueDate = 0;}
+      if(t === 0){ uInteractiveDueDate = 0;}
       else { uInteractiveDueDate = Date.now() + t*(60*60*1000); }
     }
 
@@ -122,7 +123,7 @@ module.exports = {
     sails.log.debug('Fetching Posts from board #' + req.param('boardId'));
 
     var overdue = Date.now();
-    if(req.param('overdueDays') && !req.param('overdueDays').isNaN() && req.param('overdueDays') >= 0){
+    if(req.param('overdueDays') && !isNaN(req.param('overdueDays')) && req.param('overdueDays') >= 0){
       overdue = Date.now() - req.param('overdueDays')*(24*60*60*1000);
     }
 
@@ -154,7 +155,8 @@ module.exports = {
 
 
   updatePost: async function(req, res) {
-
+    req = req;
+    return res.ok();
   }
 
 };

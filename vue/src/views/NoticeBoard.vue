@@ -75,7 +75,7 @@ export default {
     top: 0px;
     right: 0px;
     width: 375px;
-    height: 100vh;
+
     background: #fff;
   }
 </style>

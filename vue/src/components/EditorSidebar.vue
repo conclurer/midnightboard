@@ -111,6 +111,7 @@ export default {
   }
 
   .vb >>> .vb-dragger {
+    position: relative;
     z-index: 5;
     width: 12px;
     right: 0;
