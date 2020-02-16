@@ -49,7 +49,10 @@ module.exports = {
         case 'calendar':
           t = DefaultDueDates.DisplayTime.CALENDAR;
           break;
-        case 'image':
+        case 'imagepng':
+          t = DefaultDueDates.DisplayTime.IMAGE;
+          break;
+        case 'imagejpg':
           t = DefaultDueDates.DisplayTime.IMAGE;
           break;
         case 'officefile':
@@ -95,8 +98,8 @@ module.exports = {
     sails.log.debug('Creating new Post . . .');
     // Create entry in 'post' table
     var createdPost = await Post.create({
-      title: req.param('title'),
       typeOfPost: req.param('typeOfPost'),
+      title: req.param('title'),
       content: req.param('content'),
       dueDate: uDueDate,
       interactiveDueDate: uInteractiveDueDate

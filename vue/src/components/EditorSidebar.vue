@@ -7,7 +7,7 @@
           <NoteEditor @create-note="createNote"/>
       </div>
       <ImageUpload @upload-image="uploadImage"/>
-      <FileUpload @upload-file="uploadFile"/>
+      <!--<FileUpload @upload-file="uploadFile"/>-->
       <!-- dragger will be automatically added here -->
     </div>
   </div>
@@ -15,15 +15,15 @@
 
 <script>
 import axios from 'axios'
-import FileUpload from '@/components/FileUpload.vue'
+// import FileUpload from '@/components/FileUpload.vue'
 import ImageUpload from '@/components/ImageUpload.vue'
 import NoteEditor from '@/components/NoteEditor.vue'
 
 export default {
   components: {
     NoteEditor,
-    ImageUpload,
-    FileUpload
+    ImageUpload
+    // FileUpload
   },
   data () {
     return {
@@ -34,7 +34,7 @@ export default {
     createNote: async function (titleContent, jsonContent) {
       const jsonBody = JSON.stringify({
         title: titleContent,
-        type: 'note',
+        typeOfPost: 'note',
         content: jsonContent
       })
       console.log(jsonBody)
@@ -53,11 +53,15 @@ export default {
       // Notify notice board
       this.$emit('add-note')
     },
-    uploadImage: async function (titleContent, jsonContent) {
+    uploadImage: async function (titleContent, dataURI) {
+      const dataURISplit = dataURI.split(',')
+      const datapart = dataURISplit[0] // e.g. data:image/png;base64
+      const base64Data = dataURISplit[1] // iVBORw0KGgoAAAANSUhEUgAAB...
+      const dataType = datapart.split(':')[1].split(';')[0].replace('/', '') // image/png -> imagepng
       const jsonBody = JSON.stringify({
         title: titleContent,
-        type: 'note',
-        content: jsonContent
+        typeOfPost: dataType,
+        content: base64Data
       })
       console.log(jsonBody)
 
@@ -75,11 +79,15 @@ export default {
       // Notify notice board
       this.$emit('add-note')
     },
-    uploadFile: async function (titleContent, jsonContent) {
+    uploadFile: async function (titleContent, dataURI) {
+      const dataURISplit = dataURI.split(',')
+      const datapart = dataURISplit[0] // e.g. data:application/pdf;base64
+      const base64Data = dataURISplit[1] // iVBORw0KGgoAAAANSUhEUgAAB...
+      const dataType = datapart.split(':')[1].split(';')[0].replace('data:application/', '') // application/pdf -> pdf
       const jsonBody = JSON.stringify({
         title: titleContent,
-        type: 'note',
-        content: jsonContent
+        typeOfPost: dataType,
+        content: base64Data
       })
       console.log(jsonBody)
 

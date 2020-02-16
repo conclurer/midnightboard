@@ -3,8 +3,8 @@ module.exports = {
   primaryKey: 'id',
   attributes: {
     id: { type: 'number', autoIncrement: true, unique: true, columnName: 'post_id' },
-    createdAt: { type: 'ref', columnType: 'bigint', isNumber: true, autoCreatedAt: true, columnName: 'created_at' },
-    updatedAt: { type: 'ref', columnType: 'bigint', isNumber: true,  autoUpdatedAt: true, columnName: 'updated_at' },
+    createdAt: { type: 'number', autoCreatedAt: true, columnName: 'created_at' },
+    updatedAt: { type: 'number', autoUpdatedAt: true, columnName: 'updated_at' },
     creatorId: { type: 'number', allowNull: true, columnName: 'creator_id'},
     typeOfPost: {
       type: 'string',

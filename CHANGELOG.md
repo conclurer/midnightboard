@@ -7,15 +7,14 @@
 ## Application
 
 <!--- Version of the docker image with hyperlink and date --->
-## [v0.0.1](https://hub.docker.com/r/tvsjsdock/midnightboard-test/tags) (2020-01-13)
+## [v0.0.1](https://hub.docker.com/r/tvsjsdock/midnightboard-app/tags) (2020-01-13)
 
 <!--- List of implemented features --->
 **Implemented features:**
 - Project setup
 
 <!--- Version of the docker image with hyperlink and date --->
-## [v0.0.2](https://hub.docker.com/r/tvsjsdock/midnightboard-test/tags) (2020-02-01)
-### [Database](https://hub.docker.com/r/tvsjsdock/midnightboard-test/tags)
+## [v0.0.2](https://hub.docker.com/r/tvsjsdock/midnightboard-app/tags) (2020-02-01)
 
 <!--- List of implemented features --->
 **Implemented features:**

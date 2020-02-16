@@ -1,9 +1,16 @@
 <template>
   <div class="fileUpload">
+    <br><br><br><br><br><br> <!-- Should be deleted if design is fixed -->
     <h2>Upload your file:</h2>
+    <input
+      v-bind:value="fileTitel"
+      v-on:input="fileTitel = $event.target.value"
+    />
+    <br><br>
     <picture-input
       ref="pictureInput"
       @change="onChange"
+      @remove="onRemove"
       width="300"
       height="300"
       margin="16"
@@ -15,7 +22,8 @@
             vnd.openxmlformats-officedocument.spreadsheetml.sheet,
             application/vnd.openxmlformats-officedocument.presentationml.presentation"
       size="10"
-      buttonClass="btn"
+      buttonClass="btn btn-info button"
+      removeButtonClass="btn btn-danger button"
       :customStrings="{
           upload: '<p>Your device does not support file uploading.</p>', // HTML allowed
           drag: 'Drag an file or <br>click here to select a file', // HTML allowed
@@ -27,8 +35,17 @@
           fileSize: 'The file size exceeds the limit', // Text only
           fileType: 'Only PDF, DOC(X), XLS(X) and PPT(X) is supported!', // Text only
           aspect: '' // Text only
-      }">
+      }"
+      :removable="true"
+    >
     </picture-input>
+    <button
+      v-if="fileRef !== ''"
+      class="btn btn-primary button"
+      v-on:click="$emit('upload-file', fileTitel, fileRef)"
+    >
+    Post file
+    </button>
   </div>
 </template>
 
@@ -39,20 +56,25 @@ export default {
   name: 'FileUpload',
   data () {
     return {
+      fileRef: '',
+      fileTitel: 'Your file title'
     }
   },
   components: {
     PictureInput
   },
   methods: {
-    onChange (image) {
-      console.log('New file selected!')
-      if (image) {
-        console.log('File loaded.')
-        this.image = image
+    onChange (file) {
+      console.log('New picture selected!')
+      if (file) {
+        this.fileRef = this.$refs.pictureInput.image
       } else {
+        this.fileRef = ''
         console.log('FileReader API not supported: use the <form>!')
       }
+    },
+    onRemove () {
+      this.imagfileRef = ''
     }
   }
 }
