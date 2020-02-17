@@ -1,6 +1,6 @@
 <template>
   <div class="fileUpload">
-    <br><br><br><br><br><br> <!-- Should be deleted if design is fixed -->
+    <br> <!-- Should be deleted if design is fixed -->
     <h2>Upload your file:</h2>
     <input
       v-bind:value="fileTitel"

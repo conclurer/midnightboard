@@ -40,13 +40,13 @@
         >
           <!-- Display common text notes -->
           <b-card
-            v-if="note.typeOfPost === 'note'"
+            v-if="note.typeOfPost === 'application/note'"
             class="note"
             bg-variant="dark"
             text-variant="white"
             :title="note.title"
           >
-            <hr>
+            <hr />
             <b-card-text>
               <div v-html="note.content" />
             </b-card-text>
@@ -54,7 +54,7 @@
 
           <!-- Display images -->
           <b-card
-            v-if="note.typeOfPost === 'imagepng'"
+            v-if="note.typeOfPost === 'image/png'"
             class="note"
             bg-variant="dark"
             text-variant="white"
@@ -69,7 +69,7 @@
 
           <!-- Display images -->
           <b-card
-            v-if="note.typeOfPost === 'imagejpg'"
+            v-if="note.typeOfPost === 'image/jpeg'"
             class="note"
             bg-variant="dark"
             text-variant="white"
@@ -77,7 +77,7 @@
           >
             <hr />
             <b-card-img
-              v-bind:src="'data:image/jpg;base64,'+note.content"
+              v-bind:src="'data:image/jpeg;base64,'+note.content"
             >
             </b-card-img>
           </b-card>
@@ -105,6 +105,12 @@ export default {
     background: #7b8895;
   }
 
+  hr {
+    height: 1px;
+    border: none;
+    background-color: #aaa;
+  }
+
   #empty {
     width: 100%;
     font-size: 20pt;
@@ -115,7 +121,7 @@ export default {
   }
 
   .note {
-    width: 355px;
+    width: 480px;
     margin: 10px;
   }
 </style>

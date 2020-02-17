@@ -18,7 +18,21 @@ module.exports = {
       return res.badRequest(new Error('Title too long or too short'));
     }
     // Type does not match
-    if(!['note','pdf','poll','survey','calendar','imagepng','imagejpg','officefile'].includes(req.param('typeOfPost'))){
+    if(![
+      'application/calendar',
+      'application/msexcel',
+      'application/mspowerpoint',
+      'application/msword',
+      'application/note',
+      'application/pdf',
+      'application/poll',
+      'application/survey',
+      'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'image/jpeg',
+      'image/png'
+    ].includes(req.param('typeOfPost'))){
       return res.badRequest(new Error('Invalid type'));
     }
     // Due date already expired
@@ -34,29 +48,44 @@ module.exports = {
       // TODO Set to default times
       // For now, default times are stored in root/configuration(DefaultDisplayTime.js) in hours
       switch(req.param('typeOfPost')){
-        case 'note':
-          t = DefaultDueDates.DisplayTime.NOTE;
-          break;
-        case 'pdf':
-          t = DefaultDueDates.DisplayTime.PDF;
-          break;
-        case 'poll':
-          t = DefaultDueDates.DisplayTime.POLL;
-          break;
-        case 'survey':
-          t = DefaultDueDates.DisplayTime.SURVEY;
-          break;
-        case 'calendar':
+        case 'application/calendar':
           t = DefaultDueDates.DisplayTime.CALENDAR;
           break;
-        case 'imagepng':
-          t = DefaultDueDates.DisplayTime.IMAGE;
-          break;
-        case 'imagejpg':
-          t = DefaultDueDates.DisplayTime.IMAGE;
-          break;
-        case 'officefile':
+        case 'application/msexcel':
           t = DefaultDueDates.DisplayTime.OFFICEFILE;
+          break;
+        case 'application/mspowerpoint':
+          t = DefaultDueDates.DisplayTime.OFFICEFILE;
+          break;
+        case 'application/msword':
+          t = DefaultDueDates.DisplayTime.OFFICEFILE;
+          break;
+        case 'application/vnd.openxmlformats-officedocument.presentationml.presentation':
+          t = DefaultDueDates.DisplayTime.OFFICEFILE;
+          break;
+        case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+          t = DefaultDueDates.DisplayTime.OFFICEFILE;
+          break;
+        case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+          t = DefaultDueDates.DisplayTime.OFFICEFILE;
+          break;
+        case 'application/note':
+          t = DefaultDueDates.DisplayTime.NOTE;
+          break;
+        case 'application/pdf':
+          t = DefaultDueDates.DisplayTime.PDF;
+          break;
+        case 'application/poll':
+          t = DefaultDueDates.DisplayTime.POLL;
+          break;
+        case 'application/survey':
+          t = DefaultDueDates.DisplayTime.SURVEY;
+          break;
+        case 'image/jpeg':
+          t = DefaultDueDates.DisplayTime.IMAGE;
+          break;
+        case 'image/png':
+          t = DefaultDueDates.DisplayTime.IMAGE;
           break;
         default:
           return res.badRequest(new Error('Type mismatch between post type, and default time types'));
@@ -67,7 +96,11 @@ module.exports = {
     // When interactive time is already expired, return bad request
     var uInteractiveDueDate = 0;
     if(req.param('interactiveDueDate')){
-      if(['poll','survey','calendar'].includes(req.param('typeOfPost'))){
+      if([
+        'application/calendar',
+        'application/poll',
+        'application/survey'
+      ].includes(req.param('typeOfPost'))){
         if(req.param('interactiveDueDate') < Date.now()){
           return res.badRequest(new Error('Invalid interactive due date'));
         }
@@ -79,14 +112,14 @@ module.exports = {
       // For now, default times are stored in root/configuration(DefaultDisplayTime.js) in hours
       t = 0;
       switch(req.param('typeOfPost')){
-        case 'poll':
+        case 'application/calendar':
+          t = DefaultDueDates.ActiveTime.CALENDAR;
+          break;
+        case 'application/poll':
           t = DefaultDueDates.ActiveTime.POLL;
           break;
-        case 'survey':
+        case 'application/survey':
           t = DefaultDueDates.ActiveTime.SURVEY;
-          break;
-        case 'calendar':
-          t = DefaultDueDates.ActiveTime.CALENDAR;
           break;
         default:
           t = 0;

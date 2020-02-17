@@ -6,8 +6,11 @@
         <div class="upperGap" />
           <NoteEditor @create-note="createNote"/>
       </div>
+      <!-- Need working scrollbar! -->
       <ImageUpload @upload-image="uploadImage"/>
-      <!--<FileUpload @upload-file="uploadFile"/>-->
+      <!--
+      <FileUpload @upload-file="uploadFile"/>
+      -->
       <!-- dragger will be automatically added here -->
     </div>
   </div>
@@ -34,7 +37,7 @@ export default {
     createNote: async function (titleContent, jsonContent) {
       const jsonBody = JSON.stringify({
         title: titleContent,
-        typeOfPost: 'note',
+        typeOfPost: 'application/note',
         content: jsonContent
       })
       console.log(jsonBody)
@@ -55,9 +58,9 @@ export default {
     },
     uploadImage: async function (titleContent, dataURI) {
       const dataURISplit = dataURI.split(',')
-      const datapart = dataURISplit[0] // e.g. data:image/png;base64
-      const base64Data = dataURISplit[1] // iVBORw0KGgoAAAANSUhEUgAAB...
-      const dataType = datapart.split(':')[1].split(';')[0].replace('/', '') // image/png -> imagepng
+      const datapart = dataURISplit[0] // E.g. data:image/png;base64
+      const base64Data = dataURISplit[1] // BORw0KGgoAAAANSUhEUgAAB...
+      const dataType = datapart.split(':')[1].split(';')[0] // Extract MIME type -> image/png
       const jsonBody = JSON.stringify({
         title: titleContent,
         typeOfPost: dataType,
@@ -82,8 +85,8 @@ export default {
     uploadFile: async function (titleContent, dataURI) {
       const dataURISplit = dataURI.split(',')
       const datapart = dataURISplit[0] // e.g. data:application/pdf;base64
-      const base64Data = dataURISplit[1] // iVBORw0KGgoAAAANSUhEUgAAB...
-      const dataType = datapart.split(':')[1].split(';')[0].replace('data:application/', '') // application/pdf -> pdf
+      const base64Data = dataURISplit[1] // ZGgoAAAANSUhEUgAASs54B...
+      const dataType = datapart.split(':')[1].split(';')[0] // Extract MIME type -> application/pdf
       const jsonBody = JSON.stringify({
         title: titleContent,
         typeOfPost: dataType,
