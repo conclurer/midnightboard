@@ -8,14 +8,28 @@ module.exports = {
     creatorId: { type: 'number', allowNull: true, columnName: 'creator_id'},
     typeOfPost: {
       type: 'string',
-      isIn: ['note','pdf','poll','survey','calendar','imagepng','imagejpg','officefile'],
+      isIn: [
+        'application/calendar',
+        'application/msword',
+        'application/msexcel',
+        'application/mspowerpoint',
+        'application/note',
+        'application/pdf',
+        'application/poll',
+        'application/survey',
+        'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'image/jpeg',
+        'image/png'
+      ],
       required: true,
       columnName: 'type_of_post'
     },
     title: { type: 'string' },
-    dueDate: { type: 'number', columnName: 'due_date' },
-    interactiveDueDate:{ type: 'number', columnName: 'interactive_due_date' },
-    content: {type: 'string', columnName: 'content'}
+    content: {type: 'string', columnName: 'content'},
+    dueDate: { type: 'ref', columnType: 'bigint', isNumber: true, columnName: 'due_date' },
+    interactiveDueDate:{ type: 'ref', columnType: 'bigint', isNumber: true, columnName: 'interactive_due_date' }
   },
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
