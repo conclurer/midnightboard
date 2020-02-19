@@ -11,7 +11,7 @@
             class="navbar-brand"
             href="#"
           ><img
-            src="../assets/logo.png"
+            src="../../../configuration/logo.png"
             height="40px"
           ></a>
         </div>

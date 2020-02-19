@@ -9,10 +9,6 @@
               class="navbar-brand"
               href="#"
             >
-              <img
-                src="../assets/logo.png"
-                height="40px"
-              >
             </span>
           </div>
           <span class="navbar-text">
@@ -78,13 +74,15 @@ export default {
 </script>
 
 <style scoped>
+  @import '../../../configuration/styles.css';
+  
   .board {
     position: absolute;
     top: 0px;
     left: 0px;
     width: 100%;
     min-height: 100vh;
-    background: #7b8895;
+    background: var(--background-board);
   }
 
   #empty {
