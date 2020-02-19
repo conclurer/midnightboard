@@ -3,7 +3,6 @@
     <div> <!-- el2 -->
       <!-- your scrollable content -->
       <div class="editorSidebar">
-        <div class="upperGap" />
           <NoteEditor @create-note="createNote"/>
       </div>
       <!-- Need working scrollbar! -->
@@ -113,14 +112,6 @@ export default {
 </script>
 
 <style scoped>
-  .upperGap {
-    position: relative;
-    top: 0px;
-    left: 0px;
-    height: 100px;
-    width: 100%;
-  }
-
   .vb >>> .vb-dragger {
     position: relative;
     z-index: 5;
