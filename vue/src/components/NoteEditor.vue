@@ -140,7 +140,7 @@
       class="button"
       @click="$emit('create-note', titleContent, textContent)"
     >
-      Create
+      {{$t('editor.note.create')}}
     </b-button>
   </div>
 </template>
@@ -177,7 +177,7 @@ export default {
   data () {
     return {
       date: null,
-      titleContent: 'Insert title here',
+      titleContent: '<h1>Title</h1>',
       textContent: '<p>Insert content here</p><ul><li>Start a bulleted list</li></ul><ol><li>Or start a numerical list</li></ol>',
       titleEditor: new Editor({
         extensions: [

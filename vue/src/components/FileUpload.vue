@@ -1,7 +1,7 @@
 <template>
   <div class="fileUpload">
     <br> <!-- Should be deleted if design is fixed -->
-    <h2>Upload your file:</h2>
+    <h2>{{$t('editor.file.post')}}</h2>
     <input
       v-bind:value="fileTitel"
       v-on:input="fileTitel = $event.target.value"
@@ -25,15 +25,15 @@
       buttonClass="btn btn-info button"
       removeButtonClass="btn btn-danger button"
       :customStrings="{
-          upload: '<p>Your device does not support file uploading.</p>', // HTML allowed
-          drag: 'Drag an file or <br>click here to select a file', // HTML allowed
-          tap: 'Tap here to select a photo <br>from your gallery', // HTML allowed
-          change: 'Change file', // Text only
-          remove: 'Remove file', // Text only
-          select: 'Select a file', // Text only
-          selected: '<p>File successfully selected!</p>', // HTML allowed
-          fileSize: 'The file size exceeds the limit', // Text only
-          fileType: 'Only PDF, DOC(X), XLS(X) and PPT(X) is supported!', // Text only
+          upload: '<p>' + $t('editor.file.upload') + '</p>', // HTML allowed
+          drag: $t('editor.file.drag'), // HTML allowed
+          tap: $t('editor.file.tap'), // HTML allowed
+          change: $t('editor.file.change'), // Text only
+          remove: $t('editor.file.remove'), // Text only
+          select: $t('editor.file.select'), // Text only
+          selected: '<p>' + $t('editor.file.selected') + '</p>', // HTML allowed
+          fileSize: $t('editor.file.fileSize'), // Text only
+          fileType: $t('editor.file.fileType'), // Text only
           aspect: '' // Text only
       }"
       :removable="true"
@@ -44,7 +44,7 @@
       class="btn btn-primary button"
       v-on:click="$emit('upload-file', fileTitel, fileRef)"
     >
-    Post file
+    {{$t('editor.file.post')}}
     </button>
   </div>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <div class="imageUpload">
     <br> <!-- Should be deleted if design is fixed -->
-    <h2>Upload your image:</h2>
+    <h2>{{$t('editor.image.title')}}</h2>
     <input
       v-bind:value="imageTitel"
       v-on:input="imageTitel = $event.target.value"
@@ -19,16 +19,16 @@
       buttonClass="btn btn-info button"
       removeButtonClass="btn btn-danger button"
       :customStrings="{
-          upload: '<p>Your device does not support file uploading.</p>', // HTML allowed
-          drag: 'Drag an image or <br>click here to select a file', // HTML allowed
-          tap: 'Tap here to select a photo <br>from your gallery', // HTML allowed
-          change: 'Change Photo', // Text only
-          remove: 'Remove Photo', // Text only
-          select: 'Select a Photo', // Text only
-          selected: '<p>Photo successfully selected!</p>', // HTML allowed
-          fileSize: 'The file size exceeds the limit', // Text only
-          fileType: 'Only JPEG and PNG is supported!', // Text only
-          aspect: 'Landscape/Portrait' // Text only
+          upload: '<p>' + $t('editor.image.upload') + '</p>', // HTML allowed
+          drag: $t('editor.image.drag'), // HTML allowed
+          tap: $t('editor.image.tap'), // HTML allowed
+          change: $t('editor.image.change'), // Text only
+          remove: $t('editor.image.remove'), // Text only
+          select: $t('editor.image.select'), // Text only
+          selected: '<p>' + $t('editor.image.selected') + '</p>', // HTML allowed
+          fileSize: $t('editor.image.fileSize'), // Text only
+          fileType: $t('editor.image.fileType'), // Text only
+          aspect: $t('editor.image.aspect') // Text only
       }"
       :removable="true"
     >
@@ -38,7 +38,7 @@
       class="btn btn-primary button"
       v-on:click="$emit('upload-image', imageTitel, imageRef)"
     >
-    Post image
+    {{$t('editor.image.post')}}
     </button>
   </div>
 </template>
@@ -51,7 +51,7 @@ export default {
   data () {
     return {
       imageRef: '',
-      imageTitel: 'Your image title'
+      imageTitel: 'Your image title' // i18n?
     }
   },
   components: {

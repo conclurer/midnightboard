@@ -13,9 +13,9 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 Vue.use(BootstrapVue)
 
-// Import Vuebar
-import Vuebar from 'vuebar'
-Vue.use(Vuebar)
+// Import SmoothVuebar
+import SmoothVuebar from 'smooth-vuebar'
+Vue.use(SmoothVuebar)
 
 // Import i18n
 import VueI18n from 'vue-i18n'

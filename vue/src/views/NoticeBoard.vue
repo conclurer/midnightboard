@@ -15,9 +15,13 @@
       v-show="this.editorActive"
       class="rightBar"
     >
-      <EditorSidebar
-        @add-note="addNote"
-      />
+      <div>
+        <div v-smoothscrollbar="{ listener, options }">
+          <EditorSidebar
+            @add-note="addNote"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -42,7 +46,9 @@ export default {
       notes: [],
       boardId: 1,
       editorActive: false,
-      english: true
+      english: true,
+      listener: () => {},
+      options: {}
     }
   },
   created () {
@@ -105,5 +111,10 @@ export default {
     width: 500px;
     height: 100vh;
     background: #fff;
+  }
+
+  .smooth-vuebar {
+    max-height: 100vh;
+    max-width: 100vw;
   }
 </style>
