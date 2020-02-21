@@ -19,14 +19,14 @@ INSERT INTO team (created_at,updated_at,team_leader_id,team_name)
     
 /* Create demo posts */
 INSERT INTO post (created_at,updated_at,creator_id,type_of_post,title,content,due_date,interactive_due_date)
-    VALUES (1577833200000,1577833200000,1,'note','Note 1','<h1>Content</h1>',0,0),
-    (1577833200000,1577833200000,2,'note','Note 2','<h1>Content</h1>',0,0),
-    (1577833200000,1577833200000,3,'note','Note 3','<h1>Content</h1>',0,0),
-    (1577833200000,1577833200000,4,'note','Note 4','<h1>Content</h1>',0,0),
-    (1577833200000,1577833200000,5,'note','Note 5','<h1>Content</h1>',0,0),
-    (1577833200000,1577833200000,1,'note','Note 6','<h1>Content</h1>',0,0),
-    (1577833200000,1577833200000,2,'note','Note 7','<h1>Content</h1>',0,0),
-    (1577833200000,1577833200000,3,'note','Note 8','<h1>Content</h1>',0,0);
+    VALUES (1577833200000,1577833200000,1,'application/note','Note 1','<h1>Content</h1>',0,0),
+    (1577833200000,1577833200000,2,'application/note','Note 2','<h1>Content</h1>',0,0),
+    (1577833200000,1577833200000,3,'application/note','Note 3','<h1>Content</h1>',0,0),
+    (1577833200000,1577833200000,4,'application/note','Note 4','<h1>Content</h1>',0,0),
+    (1577833200000,1577833200000,5,'application/note','Note 5','<h1>Content</h1>',0,0),
+    (1577833200000,1577833200000,1,'application/note','Note 6','<h1>Content</h1>',0,0),
+    (1577833200000,1577833200000,2,'application/note','Note 7','<h1>Content</h1>',0,0),
+    (1577833200000,1577833200000,3,'application/note','Note 8','<h1>Content</h1>',0,0);
 
 /* Link posts to board */
 INSERT INTO post_location (post_id, board_id)

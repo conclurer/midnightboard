@@ -1,6 +1,5 @@
 # Node LTS - v12.13.0
 FROM node:erbium-slim
-ENV NODE_ENV production
 # Expose port 1337
 EXPOSE 1337
 # Create directory if not exists

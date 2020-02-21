@@ -34,31 +34,49 @@
           v-masonry-tile
           class="item"
         >
+          <!-- Display common text notes -->
           <b-card
+            v-if="note.typeOfPost === 'application/note'"
             class="note"
             bg-variant="dark"
             text-variant="white"
             :title="note.title"
           >
-            <hr>
+            <hr />
             <b-card-text>
               <div v-html="note.content" />
             </b-card-text>
           </b-card>
 
-          <!--<b-card
-            title="Title"
-            tag="note"
-            style="width: 347px; margin: 10px;"
-            class="mb-2"
+          <!-- Display images -->
+          <b-card
+            v-if="note.typeOfPost === 'image/png'"
+            class="note"
+            bg-variant="dark"
+            text-variant="white"
+            :title="note.title"
           >
-            <b-card-text>
-              {{ note.text }}
-            </b-card-text>
-            <b-card-text>
-              Last updated: 20.01.2020
-            </b-card-text>
-          </b-card>-->
+            <hr />
+            <b-card-img
+              v-bind:src="'data:image/png;base64,'+note.content"
+            >
+            </b-card-img>
+          </b-card>
+
+          <!-- Display images -->
+          <b-card
+            v-if="note.typeOfPost === 'image/jpeg'"
+            class="note"
+            bg-variant="dark"
+            text-variant="white"
+            :title="note.title"
+          >
+            <hr />
+            <b-card-img
+              v-bind:src="'data:image/jpeg;base64,'+note.content"
+            >
+            </b-card-img>
+          </b-card>
         </div>
       </div>
     </div>
@@ -85,6 +103,12 @@ export default {
     background: var(--background-board);
   }
 
+  hr {
+    height: 1px;
+    border: none;
+    background-color: #aaa;
+  }
+
   #empty {
     width: 100%;
     font-size: 20pt;
@@ -95,7 +119,7 @@ export default {
   }
 
   .note {
-    width: 355px;
+    width: 480px;
     margin: 10px;
   }
 </style>

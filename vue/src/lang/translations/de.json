@@ -2,12 +2,47 @@
     "about":{
         "message":"Das ist eine About Seite"
     },
+    "editor":{
+        "note":{
+            "create":"Erstellen",
+            "title":"Titel hier eingeben"
+        },
+        "image":{
+            "title":"Bild hochladen:",
+            "post":"Bild posten",
+            "upload":"Dein Gerät unterstützt kein Hochladen von Bildern.",
+            "drag":"Ziehe hierher ein Bild oder klicke darauf, um eins auszuwählen",
+            "tap":"Tippe hier, um ein Bild aus deiner Galerie auszuwählen",
+            "change":"Bild ändern",
+            "remove":"Bild entfernen",
+            "select":"Bild auswählen",
+            "selected":"Bild erfolgreich ausgewählt!",
+            "fileSize":"Die Dateigröße überschreitet das Limit!",
+            "fileType":"Nur JPEG und PNG werden unterstützt!",
+            "aspect":"Landschaft/Porträt"
+        },
+        "file":{
+            "title":"Datei hochladen:",
+            "post":"Datei posten",
+            "upload":"Dein Gerät unterstützt kein Hochladen von Dateien.",
+            "drag":"Ziehe hierher eine Datei oder klicke darauf, um eine auszuwählen",
+            "tap":"Tippe hier, um eine Datei von deinem Gerät auszuwählen",
+            "change":"Datei ändern",
+            "remove":"Datei entfernen",
+            "select":"Datei auswählen",
+            "selected":"Datei erfolgreich ausgewählt!",
+            "fileSize":"Die Dateigröße überschreitet das Limit!",
+            "fileType":"Es werden nur PDF, DOC(X), XLS(X) und PPT(X) unterstützt!"
+        }
+    },
     "profile":{
         "email":"E-Mail",
         "username":"Nutzername",
         "password":"Passwort"
     },
-
-
+    "ui":{
+        "add":"Neu",
+        "profile":"Profil"
+    },
     "HelloWorld": "Hallo Welt!"
 }

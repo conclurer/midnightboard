@@ -11,7 +11,7 @@ Images for [application](https://hub.docker.com/r/tvsjsdock/midnightboard-app/ta
 
 ### Demo page on heroku is in progress
 
-## Swagger [API Documentation](https://rawcdn.githack.com/conclurer/midnightboard/9cc1496ff4c2cdd50f88ed6f6d49d7305341e29d/sails/swagger/swagger.html)
+## Swagger [API Documentation](https://rawcdn.githack.com/conclurer/midnightboard/master/sails/swagger/swagger.html)
 
 ---
 

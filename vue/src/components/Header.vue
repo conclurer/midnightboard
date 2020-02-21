@@ -27,12 +27,26 @@
                     class="unselectable"
                     unselectable="on"
                     style="margin-right: 40px;"
-                  ><a @click="plusClicked"><font-awesome-icon icon="plus" /> Add</a></span>
+                  ><a @click="plusClicked"><font-awesome-icon icon="plus" /> {{$t('ui.add')}} </a></span>
                 </td><td>
                   <span
                     class="unselectable"
                     unselectable="on"
-                  ><font-awesome-icon icon="user-circle" /> Profile</span>
+                    style="margin-right: 30px;"
+                  ><font-awesome-icon icon="user-circle" /> {{$t('ui.profile')}} </span>
+                </td><td>
+                  <span
+                    id="flag"
+                    v-if="english"
+                    class="unselectable"
+                    unselectable="on"
+                  ><a @click="changeLanguage">&#127465;&#127466;</a></span>
+                  <span
+                    id="flag"
+                    v-if="!english"
+                    class="unselectable"
+                    unselectable="on"
+                  ><a @click="changeLanguage">&#127468;&#127463;</a></span>
                 </td>
               </tr>
             </table>
@@ -46,6 +60,7 @@
 <script>
 export default {
   name: 'Header',
+  props: ['english'],
   methods: {
     plusClicked (e) {
       e.preventDefault()
@@ -53,32 +68,33 @@ export default {
       // Send up to parent
       this.$emit('plus-clicked')
     },
-    newNote (e) {
+    changeLanguage (e) {
       e.preventDefault()
-      const newNote = {
-        text: 'New note'
-      }
 
       // Send up to parent
-      this.$emit('new-note', newNote)
+      this.$emit('change-language')
     }
   }
 }
 </script>
 
 <style scoped>
-    a {
-      cursor: pointer;
-    }
+  a {
+    cursor: pointer;
+  }
 
-    .header {
-      width: 100%;
-      color: #fff;
-      font-size: 20pt;
-    }
+  .header {
+    width: 100%;
+    color: #fff;
+    font-size: 20pt;
+  }
 
-    .unselectable {
-      -moz-user-select:none;
-      -webkit-user-select:none;
-    }
+  .unselectable {
+    -moz-user-select:none;
+    -webkit-user-select:none;
+  }
+
+  #flag {
+    font-size: 25px;
+  }
 </style>
