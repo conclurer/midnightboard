@@ -50,9 +50,9 @@ jobs:
             
       # Start Sails.js application
       - run:
-        name: Start application
-        command: npm run start
-        background: true
+          name: Start application
+          command: npm run start
+          background: true
 
       # Run Jest
       - run:
