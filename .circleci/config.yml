@@ -46,7 +46,6 @@ jobs:
           name: Npm install and start db
           command: |
             npm install
-            npm run vue-lint
             docker-compose up --no-deps --build --force-recreate --detach db
             
       # Start Sails.js application
@@ -55,11 +54,12 @@ jobs:
           command: npm run start
           background: true
 
-      # Run Jest
+      # Run ESLint & Jest
       - run:
-          name: Run Jest
+          name: Run linter and test cases
           command: |
-            dockerize -wait tcp://localhost:1337 -timeout 90s
+            dockerize -wait tcp://localhost:1337 -timeout 100s
+            npm run vue-lint
             npm run test
   
   # Danger configuration
