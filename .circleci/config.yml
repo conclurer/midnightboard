@@ -41,11 +41,12 @@ jobs:
   test:
     # Midnightboard database Docker image for VM
     docker:
+      - image: circleci/node:erbium
       - image: tvsjsdock/midnightboard-db:latest
         environment:
-          POSTGRES_USER=dev
-          POSTGRES_PASSWORD=secret2020
-          POSTGRES_DB=midnightboard
+          POSTGRES_USER: dev
+          POSTGRES_PASSWORD: secret2020
+          POSTGRES_DB: midnightboard
 
     # All steps for testing
     steps:
@@ -79,6 +80,9 @@ jobs:
   
   # Danger configuration
   danger:
+    # Node.js Docker image for VM
+    docker:
+      - image: circleci/node:erbium
     # All steps for Danger JS
     steps:
       # Run Danger
@@ -90,6 +94,9 @@ jobs:
           
   # Build and deploy configuration
   build-deploy:
+    # Node.js Docker image for VM
+    docker:
+      - image: circleci/node:erbium
     # All steps for build
     steps:
       # Build Docker images on VM and push it to DockerHub
