@@ -61,7 +61,7 @@ jobs:
       - run:
           name: Run linter and test cases
           command: |
-            dockerize -wait tcp://localhost:1337 -timeout 100s
+            dockerize -wait tcp://localhost:1337 -timeout 120s
             npm run vue-lint
             npm run test
   
