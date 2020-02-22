@@ -50,6 +50,9 @@ jobs:
 
     # All steps for testing
     steps:
+      # Checkout branch to VM
+      - checkout
+
       # Install dockerize for race condition
       - run:
           name: Install dockerize
@@ -85,6 +88,9 @@ jobs:
       - image: circleci/node:erbium
     # All steps for Danger JS
     steps:
+      # Checkout branch to VM
+      - checkout
+
       # Run Danger
       - run:
           name: Danger
@@ -99,6 +105,9 @@ jobs:
       - image: circleci/node:erbium
     # All steps for build
     steps:
+      # Checkout branch to VM
+      - checkout
+
       # Build Docker images on VM and push it to DockerHub
       - run:
           name: Build and push Docker images
