@@ -61,14 +61,13 @@ $ npm run start-dev
 ##### Restart database (imports automatically changes on db/backup.sql)
 
 ```bash
-$ docker-compose stop db && docker-compose rm -f -v db && docker-compose up --no-deps --build --force-recreate --detach db
+$ docker-compose stop db && docker-compose rm -f -v db && docker-compose up --no-deps --build --force-recreate db
 ```
 
 ---
 
 ## Setup without Docker
 For running a local PostgreSQL server check out [datastores.js](https://github.com/conclurer/midnightboard/blob/master/sails/config/datastores.js) for more details.
-
 
 ```bash
 $ npm install

@@ -11,7 +11,6 @@ jobs:
     # Need Node.js & midnightboard database
     docker:
       - image: circleci/node:erbium
-      - image: tvsjsdock/midnightboard-db:latest
 
     # All steps for test
     steps:
@@ -41,12 +40,16 @@ jobs:
           environment:
             DOCKERIZE_VERSION: v0.6.1
 
-      # Install project and start database
+      # Install project
       - run:
           name: Npm install and start db
-          command: |
-            npm install
-            docker-compose up --no-deps --build --force-recreate --detach db
+          command: npm install
+
+      # Start database in a background task
+      - run:
+          name: Start database
+          command: docker-compose up --no-deps --build --force-recreate db
+          background: true
             
       # Start Sails.js application
       - run:
