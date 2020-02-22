@@ -8,7 +8,11 @@ version: 2.1
 jobs:
   # Test configuration
   test:
-    # All steps for test
+    # Node.js Docker image for VM
+    docker:
+      - image: circleci/node:erbium
+
+    # All steps for testing
     steps:
       # Checkout branch to VM
       - checkout
@@ -67,6 +71,7 @@ jobs:
     # Node.js Docker image for VM
     docker:
       - image: circleci/node:erbium
+
     # All steps for Danger JS
     steps:
       # Checkout branch to VM
