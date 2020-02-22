@@ -61,7 +61,7 @@ $ npm run start-dev
 ##### Restart database (imports automatically changes on db/backup.sql)
 
 ```bash
-$ docker-compose stop db && docker-compose rm -f -v db && docker-compose up --no-deps --build --force-recreate db
+$ docker-compose stop db && docker-compose rm -f -v db && docker-compose up --no-deps --build --force-recreate --detach db
 ```
 
 ---

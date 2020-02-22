@@ -37,7 +37,7 @@ jobs:
           name: Run tests
           command: |
             npm install
-            docker-compose up --no-deps --build --force-recreate db
+            docker-compose up --no-deps --build --force-recreate --detach db
             npm run start
             npm run test
   
