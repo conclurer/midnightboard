@@ -32,22 +32,27 @@ jobs:
             tar -xz -C /tmp -f /tmp/docker-$VER.tgz
             sudo mv /tmp/docker/* /usr/bin
 
-      # For race condition check 
+      # Install dockerize for race condition
       - run:
-          name: install dockerize
+          name: Install dockerize
           command: |
             wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz 
             sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
           environment:
             DOCKERIZE_VERSION: v0.6.1
 
-      # Prepare tests
+      # Install project and start database
       - run:
-          name: Prepare tests
+          name: Npm install and start db
           command: |
             npm install
             docker-compose up --no-deps --build --force-recreate --detach db
-            npm run start
+            
+      # Start Sails.js application
+      - run:
+        name: Start application
+        command: npm run start
+        background: true
 
       # Run Jest
       - run:
