@@ -3,7 +3,6 @@
     <!-- Placeholder for right positioning -->
     <div
       id="empty"
-      style="grid-row: 1;"
     >
       <nav class="navbar navbar-inverse bg-dark">
         <div class="container-fluid">
@@ -16,12 +15,12 @@
 
     <!-- Space for content -->
     <div
+      class="inner-board"
       v-if="!this.editorActive"
-      class="content"
-      style="grid-row: 2;"
-      :key="renderKey"
+      :key="editorActive"
     >
       <div
+        class="content"
         v-masonry
         transition-duration="0.4s"
         item-selector=".item"
@@ -81,16 +80,17 @@
 
     <!-- Space for content -->
     <div
+      class="inner-board"
       v-if="this.editorActive"
-      style="grid-row: 2; display: grid; grid-template-columns: repeat(3, 1fr);"
+      style="display: grid; grid-template-columns: 1fr 500px;"
     >
       <div
         class="content"
         v-masonry
         transition-duration="0.4s"
         item-selector=".item"
-        style="grid-column: 1 / 3;"
-        :key="renderKey"
+        style="grid-column: 1 / 2;"
+        :key="editorActive"
       >
         <div
           v-for="note in notes.slice().reverse()"
@@ -144,10 +144,9 @@
         </div>
       </div>
 
-      <!-- Display rigth bar style="width: 33%; height: auto; position: absolute; top: 0px; right: 0px;" -->
+      <!-- Display rigth bar -->
       <div
         class="rightBar"
-        style="grid-column: 3 / 4;"
       >
         <div>
           <div v-smoothscrollbar="{ listener, options }">
@@ -181,18 +180,23 @@ export default {
       this.$emit('add-note')
     }
   },
-  props: ['notes', 'editorActive', 'renderKey']
+  props: ['notes', 'editorActive']
 }
 </script>
 
 <style scoped>
 @import '../../../configuration/styles.css';
 .board {
-  position: static;
+  position: sticky;
   width: 100vw;
   min-height: 100vh;
   background: var(--background-board);
   display: grid;
+  grid-auto-rows: min-content;
+}
+
+.inner-board {
+  grid-row: 2;
 }
 
 hr {
@@ -202,7 +206,7 @@ hr {
 }
 
 #empty {
-  position: static;
+  grid-row: 1 / 1;
   width: 100vw;
   font-size: 20pt;
 }
@@ -218,7 +222,11 @@ hr {
 }
 
 .rightBar {
-  margin-top: 0px;
+  grid-column: 2 / 3;
+  width: 500px;
+  height: 100%;
+  position: fixed;
+  right: 0px;
   background: #fff;
 }
 </style>

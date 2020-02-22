@@ -40,6 +40,10 @@
     >
     {{$t('editor.image.post')}}
     </button>
+    <br>
+    <br>
+    <br>
+    <br>
   </div>
 </template>
 

@@ -12,7 +12,6 @@
       @add-note="addNote"
       :notes="notes"
       :editorActive="editorActive"
-      :renderKey="renderKey"
     />
   </div>
 </template>
@@ -71,9 +70,6 @@ export default {
       this.editorActive = !this.editorActive
       // Place sidebar below titlebar
       // document.getElementsByClassName('rightBar')[0].style.top = document.getElementsByClassName('navbar')[0].clientHeight + 'px'
-      // this.board.content.$forceUpdate()
-      // var i = this.document.getElementsByClassName('view')[0].$forceUpdate()
-      this.key = !this.key
     },
     changeLanguage () {
       this.english = !this.english
