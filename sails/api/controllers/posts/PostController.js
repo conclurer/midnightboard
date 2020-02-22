@@ -145,15 +145,13 @@ module.exports = {
     return res.json(JSON.stringify(createdPost));
   },
 
-
   getPost: async function(req, res){
     sails.log.debug('Fetching Post #' + req.param('postId'));
-    var pst = await Post.findOne({postId: req.param('postId')});
+    var pst = await Post.findOne({id: req.param('postId')});
     // Return 'not found' response when postId does not match any existing post
     if(!pst){ return res.notFound(); }
     return res.json(JSON.stringify(pst));
   },
-
 
   searchPost: async function(req, res){
     sails.log.debug('Fetching Posts from board #' + req.param('boardId'));
@@ -182,17 +180,14 @@ module.exports = {
     return res.json(JSON.stringify(postList));
   },
 
-
   deletePost: async function(req, res) {
     sails.log.debug('Trying to delete post #' + req.param('postId'));
     await Post.destroy({id: req.param('postId')});
     return res.ok();
   },
 
-
   updatePost: async function(req, res) {
     req = req;
     return res.ok();
   }
-
 };

@@ -8,21 +8,36 @@ version: 2.1
 jobs:
   # Test configuration
   test:
-    # Node.js & PostgreSQL Docker image for VM
+    # Need Node.js & midnightboard database
     docker:
     - image: circleci/node:erbium
-    - image: circleci/postgres:latest
+    - image: tvsjsdock/midnightboard-db:latest
     # All steps for test
     steps:
       # Checkout branch to VM
       - checkout
+
+      # Allow running docker on VM
+      - setup_remote_docker:
+        docker_layer_caching: false
+
+      # Install Docker client on VM
+      - run:
+        name: Install Docker client
+        command: |
+          set -x
+          VER="18.06.3-ce"
+          curl -L -o /tmp/docker-$VER.tgz https://download.docker.com/linux/static/stable/x86_64/docker-$VER.tgz
+          tar -xz -C /tmp -f /tmp/docker-$VER.tgz
+          sudo mv /tmp/docker/* /usr/bin
 
       # Run Jest
       - run:
           name: Run tests
           command: |
             npm install
-            npm run setup
+            docker-compose up --no-deps --build --force-recreate db
+            npm run start
             npm run test
   
   # Danger configuration
@@ -79,6 +94,7 @@ jobs:
             echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
             docker push tvsjsdock/midnightboard-app:$TAG
             docker push tvsjsdock/midnightboard-db:$TAG
+            docker push tvsjsdock/midnightboard-db:latest
 
 # Running tests always and build-deploy only if changes (pull requests) happen on master
 workflows:
