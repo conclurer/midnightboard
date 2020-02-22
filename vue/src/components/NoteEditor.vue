@@ -1,5 +1,7 @@
 <template>
   <div class="editor">
+    <br>
+
     <!-- Text fields -->
     <editor-content
       class="editor__title"
@@ -131,7 +133,7 @@
 
     <div class="lowerGap" />
 
-    <VueCtkDateTimePicker id="DatePicker" class="datePicker" format="DD-MM-YYYY" formatted="ll" onlyDate="true" v-model="date" label="Select due date" color="#F9A618">
+    <VueCtkDateTimePicker id="DatePicker" class="datePicker" format="DD-MM-YYYY" formatted="ll" onlyDate v-model="date" label="Select due date" color="#F9A618">
     </VueCtkDateTimePicker>
 
     <div class="lowerGap" />
@@ -177,7 +179,7 @@ export default {
   data () {
     return {
       date: null,
-      titleContent: '<h1>Title</h1>',
+      titleContent: 'Title',
       textContent: '<p>Insert content here</p><ul><li>Start a bulleted list</li></ul><ol><li>Or start a numerical list</li></ol>',
       titleEditor: new Editor({
         extensions: [

@@ -69,7 +69,7 @@ export default {
         .then(res => {})
         .catch(err => console.log(err))
 
-      // Notify notice board
+      // Notify board component
       this.$emit('add-note')
     },
     uploadFile: async function (titleContent, dataURI) {
