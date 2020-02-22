@@ -1,18 +1,5 @@
 <template>
   <div class="board">
-    <!-- Placeholder for right positioning -->
-    <div
-      id="empty"
-    >
-      <nav class="navbar navbar-inverse bg-dark">
-        <div class="container-fluid">
-          <span class="navbar-text">
-            Title
-          </span>
-        </div>
-      </nav>
-    </div>
-
     <!-- Space for content -->
     <div
       class="inner-board"
@@ -196,19 +183,13 @@ export default {
 }
 
 .inner-board {
-  grid-row: 2;
+  grid-row: 1 / 1;
 }
 
 hr {
   height: 1px;
   border: none;
   background-color: #aaa;
-}
-
-#empty {
-  grid-row: 1 / 1;
-  width: 100vw;
-  font-size: 20pt;
 }
 
 .content {

@@ -85,6 +85,7 @@ export default {
 
   .header {
     width: 100%;
+    height: 70px;
     color: #fff;
     font-size: 20pt;
   }
