@@ -46,6 +46,7 @@ jobs:
           name: Npm install and start db
           command: |
             npm install
+            npm run vue-lint
             docker-compose up --no-deps --build --force-recreate --detach db
             
       # Start Sails.js application

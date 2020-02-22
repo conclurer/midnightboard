@@ -14,7 +14,7 @@
         "sails-start-dev": "cd sails && npm run start-dev",
         "sails-start-prod": "cd sails && npm run start-prod",
         "test": "cd sails && npm run test",
-        "start": "npm run setup && npm run vue-lint && npm run vue-build && npm run sails-start-dev"
+        "start": "npm run setup && npm run sails-start-dev"
     },
     "repository": {
         "type": "git",
