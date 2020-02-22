@@ -67,7 +67,7 @@ jobs:
             tar -xz -C /tmp -f /tmp/docker-$VER.tgz
             sudo mv /tmp/docker/* /usr/bin
 
-      # Install dockerize for race condition
+      # Install dockerize to wait for test cases until application is running
       - run:
           name: Install dockerize
           command: |
