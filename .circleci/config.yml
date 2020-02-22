@@ -32,13 +32,28 @@ jobs:
             tar -xz -C /tmp -f /tmp/docker-$VER.tgz
             sudo mv /tmp/docker/* /usr/bin
 
-      # Run Jest
+      # For race condition check 
       - run:
-          name: Run tests
+          name: install dockerize
+          command: |
+            wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz 
+            sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+          environment:
+            DOCKERIZE_VERSION: v0.6.1
+
+      # Prepare tests
+      - run:
+          name: Prepare tests
           command: |
             npm install
             docker-compose up --no-deps --build --force-recreate --detach db
             npm run start
+
+      # Run Jest
+      - run:
+          name: Run Jest
+          command: |
+            dockerize -wait tcp://localhost:1337 -timeout 1m
             npm run test
   
   # Danger configuration
