@@ -58,7 +58,7 @@ jobs:
       - run:
           name: Run Jest
           command: |
-            dockerize -wait tcp://localhost:1337 -timeout 1m
+            dockerize -wait tcp://localhost:1337 -timeout 90s
             npm run test
   
   # Danger configuration
