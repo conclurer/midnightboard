@@ -144,7 +144,7 @@ CREATE TABLE public.post (
     created_at bigint NOT NULL,
     updated_at bigint NOT NULL,
     creator_id integer,
-    type_of_post character varying(27) NOT NULL,
+    type_of_post character varying(127) NOT NULL,
     title character varying(50),
     content text,
     due_date bigint NOT NULL,

@@ -5,7 +5,9 @@
     "profile":{
         "email":"E-Mail",
         "username":"Username",
-        "password":"Password"
+        "password":"Password",
+        "firstname":"First name",
+        "lastname":"Last name"
     },
 
 

@@ -1,0 +1,32 @@
+POST http://localhost:1337/api/users/register/ HTTP/1.1
+content-type: application/json
+
+{
+    "userName": "TestUser2",
+    "password": "P@ssw0rd",
+    "email": "test@mail2.ex",
+    "firstName": "Maxim",
+    "lastName": "Mustermann"
+}
+
+###
+
+POST http://localhost:1337/api/users/login HTTP/1.1
+content-type: application/json
+
+{
+    "username": "TestUser2",
+    "password": "P@ssw0rd"
+}
+
+###
+
+DELETE http://localhost:1337/api/users/logout HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NaiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVGVzdFVzZXIyIiwiaWF0IjoxNTgyNDc3NTg3fQ.KZ_bBb0JMs9nggImznIakph6Kl9l7KPZ2c6hvgRaImM
+
+###
+
+
+PUT http://localhost:1337/api/users/1 HTTP/1.1
+content-type: application/json
+

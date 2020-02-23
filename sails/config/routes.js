@@ -65,6 +65,16 @@ module.exports.routes = {
         action: 'registerUser',
         skipAssets: true
     },
+    'POST   /api/users/login': {
+        controller: 'users/User',
+        action: 'loginUser',
+        skipAssets: true
+    },
+    'DELETE   /api/users/logout': {
+        controller: 'users/User',
+        action: 'logoutUser',
+        skipAssets: true
+    },
     'DELETE   /api/users/:userId': {
         controller: 'users/User',
         action: 'deleteUser',
