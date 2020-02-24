@@ -4,9 +4,11 @@
   >
     <Header
       id="titlebar"
+      title="Quality Assurance"
       @plus-clicked="plusClicked"
       @change-language="changeLanguage"
       :english="english"
+      :buttonsActive=true
     />
     <Board
       @add-note="addNote"
@@ -34,8 +36,7 @@ export default {
       notes: [],
       boardId: 1,
       editorActive: false,
-      english: true,
-      renderKey: false
+      english: true
     }
   },
   created () {

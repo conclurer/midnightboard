@@ -36,6 +36,8 @@
         }
     },
     "profile":{
+        "firstName":"Vorname",
+        "lastName":"Nachname",
         "email":"E-Mail",
         "username":"Nutzername",
         "password":"Passwort"
