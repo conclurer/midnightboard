@@ -57,3 +57,10 @@ CREATE TABLE public.team_membership (
     team_id integer NOT NULL REFERENCES team (team_id) ON DELETE CASCADE,
     member_id integer NOT NULL REFERENCES member (member_id) ON DELETE CASCADE
 );
+
+CREATE TABLE public.token (
+    id serial NOT NULL PRIMARY KEY,
+    created_at bigint NOT NULL,
+    uid int NOT NULL,
+    refresh_token text
+);

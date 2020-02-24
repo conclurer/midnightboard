@@ -21,12 +21,14 @@ content-type: application/json
 
 ###
 
-DELETE http://localhost:1337/api/users/logout HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NaiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVGVzdFVzZXIyIiwiaWF0IjoxNTgyNDc3NTg3fQ.KZ_bBb0JMs9nggImznIakph6Kl9l7KPZ2c6hvgRaImM
+PUT http://localhost:1337/api/users/1 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVGVzdFVzZXIyIiwiaWF0IjoxNTgyNTQ5OTAwLCJleHAiOjE1ODI1NDk5MTV9.vrDu4laa9YB413AgucSkgMAZcJYlC-mHYVuyaZbV40w
 
 ###
-
-
-PUT http://localhost:1337/api/users/1 HTTP/1.1
+###
+POST http://localhost:1337/api/users/refresh HTTP/1.1
 content-type: application/json
 
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVGVzdFVzZXIyIiwiaWF0IjoxNTgyNTUwNDM5fQ.iqLwGQiQZrbxxr1_hHZksPke5Be5zlgYKOEd4YYEuL4"
+}

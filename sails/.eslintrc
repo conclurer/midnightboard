@@ -49,7 +49,8 @@
     "PostLocation": true,
     "Team": true,
     "TeamMembership": true,
-    "User": true
+    "User": true,
+    "RefreshToken": true
     
     // …and any others.
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
