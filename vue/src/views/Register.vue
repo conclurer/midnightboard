@@ -46,7 +46,6 @@
 
 <script>
 // @ is an alias to /src
-import axios from 'axios'
 import Header from '@/components/Header.vue'
 import { i18n } from '@/main.js'
 

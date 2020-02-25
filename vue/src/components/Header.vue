@@ -67,7 +67,6 @@
       </b-navbar-nav>
     </b-navbar>
 
-
     <!-- Bootstrap navbar
     <nav class="navbar navbar-inverse bg-dark fixed-top">
       <div class="container-fluid">
