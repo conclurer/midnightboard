@@ -44,7 +44,13 @@
     },
     "ui":{
         "add":"Add",
-        "profile":"Profile"
+        "profile":"Profile",
+        "welcome":"Welcome back!",
+        "login":"Log In",
+        "toLogin":"Or log in with an existing account",
+        "createAccount":"Create a new account:",
+        "signUp":"Sign Up",
+        "toSignUp":"Or create a new account"
     },
     "HelloWorld": "Hello World!"
 }

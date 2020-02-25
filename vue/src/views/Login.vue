@@ -9,17 +9,32 @@
       :english="english"
       :buttonsActive=false
     />
-    <div class="loginBox" align="center">
+    <b-card
+      class="loginBox"
+      align="center"
+      bg-variant="dark"
+      text-variant="white"
+    >
       <br>
       <form>
-        <h2>Login</h2>
+        <h2>{{$t('ui.welcome')}}</h2>
         <br>
-        <input type="text" id="fname" name="fname" :placeholder="$t('profile.email')" size="36">
+        <input type="text" id="email" name="email" :placeholder="$t('profile.email')" size="36">
         <br>
         <br>
-        <input type="text" id="lname" name="lname" :placeholder="$t('profile.password')" size="36">
+        <input type="text" id="passwd" name="passwd" :placeholder="$t('profile.password')" size="36">
+        <br>
+        <br>
+        <input type="submit" :value="$t('ui.login')">
+        <br>
+        <br>
+        <router-link
+          to="/register"
+        >
+          {{$t('ui.toSignUp')}}
+        </router-link>
       </form>
-    </div>
+    </b-card>
   </div>
 </template>
 
@@ -79,6 +94,7 @@ export default {
 }
 
 .loginBox {
-    margin: 0 auto;
+  width: 400px;
+  margin: 20px auto;
 }
 </style>

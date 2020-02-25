@@ -21,13 +21,13 @@
             <span
               class="unselectable"
               unselectable="on"
-            ><a @click="plusClicked"><font-awesome-icon icon="plus" /> {{$t('ui.add')}} </a></span>
+            ><a @click="plusClicked"><font-awesome-icon icon="plus" /> {{$t('ui.add')}}</a></span>
           </b-nav-item>
           <b-nav-item>
             <span
               class="unselectable"
               unselectable="on"
-            ><font-awesome-icon icon="user-circle" /> {{$t('ui.profile')}} </span>
+            ><font-awesome-icon icon="user-circle" /> {{$t('ui.profile')}}</span>
           </b-nav-item>
           <b-nav-item>
             <span
