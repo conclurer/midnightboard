@@ -11,11 +11,10 @@
         "setup": "cd vue && npm install && cd ../sails && npm install && npm audit fix && cd .. && npm run vue-build",
         "vue-lint": "cd vue && npm run lint",
         "vue-build": "cd vue && npm run build && rm -rf ../sails/assets/ && cp -a dist/. ../sails/assets && touch ../sails/assets/.gitkeep",
-        "sails-test": "cd sails && npm run test",
         "sails-start-dev": "cd sails && npm run start-dev",
         "sails-start-prod": "cd sails && npm run start-prod",
-        "test": "npm run vue-lint && npm run sails-test",
-        "start": "npm run setup && npm run vue-lint && npm run vue-build && npm run sails-start-dev"
+        "test": "cd sails && npm run test",
+        "start": "npm run setup && npm run sails-start-dev"
     },
     "repository": {
         "type": "git",

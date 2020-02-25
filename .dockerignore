@@ -23,6 +23,7 @@
 **/package-lock.json
 **/secrets.dev.yaml
 **/swagger
+**/test
 **/values.dev.yaml
 CHANGELOG.md
 CONTRIBUTING.md
