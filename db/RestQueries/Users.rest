@@ -22,13 +22,31 @@ content-type: application/json
 ###
 
 PUT http://localhost:1337/api/users/1 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVGVzdFVzZXIyIiwiaWF0IjoxNTgyNTQ5OTAwLCJleHAiOjE1ODI1NDk5MTV9.vrDu4laa9YB413AgucSkgMAZcJYlC-mHYVuyaZbV40w
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVGVzdFVzZXIyIiwiaWQiOjcsImlhdCI6MTU4MjY2Nzk0MSwiZXhwIjoxNTgyNjY4ODQxfQ.O-pOkjxPCL38HDISghKfu5HB4TnzYDM7llWGcnr6-WI
 
 ###
+
+//LOGOUT via AcessToken
+DELETE http://localhost:1337/api/users/logout HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVGVzdFVzZXIyIiwiaWQiOjcsImlhdCI6MTU4MjY2ODU4OSwiZXhwIjoxNTgyNjY5NDg5fQ.PklZuN0gyO89WbegyOvmwesYeaAtVy8qEMMoIlHgK60
+
 ###
+
+//LOGOUT via RefreshToken
+DELETE http://localhost:1337/api/users/logout HTTP/1.1
+content-type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVGVzdFVzZXIyIiwiaWQiOjcsImlhdCI6MTU4MjY2ODYwNX0.WJkoO93q-vSsT5gzOTXLjI48ASwBvolE--FxoNSJqKk"
+}
+
+###
+
 POST http://localhost:1337/api/users/refresh HTTP/1.1
 content-type: application/json
 
 {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVGVzdFVzZXIyIiwiaWF0IjoxNTgyNTUwNDM5fQ.iqLwGQiQZrbxxr1_hHZksPke5Be5zlgYKOEd4YYEuL4"
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVGVzdFVzZXIyIiwiaWQiOjcsImlhdCI6MTU4MjY2ODY1M30.wPMWvCQXsMqDQTAJ016RHq8SzUW0evDtba_4nWdkDa4"
 }
+
+###

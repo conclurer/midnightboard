@@ -19,7 +19,9 @@ module.exports = {
   },
 
   updateUser: async function(req, res){
+    // TODO. For now it is used as temporary helper that returns the contents of a valid JWT
     var out = await sails.helpers.authenticateJwt(req.headers);
+    //sails.log(req.me['id'] + " || " + req.me['name']);
     return res.ok(out);
   },
 };
