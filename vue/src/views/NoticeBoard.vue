@@ -69,8 +69,6 @@ export default {
     plusClicked () {
       // Show/hide editor sidebar
       this.editorActive = !this.editorActive
-      // Place sidebar below titlebar
-      // document.getElementsByClassName('rightBar')[0].style.top = document.getElementsByClassName('navbar')[0].clientHeight + 'px'
     },
     changeLanguage () {
       this.english = !this.english

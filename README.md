@@ -69,7 +69,6 @@ $ docker-compose stop db && docker-compose rm -f -v db && docker-compose up --no
 ## Setup without Docker
 For running a local PostgreSQL server check out [datastores.js](https://github.com/conclurer/midnightboard/blob/master/sails/config/datastores.js) for more details.
 
-
 ```bash
 $ npm install
 $ npm run setup

@@ -6,23 +6,93 @@ version: 2.1
 
 # CircleCI jobs
 jobs:
-  # Test configuration
-  test:
-    # Node.js & PostgreSQL Docker image for VM
+  setup:
+    # Node.js Docker image for VM
     docker:
-    - image: circleci/node:erbium
-    - image: circleci/postgres:latest
-    # All steps for test
+      - image: circleci/node:erbium
+    # All steps for testing
     steps:
       # Checkout branch to VM
       - checkout
 
-      # Run Jest
+    # Allow running docker on VM
+      - setup_remote_docker:
+          docker_layer_caching: false
+
+    # Install Docker client on VM
       - run:
-          name: Run tests
+          name: Install Docker client
           command: |
-            npm install
-            npm run setup
+            set -x
+            VER="18.06.3-ce"
+            curl -L -o /tmp/docker-$VER.tgz https://download.docker.com/linux/static/stable/x86_64/docker-$VER.tgz
+            tar -xz -C /tmp -f /tmp/docker-$VER.tgz
+            sudo mv /tmp/docker/* /usr/bin
+
+    # Build database image on VM and push it to DockerHub
+      - run:
+          name: Build and push Docker image
+          command: |
+            docker-compose build db
+            echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
+            docker push tvsjsdock/midnightboard-db:latest
+
+  # Test configuration
+  test:
+    # Midnightboard database Docker image for VM
+    docker:
+      - image: circleci/node:erbium
+      - image: tvsjsdock/midnightboard-db:latest
+        environment:
+          POSTGRES_USER: dev
+          POSTGRES_PASSWORD: secret2020
+          POSTGRES_DB: midnightboard
+
+    # All steps for testing
+    steps:
+      # Checkout branch to VM
+      - checkout
+
+      # Allow running docker on VM
+      - setup_remote_docker:
+          docker_layer_caching: false
+
+      # Install Docker client on VM
+      - run:
+          name: Install Docker client
+          command: |
+            set -x
+            VER="18.06.3-ce"
+            curl -L -o /tmp/docker-$VER.tgz https://download.docker.com/linux/static/stable/x86_64/docker-$VER.tgz
+            tar -xz -C /tmp -f /tmp/docker-$VER.tgz
+            sudo mv /tmp/docker/* /usr/bin
+
+      # Install dockerize to wait for test cases until application is running
+      - run:
+          name: Install dockerize
+          command: |
+            wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz 
+            sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+          environment:
+            DOCKERIZE_VERSION: v0.6.1
+
+      # Install project
+      - run:
+          name: Install project
+          command: npm install
+
+      # Start Sails.js application
+      - run:
+          name: Start application
+          command: npm run start
+          background: true
+
+      # Run ESLint & Jest
+      - run:
+          name: Run linter and test cases
+          command: |
+            dockerize -wait tcp://localhost:1337 -timeout 120s
+            npm run vue-lint
             npm run test
   
   # Danger configuration
@@ -44,16 +114,14 @@ jobs:
           
   # Build and deploy configuration
   build-deploy:
-    # Node.js & PostgreSQL Docker image for VM
+    # Node.js Docker image for VM
     docker:
       - image: circleci/node:erbium
-      - image: circleci/postgres:latest
-    
     # All steps for build
     steps:
       # Checkout branch to VM
       - checkout
-      
+
       # Allow running docker on VM
       - setup_remote_docker:
           docker_layer_caching: false
@@ -85,8 +153,12 @@ workflows:
    version: 2
    test-danger-build-deploy:
      jobs:
+      # Run setup job
+      - setup
       # Run test job
-      - test
+      - test:
+          requires:
+          - setup
       # Run danger job
       - danger:
           requires:

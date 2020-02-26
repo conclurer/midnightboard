@@ -133,7 +133,15 @@
 
     <div class="lowerGap" />
 
-    <VueCtkDateTimePicker id="DatePicker" class="datePicker" format="DD-MM-YYYY" formatted="ll" onlyDate v-model="date" label="Select due date" color="#F9A618">
+    <VueCtkDateTimePicker
+      id="DatePicker"
+      class="datePicker"
+      format="DD-MM-YYYY"
+      formatted="ll"
+      onlyDate v-model="date"
+      label="Select due date"
+      color="#F9A618"
+    >
     </VueCtkDateTimePicker>
 
     <div class="lowerGap" />

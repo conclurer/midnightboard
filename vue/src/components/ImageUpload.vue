@@ -1,6 +1,6 @@
 <template>
   <div class="imageUpload">
-    <br> <!-- Should be deleted if design is fixed -->
+    <br>
     <h2>{{$t('editor.image.title')}}</h2>
     <input
       v-bind:value="imageTitel"
@@ -40,10 +40,7 @@
     >
     {{$t('editor.image.post')}}
     </button>
-    <br>
-    <br>
-    <br>
-    <br>
+    <br><br><br><br> <!-- For scrollbar -->
   </div>
 </template>
 
