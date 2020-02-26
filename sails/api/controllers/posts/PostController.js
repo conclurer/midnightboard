@@ -131,7 +131,6 @@ module.exports = {
     var createdPost = await Post.create({
       typeOfPost: req.param('typeOfPost'),
       title: req.param('title'),
-      typeOfPost: req.param('typeOfPost'),
       content: req.param('content'),
       dueDate: uDueDate,
       interactiveDueDate: uInteractiveDueDate
