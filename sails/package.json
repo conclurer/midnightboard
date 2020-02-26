@@ -9,6 +9,7 @@
         "core-js": "^3.6.4",
         "grunt": "^1.0.4",
         "sails": "^1.2.3",
+        "sails-hook-cron": "^3.0.1",
         "sails-hook-grunt": "^4.0.1",
         "sails-hook-orm": "^2.1.1",
         "sails-hook-sockets": "^2.0.0",

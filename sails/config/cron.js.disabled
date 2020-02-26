@@ -1,0 +1,19 @@
+import { DefaultDueDates } from '../../../../configuration/DefaultDisplayTimes';
+export const cron = {
+  cleanupOverduePosts: {
+    schedule: '0 2 */1 * *',
+    onTick: async function () {
+      sails.log.debug('SCHEDULE::: Running schedule, cleaning up overdue posts . . .');
+      var overdue = Date.now() - DefaultDueDates.MaMaxOverdueTime*(60*60*1000)
+      var idList = await Post.find({
+        where: {dueDate: { '<' : overdue }},
+        select: ['id']
+      });
+      sails.log.debug('SCHEDULE::: Deleting ' + idList.length + ' posts . . . ');
+
+      for(i=0;i<idList.length;i++){
+        await Post.destroy({id: idList[i].id});
+      }
+    }
+  }
+};
