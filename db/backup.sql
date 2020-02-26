@@ -144,7 +144,7 @@ CREATE TABLE public.post (
     created_at bigint NOT NULL,
     updated_at bigint NOT NULL,
     creator_id integer,
-    type_of_post character varying(27) NOT NULL,
+    type_of_post character varying(127) NOT NULL,
     title character varying(50),
     content text,
     due_date bigint NOT NULL,
@@ -390,7 +390,6 @@ COPY public.post (post_id, created_at, updated_at, creator_id, type_of_post, tit
 10	1577833200000	1577833200000	2	application/note	Old Note 2	<h1>Content</h1>	1577833200000	0
 11	1577833200000	1577833200000	3	application/note	Old Note 3	<h1>Content</h1>	1577833200000	0
 \.
-
 
 --
 -- Data for Name: post_location; Type: TABLE DATA; Schema: public; Owner: dev
