@@ -5,6 +5,11 @@
 </template>
 
 <style>
+@viewport {
+  max-zoom: 2.0;
+  min-zoom: 0.5;
+}
+
 body {
   overflow-y: scroll;
 }

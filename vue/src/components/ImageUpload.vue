@@ -1,6 +1,6 @@
 <template>
   <div class="imageUpload">
-    <br> <!-- Should be deleted if design is fixed -->
+    <br>
     <h2>{{$t('editor.image.title')}}</h2>
     <input
       v-bind:value="imageTitel"
@@ -40,6 +40,7 @@
     >
     {{$t('editor.image.post')}}
     </button>
+    <br><br><br><br> <!-- For scrollbar -->
   </div>
 </template>
 
@@ -76,30 +77,30 @@ export default {
 </script>
 
 <style>
-    #imageUpload {
+  #imageUpload {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
     margin-top: 60px;
-    }
+  }
 
-    h1, h2 {
+  h1, h2 {
     font-weight: normal;
-    }
+  }
 
-    ul {
+  ul {
     list-style-type: none;
     padding: 0;
-    }
+  }
 
-    li {
+  li {
     display: inline-block;
     margin: 0 10px;
-    }
+  }
 
-    a {
+  a {
     color: #42b983;
-    }
+  }
 </style>

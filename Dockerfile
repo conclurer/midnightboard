@@ -12,6 +12,8 @@ COPY sails /usr/src/app/sails
 COPY vue /usr/src/app/vue
 # Copy package.json to /usr/src/app
 COPY package.json /usr/src/app
+# Copy configuration to /usr/src/app/configuration
+COPY configuration /usr/src/app/configuration
 # Setup project
 RUN npm install && npm run setup
 # Start application with $ docker run ...

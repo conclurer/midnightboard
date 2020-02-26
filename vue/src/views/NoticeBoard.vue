@@ -4,25 +4,17 @@
   >
     <Header
       id="titlebar"
+      title="Quality Assurance"
       @plus-clicked="plusClicked"
       @change-language="changeLanguage"
       :english="english"
+      :buttonsActive=true
     />
     <Board
+      @add-note="addNote"
       :notes="notes"
+      :editorActive="editorActive"
     />
-    <div
-      v-show="this.editorActive"
-      class="rightBar"
-    >
-      <div>
-        <div v-smoothscrollbar="{ listener, options }">
-          <EditorSidebar
-            @add-note="addNote"
-          />
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -31,24 +23,20 @@
 import axios from 'axios'
 import Board from '@/components/Board.vue'
 import Header from '@/components/Header.vue'
-import EditorSidebar from '@/components/EditorSidebar.vue'
 import { i18n } from '@/main.js'
 
 export default {
   name: 'NoticeBoard',
   components: {
     Header,
-    Board,
-    EditorSidebar
+    Board
   },
   data () {
     return {
       notes: [],
       boardId: 1,
       editorActive: false,
-      english: true,
-      listener: () => {},
-      options: {}
+      english: true
     }
   },
   created () {
@@ -81,8 +69,6 @@ export default {
     plusClicked () {
       // Show/hide editor sidebar
       this.editorActive = !this.editorActive
-      // Place sidebar below titlebar
-      document.getElementsByClassName('rightBar')[0].style.top = document.getElementsByClassName('navbar')[0].clientHeight + 'px'
     },
     changeLanguage () {
       this.english = !this.english
@@ -103,14 +89,7 @@ export default {
 <style scoped>
   .home {
     position: relative;
-  }
-
-  .rightBar {
-    position: fixed;
-    right: 0px;
-    width: 500px;
-    height: 100vh;
-    background: #fff;
+    overflow-x: hidden;
   }
 
   .smooth-vuebar {
