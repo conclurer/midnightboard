@@ -365,11 +365,11 @@ COPY public.board_subscription (id, board_id, member_id) FROM stdin;
 --
 
 COPY public.member (member_id, created_at, updated_at, user_name, first_name, last_name, email, password, avatar, language_preference, hide_last_name) FROM stdin;
-1	1577833200000	1577833200000	user1	Max	Mustermann	Max.Mustermann@ma.il	password123	\N	en	t
-2	1577833200000	1577833200000	user2	Peter	Mustermann	Peter.Mustermann@ma.il	password123	\N	en	t
-3	1577833200000	1577833200000	user3	Hans	Mustermann	Hans.Mustermann@ma.il	password123	\N	en	t
-4	1577833200000	1577833200000	user4	Bibi	Mustermann	Bibi.Mustermann@ma.il	password123	\N	en	t
-5	1577833200000	1577833200000	user5	Heidi	Mustermann	Heidi.Mustermann@ma.il	password123	\N	en	t
+1	1577833200000	1577833200000	user1	Max	Mustermann	Max.Mustermann@ma.il	passwordA	\N	en	t
+2	1577833200000	1577833200000	user2	Peter	Mustermann	Peter.Mustermann@ma.il	passwordB	\N	en	t
+3	1577833200000	1577833200000	user3	Hans	Mustermann	Hans.Mustermann@ma.il	passwordC	\N	en	t
+4	1577833200000	1577833200000	user4	Bibi	Mustermann	Bibi.Mustermann@ma.il	passwordD	\N	en	t
+5	1577833200000	1577833200000	user5	Heidi	Mustermann	Heidi.Mustermann@ma.il	passwordE	\N	en	t
 \.
 
 
@@ -378,16 +378,18 @@ COPY public.member (member_id, created_at, updated_at, user_name, first_name, la
 --
 
 COPY public.post (post_id, created_at, updated_at, creator_id, type_of_post, title, content, due_date, interactive_due_date) FROM stdin;
-1	1577833200000	1577833200000	1	application/note	Note 1	<h1>Content</h1>	0	0
-2	1577833200000	1577833200000	2	application/note	Note 2	<h1>Content</h1>	0	0
-3	1577833200000	1577833200000	3	application/note	Note 3	<h1>Content</h1>	0	0
-4	1577833200000	1577833200000	4	application/note	Note 4	<h1>Content</h1>	0	0
-5	1577833200000	1577833200000	5	application/note	Note 5	<h1>Content</h1>	0	0
-6	1577833200000	1577833200000	1	application/note	Note 6	<h1>Content</h1> 	0	0
-7	1577833200000	1577833200000	2	application/note	Note 7	<h1>Content</h1>	0	0
-8	1577833200000	1577833200000	3	application/note	Note 8	<h1>Content</h1>	0	0
+1	1577833200000	1577833200000	1	application/note	Note 1	<h1>Content</h1>	1587333600000	0
+2	1577833200000	1577833200000	2	application/note	Note 2	<h1>Content</h1>	1587333600000	0
+3	1577833200000	1577833200000	3	application/note	Note 3	<h1>Content</h1>	1587333600000	0
+4	1577833200000	1577833200000	4	application/note	Note 4	<h1>Content</h1>	1587333600000	0
+5	1577833200000	1577833200000	5	application/note	Note 5	<h1>Content</h1>	1587333600000	0
+6	1577833200000	1577833200000	1	application/note	Note 6	<h1>Content</h1>	1587333600000	0
+7	1577833200000	1577833200000	2	application/note	Note 7	<h1>Content</h1>	1587333600000	0
+8	1577833200000	1577833200000	3	application/note	Note 8	<h1>Content</h1>	1587333600000	0
+9	1577833200000	1577833200000	1	application/note	Old Note 1	<h1>Content</h1>	1577833200000	0
+10	1577833200000	1577833200000	2	application/note	Old Note 2	<h1>Content</h1>	1577833200000	0
+11	1577833200000	1577833200000	3	application/note	Old Note 3	<h1>Content</h1>	1577833200000	0
 \.
-
 
 --
 -- Data for Name: post_location; Type: TABLE DATA; Schema: public; Owner: dev
@@ -407,6 +409,9 @@ COPY public.post_location (id, board_id, post_id) FROM stdin;
 11	2	6
 12	1	7
 13	1	8
+14	1	9
+15	1	10
+16	1	11
 \.
 
 
@@ -457,14 +462,14 @@ SELECT pg_catalog.setval('public.member_member_id_seq', 5, true);
 -- Name: post_location_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dev
 --
 
-SELECT pg_catalog.setval('public.post_location_id_seq', 13, true);
+SELECT pg_catalog.setval('public.post_location_id_seq', 16, true);
 
 
 --
 -- Name: post_post_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dev
 --
 
-SELECT pg_catalog.setval('public.post_post_id_seq', 8, true);
+SELECT pg_catalog.setval('public.post_post_id_seq', 11, true);
 
 
 --

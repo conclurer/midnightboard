@@ -5,7 +5,7 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
-var DefaultDueDates = require('../../../../configuration/DefaultDisplayTimes'); // TODO Remove when replacing default times
+var DefaultDueDates = require('../../../../configuration/DefaultDisplayTimes');
 module.exports = {
   newPost: async function(req, res){
     // 'Bad Reqest' Responses when information is missing from the API Request
@@ -40,10 +40,9 @@ module.exports = {
       return res.badRequest(new Error('Invalid due date'));
     }
 
-    var t = 0;
-
     // Set default due date when no date is given
     var uDueDate = Date.now();
+    var t = 0;
     if(!req.param('dueDate')){
       // TODO Set to default times
       // For now, default times are stored in root/configuration(DefaultDisplayTime.js) in hours
@@ -110,7 +109,6 @@ module.exports = {
     } else {
       // TODO Set to default times
       // For now, default times are stored in root/configuration(DefaultDisplayTime.js) in hours
-      t = 0;
       switch(req.param('typeOfPost')){
         case 'application/calendar':
           t = DefaultDueDates.ActiveTime.CALENDAR;
@@ -145,6 +143,7 @@ module.exports = {
     return res.json(JSON.stringify(createdPost));
   },
 
+
   getPost: async function(req, res){
     sails.log.debug('Fetching Post #' + req.param('postId'));
     var pst = await Post.findOne({id: req.param('postId')});
@@ -152,6 +151,7 @@ module.exports = {
     if(!pst){ return res.notFound(); }
     return res.json(JSON.stringify(pst));
   },
+
 
   searchPost: async function(req, res){
     sails.log.debug('Fetching Posts from board #' + req.param('boardId'));
@@ -180,11 +180,13 @@ module.exports = {
     return res.json(JSON.stringify(postList));
   },
 
+
   deletePost: async function(req, res) {
     sails.log.debug('Trying to delete post #' + req.param('postId'));
     await Post.destroy({id: req.param('postId')});
     return res.ok();
   },
+
 
   updatePost: async function(req, res) {
     req = req;
