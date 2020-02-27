@@ -3,8 +3,8 @@ const http = require('./fetch.js');
 
 // newPost
 const createData = {
-  title: 'Note title',
   typeOfPost: 'application/note',
+  title: 'Note title',
   content: '<h2>Content</h2>'
 };
 test('Check newPost with type application/note', () => {
@@ -16,12 +16,16 @@ test('Check newPost with type application/note', () => {
     body: JSON.stringify(createData)
   })
   .then((response) => {
+    // Check for status code
     expect(response.status).toBe(200);
-    response.json();
+    return response.json();
   })
-  .then((jsonData) => {
+  .then((jsonString) => {
     // Check for valid data
-    expect(jsonData).not.toBeNull();
+    const jsonData = JSON.parse(jsonString);
+    expect(jsonData.typeOfPost).toBe('application/note');
+    expect(jsonData.title).toBe('Note title');
+    expect(jsonData.content).toBe('<h2>Content</h2>');
   })
   .catch(() => {
     expect(null).not.toBeNull();
@@ -35,11 +39,11 @@ test('Check getPost with postId = 1', () => {
   })
   .then((response) => {
     expect(response.status).toBe(200);
-    response.json();
+    return response.json();
   })
-  .then((jsonData) => {
+  .then((jsonString) => {
     // Check for valid data
-    expect(jsonData).not.toBeNull();
+    expect(jsonString).not.toBeNull();
   })
   .catch(() => {
     expect(null).not.toBeNull();
@@ -53,11 +57,11 @@ test('Check searchPost with boardId = 1', () => {
   })
   .then((response) => {
     expect(response.status).toBe(200);
-    response.json();
+    return response.json();
   })
-  .then((jsonData) => {
+  .then((jsonString) => {
     // Check for valid data
-    expect(jsonData).not.toBeNull();
+    expect(jsonString).not.toBeNull();
   })
   .catch(() => {
     expect(null).not.toBeNull();

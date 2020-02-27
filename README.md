@@ -56,7 +56,7 @@ $ cd sails
 $ npm run start-dev
 ```
 
-#### Open [http://localhost:1337/home](http://localhost:1337/home)
+#### Open [http://localhost:1337/](http://localhost:1337/)
 
 ##### Restart database (imports automatically changes on db/backup.sql)
 
