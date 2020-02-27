@@ -2,6 +2,15 @@
     "about":{
         "message":"Das ist eine About Seite"
     },
+    "board":{
+        "download":{
+            "image":"Bild herunterladen",
+            "pdf":"PDF herunterladen",
+            "word":"Word-Dokument herunterladen",
+            "excel":"Excel-Tabelle herunterladen",
+            "powerpoint":"PowerPoint-Präsentation herunterladen"
+        }
+    },
     "editor":{
         "note":{
             "create":"Erstellen",

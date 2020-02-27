@@ -46,7 +46,11 @@ import {
   faQuoteRight,
   faTerminal,
   faUndo,
-  faRedo
+  faRedo,
+  faFilePdf,
+  faFileWord,
+  faFileExcel,
+  faFilePowerpoint
 } from '@fortawesome/free-solid-svg-icons'
 library.add(
   faPlus,
@@ -63,7 +67,11 @@ library.add(
   faQuoteRight,
   faTerminal,
   faUndo,
-  faRedo
+  faRedo,
+  faFilePdf,
+  faFileWord,
+  faFileExcel,
+  faFilePowerpoint
 )
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

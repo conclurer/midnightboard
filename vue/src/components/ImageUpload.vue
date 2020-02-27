@@ -14,7 +14,8 @@
       width="300"
       height="300"
       margin="16"
-      accept="image/jpeg,image/png"
+      accept="image/jpeg,
+            image/png"
       size="10"
       buttonClass="btn btn-info button"
       removeButtonClass="btn btn-danger button"
@@ -40,7 +41,6 @@
     >
     {{$t('editor.image.post')}}
     </button>
-    <br><br><br><br> <!-- For scrollbar -->
   </div>
 </template>
 

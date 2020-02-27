@@ -2,21 +2,21 @@
   <div class="editorSidebar">
     <NoteEditor @create-note="createNote"/>
     <ImageUpload @upload-image="uploadImage"/>
-    <!-- <FileUpload @upload-file="uploadFile"/> -->
+    <FileUpload @upload-file="uploadFile"/>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-// import FileUpload from '@/components/FileUpload.vue'
+import FileUpload from '@/components/FileUpload.vue'
 import ImageUpload from '@/components/ImageUpload.vue'
 import NoteEditor from '@/components/NoteEditor.vue'
 
 export default {
   components: {
     NoteEditor,
-    ImageUpload
-    // FileUpload
+    ImageUpload,
+    FileUpload
   },
   data () {
     return {
