@@ -20,13 +20,13 @@ module.exports = {
     // Type does not match
     if(![
       'application/calendar',
-      'application/msexcel',
-      'application/mspowerpoint',
       'application/msword',
       'application/note',
       'application/pdf',
       'application/poll',
       'application/survey',
+      'application/vnd.ms-excel',
+      'application/vnd.ms-powerpoint',
       'application/vnd.openxmlformats-officedocument.presentationml.presentation',
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -50,10 +50,10 @@ module.exports = {
         case 'application/calendar':
           t = DefaultDueDates.DisplayTime.CALENDAR;
           break;
-        case 'application/msexcel':
+        case 'application/vnd.ms-excel':
           t = DefaultDueDates.DisplayTime.OFFICEFILE;
           break;
-        case 'application/mspowerpoint':
+        case 'application/vnd.ms-powerpoint':
           t = DefaultDueDates.DisplayTime.OFFICEFILE;
           break;
         case 'application/msword':

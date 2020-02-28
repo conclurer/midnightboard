@@ -2,6 +2,15 @@
     "about":{
         "message":"This is an About page"
     },
+    "board":{
+        "download":{
+            "image":"Download Image",
+            "pdf":"Download PDF",
+            "word":"Download Word Document",
+            "excel":"Download Excel Spreadsheet",
+            "powerpoint":"Download PowerPoint Presentation"
+        }
+    },
     "editor":{
         "note":{
             "create":"Create",
