@@ -38,12 +38,12 @@ export default new Router({
       {
         path: 'login',
         name: 'Login',
-        component: () => import('../views/Temporary/Login.vue')
+        component: () => import('../views/Login.vue')
       },
       {
         path: 'register',
         name: 'Register',
-        component: () => import('../views/Temporary/Register.vue')
+        component: () => import('../views/Register.vue')
       }
     ]
 
@@ -51,6 +51,7 @@ export default new Router({
   // Redirect to 404 page if trying to visit invalid path
   {
     path: '*',
+    // redirect: '/home'
     component: () => import('../views/404.vue')
   }
   ]

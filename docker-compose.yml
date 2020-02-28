@@ -19,7 +19,7 @@ services:
     container_name: midnightboard-app
     image: tvsjsdock/midnightboard-app:latest
     environment:
-      NODE_ENV: development
+      NODE_ENV: production
     ports:
       - "1337:1337"
     depends_on:

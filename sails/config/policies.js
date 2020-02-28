@@ -9,7 +9,8 @@
  */
 
 module.exports.policies = {
-    '*': 'is-logged-in',
+    //'*': 'is-logged-in',
+    '*': true,
 
     
     'users/Auth/*': true

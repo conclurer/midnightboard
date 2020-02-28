@@ -2,14 +2,55 @@
     "about":{
         "message":"This is an About page"
     },
+    "editor":{
+        "note":{
+            "create":"Create",
+            "title":"Insert title here"
+        },
+        "image":{
+            "title":"Upload your image:",
+            "post":"Post image",
+            "upload":"Your device does not support file uploading.",
+            "drag":"Drag an image or click here to select a image",
+            "tap":"Tap here to select a image from your gallery",
+            "change":"Change image",
+            "remove":"Remove image",
+            "select":"Select a image",
+            "selected":"Image successfully selected!",
+            "fileSize":"The file size exceeds the limit",
+            "fileType":"Only JPEG and PNG are supported!",
+            "aspect":"Landscape/Portrait"
+        },
+        "file":{
+            "title":"Upload your file:",
+            "post":"Post file",
+            "upload":"Your device does not support file uploading.",
+            "drag":"Drag an file or click here to select a file",
+            "tap":"Tap here to select a file from your device",
+            "change":"Change file",
+            "remove":"Remove file",
+            "select":"Select a file",
+            "selected":"File successfully selected!",
+            "fileSize":"The file size exceeds the limit",
+            "fileType":"Only PDF, DOC(X), XLS(X) and PPT(X) are supported!"
+        }
+    },
     "profile":{
+        "firstName":"First name",
+        "lastName":"Last name",
         "email":"E-Mail",
         "username":"Username",
-        "password":"Password",
-        "firstname":"First name",
-        "lastname":"Last name"
+        "password":"Password"
     },
-
-
+    "ui":{
+        "add":"Add",
+        "profile":"Profile",
+        "welcome":"Welcome back!",
+        "login":"Log In",
+        "toLogin":"Or log in with an existing account",
+        "createAccount":"Create a new account:",
+        "signUp":"Sign Up",
+        "toSignUp":"Or create a new account"
+    },
     "HelloWorld": "Hello World!"
 }

@@ -7,7 +7,7 @@ CREATE TABLE public.member (
     first_name VARCHAR(20),
     last_name VARCHAR(20),
     email TEXT NOT NULL UNIQUE,
-    password VARCHAR(64) NOT NULL,
+    password TEXT NOT NULL,
     avatar jsonb,
     language_preference  CHAR(2) DEFAULT 'en' NOT NULL,
     hide_last_name boolean DEFAULT TRUE NOT NULL 

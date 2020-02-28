@@ -27,7 +27,6 @@ INSERT INTO post (created_at,updated_at,creator_id,type_of_post,title,content,du
     (1577833200000,1577833200000,1,'application/note','Note 6','<h1>Content</h1>',1587333600000,0),
     (1577833200000,1577833200000,2,'application/note','Note 7','<h1>Content</h1>',1587333600000,0),
     (1577833200000,1577833200000,3,'application/note','Note 8','<h1>Content</h1>',1587333600000,0),
-
     (1577833200000,1577833200000,1,'application/note','Old Note 1','<h1>Content</h1>',1577833200000,0),
     (1577833200000,1577833200000,2,'application/note','Old Note 2','<h1>Content</h1>',1577833200000,0),
     (1577833200000,1577833200000,3,'application/note','Old Note 3','<h1>Content</h1>',1577833200000,0);

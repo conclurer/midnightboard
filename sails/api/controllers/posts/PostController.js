@@ -95,7 +95,8 @@ module.exports = {
     // When interactive time is already expired, return bad request
     var uInteractiveDueDate = 0;
     if(req.param('interactiveDueDate')){
-      if(['application/calendar',
+      if([
+        'application/calendar',
         'application/poll',
         'application/survey'
       ].includes(req.param('typeOfPost'))){
@@ -121,15 +122,15 @@ module.exports = {
         default:
           t = 0;
       }
-      if(t===0){ uInteractiveDueDate = 0;}
+      if(t === 0){ uInteractiveDueDate = 0;}
       else { uInteractiveDueDate = Date.now() + t*(60*60*1000); }
     }
 
     sails.log.debug('Creating new Post . . .');
     // Create entry in 'post' table
     var createdPost = await Post.create({
-      title: req.param('title'),
       typeOfPost: req.param('typeOfPost'),
+      title: req.param('title'),
       content: req.param('content'),
       dueDate: uDueDate,
       interactiveDueDate: uInteractiveDueDate
@@ -145,7 +146,7 @@ module.exports = {
 
   getPost: async function(req, res){
     sails.log.debug('Fetching Post #' + req.param('postId'));
-    var pst = await Post.findOne({postId: req.param('postId')});
+    var pst = await Post.findOne({id: req.param('postId')});
     // Return 'not found' response when postId does not match any existing post
     if(!pst){ return res.notFound(); }
     return res.json(JSON.stringify(pst));
@@ -156,7 +157,7 @@ module.exports = {
     sails.log.debug('Fetching Posts from board #' + req.param('boardId'));
 
     var overdue = Date.now();
-    if(req.param('overdueDays') && !req.param('overdueDays').isNaN() && req.param('overdueDays') >= 0){
+    if(req.param('overdueDays') && !isNaN(req.param('overdueDays')) && req.param('overdueDays') >= 0){
       overdue = Date.now() - req.param('overdueDays')*(24*60*60*1000);
     }
 
@@ -188,7 +189,7 @@ module.exports = {
 
 
   updatePost: async function(req, res) {
-
+    
     return res.ok();
   }
 };

@@ -25,7 +25,6 @@ module.exports = {
   },
 
   updateBoard: async function(req, res){
-
     return res.ok();
   },
 };

@@ -4,7 +4,7 @@ info:
   description: API for [midnightboard](https://github.com/conclurer/midnightboard).<br>
     Generated as JSON by [sails-hook-swagger-generator](https://github.com/theo4u/sails-hook-swagger-generator).<br>
     Converted to YAML by [Swagger Editor](https://editor.swagger.io).
-  version: 0.0.2
+  version: 0.0.3
   license:
     name: MIT License
     url: 'https://github.com/conclurer/midnightboard/blob/master/LICENSE'
@@ -42,7 +42,7 @@ definitions:
         type: string
     required:
       - boardName
-  boardSubscription:
+  boardsubscription:
     properties:
       boardId:
         type: string
@@ -56,7 +56,7 @@ definitions:
         type: string
       updatedAt:
         type: string
-      username:
+      userName:
         type: string
       firstName:
         type: string
@@ -73,7 +73,7 @@ definitions:
       hideLastName:
         type: boolean
     required:
-      - username
+      - userName
       - email
       - password
   post:
@@ -90,15 +90,15 @@ definitions:
         type: string
       title:
         type: string
+      content:
+        type: string
       dueDate:
         type: string
       interactiveDueDate:
         type: string
-      content:
-        type: string
     required:
       - typeOfPost
-  PostLocation:
+  postlocation:
     properties:
       id:
         type: string
@@ -120,7 +120,7 @@ definitions:
         type: string
     required:
       - teamName
-  teamMembership:
+  teammembership:
     properties:
       teamId:
         type: string
@@ -132,13 +132,17 @@ parameters:
     name: where
     required: false
     type: string
-    description: 'This follows the standard from http://sailsjs.com/documentation/reference/blueprint-api/find-where'
+    description: >-
+      This follows the standard from
+      http://sailsjs.com/documentation/reference/blueprint-api/find-where
   LimitQueryParam:
     in: query
     name: limit
     required: false
     type: integer
-    description: The maximum number of records to send back (useful for pagination). Defaults to undefined
+    description: >-
+      The maximum number of records to send back (useful for pagination).
+      Defaults to undefined
   SkipQueryParam:
     in: query
     name: skip
@@ -150,13 +154,17 @@ parameters:
     name: sort
     required: false
     type: string
-    description: 'The sort order. By default, returned records are sorted by primary key value in ascending order. e.g. ?sort=lastName%20ASC'
+    description: >-
+      The sort order. By default, returned records are sorted by primary key
+      value in ascending order. e.g. ?sort=lastName%20ASC
   PopulateQueryParam:
     in: query
     name: populate
     required: false
     type: string
-    description: 'check for better understanding -> http://sailsjs.com/documentation/reference/blueprint-api/find-where'
+    description: >-
+      check for better understanding ->
+      http://sailsjs.com/documentation/reference/blueprint-api/find-where
   PageQueryParam:
     in: query
     name: page
