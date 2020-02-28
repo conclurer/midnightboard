@@ -4,11 +4,11 @@
     },
     "board":{
         "download":{
-            "image":"Download Image",
-            "pdf":"Download PDF",
-            "word":"Download Word Document",
-            "excel":"Download Excel Spreadsheet",
-            "powerpoint":"Download PowerPoint Presentation"
+            "image":"Click here to download image",
+            "pdf":"Click here to download PDF file",
+            "word":"Click here to download Word document",
+            "excel":"Click here to download Excel spreadsheet",
+            "powerpoint":"Click here to download PowerPoint presentation"
         }
     },
     "editor":{
