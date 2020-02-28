@@ -187,7 +187,7 @@ export default {
   data () {
     return {
       date: null,
-      titleContent: 'Title',
+      titleContent: 'Yout note title',
       textContent: '<p>Insert content here</p><ul><li>Start a bulleted list</li></ul><ol><li>Or start a numerical list</li></ol>',
       titleEditor: new Editor({
         extensions: [
@@ -195,7 +195,7 @@ export default {
         ],
         content: `
           <h2>
-            Insert title here
+            Your note title
           </h2>
         `,
         onUpdate: ({ getHTML }) => {

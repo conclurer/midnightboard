@@ -4,11 +4,11 @@
     },
     "board":{
         "download":{
-            "image":"Bild herunterladen",
-            "pdf":"PDF herunterladen",
-            "word":"Word-Dokument herunterladen",
-            "excel":"Excel-Tabelle herunterladen",
-            "powerpoint":"PowerPoint-Präsentation herunterladen"
+            "image":"Hier klicken um das Bild herunterzuladen",
+            "pdf":"Hier klicken um die PDF-Datei herunterzuladen",
+            "word":"Hier klicken um das Word-Dokument herunterzuladen",
+            "excel":"Hier klicken um die Excel-Tabelle herunterzuladen",
+            "powerpoint":"Hier klicken um die PowerPoint-Präsentation herunterzuladen"
         }
     },
     "editor":{

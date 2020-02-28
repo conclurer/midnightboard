@@ -3,9 +3,8 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-// Import regenerator-runtime
-import 'core-js/stable'
-import 'regenerator-runtime/runtime'
+// Import @babel/runtime/regenerator
+import '@babel/runtime/regenerator'
 
 // Import Bootstrap
 import BootstrapVue from 'bootstrap-vue'
