@@ -1,12 +1,36 @@
 <template>
   <div class="fileUpload">
-    <br> <!-- Should be deleted if design is fixed -->
-    <h2>{{$t('editor.file.post')}}</h2>
+    <br>
+    <h2>{{$t('editor.file.title')}}</h2>
     <input
       v-bind:value="fileTitel"
       v-on:input="fileTitel = $event.target.value"
     />
     <br><br>
+    <div
+      v-if="this.pdfSelected"
+      :key="pdfSelected"
+    >
+      <font-awesome-icon icon="file-pdf" size="10x"/>
+    </div>
+    <div
+      v-if="this.wordSelected"
+      :key="wordSelected"
+    >
+      <font-awesome-icon icon="file-word" size="10x"/>
+    </div>
+        <div
+      v-if="this.excelSelected"
+      :key="excelSelected"
+    >
+      <font-awesome-icon icon="file-excel" size="10x"/>
+    </div>
+    <div
+      v-if="this.powerpointSelected"
+      :key="powerpointSelected"
+    >
+      <font-awesome-icon icon="file-powerpoint" size="10x"/>
+    </div>
     <picture-input
       ref="pictureInput"
       @change="onChange"
@@ -16,10 +40,10 @@
       margin="16"
       accept="application/pdf,
             application/msword,
-            application/msexcel,
-            application/mspowerpoint,
+            application/vnd.ms-excel,
+            application/vnd.ms-powerpoint,
             application/vnd.openxmlformats-officedocument.wordprocessingml.document,
-            vnd.openxmlformats-officedocument.spreadsheetml.sheet,
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
             application/vnd.openxmlformats-officedocument.presentationml.presentation"
       size="10"
       buttonClass="btn btn-info button"
@@ -46,6 +70,7 @@
     >
     {{$t('editor.file.post')}}
     </button>
+    <br><br><br><br> <!-- For scrollbar -->
   </div>
 </template>
 
@@ -57,7 +82,11 @@ export default {
   data () {
     return {
       fileRef: '',
-      fileTitel: 'Your file title'
+      fileTitel: 'Your file title', // i18n?
+      pdfSelected: false,
+      wordSelected: false,
+      excelSelected: false,
+      powerpointSelected: false
     }
   },
   components: {
@@ -65,8 +94,23 @@ export default {
   },
   methods: {
     onChange (file) {
-      console.log('New picture selected!')
+      this.pdfSelected = false
+      this.wordSelected = false
+      this.excelSelected = false
+      this.powerpointSelected = false
       if (file) {
+        // Hide image preview
+        document.getElementsByClassName('preview-container')[1].style.display = 'none'
+        const fileType = file.split(';')[0].split(':')[1]
+        if (fileType === 'application/pdf') {
+          this.pdfSelected = true
+        } else if (fileType === 'application/msword' || fileType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+          this.wordSelected = true
+        } else if (fileType === 'application/vnd.ms-excel' || fileType === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+          this.excelSelected = true
+        } else { // application/vnd.ms-powerpoint || application/vnd.openxmlformats-officedocument.presentationml.presentation
+          this.powerpointSelected = true
+        }
         this.fileRef = this.$refs.pictureInput.image
       } else {
         this.fileRef = ''
@@ -74,7 +118,12 @@ export default {
       }
     },
     onRemove () {
-      this.imagfileRef = ''
+      document.getElementsByClassName('preview-container')[1].style.display = 'block'
+      this.fileRef = ''
+      this.pdfSelected = false
+      this.wordSelected = false
+      this.excelSelected = false
+      this.powerpointSelected = false
     }
   }
 }

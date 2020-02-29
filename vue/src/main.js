@@ -3,9 +3,8 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-// Import regenerator-runtime
-import 'core-js/stable'
-import 'regenerator-runtime/runtime'
+// Import @babel/runtime/regenerator
+import '@babel/runtime/regenerator'
 
 // Import Bootstrap
 import BootstrapVue from 'bootstrap-vue'
@@ -46,7 +45,11 @@ import {
   faQuoteRight,
   faTerminal,
   faUndo,
-  faRedo
+  faRedo,
+  faFilePdf,
+  faFileWord,
+  faFileExcel,
+  faFilePowerpoint
 } from '@fortawesome/free-solid-svg-icons'
 library.add(
   faPlus,
@@ -63,7 +66,11 @@ library.add(
   faQuoteRight,
   faTerminal,
   faUndo,
-  faRedo
+  faRedo,
+  faFilePdf,
+  faFileWord,
+  faFileExcel,
+  faFilePowerpoint
 )
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

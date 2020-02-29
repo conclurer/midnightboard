@@ -8,11 +8,11 @@ test('Check getUser with userId = 1', () => {
   })
   .then((response) => {
     expect(response.status).toBe(200);
-    response.json();
+    return response.json();
   })
-  .then((jsonData) => {
+  .then((jsonString) => {
     // Check for valid data
-    expect(jsonData).not.toBeNull();
+    expect(jsonString).not.toBeNull();
   })
   .catch(() => {
     expect(null).not.toBeNull();
@@ -40,11 +40,11 @@ test('Check registerUser with createData', () => {
   })
   .then((response) => {
     expect(response.status).toBe(200);
-    response.json();
+    return response.json();
   })
-  .then((jsonData) => {
+  .then((jsonString) => {
     // Check for valid data
-    expect(jsonData).not.toBeNull();
+    expect(jsonString).not.toBeNull();
   })
   .catch(() => {
     expect(null).not.toBeNull();

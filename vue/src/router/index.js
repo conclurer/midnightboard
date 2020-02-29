@@ -51,7 +51,6 @@ export default new Router({
   // Redirect to 404 page if trying to visit invalid path
   {
     path: '*',
-    // redirect: '/home'
     component: () => import('../views/404.vue')
   }
   ]

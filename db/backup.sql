@@ -391,7 +391,6 @@ COPY public.post (post_id, created_at, updated_at, creator_id, type_of_post, tit
 11	1577833200000	1577833200000	3	application/note	Old Note 3	<h1>Content</h1>	1577833200000	0
 \.
 
-
 --
 -- Data for Name: post_location; Type: TABLE DATA; Schema: public; Owner: dev
 --
