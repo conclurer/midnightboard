@@ -13,8 +13,8 @@ module.exports = function defineCustomHook(sails) {
     initialize: async function () {
 
       sails.log.info('Initializing hook... (`api/hooks/custom`)');
-      // Check Stripe/Mailgun configuration (for billing and emails).
-      // TODO Init Mailservice
+
+      // TODO Mail service etc. will be innitiated here
 
     },
 
@@ -34,7 +34,6 @@ module.exports = function defineCustomHook(sails) {
           skipAssets: true,
           fn: async function(req, res, next){
 
-            //#region req.me
             if (req.me !== undefined) {
               throw new Error('Cannot attach logged-in user as `req.me` because this property already exists!  (Is it being attached somewhere else?)');
             }
@@ -44,7 +43,7 @@ module.exports = function defineCustomHook(sails) {
             if(loggedInUser){
               req.me = loggedInUser;
             }
-            //#endregion
+
             //res.setHeader('Cache-Control', 'no-cache, no-store');
             return next();
           }

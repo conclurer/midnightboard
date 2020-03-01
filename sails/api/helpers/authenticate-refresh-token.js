@@ -17,13 +17,13 @@ module.exports = {
 
 
   fn: async function (inputs, exits) {
-    var usr; 
+    var usr;
     jwt.verify(inputs.token, sails.config.jwts.REFRESH_TOKEN_SECRET, (err, user) => {
       usr = user;
       if(err){return exits.success(null);}
     });
     var findTokenInDb = await RefreshToken.findOne( {refreshToken: inputs.token} );
-    if( !findTokenInDb ){ return exits.success(null) }
+    if( !findTokenInDb ){ return exits.success(null); }
     return exits.success(usr);
   }
 
