@@ -21,13 +21,11 @@ test('Check getUser with userId = 1', () => {
 
 // registerUser
 const createData = {
-  createdAt: 1577833200000,
-  updateAt: 1577833200000,
-  userName: 'User Name',
-  firstName: 'First Name',
-  lastName: 'Last Name',
+  userName: 'UserName',
+  firstName: 'FirstName',
+  lastName: 'LastName',
   email: 'username@provider.com',
-  password: 'password',
+  password: 'P@ssw0rd',
   languagePreference: 'en'
 };
 test('Check registerUser with createData', () => {
@@ -38,14 +36,7 @@ test('Check registerUser with createData', () => {
     },
     body: JSON.stringify(createData)
   })
-  .then((response) => {
-    expect(response.status).toBe(200);
-    return response.json();
-  })
-  .then((jsonString) => {
-    // Check for valid data
-    expect(jsonString).not.toBeNull();
-  })
+  .then((response) => expect(response.status).toBe(200))
   .catch(() => {
     expect(null).not.toBeNull();
   });
@@ -64,13 +55,11 @@ test('Check deleteUser with userId = 2', () => {
 
 // updateUser
 const updateData = {
-  createdAt: 1577833300000,
-  updateAt: 1577833300000,
-  userName: 'User Name',
+  userName: 'UserName',
   firstName: 'FirstName',
   lastName: 'LastName',
   email: 'username@provider.com',
-  password: 'Password',
+  password: 'P@ssw0rd',
   languagePreference: 'de'
 };
 test('Check updatePost with updateData', () => {

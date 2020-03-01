@@ -2,6 +2,7 @@ CREATE TABLE public.member (
     member_id serial NOT NULL PRIMARY KEY,
     created_at bigint NOT NULL,
     updated_at bigint NOT NULL,
+    last_seen bigint,
     user_name VARCHAR(30) NOT NULL UNIQUE,
     first_name VARCHAR(20),
     last_name VARCHAR(20),
