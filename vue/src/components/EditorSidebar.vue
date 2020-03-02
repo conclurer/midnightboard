@@ -30,7 +30,6 @@ export default {
         typeOfPost: 'application/note',
         content: jsonContent
       })
-      console.log(jsonBody)
 
       // Post request to api
       await axios
@@ -56,7 +55,6 @@ export default {
         typeOfPost: dataType,
         content: base64Data
       })
-      console.log(jsonBody)
 
       // Post request to api
       await axios
@@ -82,7 +80,6 @@ export default {
         typeOfPost: dataType,
         content: base64Data
       })
-      console.log(jsonBody)
 
       // Post request to api
       await axios
