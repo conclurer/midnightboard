@@ -29,7 +29,7 @@ module.exports = {
     title: { type: 'string' },
     content: {type: 'string', columnName: 'content'},
     dueDate: { type: 'ref', columnType: 'bigint', isNumber: true, columnName: 'due_date' },
-    interactiveDueDate:{ type: 'ref', columnType: 'bigint', isNumber: true, columnName: 'interactive_due_date' }
+    interactiveDueDate: { type: 'ref', columnType: 'bigint', isNumber: true, columnName: 'interactive_due_date' }
   },
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

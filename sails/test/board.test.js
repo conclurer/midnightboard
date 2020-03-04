@@ -9,17 +9,17 @@ test('Check getBoard with boardId = 1', () => {
       'Content-Type': 'application/json',
     }
   })
-  .then((response) => {
-    expect(response.status).toBe(200);
-    return response.json();
-  })
-  .then((jsonString) => {
+    .then((response) => {
+      expect(response.status).toBe(200);
+      return response.json();
+    })
+    .then((jsonString) => {
     // Check for valid data
-    expect(jsonString).not.toBeNull();
-  })
-  .catch(() => {
-    expect(null).not.toBeNull();
-  });
+      expect(jsonString).not.toBeNull();
+    })
+    .catch(() => {
+      expect(null).not.toBeNull();
+    });
 });
 
 // createBoard
@@ -37,10 +37,10 @@ test('Check createBoard with boardName = Create Name', () => {
     },
     body: JSON.stringify(createData)
   })
-  .then((response) => expect(response.status).toBe(200))
-  .catch(() => {
-    expect(null).not.toBeNull();
-  });
+    .then((response) => expect(response.status).toBe(200))
+    .catch(() => {
+      expect(null).not.toBeNull();
+    });
 });
 
 // deleteBoard
@@ -48,10 +48,10 @@ test('Check deleteBoard with boardId = 1', () => {
   return http.fetch('http://localhost:1337/api/boards/1', {
     method: 'DELETE'
   })
-  .then((response) => expect(response.status).toBe(200))
-  .catch(() => {
-    expect(null).not.toBeNull();
-  });
+    .then((response) => expect(response.status).toBe(200))
+    .catch(() => {
+      expect(null).not.toBeNull();
+    });
 });
 
 // updateBoard
@@ -69,8 +69,8 @@ test('Check deleteBoard with boardId = 2', () => {
     },
     body: JSON.stringify(updateData)
   })
-  .then((response) => expect(response.status).toBe(200))
-  .catch(() => {
-    expect(null).not.toBeNull();
-  });
+    .then((response) => expect(response.status).toBe(200))
+    .catch(() => {
+      expect(null).not.toBeNull();
+    });
 });

@@ -9,12 +9,12 @@ module.exports = {
     userName: { type: 'string', required: true, unique: true, columnName: 'user_name'},
     firstName: { type: 'string', allowNull: true, columnName: 'first_name' },
     lastName: { type: 'string', allowNull: true, columnName: 'last_name' },
-    email: { type: 'string', required:true, unique:true, columnName: 'email'},
+    email: { type: 'string', required: true, unique: true, columnName: 'email'},
     password: { type: 'string', required: true },
     avatar: {type: 'ref', columnName: 'avatar'},
     languagePreference: {
       type: 'string',
-      isIn: ['en','de'],
+      isIn: ['en', 'de'],
       defaultsTo: 'en',
       columnName: 'language_preference'
     },

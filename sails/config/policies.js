@@ -12,6 +12,5 @@ module.exports.policies = {
     //'*': 'is-logged-in',
     '*': true,
 
-    
     'users/Auth/*': true
 };

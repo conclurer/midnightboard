@@ -26,7 +26,7 @@ module.exports = {
     return res.ok();
   },
 
-  updateUser: async function(req, res){
+  updateUser: async function(req, res) {
     return res.ok();
   },
 };

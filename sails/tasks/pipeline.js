@@ -11,7 +11,6 @@
  */
 
 
-
 //  ██████╗ ██╗      █████╗ ██╗███╗   ██╗        ██████╗███████╗███████╗
 //  ██╔══██╗██║     ██╔══██╗██║████╗  ██║       ██╔════╝██╔════╝██╔════╝
 //  ██████╔╝██║     ███████║██║██╔██╗ ██║       ██║     ███████╗███████╗
@@ -117,7 +116,6 @@ var templateFilesToInject = [
 ];
 
 
-
 //  ███╗   ███╗██╗███████╗ ██████╗       ███████╗███████╗████████╗██╗   ██╗██████╗
 //  ████╗ ████║██║██╔════╝██╔════╝       ██╔════╝██╔════╝╚══██╔══╝██║   ██║██╔══██╗
 //  ██╔████╔██║██║███████╗██║            ███████╗█████╗     ██║   ██║   ██║██████╔╝
@@ -137,21 +135,21 @@ var tmpPath = '.tmp/public/';
 // they reside in the first place)
 module.exports.cssFilesToInject = cssFilesToInject.map((cssPath)=>{
   // If we're ignoring the file, make sure the ! is at the beginning of the path
-  if (cssPath[0] === '!') {
+  if(cssPath[0] === '!') {
     return require('path').join('!' + tmpPath, cssPath.substr(1));
   }
   return require('path').join(tmpPath, cssPath);
 });
 module.exports.jsFilesToInject = jsFilesToInject.map((jsPath)=>{
   // If we're ignoring the file, make sure the ! is at the beginning of the path
-  if (jsPath[0] === '!') {
+  if(jsPath[0] === '!') {
     return require('path').join('!' + tmpPath, jsPath.substr(1));
   }
   return require('path').join(tmpPath, jsPath);
 });
 module.exports.templateFilesToInject = templateFilesToInject.map((tplPath)=>{
   // If we're ignoring the file, make sure the ! is at the beginning of the path
-  if (tplPath[0] === '!') {
+  if(tplPath[0] === '!') {
     return require('path').join('!assets/', tplPath.substr(1));
   }
   return require('path').join('assets/', tplPath);

@@ -27,14 +27,13 @@
 process.chdir(__dirname);
 
 
-
 // Attempt to import `sails` dependency, as well as `rc` (for loading `.sailsrc` files).
 var sails;
 var rc;
 try {
   sails = require('sails');
   rc = require('sails/accessible/rc');
-} catch (err) {
+} catch(err) {
   console.error('Encountered an error when attempting to require(\'sails\'):');
   console.error(err.stack);
   console.error('--');

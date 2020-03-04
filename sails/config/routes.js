@@ -56,23 +56,23 @@ module.exports.routes = {
     //#region APIs
     //AUTH
     'POST   /api/users/register': {
-        controller: 'users/Auth',
-        action: 'registerUser',
+        controller: 'authentication',
+        action: 'register',
         skipAssets: true
     },
     'POST   /api/users/login': {
-        controller: 'users/Auth',
-        action: 'loginUser',
+        controller: 'authentication',
+        action: 'login',
         skipAssets: true
     },
     'DELETE   /api/users/logout': {
-        controller: 'users/Auth',
-        action: 'logoutUser',
+        controller: 'authentication',
+        action: 'logout',
         skipAssets: true
     },
     'POST   /api/users/refresh': {
-        controller: 'users/Auth',
-        action: 'refreshUserToken',
+        controller: 'authentication',
+        action: 'refresh',
         skipAssets: true
     },
 

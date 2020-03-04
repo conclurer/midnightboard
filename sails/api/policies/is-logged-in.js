@@ -1,19 +1,19 @@
 /**
  * is-logged-in
  *
+ * Checks if the request had a valid JWT attached.
+ * The 'req.me' attribute is attached within sails/api/hooks/custom/index.js
  *
- * For more about how to use policies, see:
- *   https://sailsjs.com/config/policies
- *   https://sailsjs.com/docs/concepts/policies
- *   https://sailsjs.com/docs/concepts/policies/access-control-and-permissions
+ * For more information about policies, see here:
+ * https://sailsjs.com/config/policies
+ * https://sailsjs.com/docs/concepts/policies
+ * https://sailsjs.com/docs/concepts/policies/access-control-and-permissions
  */
-module.exports = async function (req, res, proceed) {
-
+module.exports = async function(req, res, proceed) {
   // 'req.me' gets defined in api/hooks/custom/index.js, before any request gets processed.
-  // When a valid auth token was provided, 'req.me' contains the data provided within the send JWT
-  if (req.me) {
+  // When a valid auth token was provided, 'req.me' contains the data provided within the sent JWT
+  if(req.me) {
     return proceed();
   }
   return res.status(401).send();
-
 };

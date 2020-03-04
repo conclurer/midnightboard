@@ -6,17 +6,17 @@ test('Check getUser with userId = 1', () => {
   return http.fetch('http://localhost:1337/api/users/1', {
     method: 'GET'
   })
-  .then((response) => {
-    expect(response.status).toBe(200);
-    return response.json();
-  })
-  .then((jsonString) => {
+    .then((response) => {
+      expect(response.status).toBe(200);
+      return response.json();
+    })
+    .then((jsonString) => {
     // Check for valid data
-    expect(jsonString).not.toBeNull();
-  })
-  .catch(() => {
-    expect(null).not.toBeNull();
-  });
+      expect(jsonString).not.toBeNull();
+    })
+    .catch(() => {
+      expect(null).not.toBeNull();
+    });
 });
 
 // registerUser
@@ -36,10 +36,10 @@ test('Check registerUser with createData', () => {
     },
     body: JSON.stringify(createData)
   })
-  .then((response) => expect(response.status).toBe(200))
-  .catch(() => {
-    expect(null).not.toBeNull();
-  });
+    .then((response) => expect(response.status).toBe(201))
+    .catch(() => {
+      expect(null).not.toBeNull();
+    });
 });
 
 // deleteUser
@@ -47,10 +47,10 @@ test('Check deleteUser with userId = 2', () => {
   return http.fetch('http://localhost:1337/api/users/2', {
     method: 'DELETE'
   })
-  .then((response) => expect(response.status).toBe(200))
-  .catch(() => {
-    expect(null).not.toBeNull();
-  });
+    .then((response) => expect(response.status).toBe(200))
+    .catch(() => {
+      expect(null).not.toBeNull();
+    });
 });
 
 // updateUser
@@ -70,8 +70,8 @@ test('Check updatePost with updateData', () => {
     },
     body: JSON.stringify(updateData)
   })
-  .then((response) => expect(response.status).toBe(200))
-  .catch(() => {
-    expect(null).not.toBeNull();
-  });
+    .then((response) => expect(response.status).toBe(200))
+    .catch(() => {
+      expect(null).not.toBeNull();
+    });
 });
