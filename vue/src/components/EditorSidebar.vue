@@ -40,7 +40,7 @@ export default {
         }
         )
         .then(res => {})
-        .catch(err => console.log(err))
+        .catch(err => this.$log.error(err))
 
       // Notify notice board
       this.$emit('add-note')
@@ -65,7 +65,7 @@ export default {
         }
         )
         .then(res => {})
-        .catch(err => console.log(err))
+        .catch(err => this.$log.error(err))
 
       // Notify board component
       this.$emit('add-note')
@@ -90,7 +90,7 @@ export default {
         }
         )
         .then(res => {})
-        .catch(err => console.log(err))
+        .catch(err => this.$log.error(err))
 
       // Notify notice board
       this.$emit('add-note')
