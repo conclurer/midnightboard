@@ -43,7 +43,7 @@ export default {
     axios
       .get('http://localhost:1337/api/posts/all/' + this.boardId)
       .then(response => { this.notes = JSON.parse(response.data) })
-      .catch(err => console.log(err))
+      .catch(err => this.$log.error(err))
 
     switch (i18n.locale.substring(0, 2)) {
       case 'en':
@@ -62,7 +62,7 @@ export default {
       axios
         .get('http://localhost:1337/api/posts/all/' + this.boardId)
         .then(response => { this.notes = JSON.parse(response.data) })
-        .catch(err => console.log(err))
+        .catch(err => this.$log.error(err))
 
       this.editorActive = false
     },
@@ -77,8 +77,6 @@ export default {
       } else {
         i18n.locale = 'de-DE'
       }
-
-      console.log(i18n.locale)
       // TODO: Change user settings
       // User system does not exist yet.
     }

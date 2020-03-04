@@ -83,6 +83,19 @@ import VueCtkDateTimePicker from 'vue-ctk-date-time-picker'
 import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css'
 Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker)
 
+import VueLogger from 'vuejs-logger'
+const isProduction = process.env.NODE_ENV === 'production'
+const options = {
+  isEnabled: true,
+  logLevel: isProduction ? 'error' : 'debug',
+  stringifyArguments: false,
+  showLogLevel: true,
+  showMethodName: true,
+  separator: '|',
+  showConsoleColors: true
+}
+Vue.use(VueLogger, options)
+
 Vue.config.productionTip = false
 
 new Vue({

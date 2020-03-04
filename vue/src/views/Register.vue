@@ -79,8 +79,6 @@ export default {
       } else {
         i18n.locale = 'de-DE'
       }
-
-      console.log(i18n.locale)
       // TODO: Change user settings
       // User system does not exist yet.
     }
