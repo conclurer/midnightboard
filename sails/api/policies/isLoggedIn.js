@@ -1,5 +1,5 @@
 /**
- * is-logged-in
+ * isLoggedIn
  *
  * Checks if the request had a valid JWT attached.
  * The 'req.me' attribute is attached within sails/api/hooks/custom/index.js
