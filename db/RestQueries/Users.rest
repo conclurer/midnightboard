@@ -1,0 +1,46 @@
+POST http://localhost:1337/api/users/register/ HTTP/1.1
+content-type: application/json
+
+{
+    "userName": "UserName7",
+    "email": "username6@provider.com",
+    "firstName": "FirstName",
+    "lastName": "LastName"
+}
+
+###
+
+POST http://localhost:1337/api/users/login HTTP/1.1
+content-type: application/json
+
+{
+    "email": "username6@provider.com",
+    "password": "P@ssw0rd"
+}
+
+###
+
+//LOGOUT via AcessToken
+DELETE http://localhost:1337/api/users/logout HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVXNlck5hbWU2IiwiaWQiOjEyLCJpYXQiOjE1ODMzMjU5MzksImV4cCI6MTYxNDg2MTkzOX0.zndFOmuKSA3ZPCr5OuKeUxh4jmI6SSuaWocSkkKxxnk
+
+###
+
+//LOGOUT via RefreshToken
+DELETE http://localhost:1337/api/users/logout HTTP/1.1
+content-type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVXNlck5hbWU2IiwiaWQiOjEyLCJpYXQiOjE1ODMzMjYwNjd9.UG6l_e0z9cOJllcOSLPT8e-078GAF1aPFgPny0vzRC8"
+}
+
+###
+
+POST http://localhost:1337/api/users/refresh HTTP/1.1
+content-type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVXNlck5hbWU2IiwiaWQiOjEyLCJpYXQiOjE1ODMzMjYxMzB9.y_Us2DZyuRBEzPij-46KWpptyZG6Ecyj8CW1UEGp-BM"
+}
+
+###

@@ -2,6 +2,7 @@ CREATE TABLE public.member (
     member_id serial NOT NULL PRIMARY KEY,
     created_at bigint NOT NULL,
     updated_at bigint NOT NULL,
+    last_seen bigint,
     user_name VARCHAR(30) NOT NULL UNIQUE,
     first_name VARCHAR(20),
     last_name VARCHAR(20),
@@ -56,4 +57,11 @@ CREATE TABLE public.team_membership (
     id serial NOT NULL PRIMARY KEY,
     team_id integer NOT NULL REFERENCES team (team_id) ON DELETE CASCADE,
     member_id integer NOT NULL REFERENCES member (member_id) ON DELETE CASCADE
+);
+
+CREATE TABLE public.token (
+    id serial NOT NULL PRIMARY KEY,
+    created_at bigint NOT NULL,
+    uid int NOT NULL,
+    refresh_token text
 );

@@ -1,10 +1,11 @@
 /* Create demo members */
 INSERT INTO member (created_at,updated_at,user_name,first_name,last_name,email,password)
-    VALUES (1577833200000, 1577833200000, 'user1', 'Max', 'Mustermann', 'Max.Mustermann@ma.il','passwordA'),
-    (1577833200000, 1577833200000, 'user2', 'Peter', 'Mustermann', 'Peter.Mustermann@ma.il','passwordB'),
-    (1577833200000, 1577833200000, 'user3', 'Hans', 'Mustermann', 'Hans.Mustermann@ma.il','passwordC'),
-    (1577833200000, 1577833200000, 'user4', 'Bibi', 'Mustermann', 'Bibi.Mustermann@ma.il','passwordD'),
-    (1577833200000, 1577833200000, 'user5', 'Heidi', 'Mustermann', 'Heidi.Mustermann@ma.il','passwordE');
+    VALUES (1577833200000, 1577833200000, 'user1', 'Max', 'Mustermann', 'Max.Mustermann@ma.il','$2b$10$B2gmqgKGsSbm8G2VIjulKOadTUMctZ7LC3ETxyOn49XnkVrgS.Ghy'),
+    (1577833200000, 1577833200000, 'user2', 'Peter', 'Mustermann', 'Peter.Mustermann@ma.il','$2b$10$oPMKDfrsHctVQwU2KPoOfOdeef0ZD0WAKCvSKFgS5Ayv6HS1umEwG'),
+    (1577833200000, 1577833200000, 'user3', 'Hans', 'Mustermann', 'Hans.Mustermann@ma.il','$2b$10$byrA4n1xu4uOzJm4W71bneIyjh0EChk6wAPN4n2r0.jWaopLLVIFO'),
+    (1577833200000, 1577833200000, 'user4', 'Bibi', 'Mustermann', 'Bibi.Mustermann@ma.il','$2b$10$k9yjuXtnda9eqmYoLGGlTumNsqR8WyaEMMtSj.qrtKpE1mRhTvQzq'),
+    (1577833200000, 1577833200000, 'user5', 'Heidi', 'Mustermann', 'Heidi.Mustermann@ma.il','$2b$10$f5E5wmCfNVE2blW0L1ucNOu5.7F3FbdR.n6p30m.07TzwY/u2kTce'),
+    (1577833200000, 1577833200000, 'admin', 'Max', 'Admin', 'Admin@ma.il','$2b$10$0mjxHpG1qnZzU5PBCW9PSe2BZ19299625/x53nkV510Ljcj3ph3Ia');
 
 /* Create demo boards */
 INSERT INTO board (created_at,updated_at,creator_id,board_name)

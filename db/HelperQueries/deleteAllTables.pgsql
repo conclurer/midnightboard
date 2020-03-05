@@ -5,3 +5,4 @@ DROP TABLE team;
 DROP TABLE board;
 DROP TABLE post;
 DROP TABLE member;
+DROP TABLE token;

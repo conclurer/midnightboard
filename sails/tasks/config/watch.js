@@ -10,7 +10,6 @@
  *
  */
 module.exports = function(grunt) {
-
   grunt.config.set('watch', {
     assets: {
 
@@ -52,5 +51,4 @@ module.exports = function(grunt) {
   // grunt.loadNpmTasks('grunt-contrib-watch');
   // ```
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 };

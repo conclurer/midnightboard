@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.1 (Debian 12.1-1.pgdg100+1)
--- Dumped by pg_dump version 12.1 (Debian 12.1-1.pgdg100+1)
+-- Dumped from database version 12.2 (Debian 12.2-2.pgdg100+1)
+-- Dumped by pg_dump version 12.2 (Debian 12.2-2.pgdg100+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -100,6 +100,7 @@ CREATE TABLE public.member (
     member_id integer NOT NULL,
     created_at bigint NOT NULL,
     updated_at bigint NOT NULL,
+    last_seen bigint,
     user_name character varying(30) NOT NULL,
     first_name character varying(20),
     last_name character varying(20),
@@ -284,6 +285,42 @@ ALTER SEQUENCE public.team_team_id_seq OWNED BY public.team.team_id;
 
 
 --
+-- Name: token; Type: TABLE; Schema: public; Owner: dev
+--
+
+CREATE TABLE public.token (
+    id integer NOT NULL,
+    created_at bigint NOT NULL,
+    uid integer NOT NULL,
+    refresh_token text
+);
+
+
+ALTER TABLE public.token OWNER TO dev;
+
+--
+-- Name: token_id_seq; Type: SEQUENCE; Schema: public; Owner: dev
+--
+
+CREATE SEQUENCE public.token_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.token_id_seq OWNER TO dev;
+
+--
+-- Name: token_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dev
+--
+
+ALTER SEQUENCE public.token_id_seq OWNED BY public.token.id;
+
+
+--
 -- Name: board board_id; Type: DEFAULT; Schema: public; Owner: dev
 --
 
@@ -333,6 +370,13 @@ ALTER TABLE ONLY public.team_membership ALTER COLUMN id SET DEFAULT nextval('pub
 
 
 --
+-- Name: token id; Type: DEFAULT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public.token ALTER COLUMN id SET DEFAULT nextval('public.token_id_seq'::regclass);
+
+
+--
 -- Data for Name: board; Type: TABLE DATA; Schema: public; Owner: dev
 --
 
@@ -364,12 +408,13 @@ COPY public.board_subscription (id, board_id, member_id) FROM stdin;
 -- Data for Name: member; Type: TABLE DATA; Schema: public; Owner: dev
 --
 
-COPY public.member (member_id, created_at, updated_at, user_name, first_name, last_name, email, password, avatar, language_preference, hide_last_name) FROM stdin;
-1	1577833200000	1577833200000	user1	Max	Mustermann	Max.Mustermann@ma.il	passwordA	\N	en	t
-2	1577833200000	1577833200000	user2	Peter	Mustermann	Peter.Mustermann@ma.il	passwordB	\N	en	t
-3	1577833200000	1577833200000	user3	Hans	Mustermann	Hans.Mustermann@ma.il	passwordC	\N	en	t
-4	1577833200000	1577833200000	user4	Bibi	Mustermann	Bibi.Mustermann@ma.il	passwordD	\N	en	t
-5	1577833200000	1577833200000	user5	Heidi	Mustermann	Heidi.Mustermann@ma.il	passwordE	\N	en	t
+COPY public.member (member_id, created_at, updated_at, last_seen, user_name, first_name, last_name, email, password, avatar, language_preference, hide_last_name) FROM stdin;
+1	1577833200000	1577833200000	\N	user1	Max	Mustermann	Max.Mustermann@ma.il	$2b$10$B2gmqgKGsSbm8G2VIjulKOadTUMctZ7LC3ETxyOn49XnkVrgS.Ghy	\N	en	t
+2	1577833200000	1577833200000	\N	user2	Peter	Mustermann	Peter.Mustermann@ma.il	$2b$10$oPMKDfrsHctVQwU2KPoOfOdeef0ZD0WAKCvSKFgS5Ayv6HS1umEwG	\N	en	t
+3	1577833200000	1577833200000	\N	user3	Hans	Mustermann	Hans.Mustermann@ma.il	$2b$10$byrA4n1xu4uOzJm4W71bneIyjh0EChk6wAPN4n2r0.jWaopLLVIFO	\N	en	t
+4	1577833200000	1577833200000	\N	user4	Bibi	Mustermann	Bibi.Mustermann@ma.il	$2b$10$k9yjuXtnda9eqmYoLGGlTumNsqR8WyaEMMtSj.qrtKpE1mRhTvQzq	\N	en	t
+5	1577833200000	1577833200000	\N	user5	Heidi	Mustermann	Heidi.Mustermann@ma.il	$2b$10$f5E5wmCfNVE2blW0L1ucNOu5.7F3FbdR.n6p30m.07TzwY/u2kTce	\N	en	t
+6	1577833200000	1577833200000	\N	admin	Max	Admin	Admin@ma.il	$2b$10$0mjxHpG1qnZzU5PBCW9PSe2BZ19299625/x53nkV510Ljcj3ph3Ia	\N	en	t
 \.
 
 
@@ -390,6 +435,7 @@ COPY public.post (post_id, created_at, updated_at, creator_id, type_of_post, tit
 10	1577833200000	1577833200000	2	application/note	Old Note 2	<h1>Content</h1>	1577833200000	0
 11	1577833200000	1577833200000	3	application/note	Old Note 3	<h1>Content</h1>	1577833200000	0
 \.
+
 
 --
 -- Data for Name: post_location; Type: TABLE DATA; Schema: public; Owner: dev
@@ -438,6 +484,14 @@ COPY public.team_membership (id, team_id, member_id) FROM stdin;
 
 
 --
+-- Data for Name: token; Type: TABLE DATA; Schema: public; Owner: dev
+--
+
+COPY public.token (id, created_at, uid, refresh_token) FROM stdin;
+\.
+
+
+--
 -- Name: board_board_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dev
 --
 
@@ -455,7 +509,7 @@ SELECT pg_catalog.setval('public.board_subscription_id_seq', 9, true);
 -- Name: member_member_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dev
 --
 
-SELECT pg_catalog.setval('public.member_member_id_seq', 5, true);
+SELECT pg_catalog.setval('public.member_member_id_seq', 6, true);
 
 
 --
@@ -484,6 +538,13 @@ SELECT pg_catalog.setval('public.team_membership_id_seq', 4, true);
 --
 
 SELECT pg_catalog.setval('public.team_team_id_seq', 2, true);
+
+
+--
+-- Name: token_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dev
+--
+
+SELECT pg_catalog.setval('public.token_id_seq', 1, false);
 
 
 --
@@ -572,6 +633,14 @@ ALTER TABLE ONLY public.team
 
 ALTER TABLE ONLY public.team
     ADD CONSTRAINT team_team_name_key UNIQUE (team_name);
+
+
+--
+-- Name: token token_pkey; Type: CONSTRAINT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public.token
+    ADD CONSTRAINT token_pkey PRIMARY KEY (id);
 
 
 --

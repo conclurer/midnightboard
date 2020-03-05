@@ -15,20 +15,20 @@ test('Check newPost with type application/pdf', () => {
     },
     body: JSON.stringify(createPDFData)
   })
-  .then((response) => {
-    expect(response.status).toBe(200);
-    return response.json();
-  })
-  .then((jsonString) => {
+    .then((response) => {
+      expect(response.status).toBe(200);
+      return response.json();
+    })
+    .then((jsonString) => {
     // Check for valid data
-    const jsonData = JSON.parse(jsonString);
-    expect(jsonData.typeOfPost).toBe('application/pdf');
-    expect(jsonData.title).toBe('New PDF');
-    expect(jsonData.content).toBe('4keLtPEMlV8LoTwN/AGwzQ==');
-  })
-  .catch(() => {
-    expect(null).not.toBeNull();
-  });
+      const jsonData = JSON.parse(jsonString);
+      expect(jsonData.typeOfPost).toBe('application/pdf');
+      expect(jsonData.title).toBe('New PDF');
+      expect(jsonData.content).toBe('4keLtPEMlV8LoTwN/AGwzQ==');
+    })
+    .catch(() => {
+      expect(null).not.toBeNull();
+    });
 });
 
 // Post new Word document

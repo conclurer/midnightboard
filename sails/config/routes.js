@@ -54,15 +54,32 @@ module.exports.routes = {
     //  ╠═╣╠═╝║  ║╣ ║║║ ║║╠═╝║ ║║║║║ ║ ╚═╗
     //  ╩ ╩╩  ╩  ╚═╝╝╚╝═╩╝╩  ╚═╝╩╝╚╝ ╩ ╚═╝
     //#region APIs
-    //USER
+    //AUTH
+    'POST   /api/users/register': {
+        controller: 'authentication',
+        action: 'register',
+        skipAssets: true
+    },
+    'POST   /api/users/login': {
+        controller: 'authentication',
+        action: 'login',
+        skipAssets: true
+    },
+    'DELETE   /api/users/logout': {
+        controller: 'authentication',
+        action: 'logout',
+        skipAssets: true
+    },
+    'POST   /api/users/refresh': {
+        controller: 'authentication',
+        action: 'refresh',
+        skipAssets: true
+    },
+
+    //USERS
     'GET    /api/users/:userId': {
         controller: 'users/User',
         action: 'getUser',
-        skipAssets: true
-    },
-    'POST   /api/users/register': {
-        controller: 'users/User',
-        action: 'registerUser',
         skipAssets: true
     },
     'DELETE   /api/users/:userId': {

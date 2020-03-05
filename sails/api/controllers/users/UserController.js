@@ -7,34 +7,26 @@
 
 module.exports = {
   getUser: async function(req, res) {
-    sails.log('Searching user ' + req.param('userId'));
+    sails.log.verbose('USER_GET::: Searching user ' + req.param('userId'));
     var usr = await Member.findOne({id: req.param('userId')});
-    return res.json(JSON.stringify(usr));
-  },
 
-  registerUser: async function(req, res) {
-    sails.log('Trying to create user ' + req.param('userName'));
-    var usr = await Member.create({
-      createdAt: req.param('createdAt'),
-      updateAt: req.param('updateAt'),
-      userName: req.param('userName'),
-      firstName: req.param('firstName'),
-      lastName: req.param('lastName'),
-      email: req.param('email'),
-      password: req.param('password'),
-      languagePreference: req.param('languagePreference'),
-    }).fetch();
-    return res.json(JSON.stringify(usr));
+    ['updatedAt',
+      'createdAt',
+      'password',
+      'languagePreference',
+      'hideLastName'
+    ].forEach(attribute => delete usr[attribute]);
+
+    return res.json(usr);
   },
 
   deleteUser: async function(req, res) {
-    sails.log('Trying to delete user ' + req.param('userId'));
-    await Member.destroy({userName: req.param('userId')});
+    sails.log.verbose('USER_DELETE::: Trying to delete user ' + req.param('userId'));
+    await Member.destroy({id: req.param('userId')});
     return res.ok();
   },
 
-  updateUser: async function(req, res){
-    req = req;
+  updateUser: async function(req, res) {
     return res.ok();
-  }
+  },
 };
