@@ -45,20 +45,20 @@ test('Check newPost with type application/vnd.openxmlformats-officedocument.word
     },
     body: JSON.stringify(createWordData)
   })
-  .then((response) => {
-    expect(response.status).toBe(200);
-    return response.json();
-  })
-  .then((jsonString) => {
+    .then((response) => {
+      expect(response.status).toBe(200);
+      return response.json();
+    })
+    .then((jsonString) => {
     // Check for valid data
-    const jsonData = JSON.parse(jsonString);
-    expect(jsonData.typeOfPost).toBe('application/vnd.openxmlformats-officedocument.wordprocessingml.document');
-    expect(jsonData.title).toBe('New Word document');
-    expect(jsonData.content).toBe('PQwd5Q0hHN8YCUpJ2tcnlg==');
-  })
-  .catch(() => {
-    expect(null).not.toBeNull();
-  });
+      const jsonData = JSON.parse(jsonString);
+      expect(jsonData.typeOfPost).toBe('application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+      expect(jsonData.title).toBe('New Word document');
+      expect(jsonData.content).toBe('PQwd5Q0hHN8YCUpJ2tcnlg==');
+    })
+    .catch(() => {
+      expect(null).not.toBeNull();
+    });
 });
 
 // Post new Excel spreadsheet
@@ -75,20 +75,20 @@ test('Check newPost with type application/vnd.openxmlformats-officedocument.spre
     },
     body: JSON.stringify(createExcelData)
   })
-  .then((response) => {
-    expect(response.status).toBe(200);
-    return response.json();
-  })
-  .then((jsonString) => {
+    .then((response) => {
+      expect(response.status).toBe(200);
+      return response.json();
+    })
+    .then((jsonString) => {
     // Check for valid data
-    const jsonData = JSON.parse(jsonString);
-    expect(jsonData.typeOfPost).toBe('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    expect(jsonData.title).toBe('New Excel spreadsheet');
-    expect(jsonData.content).toBe('Ht0IqLH4jSA0Fo4Wqgp20Q==');
-  })
-  .catch(() => {
-    expect(null).not.toBeNull();
-  });
+      const jsonData = JSON.parse(jsonString);
+      expect(jsonData.typeOfPost).toBe('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+      expect(jsonData.title).toBe('New Excel spreadsheet');
+      expect(jsonData.content).toBe('Ht0IqLH4jSA0Fo4Wqgp20Q==');
+    })
+    .catch(() => {
+      expect(null).not.toBeNull();
+    });
 });
 
 // Post new PowerPoint presentation
@@ -105,18 +105,18 @@ test('Check newPost with type application/vnd.openxmlformats-officedocument.pres
     },
     body: JSON.stringify(createPowerPointData)
   })
-  .then((response) => {
-    expect(response.status).toBe(200);
-    return response.json();
-  })
-  .then((jsonString) => {
+    .then((response) => {
+      expect(response.status).toBe(200);
+      return response.json();
+    })
+    .then((jsonString) => {
     // Check for valid data
-    const jsonData = JSON.parse(jsonString);
-    expect(jsonData.typeOfPost).toBe('application/vnd.openxmlformats-officedocument.presentationml.presentation');
-    expect(jsonData.title).toBe('New PowerPoint presentation');
-    expect(jsonData.content).toBe('n6WSUANntSR1B5z3vjT1bQ==');
-  })
-  .catch(() => {
-    expect(null).not.toBeNull();
-  });
+      const jsonData = JSON.parse(jsonString);
+      expect(jsonData.typeOfPost).toBe('application/vnd.openxmlformats-officedocument.presentationml.presentation');
+      expect(jsonData.title).toBe('New PowerPoint presentation');
+      expect(jsonData.content).toBe('n6WSUANntSR1B5z3vjT1bQ==');
+    })
+    .catch(() => {
+      expect(null).not.toBeNull();
+    });
 });
