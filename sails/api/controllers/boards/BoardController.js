@@ -8,16 +8,15 @@
 module.exports = {
   getBoard: async function(req, res) {
     sails.log.verbose('BOARD_GET::: Fetching Board ' + req.param('boardId'));
-    const board = await Board.findOne({id: req.param('boardId')});
+    var board = await Board.findOne({id: req.param('boardId')});
+    if(!board) return res.notFound();
     return res.json(JSON.stringify(board));
   },
 
   createBoard: async function(req, res) {
     sails.log.verbose('BOARD_CREATE::: Trying to create board with name ' + req.param('boardName'));
-    const board = await Board.create({
-      boardName: req.param('boardName'),
-      creatorId: req.param('creatorId')
-    });
+    var board = await Board.create({boardName: req.param('boardName')}).fetch();
+    if(!board) return res.notFound();
     return res.json(JSON.stringify(board));
   },
 

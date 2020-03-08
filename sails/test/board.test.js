@@ -27,8 +27,10 @@ test('Check getBoard with id = 1', () => {
 
 // createBoard
 const createData = {
-  boardName: 'Create Name',
-  creatorId: 1
+  createdAt: 1577833200000,
+  updateAt: 1577833200000,
+  creatorId: 1,
+  boardName: 'Create Name'
 };
 test('Check createBoard with name = Create Name', () => {
   return fetch('http://localhost:1337/api/boards/create', {
@@ -66,8 +68,10 @@ test('Check deleteBoard with volatile board', () => {
 
 // updateBoard
 const updateData = {
-  boardName: 'Update Name',
-  creatorId: 1
+  createdAt: 1577833300000,
+  updateAt: 1577833300000,
+  creatorId: 1,
+  boardName: 'Update Name'
 };
 test('Check updateBoard with id = 2', () => {
   return fetch('http://localhost:1337/api/boards/2', {

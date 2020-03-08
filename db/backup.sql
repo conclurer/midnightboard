@@ -137,6 +137,42 @@ ALTER SEQUENCE public.member_member_id_seq OWNED BY public.member.member_id;
 
 
 --
+-- Name: poll; Type: TABLE; Schema: public; Owner: dev
+--
+
+CREATE TABLE public.poll (
+    poll_id integer NOT NULL,
+    post_id integer,
+    answer_id integer NOT NULL,
+    vote integer NOT NULL
+);
+
+
+ALTER TABLE public.poll OWNER TO dev;
+
+--
+-- Name: poll_poll_id_seq; Type: SEQUENCE; Schema: public; Owner: dev
+--
+
+CREATE SEQUENCE public.poll_poll_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.poll_poll_id_seq OWNER TO dev;
+
+--
+-- Name: poll_poll_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dev
+--
+
+ALTER SEQUENCE public.poll_poll_id_seq OWNED BY public.poll.poll_id;
+
+
+--
 -- Name: post; Type: TABLE; Schema: public; Owner: dev
 --
 
@@ -210,6 +246,43 @@ ALTER TABLE public.post_post_id_seq OWNER TO dev;
 --
 
 ALTER SEQUENCE public.post_post_id_seq OWNED BY public.post.post_id;
+
+
+--
+-- Name: survey; Type: TABLE; Schema: public; Owner: dev
+--
+
+CREATE TABLE public.survey (
+    survey_id integer NOT NULL,
+    post_id integer,
+    question_id integer NOT NULL,
+    answer text,
+    vote integer
+);
+
+
+ALTER TABLE public.survey OWNER TO dev;
+
+--
+-- Name: survey_survey_id_seq; Type: SEQUENCE; Schema: public; Owner: dev
+--
+
+CREATE SEQUENCE public.survey_survey_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.survey_survey_id_seq OWNER TO dev;
+
+--
+-- Name: survey_survey_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dev
+--
+
+ALTER SEQUENCE public.survey_survey_id_seq OWNED BY public.survey.survey_id;
 
 
 --
@@ -342,6 +415,13 @@ ALTER TABLE ONLY public.member ALTER COLUMN member_id SET DEFAULT nextval('publi
 
 
 --
+-- Name: poll poll_id; Type: DEFAULT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public.poll ALTER COLUMN poll_id SET DEFAULT nextval('public.poll_poll_id_seq'::regclass);
+
+
+--
 -- Name: post post_id; Type: DEFAULT; Schema: public; Owner: dev
 --
 
@@ -353,6 +433,13 @@ ALTER TABLE ONLY public.post ALTER COLUMN post_id SET DEFAULT nextval('public.po
 --
 
 ALTER TABLE ONLY public.post_location ALTER COLUMN id SET DEFAULT nextval('public.post_location_id_seq'::regclass);
+
+
+--
+-- Name: survey survey_id; Type: DEFAULT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public.survey ALTER COLUMN survey_id SET DEFAULT nextval('public.survey_survey_id_seq'::regclass);
 
 
 --
@@ -419,6 +506,14 @@ COPY public.member (member_id, created_at, updated_at, last_seen, user_name, fir
 
 
 --
+-- Data for Name: poll; Type: TABLE DATA; Schema: public; Owner: dev
+--
+
+COPY public.poll (poll_id, post_id, answer_id, vote) FROM stdin;
+\.
+
+
+--
 -- Data for Name: post; Type: TABLE DATA; Schema: public; Owner: dev
 --
 
@@ -458,6 +553,14 @@ COPY public.post_location (id, board_id, post_id) FROM stdin;
 14	1	9
 15	1	10
 16	1	11
+\.
+
+
+--
+-- Data for Name: survey; Type: TABLE DATA; Schema: public; Owner: dev
+--
+
+COPY public.survey (survey_id, post_id, question_id, answer, vote) FROM stdin;
 \.
 
 
@@ -513,6 +616,13 @@ SELECT pg_catalog.setval('public.member_member_id_seq', 6, true);
 
 
 --
+-- Name: poll_poll_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dev
+--
+
+SELECT pg_catalog.setval('public.poll_poll_id_seq', 1, false);
+
+
+--
 -- Name: post_location_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dev
 --
 
@@ -524,6 +634,13 @@ SELECT pg_catalog.setval('public.post_location_id_seq', 16, true);
 --
 
 SELECT pg_catalog.setval('public.post_post_id_seq', 11, true);
+
+
+--
+-- Name: survey_survey_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dev
+--
+
+SELECT pg_catalog.setval('public.survey_survey_id_seq', 1, false);
 
 
 --
@@ -596,6 +713,14 @@ ALTER TABLE ONLY public.member
 
 
 --
+-- Name: poll poll_pkey; Type: CONSTRAINT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public.poll
+    ADD CONSTRAINT poll_pkey PRIMARY KEY (poll_id);
+
+
+--
 -- Name: post_location post_location_pkey; Type: CONSTRAINT; Schema: public; Owner: dev
 --
 
@@ -609,6 +734,14 @@ ALTER TABLE ONLY public.post_location
 
 ALTER TABLE ONLY public.post
     ADD CONSTRAINT post_pkey PRIMARY KEY (post_id);
+
+
+--
+-- Name: survey survey_pkey; Type: CONSTRAINT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public.survey
+    ADD CONSTRAINT survey_pkey PRIMARY KEY (survey_id);
 
 
 --
@@ -668,6 +801,14 @@ ALTER TABLE ONLY public.board_subscription
 
 
 --
+-- Name: poll poll_post_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public.poll
+    ADD CONSTRAINT poll_post_id_fkey FOREIGN KEY (post_id) REFERENCES public.post(post_id) ON DELETE CASCADE;
+
+
+--
 -- Name: post post_creator_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: dev
 --
 
@@ -689,6 +830,14 @@ ALTER TABLE ONLY public.post_location
 
 ALTER TABLE ONLY public.post_location
     ADD CONSTRAINT post_location_post_id_fkey FOREIGN KEY (post_id) REFERENCES public.post(post_id) ON DELETE CASCADE;
+
+
+--
+-- Name: survey survey_post_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public.survey
+    ADD CONSTRAINT survey_post_id_fkey FOREIGN KEY (post_id) REFERENCES public.post(post_id) ON DELETE CASCADE;
 
 
 --

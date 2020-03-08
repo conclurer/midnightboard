@@ -139,15 +139,24 @@ module.exports = {
       dueDate: uDueDate,
       interactiveDueDate: uInteractiveDueDate
     }).fetch();
-    // Create entry in 'post_location' table
-    await PostLocation.create({
-      boardId: req.param('boardId'),
-      postId: createdPost.id
-    });
-    return res.json(JSON.stringify(createdPost));
+    // Wait for new post
+    if(createdPost) {
+      // Create entry in 'post_location' table
+      var createdLocation = await PostLocation.create({
+        boardId: req.param('boardId'),
+        postId: createdPost.id
+      }).fetch();
+      if(createdLocation) {
+        return res.json(JSON.stringify(createdPost));
+      } else {
+        return res.serverError();
+      }
+    } else {
+      return res.badRequest();
+    }
   },
 
-
+  // Get post
   getPost: async function(req, res) {
     sails.log.verbose('POST_SEARCH::: Fetching Post ' + req.param('postId'));
     var pst = await Post.findOne({id: req.param('postId')});
@@ -158,7 +167,7 @@ module.exports = {
     return res.json(JSON.stringify(pst));
   },
 
-
+  // Search post
   searchPost: async function(req, res) {
     sails.log.verbose('POST_SEARCH::: Fetching Posts from board ' + req.param('boardId'));
     var overdue = Date.now();
@@ -185,14 +194,14 @@ module.exports = {
     return res.json(JSON.stringify(postList));
   },
 
-
+  // Delete a post
   deletePost: async function(req, res) {
     sails.log.verbose('POST_DELETE::: Trying to delete post ' + req.param('postId'));
     // TODO Delete logic - await Post.destroy({id: req.param('postId')}); doesnt work!
     return res.ok();
   },
 
-
+  // Update a post
   updatePost: async function(req, res) {
     // TODO Update logic
     sails.log.verbose('POST_UPDATE::: Trying to update post ' + req.param('postId'));
