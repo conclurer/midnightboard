@@ -131,14 +131,14 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   #fileUpload {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 60px;
   }
 
   .fileTitle {
@@ -148,20 +148,19 @@ export default {
   }
 
   h1, h2 {
-  font-weight: normal;
+    font-weight: normal;
   }
 
   ul {
-  list-style-type: none;
-  padding: 0;
+    list-style-type: none;
+    padding: 0;
   }
 
   li {
-  display: inline-block;
-  margin: 0 10px;
+    margin: 0 10px;
   }
 
   a {
-  color: #42b983;
+    color: #42b983;
   }
 </style>

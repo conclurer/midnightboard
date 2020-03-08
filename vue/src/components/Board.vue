@@ -400,6 +400,14 @@ hr {
   background-color: #aaa;
 }
 
+li {
+  display: list-item;
+}
+
+ul {
+  text-align: left;
+}
+
 .content {
   position: static;
   margin: 10px 10px;

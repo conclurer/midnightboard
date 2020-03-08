@@ -152,6 +152,7 @@
     >
       {{$t('editor.note.create')}}
     </b-button>
+    <br>
   </div>
 </template>
 
@@ -187,7 +188,7 @@ export default {
   data () {
     return {
       date: null,
-      titleContent: 'Yout note title',
+      titleContent: 'Your note title',
       textContent: '<p>Insert content here</p><ul><li>Start a bulleted list</li></ul><ol><li>Or start a numerical list</li></ol>',
       titleEditor: new Editor({
         extensions: [
