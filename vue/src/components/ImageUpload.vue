@@ -41,8 +41,9 @@
       class="btn btn-primary button"
       v-on:click="$emit('upload-image', imageTitle, imageRef)"
     >
-    {{$t('editor.image.post')}}
+      {{$t('editor.image.post')}}
     </button>
+    <br>
   </div>
 </template>
 
@@ -77,7 +78,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   #imageUpload {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -103,7 +104,6 @@ export default {
   }
 
   li {
-    display: inline-block;
     margin: 0 10px;
   }
 

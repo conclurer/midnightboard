@@ -20,4 +20,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
 }
+
+.ProseMirror {
+  border: 1px solid #4d90fe;
+  border-radius: 3px;
+  outline: none;
+}
 </style>
