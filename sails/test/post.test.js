@@ -1,5 +1,5 @@
 // Testing the PostController with Jest
-const http = require('./fetch.js');
+const fetch = require('node-fetch');
 
 // newPost
 const createData = {
@@ -8,7 +8,7 @@ const createData = {
   content: '<h2>Content</h2>'
 };
 test('Check newPost with type application/note', () => {
-  return http.fetch('http://localhost:1337/api/boards/1/new', {
+  return fetch('http://localhost:1337/api/boards/1/new', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -33,8 +33,8 @@ test('Check newPost with type application/note', () => {
 });
 
 // getPost
-test('Check getPost with postId = 1', () => {
-  return http.fetch('http://localhost:1337/api/posts/1', {
+test('Check getPost with id = 1', () => {
+  return fetch('http://localhost:1337/api/posts/1', {
     method: 'GET'
   })
     .then((response) => {
@@ -51,8 +51,8 @@ test('Check getPost with postId = 1', () => {
 });
 
 // searchPost
-test('Check searchPost with boardId = 1', () => {
-  return http.fetch('http://localhost:1337/api/posts/all/1', {
+test('Check searchPost with id = 1', () => {
+  return fetch('http://localhost:1337/api/posts/all/1', {
     method: 'GET'
   })
     .then((response) => {
@@ -69,8 +69,8 @@ test('Check searchPost with boardId = 1', () => {
 });
 
 // deletePost
-test('Check deletePost with postId = 2', () => {
-  return http.fetch('http://localhost:1337/api/posts/2', {
+test('Check deletePost with id = 2', () => {
+  return fetch('http://localhost:1337/api/posts/2', {
     method: 'DELETE'
   })
     .then((response) => expect(response.status).toBe(200))
@@ -85,8 +85,8 @@ const updateData = {
   typeOfPost: 'application/note',
   content: '<h3>Content</h3>'
 };
-test('Check updatePost with postId = 1', () => {
-  return http.fetch('http://localhost:1337/api/posts/1', {
+test('Check updatePost with id = 1', () => {
+  return fetch('http://localhost:1337/api/posts/1', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',

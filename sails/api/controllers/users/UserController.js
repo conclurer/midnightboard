@@ -27,6 +27,8 @@ module.exports = {
   },
 
   updateUser: async function(req, res) {
+    // TODO Update logic
+    sails.log.verbose('USER_UPDATE::: Trying to update user ' + req.param('userId'));
     return res.ok();
-  },
+  }
 };

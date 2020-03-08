@@ -8,6 +8,8 @@
 var DefaultDueDates = require('../../../../configuration/DefaultDisplayTimes');
 module.exports = {
   newPost: async function(req, res) {
+    sails.log.verbose('POST_NEW::: Trying to create new post');
+
     // 'Bad Reqest' Responses when information is missing from the API Request
     // No title specified
     if(!req.param('title')) {
@@ -129,7 +131,6 @@ module.exports = {
       }
     }
 
-    sails.log.debug('Creating new Post . . .');
     // Create entry in 'post' table
     var createdPost = await Post.create({
       typeOfPost: req.param('typeOfPost'),
@@ -148,9 +149,9 @@ module.exports = {
 
 
   getPost: async function(req, res) {
-    sails.log.debug('Fetching Post #' + req.param('postId'));
+    sails.log.verbose('POST_SEARCH::: Fetching Post ' + req.param('postId'));
     var pst = await Post.findOne({id: req.param('postId')});
-    // Return 'not found' response when postId does not match any existing post
+    // Return 'not found' response when id does not match any existing post
     if(!pst) {
       return res.notFound();
     }
@@ -159,8 +160,7 @@ module.exports = {
 
 
   searchPost: async function(req, res) {
-    sails.log.debug('Fetching Posts from board #' + req.param('boardId'));
-
+    sails.log.verbose('POST_SEARCH::: Fetching Posts from board ' + req.param('boardId'));
     var overdue = Date.now();
     if(req.param('overdueDays') && !isNaN(req.param('overdueDays')) && req.param('overdueDays') >= 0) {
       overdue = Date.now() - req.param('overdueDays') * (24 * 60 * 60 * 1000);
@@ -187,13 +187,15 @@ module.exports = {
 
 
   deletePost: async function(req, res) {
-    sails.log.debug('Trying to delete post #' + req.param('postId'));
-    await Post.destroy({id: req.param('postId')});
+    sails.log.verbose('POST_DELETE::: Trying to delete post ' + req.param('postId'));
+    // TODO Delete logic - await Post.destroy({id: req.param('postId')}); doesnt work!
     return res.ok();
   },
 
 
   updatePost: async function(req, res) {
+    // TODO Update logic
+    sails.log.verbose('POST_UPDATE::: Trying to update post ' + req.param('postId'));
     return res.ok();
   }
 };

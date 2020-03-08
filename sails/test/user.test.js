@@ -1,9 +1,12 @@
 // Testing the UserController with Jest
-const http = require('./fetch.js');
+const fetch = require('node-fetch');
+
+// Setup
+var userId = 1;
 
 // getUser
-test('Check getUser with userId = 1', () => {
-  return http.fetch('http://localhost:1337/api/users/1', {
+test('Check getUser with id = ' + userId, () => {
+  return fetch('http://localhost:1337/api/users/' + userId, {
     method: 'GET'
   })
     .then((response) => {
@@ -29,7 +32,7 @@ const createData = {
   languagePreference: 'en'
 };
 test('Check registerUser with createData', () => {
-  return http.fetch('http://localhost:1337/api/users/register', {
+  return fetch('http://localhost:1337/api/users/register', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -43,8 +46,9 @@ test('Check registerUser with createData', () => {
 });
 
 // deleteUser
-test('Check deleteUser with userId = 2', () => {
-  return http.fetch('http://localhost:1337/api/users/2', {
+userId += 1; // TODO: Should be a new/temporary user
+test('Check deleteUser with volatile user', () => {
+  return fetch('http://localhost:1337/api/users/' + userId, {
     method: 'DELETE'
   })
     .then((response) => expect(response.status).toBe(200))
@@ -63,7 +67,7 @@ const updateData = {
   languagePreference: 'de'
 };
 test('Check updatePost with updateData', () => {
-  return http.fetch('http://localhost:1337/api/users/1', {
+  return fetch('http://localhost:1337/api/users/1', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',

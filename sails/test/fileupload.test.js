@@ -1,5 +1,5 @@
 // Testing the PostController with Jest
-const http = require('./fetch.js');
+const fetch = require('node-fetch');
 
 // Post new PDF
 const createPDFData = {
@@ -8,7 +8,7 @@ const createPDFData = {
   content: '4keLtPEMlV8LoTwN/AGwzQ=='
 };
 test('Check newPost with type application/pdf', () => {
-  return http.fetch('http://localhost:1337/api/boards/1/new', {
+  return fetch('http://localhost:1337/api/boards/1/new', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -20,7 +20,7 @@ test('Check newPost with type application/pdf', () => {
       return response.json();
     })
     .then((jsonString) => {
-    // Check for valid data
+      // Check for valid data
       const jsonData = JSON.parse(jsonString);
       expect(jsonData.typeOfPost).toBe('application/pdf');
       expect(jsonData.title).toBe('New PDF');
@@ -38,7 +38,7 @@ const createWordData = {
   content: 'PQwd5Q0hHN8YCUpJ2tcnlg=='
 };
 test('Check newPost with type application/vnd.openxmlformats-officedocument.wordprocessingml.document', () => {
-  return http.fetch('http://localhost:1337/api/boards/1/new', {
+  return fetch('http://localhost:1337/api/boards/1/new', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ test('Check newPost with type application/vnd.openxmlformats-officedocument.word
       return response.json();
     })
     .then((jsonString) => {
-    // Check for valid data
+      // Check for valid data
       const jsonData = JSON.parse(jsonString);
       expect(jsonData.typeOfPost).toBe('application/vnd.openxmlformats-officedocument.wordprocessingml.document');
       expect(jsonData.title).toBe('New Word document');
@@ -68,7 +68,7 @@ const createExcelData = {
   content: 'Ht0IqLH4jSA0Fo4Wqgp20Q=='
 };
 test('Check newPost with type application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', () => {
-  return http.fetch('http://localhost:1337/api/boards/1/new', {
+  return fetch('http://localhost:1337/api/boards/1/new', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -80,7 +80,7 @@ test('Check newPost with type application/vnd.openxmlformats-officedocument.spre
       return response.json();
     })
     .then((jsonString) => {
-    // Check for valid data
+      // Check for valid data
       const jsonData = JSON.parse(jsonString);
       expect(jsonData.typeOfPost).toBe('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
       expect(jsonData.title).toBe('New Excel spreadsheet');
@@ -98,7 +98,7 @@ const createPowerPointData = {
   content: 'n6WSUANntSR1B5z3vjT1bQ=='
 };
 test('Check newPost with type application/vnd.openxmlformats-officedocument.presentationml.presentation', () => {
-  return http.fetch('http://localhost:1337/api/boards/1/new', {
+  return fetch('http://localhost:1337/api/boards/1/new', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -110,7 +110,7 @@ test('Check newPost with type application/vnd.openxmlformats-officedocument.pres
       return response.json();
     })
     .then((jsonString) => {
-    // Check for valid data
+      // Check for valid data
       const jsonData = JSON.parse(jsonString);
       expect(jsonData.typeOfPost).toBe('application/vnd.openxmlformats-officedocument.presentationml.presentation');
       expect(jsonData.title).toBe('New PowerPoint presentation');
