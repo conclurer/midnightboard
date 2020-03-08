@@ -10,5 +10,5 @@ CREATE TABLE public.member (
     password TEXT NOT NULL,
     avatar jsonb,
     language_preference  CHAR(2) DEFAULT 'en' NOT NULL,
-    hide_last_name boolean DEFAULT TRUE NOT NULL 
+    hide_last_name boolean DEFAULT FALSE NOT NULL 
 );

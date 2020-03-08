@@ -22,7 +22,7 @@ module.exports = {
       statusCode: 401
     },
     invalidToken: {
-      description: 'Invalid E-Mail address',
+      description: 'Invalid refresh token',
       statusCode: 403
     }
   },

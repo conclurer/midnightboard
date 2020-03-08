@@ -108,7 +108,7 @@ CREATE TABLE public.member (
     password text NOT NULL,
     avatar jsonb,
     language_preference character(2) DEFAULT 'en'::bpchar NOT NULL,
-    hide_last_name boolean DEFAULT true NOT NULL
+    hide_last_name boolean DEFAULT false NOT NULL
 );
 
 

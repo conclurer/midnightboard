@@ -32,20 +32,8 @@ module.exports = {
       responseType: '',
       statusCode: 201
     },
-    invalidEmail: {
-      description: 'Email does not match sails.config.custom/EMAIL_REGEX',
-      statusCode: 400
-    },
-    invalidPassword: {
-      description: 'Passwort does not match sails.config.custom/PASSWORD_REGEX',
-      statusCode: 400
-    },
-    invalidUsername: {
-      description: 'Username does not match sails.config.custom/USERNAME_REGEX',
-      statusCode: 400
-    },
-    invalidRealname: {
-      description: 'First or last name do not match sails.config.custom/REALNAME_REGEX',
+    invalidParams: {
+      description: 'One or more parameters are invalid',
       statusCode: 400
     },
     nameTaken: {
@@ -73,17 +61,17 @@ module.exports = {
       return exits.missingParams('Missing parameters. email, userName, password, firstName and lastName are required');
     }
     if(!emailRegex.test(inputs.email)) {
-      return exits.invalidEmail('Invalid E-Mail address');
+      return exits.invalidParams('Invalid E-Mail address');
     }
     if(!passwordRegex.test(inputs.password)) {
-      return exits.invalidPassword('Password must be atleast 8 characters long,'
+      return exits.invalidParams('Password must be atleast 8 characters long,'
         + ' and must contain one uppercase letter, one lowercase letter, and 1 number or special character');
     }
     if(!usernameRegex.test(inputs.userName)) {
-      exits.invalidUsername('Username contains illegal characters');
+      return exits.invalidParams('Username is too short/long or contains illegal characters');
     }
     if(!realnameRegex.test(inputs.firstName) || !realnameRegex.test(inputs.lastName)) {
-      return exits.invalidRealname('First or last name contains illegal characters');
+      return exits.invalidParams('First or last name is too short/long or contains illegal characters');
     }
 
     sails.log.verbose('AUTH_REGISTER::: Trying to create user ' + inputs.userName);
@@ -95,13 +83,19 @@ module.exports = {
       return exits.serverError();
     }
     try {
-      await Member.create({
+      var createdUser = await Member.create({
         userName: inputs.userName,
-        email: inputs.email,
+        email: inputs.email.toLowerCase(),
         password: hashedPassword,
         firstName: inputs.firstName,
-        lastName: inputs.firstName
-      });
+        lastName: inputs.lastName
+      }).fetch();
+
+      ['updatedAt',
+        'password',
+        'languagePreference',
+        'hideLastName'
+      ].forEach(attribute => delete createdUser[attribute]);
     } catch(err) {
       if(err.code === 'E_UNIQUE') {
         return exits.nameTaken('Username or email already taken');
@@ -109,6 +103,6 @@ module.exports = {
       sails.log.debug('AUTH_REGISTER_ERR::: ' + err);
       return exits.serverError();
     }
-    return exits.success();
+    return exits.success(createdUser);
   }
 };

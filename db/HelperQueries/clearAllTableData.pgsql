@@ -5,3 +5,4 @@ DELETE FROM team;
 DELETE FROM post;
 DELETE FROM board;
 DELETE FROM member;
+DELETE FROM token;

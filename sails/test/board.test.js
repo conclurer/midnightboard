@@ -1,11 +1,103 @@
-// Testing the BoardController with Jest
-const http = require('./fetch.js');
+//#region Test data
+const fetch = require('node-fetch');
+const returnedData = {};
 
-// getBoard
-test('Check getBoard with boardId = 1', () => {
-  return http.fetch('http://localhost:1337/api/boards/1', {
+const adminLogin = {
+  userName: 'admin',
+  password: 'admin',
+  token: null
+};
+
+const boardData = {
+  boardName: 'JEST Board'
+};
+const boardDataUpdated = {
+  boardName: 'JEST Board Updated'
+};
+
+const postDataNote = {
+  title: 'JEST Post Note',
+  typeOfPost: 'application/note',
+  dueDate: 1609498800000,
+  content: '<h2>JEST Note</h2>'
+};
+const postDataNoteSkip = {
+  title: 'JEST Post Note Skip',
+  typeOfPost: 'application/note',
+  dueDate: 1609498800000,
+  content: '<h2>JEST Note Skip</h2>',
+  skipReturn: true
+};
+const postDataPDF = {
+  title: 'JEST Post PDF',
+  typeOfPost: 'application/pdf',
+  content: '4keLtPEMlV8LoTwN/AGwzQ=='
+};
+//#endregion
+
+beforeAll(() => {
+  // Init. Retrieve acces token via adminLogin
+  return fetch('http://localhost:1337/api/users/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(adminLogin)
+  })
+    .then(res => res.json())
+    .then((json) => {
+      adminLogin.token = json.accessToken;
+    })
+    .catch((err) => {
+      console.log('JEST:Board::: Error on setup: ' + err);
+      expect(null).not.toBeNull();
+    });
+});
+
+//#region Create and Update board
+test('BOARD::: Create board', () => {
+  return fetch('http://localhost:1337/api/boards/create', {
+    method: 'POST',
+    headers: {
+      Authorization: 'Bearer ' + adminLogin.token,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(boardData)
+  })
+    .then((response) => {
+      expect(response.status).toBe(201);
+      return response.json();
+    })
+    .then((jsonString) => {
+      expect(jsonString.boardName).toBe(boardData.boardName);
+      expect(jsonString.id).not.toBeUndefined();
+      returnedData.id = jsonString.id;
+    })
+    .catch(() => {
+      expect(null).not.toBeNull();
+    });
+});
+
+test('BOARD::: Update created board', () => {
+  return fetch('http://localhost:1337/api/boards/' + returnedData.id, {
+    method: 'PUT',
+    headers: {
+      Authorization: 'Bearer ' + adminLogin.token,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(boardDataUpdated)
+  })
+    .then((response) => expect(response.status).toBe(200))
+    .catch(() => {
+      expect(null).not.toBeNull();
+    });
+});
+
+test('BOARD::: Get updated board', () => {
+  return fetch('http://localhost:1337/api/boards/' + returnedData.id, {
     method: 'GET',
     headers: {
+      Authorization: 'Bearer ' + adminLogin.token,
       'Content-Type': 'application/json',
     }
   })
@@ -14,63 +106,162 @@ test('Check getBoard with boardId = 1', () => {
       return response.json();
     })
     .then((jsonString) => {
-    // Check for valid data
-      expect(jsonString).not.toBeNull();
+      expect(jsonString.boardName).toBe(boardDataUpdated.boardName);
+      returnedData.id = jsonString.id;
+    })
+    .catch(() => {
+      expect(null).not.toBeNull();
+    });
+});
+//#endregion
+
+//#region Post tests
+test('POST::: Create new post : Note', () => {
+  return fetch('http://localhost:1337/api/boards/' + returnedData.id + '/new', {
+    method: 'POST',
+    headers: {
+      Authorization: 'Bearer ' + adminLogin.token,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(postDataNote)
+  })
+    .then((response) => {
+      expect(response.status).toBe(201);
+      return response.json();
+    })
+    .then((jsonString) => {
+      expect(jsonString.title).toBe(postDataNote.title);
+      expect(jsonString.typeOfPost).toBe(postDataNote.typeOfPost);
+      expect(jsonString.content).toBe(postDataNote.content);
+      expect(jsonString.id).not.toBeUndefined();
+      returnedData.postIdNote = jsonString.id;
     })
     .catch(() => {
       expect(null).not.toBeNull();
     });
 });
 
-// createBoard
-const createData = {
-  createdAt: 1577833200000,
-  updateAt: 1577833200000,
-  creatorId: 1,
-  boardName: 'Create Name'
-};
-test('Check createBoard with boardName = Create Name', () => {
-  return http.fetch('http://localhost:1337/api/boards/create', {
+test('POST::: Create new post : PDF', () => {
+  return fetch('http://localhost:1337/api/boards/' + returnedData.id + '/new', {
     method: 'POST',
     headers: {
+      Authorization: 'Bearer ' + adminLogin.token,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(createData)
+    body: JSON.stringify(postDataPDF)
   })
-    .then((response) => expect(response.status).toBe(200))
+    .then((response) => {
+      expect(response.status).toBe(201);
+      return response.json();
+    })
+    .then((jsonString) => {
+      expect(jsonString.title).toBe(postDataPDF.title);
+      expect(jsonString.typeOfPost).toBe(postDataPDF.typeOfPost);
+      expect(jsonString.content).toBe(postDataPDF.content);
+      expect(jsonString.dueDate).not.toBeFalsy();
+      expect(jsonString.id).not.toBeFalsy();
+      returnedData.postIdPDF = jsonString.id;
+    })
     .catch(() => {
       expect(null).not.toBeNull();
     });
 });
 
-// deleteBoard
-test('Check deleteBoard with boardId = 1', () => {
-  return http.fetch('http://localhost:1337/api/boards/1', {
-    method: 'DELETE'
-  })
-    .then((response) => expect(response.status).toBe(200))
-    .catch(() => {
-      expect(null).not.toBeNull();
-    });
-});
-
-// updateBoard
-const updateData = {
-  createdAt: 1577833300000,
-  updateAt: 1577833300000,
-  creatorId: 1,
-  boardName: 'Update Name'
-};
-test('Check deleteBoard with boardId = 2', () => {
-  return http.fetch('http://localhost:1337/api/boards/2', {
-    method: 'PUT',
+test('POST::: Create new post : Note, skip return', () => {
+  return fetch('http://localhost:1337/api/boards/' + returnedData.id + '/new', {
+    method: 'POST',
     headers: {
+      Authorization: 'Bearer ' + adminLogin.token,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(updateData)
+    body: JSON.stringify(postDataNoteSkip)
+  })
+    .then((response) => {
+      expect(response.status).toBe(201);
+    })
+    .catch(() => {
+      expect(null).not.toBeNull();
+    });
+});
+
+test('POST::: Get all', () => {
+  return fetch('http://localhost:1337/api/posts/all/' + returnedData.id, {
+    method: 'GET',
+    headers: {
+      Authorization: 'Bearer ' + adminLogin.token
+    }
+  })
+    .then((response) => {
+      expect(response.status).toBe(200);
+      return response.json();
+    })
+    .then((jsonString) => {
+      expect(jsonString.posts.length).toBe(3);
+      expect(jsonString.posts[0].id).not.toBeFalsy();
+      expect(jsonString.posts[1].id).not.toBeFalsy();
+      expect(jsonString.posts[2].id).not.toBeFalsy();
+      jsonString.posts.forEach((item) => {
+        if(item.id !== returnedData.postIdNote && item.id !== returnedData.postIdPDF) {
+          returnedData.postIdSkip = item.id;
+        }
+      });
+    })
+    .catch(() => {
+      expect(null).not.toBeNull();
+    });
+});
+//#endregion
+
+//#region Cleanup
+test('POST::: Delete post A', () => {
+  return fetch('http://localhost:1337/api/posts/' + returnedData.postIdNote, {
+    method: 'DELETE',
+    headers: {
+      Authorization: 'Bearer ' + adminLogin.token,
+    }
   })
     .then((response) => expect(response.status).toBe(200))
     .catch(() => {
       expect(null).not.toBeNull();
     });
 });
+
+test('POST::: Delete post B', () => {
+  return fetch('http://localhost:1337/api/posts/' + returnedData.postIdPDF, {
+    method: 'DELETE',
+    headers: {
+      Authorization: 'Bearer ' + adminLogin.token,
+    }
+  })
+    .then((response) => expect(response.status).toBe(200))
+    .catch(() => {
+      expect(null).not.toBeNull();
+    });
+});
+
+test('POST::: Delete post C', () => {
+  return fetch('http://localhost:1337/api/posts/' + returnedData.postIdSkip, {
+    method: 'DELETE',
+    headers: {
+      Authorization: 'Bearer ' + adminLogin.token,
+    }
+  })
+    .then((response) => expect(response.status).toBe(200))
+    .catch(() => {
+      expect(null).not.toBeNull();
+    });
+});
+
+test('BOARD::: Delete board', () => {
+  return fetch('http://localhost:1337/api/boards/' + returnedData.id, {
+    method: 'DELETE',
+    headers: {
+      Authorization: 'Bearer ' + adminLogin.token,
+    }
+  })
+    .then((response) => expect(response.status).toBe(200))
+    .catch(() => {
+      expect(null).not.toBeNull();
+    });
+});
+//#endregion
