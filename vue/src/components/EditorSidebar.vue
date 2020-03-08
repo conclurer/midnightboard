@@ -1,7 +1,9 @@
 <template>
   <div class="editorSidebar">
     <NoteEditor @create-note="createNote"/>
+    <hr />
     <ImageUpload @upload-image="uploadImage"/>
+    <hr />
     <FileUpload @upload-file="uploadFile"/>
   </div>
 </template>
