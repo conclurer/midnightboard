@@ -12,7 +12,7 @@
       class="editor__content"
       :editor="contentEditor"
     />
-    <br>
+    <div class="lowerGap" />
 
     <!-- Formatting tools -->
     <editor-menu-bar
@@ -131,7 +131,7 @@
       </div>
     </editor-menu-bar>
 
-    <div class="lowerGap" />
+    <br>
 
     <VueCtkDateTimePicker
       id="DatePicker"
@@ -152,7 +152,7 @@
     >
       {{$t('editor.note.create')}}
     </b-button>
-    <br>
+    <br><br>
   </div>
 </template>
 
@@ -189,7 +189,7 @@ export default {
     return {
       date: null,
       titleContent: 'Your note title',
-      textContent: '<p>Insert content here</p><ul><li>Start a bulleted list</li></ul><ol><li>Or start a numerical list</li></ol>',
+      textContent: '<p>Insert content here</p><ul><li><p>Start a bulleted list</p></li></ul><ol><li><p>Or start a numerical list</p></li></ol>',
       titleEditor: new Editor({
         extensions: [
           new Heading({ levels: [2] })
@@ -272,5 +272,6 @@ export default {
   }
   .datePicker {
     width: 300px;
+    z-index: 10003;
   }
 </style>
