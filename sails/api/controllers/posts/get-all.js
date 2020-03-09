@@ -11,15 +11,15 @@ module.exports = {
       type: 'number'
     },
     overdueDays: {
-      description: 'If set, also retrieves posts that are x days overdue',
+      description: 'Optional: If set, also retrieves posts that are x days overdue',
       type: 'number'
     },
     limit: {
-      description: 'Maximum number of posts ro receive. Combine with `offset`',
+      description: 'Optional: Maximum number of posts ro receive. Combine with `offset`',
       type: 'number'
     },
     offset: {
-      description: 'Post offset',
+      description: 'Optional: Post offset',
       type: 'number'
     }
   },

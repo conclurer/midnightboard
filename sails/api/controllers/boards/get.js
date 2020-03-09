@@ -7,7 +7,7 @@ module.exports = {
 
   inputs: {
     boardId: {
-      description: 'Board ID of board to retrieve',
+      description: 'ID of board to retrieve',
       type: 'number'
     }
   },
@@ -23,7 +23,7 @@ module.exports = {
     },
     nonExistent: {
       description: 'Board does not exist',
-      statusCode: 204
+      statusCode: 404
     }
   },
 

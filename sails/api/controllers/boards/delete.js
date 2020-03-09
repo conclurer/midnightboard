@@ -21,8 +21,8 @@ module.exports = {
       statusCode: 400
     },
     nonExistent: {
-      description: 'User does not exist in database',
-      statusCode: 401
+      description: 'Board does not exist in database',
+      statusCode: 400
     }
   },
 

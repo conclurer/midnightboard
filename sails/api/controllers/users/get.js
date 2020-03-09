@@ -10,7 +10,7 @@ module.exports = {
       type: 'number'
     },
     skipAvatar: {
-      description: 'If set to true, no user avatar is sent. Has to be sent within the url via `?skipAvatar=true`',
+      description: 'Optional: If set to true, no user avatar is sent. Has to be sent within the url via `?skipAvatar=true`',
       type: 'boolean'
     }
   },
@@ -23,6 +23,10 @@ module.exports = {
     missingParams: {
       description: 'Missing parameters',
       statusCode: 401
+    },
+    nonExistent: {
+      description: 'User does not exist',
+      statusCode: 404
     }
   },
 

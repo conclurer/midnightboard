@@ -9,47 +9,6 @@
  */
 
 module.exports.routes = {
-
-/*
-    //  ╦ ╦╔═╗╔╗ ╔═╗╔═╗╔═╗╔═╗╔═╗
-    //  ║║║║╣ ╠╩╗╠═╝╠═╣║ ╦║╣ ╚═╗
-    //  ╚╩╝╚═╝╚═╝╩  ╩ ╩╚═╝╚═╝╚═╝
-    'GET /':                   { action: 'view-homepage-or-redirect' },
-    'GET /welcome/:unused?':   { action: 'dashboard/view-welcome' },
-
-    'GET /faq':                { action:   'view-faq' },
-    'GET /legal/terms':        { action:   'legal/view-terms' },
-    'GET /legal/privacy':      { action:   'legal/view-privacy' },
-    'GET /contact':            { action:   'view-contact' },
-
-    'GET /signup':             { action: 'entrance/view-signup' },
-    'GET /email/confirm':      { action: 'entrance/confirm-email' },
-    'GET /email/confirmed':    { action: 'entrance/view-confirmed-email' },
-
-    'GET /login':              { action: 'entrance/view-login' },
-    'GET /password/forgot':    { action: 'entrance/view-forgot-password' },
-    'GET /password/new':       { action: 'entrance/view-new-password' },
-
-    'GET /account':            { action: 'account/view-account-overview' },
-    'GET /account/password':   { action: 'account/view-edit-password' },
-    'GET /account/profile':    { action: 'account/view-edit-profile' },
-
-
-    //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
-    //  ║║║║╚═╗║    ╠╦╝║╣  ║║║╠╦╝║╣ ║   ║ ╚═╗  ┌┼─   ║║║ ║║║║║║║║  ║ ║╠═╣ ║║╚═╗
-    //  ╩ ╩╩╚═╝╚═╝  ╩╚═╚═╝═╩╝╩╩╚═╚═╝╚═╝ ╩ ╚═╝  └┘   ═╩╝╚═╝╚╩╝╝╚╝╩═╝╚═╝╩ ╩═╩╝╚═╝
-    '/terms':                   '/legal/terms',
-    '/logout':                  '/api/v1/account/logout',
-
-
-    //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
-    //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
-    //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝
-    // …
-
-    */
-
-    //
     //  ╔═╗╔═╗╦  ╔═╗╔╗╔╔╦╗╔═╗╔═╗╦╔╗╔╔╦╗╔═╗
     //  ╠═╣╠═╝║  ║╣ ║║║ ║║╠═╝║ ║║║║║ ║ ╚═╗
     //  ╩ ╩╩  ╩  ╚═╝╝╚╝═╩╝╩  ╚═╝╩╝╚╝ ╩ ╚═╝
@@ -109,7 +68,7 @@ module.exports.routes = {
         action: 'get',
         skipAssets: true
     },
-    'POST   /api/boards/create': {
+    'POST   /api/boards': {
         controller: 'boards',
         action: 'create',
         skipAssets: true
@@ -127,7 +86,7 @@ module.exports.routes = {
 
 
     //POSTS
-    'POST   /api/boards/:boardId/new': {
+    'POST   /api/boards/:boardId': {
         controller: 'posts',
         action: 'create',
         skipAssets: true
@@ -138,8 +97,8 @@ module.exports.routes = {
         skipAssets: true
     },
     'GET   /api/posts/:postId': {
-        controller: 'posts/Post',
-        action: 'getPost',
+        controller: 'posts',
+        action: 'get',
         skipAssets: true
     },
     'DELETE   /api/posts/:postId': {

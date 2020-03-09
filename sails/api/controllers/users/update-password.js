@@ -39,6 +39,10 @@ module.exports = {
     serverError: {
       description: 'Unexpected server error',
       statusCode: 500
+    },
+    nonExistent: {
+      description: 'User does not exist',
+      statusCode: 400
     }
   },
 

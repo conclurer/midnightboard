@@ -19,7 +19,7 @@ module.exports = {
     },
     missingParams: {
       description: 'Missing parameters',
-      statusCode: 401
+      statusCode: 400
     },
     invalidToken: {
       description: 'Invalid refresh token',

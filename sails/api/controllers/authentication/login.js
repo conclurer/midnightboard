@@ -7,11 +7,11 @@ module.exports = {
 
   inputs: {
     userName: {
-      description: 'Username used to log in.',
+      description: 'Username used to log in. Email may be used instead',
       type: 'string'
     },
     email: {
-      description: 'Email used to log in',
+      description: 'Email used to log in. Username may be used instead',
       type: 'string'
     },
     password: {

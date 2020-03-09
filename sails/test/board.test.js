@@ -56,7 +56,7 @@ beforeAll(() => {
 
 //#region Create and Update board
 test('BOARD::: Create board', () => {
-  return fetch('http://localhost:1337/api/boards/create', {
+  return fetch('http://localhost:1337/api/boards', {
     method: 'POST',
     headers: {
       Authorization: 'Bearer ' + adminLogin.token,
@@ -117,7 +117,7 @@ test('BOARD::: Get updated board', () => {
 
 //#region Post tests
 test('POST::: Create new post : Note', () => {
-  return fetch('http://localhost:1337/api/boards/' + returnedData.id + '/new', {
+  return fetch('http://localhost:1337/api/boards/' + returnedData.id, {
     method: 'POST',
     headers: {
       Authorization: 'Bearer ' + adminLogin.token,
@@ -142,7 +142,7 @@ test('POST::: Create new post : Note', () => {
 });
 
 test('POST::: Create new post : PDF', () => {
-  return fetch('http://localhost:1337/api/boards/' + returnedData.id + '/new', {
+  return fetch('http://localhost:1337/api/boards/' + returnedData.id, {
     method: 'POST',
     headers: {
       Authorization: 'Bearer ' + adminLogin.token,
@@ -168,7 +168,7 @@ test('POST::: Create new post : PDF', () => {
 });
 
 test('POST::: Create new post : Note, skip return', () => {
-  return fetch('http://localhost:1337/api/boards/' + returnedData.id + '/new', {
+  return fetch('http://localhost:1337/api/boards/' + returnedData.id, {
     method: 'POST',
     headers: {
       Authorization: 'Bearer ' + adminLogin.token,

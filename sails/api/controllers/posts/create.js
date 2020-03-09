@@ -19,11 +19,11 @@ module.exports = {
       type: 'string'
     },
     dueDate: {
-      description: 'Date in milliseconds, after which the post is no longer displayed',
+      description: 'Optional: Date in milliseconds, after which the post is no longer displayed',
       type: 'number'
     },
     InteractiveDueDate: {
-      description: 'Date in milliseconds, after which interaction is no longer possible',
+      description: 'Optional: Date in milliseconds, after which interaction is no longer possible',
       type: 'number'
     },
     content: {
@@ -31,7 +31,7 @@ module.exports = {
       type: 'ref'
     },
     skipReturn: {
-      description: 'Optional parameter. No post is returned if set to true',
+      description: 'Optional: No post is returned if set to true',
       type: 'boolean'
     }
   },
