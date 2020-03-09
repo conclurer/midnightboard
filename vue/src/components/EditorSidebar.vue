@@ -35,7 +35,7 @@ export default {
 
       // Post request to api
       await axios
-        .post('http://localhost:1337/api/boards/' + this.boardId + '/new', jsonBody, {
+        .post('http://localhost:1337/api/boards/' + this.boardId, jsonBody, {
           headers: {
             'Content-Type': 'application/json'
           }
@@ -60,7 +60,7 @@ export default {
 
       // Post request to api
       await axios
-        .post('http://localhost:1337/api/boards/' + this.boardId + '/new', jsonBody, {
+        .post('http://localhost:1337/api/boards/' + this.boardId, jsonBody, {
           headers: {
             'Content-Type': 'application/json'
           }
@@ -85,7 +85,7 @@ export default {
 
       // Post request to api
       await axios
-        .post('http://localhost:1337/api/boards/' + this.boardId + '/new', jsonBody, {
+        .post('http://localhost:1337/api/boards/' + this.boardId, jsonBody, {
           headers: {
             'Content-Type': 'application/json'
           }

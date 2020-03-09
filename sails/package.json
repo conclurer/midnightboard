@@ -21,7 +21,8 @@
     "devDependencies": {
         "eslint": "^6.7.2",
         "eslint-plugin-jest": "^23.1.1",
-        "jest": "^24.9.0"
+        "jest": "^24.9.0",
+        "node-fetch": "2.6.0"
     },
     "scripts": {
         "start-dev": "env NODE_ENV=development node app.js",

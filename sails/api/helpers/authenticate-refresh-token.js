@@ -24,7 +24,7 @@ module.exports = {
         return exits.success(null);
       }
     });
-    var findTokenInDb = await RefreshToken.findOne({refreshToken: inputs.token});
+    var findTokenInDb = await RefreshToken.find({refreshToken: inputs.token}).limit(1);
     if(!findTokenInDb) {
       return exits.success(null);
     }

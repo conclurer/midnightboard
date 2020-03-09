@@ -7,11 +7,11 @@ module.exports = {
 
   inputs: {
     userName: {
-      description: 'Username used to log in.',
+      description: 'Username used to log in. Email may be used instead',
       type: 'string'
     },
     email: {
-      description: 'Email used to log in',
+      description: 'Email used to log in. Username may be used instead',
       type: 'string'
     },
     password: {
@@ -30,7 +30,7 @@ module.exports = {
       statusCode: 400
     },
     invalidLogin: {
-      description: 'Invalid E-Mail address',
+      description: 'Invalid Login',
       statusCode: 403
     },
     serverError: {
@@ -50,7 +50,7 @@ module.exports = {
     if(inputs.userName) {
       usr = await Member.findOne({userName: inputs.userName});
     } else if(inputs.email) {
-      usr = await Member.findOne({email: inputs.email});
+      usr = await Member.findOne({email: inputs.email.toLowerCase()});
     } else {
       return exits.missingParams('password and email or userName are required');
     }
@@ -68,7 +68,8 @@ module.exports = {
         const refreshToken = jwt.sign(tokenData, sails.config.jwts.REFRESH_TOKEN_SECRET);
         await RefreshToken.create({uid: usr.id, refreshToken: refreshToken}); // Save refresh token to database
 
-        return exits.success({accessToken: acessToken, refreshToken: refreshToken});
+        return exits.success({accessToken: acessToken, refreshToken: refreshToken,
+          expiresIn: sails.config.jwts.EXPIRATION_TIME});
       } else {
         return exits.invalidLogin('Incorrect username or password');
       }

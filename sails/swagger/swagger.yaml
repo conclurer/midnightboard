@@ -355,7 +355,7 @@ paths:
           description: Resource not found
         '500':
           description: Internal server error
-  /api/boards/create:
+  /api/boards:
     post:
       summary: ''
       description: ''
@@ -374,7 +374,7 @@ paths:
           description: Resource not found
         '500':
           description: Internal server error
-  '/api/boards/{boardId}/new':
+  '/api/boards/{boardId}':
     post:
       summary: ''
       description: ''
