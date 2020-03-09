@@ -1,5 +1,5 @@
 CREATE TABLE public.member (
-    member_id serial NOT NULL PRIMARY KEY,
+    id serial NOT NULL PRIMARY KEY,
     created_at bigint NOT NULL,
     updated_at bigint NOT NULL,
     last_seen bigint,

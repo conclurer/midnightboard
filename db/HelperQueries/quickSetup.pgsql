@@ -1,5 +1,5 @@
 CREATE TABLE public.member (
-    member_id serial NOT NULL PRIMARY KEY,
+    id serial NOT NULL PRIMARY KEY,
     created_at bigint NOT NULL,
     updated_at bigint NOT NULL,
     last_seen bigint,
@@ -14,18 +14,18 @@ CREATE TABLE public.member (
 );
 
 CREATE TABLE public.team (
-    team_id serial NOT NULL PRIMARY KEY,
+    id serial NOT NULL PRIMARY KEY,
     created_at bigint NOT NULL,
     updated_at bigint NOT NULL,
-    team_leader_id integer REFERENCES member (member_id) ON DELETE SET NULL,
+    team_leader_id integer REFERENCES member (id) ON DELETE SET NULL,
     team_name VARCHAR(50) NOT NULL UNIQUE
 );
 
 CREATE TABLE public.post (
-    post_id serial NOT NULL PRIMARY KEY,
+    id serial NOT NULL PRIMARY KEY,
     created_at bigint NOT NULL,
     updated_at bigint NOT NULL,
-    creator_id integer REFERENCES member (member_id) ON DELETE SET NULL,
+    creator_id integer REFERENCES member (id) ON DELETE SET NULL,
     type_of_post VARCHAR(127) NOT NULL,
     title VARCHAR(50),
     content text,
@@ -34,29 +34,29 @@ CREATE TABLE public.post (
 );
 
 CREATE TABLE public.board (
-    board_id serial NOT NULL PRIMARY KEY,
+    id serial NOT NULL PRIMARY KEY,
     created_at bigint NOT NULL,
     updated_at bigint NOT NULL,
-    creator_id integer REFERENCES member (member_id) ON DELETE SET NULL,
+    creator_id integer REFERENCES member (id) ON DELETE SET NULL,
     board_name VARCHAR(50) NOT NULL UNIQUE
 );
 
 CREATE TABLE public.board_subscription (
     id serial NOT NULL PRIMARY KEY,
-    board_id integer NOT NULL REFERENCES board (board_id) ON DELETE CASCADE,
-    member_id integer NOT NULL REFERENCES member (member_id) ON DELETE CASCADE
+    board_id integer NOT NULL REFERENCES board (id) ON DELETE CASCADE,
+    member_id integer NOT NULL REFERENCES member (id) ON DELETE CASCADE
 );
 
 CREATE TABLE public.post_location (
     id serial NOT NULL PRIMARY KEY,
-    board_id integer NOT NULL REFERENCES board (board_id) ON DELETE CASCADE,
-    post_id integer NOT NULL REFERENCES post (post_id) ON DELETE CASCADE
+    board_id integer NOT NULL REFERENCES board (id) ON DELETE CASCADE,
+    post_id integer NOT NULL REFERENCES post (id) ON DELETE CASCADE
 );
 
 CREATE TABLE public.team_membership (
     id serial NOT NULL PRIMARY KEY,
-    team_id integer NOT NULL REFERENCES team (team_id) ON DELETE CASCADE,
-    member_id integer NOT NULL REFERENCES member (member_id) ON DELETE CASCADE
+    team_id integer NOT NULL REFERENCES team (id) ON DELETE CASCADE,
+    member_id integer NOT NULL REFERENCES member (id) ON DELETE CASCADE
 );
 
 CREATE TABLE public.token (
