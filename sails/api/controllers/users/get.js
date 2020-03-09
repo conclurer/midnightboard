@@ -10,7 +10,7 @@ module.exports = {
       type: 'number'
     },
     skipAvatar: {
-      description: 'Optional: If set to true, no user avatar is sent. Has to be sent within the url via `?skipAvatar=true`',
+      description: 'Optional: If set to true, no user avatar is sent.',
       type: 'boolean'
     }
   },

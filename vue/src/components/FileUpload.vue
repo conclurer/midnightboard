@@ -2,9 +2,11 @@
   <div class="fileUpload">
     <br>
     <h2>{{$t('editor.file.title')}}</h2>
-    <input
-      v-bind:value="fileTitel"
-      v-on:input="fileTitel = $event.target.value"
+    <b-form-input
+      class="fileTitle"
+      v-bind:value="fileTitle"
+      v-on:input="fileTitle = $event"
+      :maxlength="maxFileTitleLength"
     />
     <br><br>
     <div
@@ -66,7 +68,7 @@
     <button
       v-if="fileRef !== ''"
       class="btn btn-primary button"
-      v-on:click="$emit('upload-file', fileTitel, fileRef)"
+      v-on:click="$emit('upload-file', fileTitle, fileRef)"
     >
     {{$t('editor.file.post')}}
     </button>
@@ -82,7 +84,8 @@ export default {
   data () {
     return {
       fileRef: '',
-      fileTitel: 'Your file title', // i18n?
+      fileTitle: 'Your file title', // i18n?
+      maxFileTitleLength: 50,
       pdfSelected: false,
       wordSelected: false,
       excelSelected: false,
@@ -114,7 +117,6 @@ export default {
         this.fileRef = this.$refs.pictureInput.image
       } else {
         this.fileRef = ''
-        console.log('FileReader API not supported: use the <form>!')
       }
     },
     onRemove () {
@@ -137,6 +139,12 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  }
+
+  .fileTitle {
+    width: 90%;
+    margin-right: auto;
+    margin-left: auto;
   }
 
   h1, h2 {

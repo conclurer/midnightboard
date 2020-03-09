@@ -30,7 +30,6 @@ export default {
         typeOfPost: 'application/note',
         content: jsonContent
       })
-      console.log(jsonBody)
 
       // Post request to api
       await axios
@@ -41,7 +40,7 @@ export default {
         }
         )
         .then(res => {})
-        .catch(err => console.log(err))
+        .catch(err => this.$log.error(err))
 
       // Notify notice board
       this.$emit('add-note')
@@ -56,7 +55,6 @@ export default {
         typeOfPost: dataType,
         content: base64Data
       })
-      console.log(jsonBody)
 
       // Post request to api
       await axios
@@ -67,7 +65,7 @@ export default {
         }
         )
         .then(res => {})
-        .catch(err => console.log(err))
+        .catch(err => this.$log.error(err))
 
       // Notify board component
       this.$emit('add-note')
@@ -82,7 +80,6 @@ export default {
         typeOfPost: dataType,
         content: base64Data
       })
-      console.log(jsonBody)
 
       // Post request to api
       await axios
@@ -93,7 +90,7 @@ export default {
         }
         )
         .then(res => {})
-        .catch(err => console.log(err))
+        .catch(err => this.$log.error(err))
 
       // Notify notice board
       this.$emit('add-note')

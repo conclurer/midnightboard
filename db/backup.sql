@@ -549,6 +549,13 @@ SELECT pg_catalog.setval('public.token_id_seq', 4, true);
 
 
 --
+-- Name: token_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dev
+--
+
+SELECT pg_catalog.setval('public.token_id_seq', 1, false);
+
+
+--
 -- Name: board board_board_name_key; Type: CONSTRAINT; Schema: public; Owner: dev
 --
 
