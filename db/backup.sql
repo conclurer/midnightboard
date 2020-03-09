@@ -488,7 +488,6 @@ COPY public.team_membership (id, team_id, member_id) FROM stdin;
 --
 
 COPY public.token (id, created_at, uid, refresh_token) FROM stdin;
-1	1583758469756	6	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJpZCI6NiwiaWF0IjoxNTgzNzU4NDY5fQ.9uzlj5j0LdHPqA2Jsm4YX0LsflttuJ-olUG_uT69zsI
 \.
 
 
@@ -545,14 +544,7 @@ SELECT pg_catalog.setval('public.team_membership_id_seq', 4, true);
 -- Name: token_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dev
 --
 
-SELECT pg_catalog.setval('public.token_id_seq', 4, true);
-
-
---
--- Name: token_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dev
---
-
-SELECT pg_catalog.setval('public.token_id_seq', 1, false);
+SELECT pg_catalog.setval('public.token_id_seq', 1, true);
 
 
 --
