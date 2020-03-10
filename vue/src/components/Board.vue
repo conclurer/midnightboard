@@ -91,6 +91,7 @@
           >
             <hr />
             <b-card-text>
+              <font-awesome-icon icon="file-word" size="10x"/><br><br>
               <a v-bind:href="'data:application/msword;base64,' + note.content" :download="note.title + '.doc'">{{$t('board.download.word')}}</a>
             </b-card-text>
           </b-card>
@@ -105,6 +106,7 @@
           >
             <hr />
             <b-card-text>
+              <font-awesome-icon icon="file-word" size="10x"/><br><br>
               <a v-bind:href="'data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,' + note.content" :download="note.title + '.docx'">{{$t('board.download.word')}}</a>
             </b-card-text>
           </b-card>
@@ -119,6 +121,7 @@
           >
             <hr />
             <b-card-text>
+              <font-awesome-icon icon="file-excel" size="10x"/><br><br>
               <a v-bind:href="'data:application/vnd.ms-excel;base64,' + note.content" :download="note.title + '.xls'">{{$t('board.download.excel')}}</a>
             </b-card-text>
           </b-card>
@@ -133,6 +136,7 @@
           >
             <hr />
             <b-card-text>
+              <font-awesome-icon icon="file-excel" size="10x"/><br><br>
               <a v-bind:href="'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,' + note.content" :download="note.title + '.xlsx'">{{$t('board.download.excel')}}</a>
             </b-card-text>
           </b-card>
@@ -147,6 +151,7 @@
           >
             <hr />
             <b-card-text>
+              <font-awesome-icon icon="file-powerpoint" size="10x"/><br><br>
               <a v-bind:href="'data:application/vnd.ms-powerpoint;base64,' + note.content" :download="note.title + '.ppt'">{{$t('board.download.powerpoint')}}</a>
             </b-card-text>
           </b-card>
@@ -161,6 +166,7 @@
           >
             <hr />
             <b-card-text>
+              <font-awesome-icon icon="file-powerpoint" size="10x"/><br><br>
               <a v-bind:href="'data:application/vnd.openxmlformats-officedocument.presentationml.presentation;base64,' + note.content" :download="note.title + '.pptx'">{{$t('board.download.powerpoint')}}</a>
             </b-card-text>
           </b-card>
@@ -261,6 +267,7 @@
           >
             <hr />
             <b-card-text>
+              <font-awesome-icon icon="file-word" size="10x"/><br><br>
               <a v-bind:href="'data:application/msword;base64,' + note.content" :download="note.title + '.doc'">{{$t('board.download.word')}}</a>
             </b-card-text>
           </b-card>
@@ -275,6 +282,7 @@
           >
             <hr />
             <b-card-text>
+              <font-awesome-icon icon="file-word" size="10x"/><br><br>
               <a v-bind:href="'data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,' + note.content" :download="note.title + '.docx'">{{$t('board.download.word')}}</a>
             </b-card-text>
           </b-card>
@@ -289,6 +297,7 @@
           >
             <hr />
             <b-card-text>
+              <font-awesome-icon icon="file-excel" size="10x"/><br><br>
               <a v-bind:href="'data:application/msexcel;base64,' + note.content" :download="note.title + '.xls'">{{$t('board.download.excel')}}</a>
             </b-card-text>
           </b-card>
@@ -303,6 +312,7 @@
           >
             <hr />
             <b-card-text>
+              <font-awesome-icon icon="file-excel" size="10x"/><br><br>
               <a v-bind:href="'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,' + note.content" :download="note.title + '.xlsx'">{{$t('board.download.excel')}}</a>
             </b-card-text>
           </b-card>
@@ -317,6 +327,7 @@
           >
             <hr />
             <b-card-text>
+              <font-awesome-icon icon="file-powerpoint" size="10x"/><br><br>
               <a v-bind:href="'data:application/mspowerpoint;base64,' + note.content" :download="note.title + '.ppt'">{{$t('board.download.powerpoint')}}</a>
             </b-card-text>
           </b-card>
@@ -331,6 +342,7 @@
           >
             <hr />
             <b-card-text>
+              <font-awesome-icon icon="file-powerpoint" size="10x"/><br><br>
               <a v-bind:href="'data:application/vnd.openxmlformats-officedocument.presentationml.presentation;base64,' + note.content" :download="note.title + '.pptx'">{{$t('board.download.powerpoint')}}</a>
             </b-card-text>
           </b-card>

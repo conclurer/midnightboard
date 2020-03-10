@@ -394,7 +394,7 @@ module.exports = {
     },
     
     policies: {
-        '*': true,
+        '*': true
     }
 
 };
