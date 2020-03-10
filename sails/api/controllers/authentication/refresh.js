@@ -18,15 +18,11 @@ module.exports = {
     },
     missingParams: {
       description: 'Missing parameters',
-      statusCode: 401
+      statusCode: 400
     },
     invalidToken: {
       description: 'Invalid E-Mail address',
       statusCode: 403
-    },
-    serverError: {
-      description: 'An unexpected server error occured',
-      statusCode: 500
     }
   },
 
@@ -45,6 +41,6 @@ module.exports = {
 
     const acessToken = jwt.sign(user, sails.config.jwts.ACCESS_TOKEN_SECRET,
       { expiresIn: sails.config.jwts.EXPIRATION_TIME });
-    return exits.success({accessToken: acessToken});
+    return exits.success({accessToken: acessToken, expiresIn: sails.config.jwts.EXPIRATION_TIME});
   }
 };

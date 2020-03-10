@@ -9,47 +9,6 @@
  */
 
 module.exports.routes = {
-
-/*
-    //  ╦ ╦╔═╗╔╗ ╔═╗╔═╗╔═╗╔═╗╔═╗
-    //  ║║║║╣ ╠╩╗╠═╝╠═╣║ ╦║╣ ╚═╗
-    //  ╚╩╝╚═╝╚═╝╩  ╩ ╩╚═╝╚═╝╚═╝
-    'GET /':                   { action: 'view-homepage-or-redirect' },
-    'GET /welcome/:unused?':   { action: 'dashboard/view-welcome' },
-
-    'GET /faq':                { action:   'view-faq' },
-    'GET /legal/terms':        { action:   'legal/view-terms' },
-    'GET /legal/privacy':      { action:   'legal/view-privacy' },
-    'GET /contact':            { action:   'view-contact' },
-
-    'GET /signup':             { action: 'entrance/view-signup' },
-    'GET /email/confirm':      { action: 'entrance/confirm-email' },
-    'GET /email/confirmed':    { action: 'entrance/view-confirmed-email' },
-
-    'GET /login':              { action: 'entrance/view-login' },
-    'GET /password/forgot':    { action: 'entrance/view-forgot-password' },
-    'GET /password/new':       { action: 'entrance/view-new-password' },
-
-    'GET /account':            { action: 'account/view-account-overview' },
-    'GET /account/password':   { action: 'account/view-edit-password' },
-    'GET /account/profile':    { action: 'account/view-edit-profile' },
-
-
-    //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
-    //  ║║║║╚═╗║    ╠╦╝║╣  ║║║╠╦╝║╣ ║   ║ ╚═╗  ┌┼─   ║║║ ║║║║║║║║  ║ ║╠═╣ ║║╚═╗
-    //  ╩ ╩╩╚═╝╚═╝  ╩╚═╚═╝═╩╝╩╩╚═╚═╝╚═╝ ╩ ╚═╝  └┘   ═╩╝╚═╝╚╩╝╝╚╝╩═╝╚═╝╩ ╩═╩╝╚═╝
-    '/terms':                   '/legal/terms',
-    '/logout':                  '/api/v1/account/logout',
-
-
-    //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
-    //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
-    //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝
-    // …
-
-    */
-
-    //
     //  ╔═╗╔═╗╦  ╔═╗╔╗╔╔╦╗╔═╗╔═╗╦╔╗╔╔╦╗╔═╗
     //  ╠═╣╠═╝║  ║╣ ║║║ ║║╠═╝║ ║║║║║ ║ ╚═╗
     //  ╩ ╩╩  ╩  ╚═╝╝╚╝═╩╝╩  ╚═╝╩╝╚╝ ╩ ╚═╝
@@ -78,68 +37,78 @@ module.exports.routes = {
 
     //USERS
     'GET    /api/users/:userId': {
-        controller: 'users/User',
-        action: 'getUser',
+        controller: 'users',
+        action: 'get',
         skipAssets: true
     },
     'DELETE   /api/users/:userId': {
-        controller: 'users/User',
-        action: 'deleteUser',
+        controller: 'users',
+        action: 'delete',
         skipAssets: true
     },
     'PUT   /api/users/:userId': {
-        controller: 'users/User',
-        action: 'updateUser',
+        controller: 'users',
+        action: 'update',
+        skipAssets: true
+    },
+    'PUT   /api/users/:userId/updatepassword': {
+        controller: 'users',
+        action: 'update-password',
+        skipAssets: true
+    },
+    'PUT   /api/users/:userId/updateemail': {
+        controller: 'users',
+        action: 'update-email',
         skipAssets: true
     },
 
     //BOARDS
     'GET    /api/boards/:boardId': {
-        controller: 'boards/Board',
-        action: 'getBoard',
+        controller: 'boards',
+        action: 'get',
         skipAssets: true
     },
-    'POST   /api/boards/create': {
-        controller: 'boards/Board',
-        action: 'createBoard',
+    'POST   /api/boards': {
+        controller: 'boards',
+        action: 'create',
         skipAssets: true
     },
     'DELETE   /api/boards/:boardId': {
-        controller: 'boards/Board',
-        action: 'deleteBoard',
+        controller: 'boards',
+        action: 'delete',
         skipAssets: true
     },
     'PUT   /api/boards/:boardId': {
-        controller: 'boards/Board',
-        action: 'updateBoard',
+        controller: 'boards',
+        action: 'update',
         skipAssets: true
     },
 
 
     //POSTS
-    'POST   /api/boards/:boardId/new': {
-        controller: 'posts/Post',
-        action: 'newPost',
-        skipAssets: true
-    },
-    'GET   /api/posts/:postId': {
-        controller: 'posts/Post',
-        action: 'getPost',
+    'POST   /api/boards/:boardId': {
+        controller: 'posts',
+        action: 'create',
         skipAssets: true
     },
     'GET   /api/posts/all/:boardId': {
-        controller: 'posts/Post',
-        action: 'searchPost',
+        controller: 'posts',
+        action: 'get-all',
+        skipAssets: true
+    },
+    'GET   /api/posts/:postId': {
+        controller: 'posts',
+        action: 'get',
         skipAssets: true
     },
     'DELETE   /api/posts/:postId': {
-        controller: 'posts/Post',
-        action: 'deletePost',
+        controller: 'posts',
+        action: 'delete',
         skipAssets: true
     },
     'PUT   /api/posts/:postId': {
-        controller: 'posts/Post',
-        action: 'updatePost',
+        controller: 'posts',
+        action: 'update',
         skipAssets: true
     },
     //#endregion

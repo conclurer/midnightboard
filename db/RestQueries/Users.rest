@@ -2,8 +2,9 @@ POST http://localhost:1337/api/users/register/ HTTP/1.1
 content-type: application/json
 
 {
-    "userName": "UserName7",
-    "email": "username6@provider.com",
+    "userName": "TESTDUP",
+    "email": "TEST@provider.com",
+    "password": "P@ssw0rd",
     "firstName": "FirstName",
     "lastName": "LastName"
 }
@@ -14,15 +15,15 @@ POST http://localhost:1337/api/users/login HTTP/1.1
 content-type: application/json
 
 {
-    "email": "username6@provider.com",
-    "password": "P@ssw0rd"
+    "userName": "admin",
+    "password": "admin"
 }
 
 ###
 
 //LOGOUT via AcessToken
 DELETE http://localhost:1337/api/users/logout HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVXNlck5hbWU2IiwiaWQiOjEyLCJpYXQiOjE1ODMzMjU5MzksImV4cCI6MTYxNDg2MTkzOX0.zndFOmuKSA3ZPCr5OuKeUxh4jmI6SSuaWocSkkKxxnk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSkVTVFVzZXIxIiwiaWQiOjE2MiwiaWF0IjoxNTgzNTk1NDM3LCJleHAiOjE2MTUxMzE0Mzd9.GeaOr2U6YgZW-ChXD_VLjEkxhyj6Sm4YRqai2KK6nHM
 
 ###
 
@@ -31,7 +32,7 @@ DELETE http://localhost:1337/api/users/logout HTTP/1.1
 content-type: application/json
 
 {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVXNlck5hbWU2IiwiaWQiOjEyLCJpYXQiOjE1ODMzMjYwNjd9.UG6l_e0z9cOJllcOSLPT8e-078GAF1aPFgPny0vzRC8"
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVEVTVERVUCIsImlkIjo3NywiaWF0IjoxNTgzNTI5MTk2fQ.XHNT5Ivn_UiUwlop_TyAP_ujioar5tT0nC4cFDT_PbQ"
 }
 
 ###
@@ -40,7 +41,7 @@ POST http://localhost:1337/api/users/refresh HTTP/1.1
 content-type: application/json
 
 {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVXNlck5hbWU2IiwiaWQiOjEyLCJpYXQiOjE1ODMzMjYxMzB9.y_Us2DZyuRBEzPij-46KWpptyZG6Ecyj8CW1UEGp-BM"
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVEVTVERVUCIsImlkIjo3NywiaWF0IjoxNTgzNTMwMzUwfQ.CxU-zhVI_CA8t-JXou_CB-75Ag57kUwsKc6_-sKPwko"
 }
 
 ###

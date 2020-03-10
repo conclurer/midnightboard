@@ -42,7 +42,7 @@ export default {
   created () {
     axios
       .get('http://localhost:1337/api/posts/all/' + this.boardId)
-      .then(response => { this.notes = JSON.parse(response.data) })
+      .then(response => { this.notes = response.data.posts })
       .catch(err => this.$log.error(err))
 
     switch (i18n.locale.substring(0, 2)) {
@@ -61,7 +61,7 @@ export default {
       // Refresh notice board
       axios
         .get('http://localhost:1337/api/posts/all/' + this.boardId)
-        .then(response => { this.notes = JSON.parse(response.data) })
+        .then(response => { this.notes = response.data.posts })
         .catch(err => this.$log.error(err))
 
       this.editorActive = false

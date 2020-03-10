@@ -7,3 +7,4 @@ DELETE FROM survey;
 DELETE FROM post;
 DELETE FROM board;
 DELETE FROM member;
+DELETE FROM token;
