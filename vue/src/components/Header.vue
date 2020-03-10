@@ -54,45 +54,33 @@
             <b-dropdown-item>&#127465;&#127466;</b-dropdown-item>
           </b-nav-item-dropdown>
         </div>
-
-        <!--<span
-              id="flag"
-              v-if="english"
-              class="unselectable"
-              unselectable="on"
-            >
-              <a @click="changeLanguage">&#127468;&#127463;</a>
-            </span>
-            <span
-              id="flag"
-              v-if="!english"
-              class="unselectable"
-              unselectable="on"
-            >
-              <a @click="changeLanguage">&#127465;&#127466;</a>
-            </span>-->
-
         <div
           v-else
         >
-          <b-nav-item>
-            <span
-              id="flag"
-              v-if="english"
-              class="unselectable"
-              unselectable="on"
-            >
-              <a @click="changeLanguage">&#127468;&#127463;</a>
-            </span>
-            <span
-              id="flag"
-              v-if="!english"
-              class="unselectable"
-              unselectable="on"
-            >
-              <a @click="changeLanguage">&#127465;&#127466;</a>
-            </span>
-          </b-nav-item>
+          <b-nav-item-dropdown
+            v-if="english"
+            id="flag"
+            class="unselectable"
+            unselectable="on"
+          >
+            <template v-slot:button-content>
+              &#127468;&#127463;
+            </template>
+            <b-dropdown-item>&#127468;&#127463;</b-dropdown-item>
+            <b-dropdown-item @click="changeLanguage">&#127465;&#127466;</b-dropdown-item>
+          </b-nav-item-dropdown>
+          <b-nav-item-dropdown
+            v-if="!english"
+            id="flag"
+            class="unselectable"
+            unselectable="on"
+          >
+            <template v-slot:button-content>
+              &#127465;&#127466;
+            </template>
+            <b-dropdown-item @click="changeLanguage">&#127468;&#127463;</b-dropdown-item>
+            <b-dropdown-item>&#127465;&#127466;</b-dropdown-item>
+          </b-nav-item-dropdown>
         </div>
       </b-navbar-nav>
     </b-navbar>
