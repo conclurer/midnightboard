@@ -57,6 +57,7 @@
         "welcome":"Willkommen zurück!",
         "login":"Anmelden",
         "toLogin":"Ich habe bereits einen Account",
+        "register":"Registrierung",
         "createAccount":"Erstellen Sie einen<br>neuen Account:",
         "signUp":"Registrieren",
         "toSignUp":"Ich habe noch keinen Account"

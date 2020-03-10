@@ -256,10 +256,12 @@ export default {
   button {
     width: 43px;
   }
+
   .editor {
     margin-left: 12px;
     margin-right: 12px;
   }
+
   .lowerGap {
     position: relative;
     top: 0px;
@@ -267,9 +269,11 @@ export default {
     height: 35px;
     width: 100%;
   }
+
   .button {
     width: auto;
   }
+
   .datePicker {
     width: 300px;
     z-index: 10003;

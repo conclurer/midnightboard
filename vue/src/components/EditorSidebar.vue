@@ -100,3 +100,11 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  hr {
+    height: 1px;
+    border: none;
+    background-color: #aaa;
+  }
+</style>

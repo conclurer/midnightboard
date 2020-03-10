@@ -3,7 +3,7 @@
     class="header"
   >
     <!-- Bootstrap-Vue navbar -->
-    <b-navbar variant="dark" type="white" fixed="top">
+    <b-navbar variant="dark" type="white" fixed="top" style="a{color: #fff;}">
       <b-navbar-brand href="#">
         <img src="../../../configuration/logo.png" height="40px" alt="Logo">
       </b-navbar-brand>
@@ -29,23 +29,49 @@
               unselectable="on"
             ><font-awesome-icon icon="user-circle" /> {{$t('ui.profile')}}</span>
           </b-nav-item>
-          <b-nav-item>
-            <span
+          <b-nav-item-dropdown
+            v-if="english"
+            id="flag"
+            class="unselectable"
+            unselectable="on"
+          >
+            <template v-slot:button-content>
+              &#127468;&#127463;
+            </template>
+            <b-dropdown-item>&#127468;&#127463;</b-dropdown-item>
+            <b-dropdown-item @click="changeLanguage">&#127465;&#127466;</b-dropdown-item>
+          </b-nav-item-dropdown>
+          <b-nav-item-dropdown
+            v-if="!english"
+            id="flag"
+            class="unselectable"
+            unselectable="on"
+          >
+            <template v-slot:button-content>
+              &#127465;&#127466;
+            </template>
+            <b-dropdown-item @click="changeLanguage">&#127468;&#127463;</b-dropdown-item>
+            <b-dropdown-item>&#127465;&#127466;</b-dropdown-item>
+          </b-nav-item-dropdown>
+        </div>
+
+        <!--<span
               id="flag"
               v-if="english"
               class="unselectable"
               unselectable="on"
-            ><a @click="changeLanguage">&#127465;&#127466;</a>
+            >
+              <a @click="changeLanguage">&#127468;&#127463;</a>
             </span>
-              <span
-                id="flag"
-                v-if="!english"
-                class="unselectable"
-                unselectable="on"
-              ><a @click="changeLanguage">&#127468;&#127463;</a>
-            </span>
-          </b-nav-item>
-        </div>
+            <span
+              id="flag"
+              v-if="!english"
+              class="unselectable"
+              unselectable="on"
+            >
+              <a @click="changeLanguage">&#127465;&#127466;</a>
+            </span>-->
+
         <div
           v-else
         >
@@ -55,13 +81,17 @@
               v-if="english"
               class="unselectable"
               unselectable="on"
-            ><a @click="changeLanguage">&#127465;&#127466;</a></span>
+            >
+              <a @click="changeLanguage">&#127468;&#127463;</a>
+            </span>
             <span
               id="flag"
               v-if="!english"
               class="unselectable"
               unselectable="on"
-            ><a @click="changeLanguage">&#127468;&#127463;</a></span>
+            >
+              <a @click="changeLanguage">&#127465;&#127466;</a>
+            </span>
           </b-nav-item>
         </div>
       </b-navbar-nav>
@@ -93,7 +123,10 @@ export default {
 <style scoped>
   a {
     cursor: pointer;
-    color: #ffffff;
+  }
+
+  .dropdown-menu {
+    min-width: 3rem;
   }
 
   .header {
@@ -116,4 +149,13 @@ export default {
     display: inline-block;
     margin: 0 10px;
   }
+
+  /* Alternative highlight styles:
+
+   padding: 5px;
+   border: 2px solid var(--accent);
+   border-style: none none solid none;
+
+   text-shadow: 1px 1px #aaa;
+  */
 </style>

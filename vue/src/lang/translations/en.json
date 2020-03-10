@@ -57,6 +57,7 @@
         "welcome":"Welcome back!",
         "login":"Log In",
         "toLogin":"Or log in with an existing account",
+        "register":"Sign Up",
         "createAccount":"Create a new account:",
         "signUp":"Sign Up",
         "toSignUp":"Or create a new account"
