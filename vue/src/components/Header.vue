@@ -34,6 +34,7 @@
             id="flag"
             class="unselectable"
             unselectable="on"
+            right
           >
             <template v-slot:button-content>
               &#127468;&#127463;
@@ -46,6 +47,7 @@
             id="flag"
             class="unselectable"
             unselectable="on"
+            right
           >
             <template v-slot:button-content>
               &#127465;&#127466;
@@ -62,6 +64,7 @@
             id="flag"
             class="unselectable"
             unselectable="on"
+            right
           >
             <template v-slot:button-content>
               &#127468;&#127463;
@@ -74,6 +77,7 @@
             id="flag"
             class="unselectable"
             unselectable="on"
+            right
           >
             <template v-slot:button-content>
               &#127465;&#127466;
