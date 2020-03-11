@@ -122,6 +122,7 @@ export default {
     onRemove () {
       document.getElementsByClassName('preview-container')[1].style.display = 'block'
       this.fileRef = ''
+      this.fileTitle = 'Your file title'
       this.pdfSelected = false
       this.wordSelected = false
       this.excelSelected = false

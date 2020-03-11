@@ -72,6 +72,7 @@ export default {
       }
     },
     onRemove () {
+      this.imageTitle = 'Your image title'
       this.imageRef = ''
     }
   }
