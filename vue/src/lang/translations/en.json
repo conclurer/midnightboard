@@ -14,7 +14,8 @@
     "editor":{
         "note":{
             "create":"Create",
-            "title":"Insert title here"
+            "title":"Insert title here",
+            "content":"<p>Insert content here</p><ul><li><p>Start a bulleted list</p></li></ul><ol><li><p>Or start a numerical list</p></li></ol>"
         },
         "image":{
             "title":"Upload your image:",

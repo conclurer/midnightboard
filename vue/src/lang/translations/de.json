@@ -14,7 +14,8 @@
     "editor":{
         "note":{
             "create":"Erstellen",
-            "title":"Titel hier eingeben"
+            "title":"Titel hier einfügen",
+            "content":"<p>Inhalt hier einfügen</p><ul><li><p>Beginnen Sie eine Liste</p></li></ul><ol><li><p>Oder eine Aufzählung</p></li></ol>"
         },
         "image":{
             "title":"Bild hochladen:",
