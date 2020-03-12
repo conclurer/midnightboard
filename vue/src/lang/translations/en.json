@@ -13,11 +13,15 @@
     },
     "editor":{
         "note":{
-            "create":"Create",
-            "title":"Insert title here"
+            "heading":"Your note title",
+            "paragraph":"Insert content here",
+            "unorderdList":"Start a bulleted list",
+            "orderedList":"Or start a numerical list",
+            "create":"Create"
         },
         "image":{
             "title":"Upload your image:",
+            "heading":"Your image title",
             "post":"Post image",
             "upload":"Your device does not support file uploading.",
             "drag":"Drag an image or click here to select a image",
@@ -32,6 +36,7 @@
         },
         "file":{
             "title":"Upload your file:",
+            "heading":"Your file title",
             "post":"Post file",
             "upload":"Your device does not support file uploading.",
             "drag":"Drag an file or click here to select a file",

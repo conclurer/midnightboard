@@ -84,7 +84,7 @@ export default {
   data () {
     return {
       fileRef: '',
-      fileTitle: 'Your file title', // i18n?
+      fileTitle: this.$t('editor.file.heading'),
       maxFileTitleLength: 50,
       pdfSelected: false,
       wordSelected: false,
@@ -122,6 +122,7 @@ export default {
     onRemove () {
       document.getElementsByClassName('preview-container')[1].style.display = 'block'
       this.fileRef = ''
+      this.fileTitle = this.$t('editor.file.heading')
       this.pdfSelected = false
       this.wordSelected = false
       this.excelSelected = false

@@ -55,7 +55,7 @@ export default {
   data () {
     return {
       imageRef: '',
-      imageTitle: 'Your image title', // i18n?
+      imageTitle: this.$t('editor.image.heading'),
       maxImageTitleLength: 50
     }
   },
@@ -73,6 +73,7 @@ export default {
     },
     onRemove () {
       this.imageRef = ''
+      this.imageTitle = this.$t('editor.image.heading')
     }
   }
 }

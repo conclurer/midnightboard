@@ -13,11 +13,15 @@
     },
     "editor":{
         "note":{
-            "create":"Erstellen",
-            "title":"Titel hier eingeben"
+            "heading":"Dein Notizname",
+            "paragraph":"Inhalt hier einfügen",
+            "unorderdList":"Starte hier eine Aufzählung",
+            "orderedList":"Oder starte hier eine numerische Liste",
+            "create":"Erstellen"
         },
         "image":{
             "title":"Bild hochladen:",
+            "heading":"Dein Bildname",
             "post":"Bild posten",
             "upload":"Dein Gerät unterstützt kein Hochladen von Bildern.",
             "drag":"Ziehe hierher ein Bild oder klicke darauf, um eins auszuwählen",
@@ -32,6 +36,7 @@
         },
         "file":{
             "title":"Datei hochladen:",
+            "heading":"Dein Dateiname",
             "post":"Datei posten",
             "upload":"Dein Gerät unterstützt kein Hochladen von Dateien.",
             "drag":"Ziehe hierher eine Datei oder klicke darauf, um eine auszuwählen",

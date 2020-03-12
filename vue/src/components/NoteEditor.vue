@@ -188,8 +188,10 @@ export default {
   data () {
     return {
       date: null,
-      titleContent: 'Your note title',
-      textContent: '<p>Insert content here</p><ul><li><p>Start a bulleted list</p></li></ul><ol><li><p>Or start a numerical list</p></li></ol>',
+      titleContent: this.$t('editor.note.heading'),
+      textContent: '<p>' + this.$t('editor.note.paragraph') + '</p><ul><li><p>' +
+        this.$t('editor.note.unorderdList') + '</p></li></ul><ol><li><p>' +
+        this.$t('editor.note.orderedList') + '</p></li></ol>',
       titleEditor: new Editor({
         extensions: [
           new Heading({ levels: [2] })
@@ -224,21 +226,9 @@ export default {
           new Underline(),
           new History()
         ],
-        content: `
-          <p>
-            Insert content here
-          </p>
-          <ul>
-            <li>
-              Start a bulleted list
-            </li>
-          </ul>
-          <ol>
-            <li>
-              Or start a numerical list
-            </li>
-          </ol>
-        `,
+        content: '<p>' + this.$t('editor.note.paragraph') + '</p><ul><li><p>' +
+        this.$t('editor.note.unorderdList') + '</p></li></ul><ol><li><p>' +
+        this.$t('editor.note.orderedList') + '</p></li></ol>',
         onUpdate: ({ getHTML }) => {
           this.textContent = getHTML()
         }
