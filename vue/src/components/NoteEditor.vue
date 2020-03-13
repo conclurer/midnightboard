@@ -143,8 +143,10 @@
       format="DD-MM-YYYY"
       formatted="ll"
       onlyDate v-model="date"
-      label="Select due date"
       color="#F9A618"
+      :label="$t('editor.datePicker.dueDate')"
+      :buttonNowTranslation="$t('editor.datePicker.currentDate')"
+      :locale="$t('editor.datePicker.language')"
     >
     </VueCtkDateTimePicker>
 
@@ -194,16 +196,6 @@ export default {
       date: null,
       titleContent: this.$t('editor.note.title'),
       textContent: this.$t('editor.note.content'),
-      /* titleEditor: new Editor({
-        extensions: [
-          new Heading({ levels: [2] })
-        ],
-        content: '<h2>' + this.$t('editor.note.title') + '</h2>',
-        onUpdate: ({ getHTML }) => {
-          this.titleContent = getHTML()
-          this.titleContent = this.titleContent.replace(/<[^>]*>?/gm, '')
-        }
-      }),*/
       contentEditor: new Editor({
         extensions: [
           new Blockquote(),
@@ -227,19 +219,19 @@ export default {
         content: this.$t('editor.note.content'),
         onUpdate: ({ getHTML }) => {
           this.textContent = getHTML()
+          this.textContent = this.textContent.replace('Ä', '&Auml;')
+          this.textContent = this.textContent.replace('ä', '&auml;')
+          this.textContent = this.textContent.replace('Ö', '&Ouml;')
+          this.textContent = this.textContent.replace('ö', '&ouml;')
+          this.textContent = this.textContent.replace('Ü', '&Uuml;')
+          this.textContent = this.textContent.replace('ü', '&uuml;')
+          this.textContent = this.textContent.replace('ß', '&szlig;')
         }
       })
     }
   },
   beforeDestroy () {
     this.contentEditor.destroy()
-  },
-  methods: {
-    getTitle () {
-      // this.titleContent = document.forms['titleForm']['title'].value
-      console.log(this.titleContent)
-      console.log(this.textContent)
-    }
   }
 }
 </script>

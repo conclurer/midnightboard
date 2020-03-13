@@ -55,7 +55,7 @@ export default {
   data () {
     return {
       imageRef: '',
-      imageTitle: 'Your image title', // i18n?
+      imageTitle: this.$t('editor.image.imageTitle'),
       maxImageTitleLength: 50
     }
   },

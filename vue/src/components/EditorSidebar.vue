@@ -5,6 +5,7 @@
     <ImageUpload @upload-image="uploadImage"/>
     <hr />
     <FileUpload @upload-file="uploadFile"/>
+    <br><br><br><br><br> <!-- For scrollbar -->
   </div>
 </template>
 

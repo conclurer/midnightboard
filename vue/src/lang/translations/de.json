@@ -15,10 +15,11 @@
         "note":{
             "create":"Erstellen",
             "title":"Titel hier einfügen",
-            "content":"<p>Inhalt hier einfügen</p><ul><li><p>Beginnen Sie eine Liste</p></li></ul><ol><li><p>Oder eine Aufzählung</p></li></ol>"
+            "content":"<p>Inhalt hier einf&uuml;gen</p><ul><li><p>Beginnen Sie eine Liste</p></li></ul><ol><li><p>Oder eine Aufz&auml;hlung</p></li></ol>"
         },
         "image":{
             "title":"Bild hochladen:",
+            "imageTitle":"Titel des Bildes",
             "post":"Bild posten",
             "upload":"Dein Gerät unterstützt kein Hochladen von Bildern.",
             "drag":"Ziehe hierher ein Bild oder klicke darauf, um eins auszuwählen",
@@ -33,6 +34,7 @@
         },
         "file":{
             "title":"Datei hochladen:",
+            "fileTitle":"Titel der Datei",
             "post":"Datei posten",
             "upload":"Dein Gerät unterstützt kein Hochladen von Dateien.",
             "drag":"Ziehe hierher eine Datei oder klicke darauf, um eine auszuwählen",
@@ -43,6 +45,11 @@
             "selected":"Datei erfolgreich ausgewählt!",
             "fileSize":"Die Dateigröße überschreitet das Limit!",
             "fileType":"Es werden nur PDF, DOC(X), XLS(X) und PPT(X) unterstützt!"
+        },
+        "datePicker":{
+            "dueDate":"Wählen Sie ein Enddatum",
+            "currentDate":"Heute",
+            "language":"de"
         }
     },
     "profile":{

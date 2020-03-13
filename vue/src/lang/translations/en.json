@@ -19,6 +19,7 @@
         },
         "image":{
             "title":"Upload your image:",
+            "imageTitle":"Your image title",
             "post":"Post image",
             "upload":"Your device does not support file uploading.",
             "drag":"Drag an image or click here to select a image",
@@ -33,6 +34,7 @@
         },
         "file":{
             "title":"Upload your file:",
+            "fileTitle":"Your file title",
             "post":"Post file",
             "upload":"Your device does not support file uploading.",
             "drag":"Drag an file or click here to select a file",
@@ -43,6 +45,11 @@
             "selected":"File successfully selected!",
             "fileSize":"The file size exceeds the limit",
             "fileType":"Only PDF, DOC(X), XLS(X) and PPT(X) are supported!"
+        },
+        "datePicker":{
+            "dueDate":"Select a due date",
+            "currentDate":"Today",
+            "language":"en"
         }
     },
     "profile":{

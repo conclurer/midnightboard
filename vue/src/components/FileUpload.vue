@@ -72,7 +72,6 @@
     >
     {{$t('editor.file.post')}}
     </button>
-    <br><br><br><br> <!-- For scrollbar -->
   </div>
 </template>
 
@@ -84,7 +83,7 @@ export default {
   data () {
     return {
       fileRef: '',
-      fileTitle: 'Your file title', // i18n?
+      fileTitle: this.$t('editor.file.fileTitle'),
       maxFileTitleLength: 50,
       pdfSelected: false,
       wordSelected: false,
