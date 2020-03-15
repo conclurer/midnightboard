@@ -47,6 +47,18 @@
             "selected":"Datei erfolgreich ausgewählt!",
             "fileSize":"Die Dateigröße überschreitet das Limit!",
             "fileType":"Es werden nur PDF, DOC(X), XLS(X) und PPT(X) unterstützt!"
+        },
+        "poll":{
+            "heading":"Poll erstellen:",
+            "title":"Deine Frage?",
+            "templateAnswer":"Antwort A",
+            "post":"Poll posten"
+        },
+        "survey":{
+            "heading":"Umfrage erstellen:",
+            "title":"Dein Umfragentitel",
+            "templateAnswer":"Antwort A",
+            "post":"Umfrage posten"
         }
     },
     "profile":{

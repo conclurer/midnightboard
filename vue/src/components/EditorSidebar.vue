@@ -5,6 +5,8 @@
     <ImageUpload @upload-image="uploadImage"/>
     <hr />
     <FileUpload @upload-file="uploadFile"/>
+    <hr />
+    <PollEditor @create-note="createPoll"/>
   </div>
 </template>
 
@@ -13,12 +15,14 @@ import axios from 'axios'
 import FileUpload from '@/components/FileUpload.vue'
 import ImageUpload from '@/components/ImageUpload.vue'
 import NoteEditor from '@/components/NoteEditor.vue'
+import PollEditor from '@/components/PollEditor.vue'
 
 export default {
   components: {
     NoteEditor,
     ImageUpload,
-    FileUpload
+    FileUpload,
+    PollEditor
   },
   data () {
     return {
@@ -81,6 +85,27 @@ export default {
         title: titleContent,
         typeOfPost: dataType,
         content: base64Data
+      })
+
+      // Post request to api
+      await axios
+        .post('http://localhost:1337/api/boards/' + this.boardId, jsonBody, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+        )
+        .then(res => {})
+        .catch(err => this.$log.error(err))
+
+      // Notify notice board
+      this.$emit('add-note')
+    },
+    createPoll: async function (titleContent, jsonContent) {
+      const jsonBody = JSON.stringify({
+        title: titleContent,
+        typeOfPost: 'application/poll',
+        content: jsonContent
       })
 
       // Post request to api
