@@ -11,23 +11,22 @@
     <br>
     <b-form-group>
          <div class="pollRow">
-            <b-form-radio class="pollRadio" disabled>
-                <b-form-input
-                    class="pollAnswer"
-                    :maxlength="maxPollAnswerLength"
-                />
-                <b-button
-                    class="pollAddButton"
-                    @click="removeAnswer()"
-                    disabled
-                >
-                <font-awesome-icon icon="minus"/>
-                </b-button>
-            </b-form-radio>
+            <b-form-radio class="pollRadio" disabled />
+            <b-form-input
+                class="pollAnswer"
+                :maxlength="maxPollAnswerLength"
+            />
+            <b-button
+                class="pollRemoveButton"
+                @click="removeAnswer()"
+                disabled
+            >
+            <font-awesome-icon icon="minus"/>
+            </b-button>
         </div>
         <br>
         <b-button
-            class="pollRemoveButton"
+            class="pollAddButton"
             @click="addAnswer()"
         >
         <font-awesome-icon icon="plus"/>
@@ -85,20 +84,28 @@ export default {
   }
 
   .pollRow {
-    width: 70%;
+    width: 90%;
     margin-right: auto;
     margin-left: auto;
   }
 
+  .pollRadio {
+    width: 10%;
+  }
+
   .pollAnswer {
-    width: 100%;
+    width: 80%;
+  }
+
+  .pollRemoveButton {
+    width: 10%;
   }
 
   .pollAddButton {
     width: auto;
   }
 
-  .pollRemoveButton, .postButton {
+  .postButton {
     width: auto;
   }
 
