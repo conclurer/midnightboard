@@ -9,6 +9,10 @@
             "word":"Click here to download the Word document",
             "excel":"Click here to download the Excel spreadsheet",
             "powerpoint":"Click here to download the PowerPoint presentation"
+        },
+        "poll":{
+            "vote":"Vote",
+            "showResult":"Show result"
         }
     },
     "editor":{

@@ -6,7 +6,7 @@
     <hr />
     <FileUpload @upload-file="uploadFile"/>
     <hr />
-    <PollEditor @create-note="createPoll"/>
+    <PollEditor @create-poll="createPoll"/>
   </div>
 </template>
 

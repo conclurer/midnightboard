@@ -170,6 +170,35 @@
               <a v-bind:href="'data:application/vnd.openxmlformats-officedocument.presentationml.presentation;base64,' + note.content" :download="note.title + '.pptx'">{{$t('board.download.powerpoint')}}</a>
             </b-card-text>
           </b-card>
+
+          <!-- Display polls -->
+          <b-card
+            v-if="note.typeOfPost === 'application/poll'"
+            class="note"
+            bg-variant="dark"
+            text-variant="white"
+            :title="note.title"
+          >
+            <hr />
+            <b-card-text>
+              <div v-html="note.content" />
+              <br>
+              <b-button
+                variant="primary"
+                class="voteButton"
+                @click="votePoll()"
+              >
+                {{$t('board.poll.vote')}}
+              </b-button>
+              <b-button
+                variant="light"
+                class="showResultButton"
+                @click="showResult()"
+              >
+                {{$t('board.poll.showResult')}}
+              </b-button>
+            </b-card-text>
+          </b-card>
         </div>
       </div>
     </div>
@@ -346,6 +375,35 @@
               <a v-bind:href="'data:application/vnd.openxmlformats-officedocument.presentationml.presentation;base64,' + note.content" :download="note.title + '.pptx'">{{$t('board.download.powerpoint')}}</a>
             </b-card-text>
           </b-card>
+
+           <!-- Display polls -->
+          <b-card
+            v-if="note.typeOfPost === 'application/poll'"
+            class="note"
+            bg-variant="dark"
+            text-variant="white"
+            :title="note.title"
+          >
+            <hr />
+            <b-card-text>
+              <div v-html="note.content" />
+              <br>
+              <b-button
+                variant="primary"
+                class="voteButton"
+                @click="votePoll()"
+              >
+                {{$t('board.poll.vote')}}
+              </b-button>
+              <b-button
+                variant="light"
+                class="showResultButton"
+                @click="showResult()"
+              >
+                {{$t('board.poll.showResult')}}
+              </b-button>
+            </b-card-text>
+          </b-card>
         </div>
       </div>
 
@@ -385,6 +443,16 @@ export default {
     addNote: async function () {
       // Notify notice board
       this.$emit('add-note')
+    },
+    votePoll: async function () {
+      // TODO
+      // Check if multiple answers are allowed
+      // Check index(es) of the poll answers
+      // Axios PUT to update votes for the answer
+    },
+    showResult: async function () {
+      // Show current results
+      // Show back button -> hide Vote & show resultResult buttons
     }
   },
   props: ['notes', 'editorActive']

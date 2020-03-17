@@ -9,6 +9,10 @@
             "word":"Hier klicken um das Word-Dokument herunterzuladen",
             "excel":"Hier klicken um die Excel-Tabelle herunterzuladen",
             "powerpoint":"Hier klicken um die PowerPoint-Präsentation herunterzuladen"
+        },
+        "poll":{
+            "vote":"Abstimmen",
+            "showResult":"Ergebnis anzeigen"
         }
     },
     "editor":{

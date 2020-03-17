@@ -9,29 +9,46 @@
       :maxlength="maxPollTitleLength"
     />
     <br>
-    <b-form-group>
-         <div class="pollRow">
-            <b-form-radio class="pollRadio" disabled />
-            <b-form-input
-                class="pollAnswer"
-                :maxlength="maxPollAnswerLength"
+    <b-container>
+      <div
+        v-for="(answer, index) in pollAnswers"
+        :key="index"
+      >
+        <b-row>
+          <b-col>
+            <b-form-group>
+            <b-form-radio
+              disabled
             />
-            <b-button
-                class="pollRemoveButton"
-                @click="removeAnswer()"
-                disabled
+            </b-form-group>
+          </b-col>
+          <b-col cols="8">
+            <b-form-input
+              v-bind:value="pollAnswers[index].answer"
+              v-on:input="pollAnswers[index].answer = $event"
+              :maxlength="maxPollAnswerLength"
             >
-            <font-awesome-icon icon="minus"/>
+            </b-form-input>
+          </b-col>
+          <b-col>
+            <b-button
+              variant="danger"
+              @click="removeAnswer(index)"
+            >
+              <font-awesome-icon icon="minus"/>
             </b-button>
-        </div>
-        <br>
-        <b-button
-            class="pollAddButton"
-            @click="addAnswer()"
-        >
-        <font-awesome-icon icon="plus"/>
-        </b-button>
-    </b-form-group>
+          </b-col>
+        </b-row>
+      </div>
+    </b-container>
+    <br>
+    <b-button
+        variant="primary"
+        class="pollAddButton"
+        @click="addAnswer()"
+    >
+    <font-awesome-icon icon="plus"/>
+    </b-button>
     <hr>
     <VueCtkDateTimePicker
       id="DatePicker"
@@ -43,13 +60,15 @@
       color="#F9A618"
     >
     </VueCtkDateTimePicker>
-    <br><br>
+    <br>
     <b-button
+      variant="secondary"
       class="postButton"
-      @click="$emit('create-note', pollTitle, pollContent)"
+      @click="createPoll()"
     >
       {{$t('editor.poll.post')}}
     </b-button>
+    <br><br><br><br><br>
   </div>
 </template>
 
@@ -60,17 +79,36 @@ export default {
     return {
       date: null,
       pollTitle: this.$t('editor.poll.title'),
+      pollAnswers: [
+        { answer: 'Answer A' },
+        { answer: '' }
+      ],
+      allowMultipleVotes: false,
       maxPollTitleLength: 50,
       maxPollAnswerLength: 30,
-      pollContent: '<poll></poll>'
+      pollContent: ''
     }
   },
   methods: {
     addAnswer () {
-      //
+      this.pollAnswers.push({ answer: '' })
     },
-    removeAnswer () {
-      //
+    removeAnswer (index) {
+      this.pollAnswers.splice(index, 1)
+    },
+    createPoll () {
+      // pollTitle can't include question marks
+      this.pollContent = ''
+      var index = 0
+      this.pollAnswers.forEach(pollAnswer => {
+        const answer = pollAnswer.answer
+        if (answer !== '') {
+          this.pollContent += '<div class="row"><div class="column"><input type="radio" id=' + '"' +
+          index + '"></div><div class="column"><b>' + answer + '</b></div></div>'
+        }
+        index++
+      })
+      this.$emit('create-poll', this.pollTitle, this.pollContent)
     }
   }
 }
@@ -83,26 +121,8 @@ export default {
     margin-left: auto;
   }
 
-  .pollRow {
-    width: 90%;
-    margin-right: auto;
-    margin-left: auto;
-  }
-
-  .pollRadio {
-    width: 10%;
-  }
-
-  .pollAnswer {
-    width: 80%;
-  }
-
-  .pollRemoveButton {
-    width: 10%;
-  }
-
   .pollAddButton {
-    width: auto;
+    width: 45%;
   }
 
   .postButton {
