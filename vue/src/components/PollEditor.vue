@@ -98,16 +98,17 @@ export default {
     },
     createPoll () {
       // pollTitle can't include question marks
-      this.pollContent = ''
+      this.pollContent = '<div class="container">'
       var index = 0
       this.pollAnswers.forEach(pollAnswer => {
         const answer = pollAnswer.answer
         if (answer !== '') {
-          this.pollContent += '<div class="row"><div class="column"><input type="radio" id=' + '"' +
-          index + '"></div><div class="column"><b>' + answer + '</b></div></div>'
+          this.pollContent += '<div class="row justify-content-center"><div class="align-self-center"><input type="radio" id=' + '"' +
+          index + '"></div><div class="col-sm-auto"><b>' + answer + '</b></div></div>'
         }
         index++
       })
+      this.pollContent += '</div>'
       this.$emit('create-poll', this.pollTitle, this.pollContent)
     }
   }
