@@ -26,8 +26,7 @@ $ npm install
 #### 2. Build and start the docker images (database & application)
 
 ```bash
-$ docker-compose build
-$ docker-compose up
+$ docker-compose up --build
 ```
 
 ---
@@ -45,15 +44,13 @@ $ docker-compose up --no-deps --build --force-recreate db
 #### Frontend (Vue.js)
 
 ```bash
-$ cd vue
-$ npm run serve
+$ cd vue && npm run serve
 ```
 
 #### Backend (Sails.js)
 
 ```bash
-$ cd sails
-$ npm run start-dev
+$ npm run sails-start-dev
 ```
 
 #### Open [http://localhost:1337/](http://localhost:1337/)
@@ -71,8 +68,7 @@ For running a local PostgreSQL server check out [datastores.js](https://github.c
 
 ```bash
 $ npm install
-$ npm run setup
-$ npm run sails-start-dev
+$ npm run start
 ```
 
 ---
