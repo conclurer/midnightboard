@@ -102,8 +102,8 @@ export default {
       // Notify notice board
       this.$emit('add-note')
     },
-    createPoll: async function (titleContent, jsonContent) {
-      const jsonBody = JSON.stringify({
+    createPoll: async function (titleContent, jsonContent, answerIndexes) {
+      const jsonBodyNote = JSON.stringify({
         title: titleContent,
         typeOfPost: 'application/poll',
         content: jsonContent
@@ -111,13 +111,29 @@ export default {
 
       // Post request to api
       await axios
-        .post('http://localhost:1337/api/boards/' + this.boardId, jsonBody, {
+        .post('http://localhost:1337/api/boards/' + this.boardId, jsonBodyNote, {
           headers: {
             'Content-Type': 'application/json'
           }
         }
         )
-        .then(res => {})
+        .then(res => {
+          // TODO
+          // console.log(res)
+          const jsonBodyPoll = JSON.stringify({
+            postId: res.id,
+            answerIds: answerIndexes
+          })
+          axios
+            .post('http://localhost:1337/api/polls/' + this.boardId, jsonBodyPoll, {
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            }
+            )
+            .then(res => {})
+            .catch(err => this.$log.error(err))
+        })
         .catch(err => this.$log.error(err))
 
       // Notify notice board

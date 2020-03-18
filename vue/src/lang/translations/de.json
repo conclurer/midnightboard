@@ -54,7 +54,9 @@
             "heading":"Poll erstellen:",
             "title":"Deine Frage?",
             "templateAnswer":"Antwort A",
-            "post":"Poll posten"
+            "post":"Poll posten",
+            "missingQuestion":"Du musst eine Frage eingeben!",
+            "missingAnswers":"Du musst mindestens zwei Antworten erstellen!"
         },
         "survey":{
             "heading":"Umfrage erstellen:",
@@ -63,7 +65,7 @@
             "post":"Umfrage posten"
         },
         "datePicker":{
-            "dueDate":"Wählen Sie ein Enddatum",
+            "dueDate":"Wähle ein Enddatum",
             "currentDate":"Heute",
             "language":"de"
         }
@@ -82,7 +84,7 @@
         "login":"Anmelden",
         "toLogin":"Ich habe bereits einen Account",
         "register":"Registrierung",
-        "createAccount":"Erstellen Sie einen<br>neuen Account:",
+        "createAccount":"Erstelle einen<br>neuen Account:",
         "signUp":"Registrieren",
         "toSignUp":"Ich habe noch keinen Account"
     },

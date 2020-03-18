@@ -81,7 +81,7 @@ export default {
       date: null,
       pollTitle: this.$t('editor.poll.title'),
       pollAnswers: [
-        { answer: 'Answer A' },
+        { answer: this.$t('editor.poll.templateAnswer') },
         { answer: '' }
       ],
       allowMultipleVotes: false,
@@ -98,19 +98,34 @@ export default {
       this.pollAnswers.splice(index, 1)
     },
     createPoll () {
-      // pollTitle can't include question marks
-      this.pollContent = '<div class="container">'
-      var index = 0
-      this.pollAnswers.forEach(pollAnswer => {
-        const answer = pollAnswer.answer
-        if (answer !== '') {
-          this.pollContent += '<div class="row justify-content-center"><div class="align-self-center"><input type="radio" id=' + '"' +
-          index + '"></div><div class="col-sm-auto"><b>' + answer + '</b></div></div>'
+      if (this.pollTitle === '') {
+        alert(this.$t('editor.poll.missingQuestion'))
+      } else {
+        var index = 0
+        var validAnswers = []
+        if (this.pollAnswers.length <= 1) {
+          alert(this.$t('editor.poll.missingAnswers'))
+        } else {
+          this.pollContent = '<div class="container">'
+          this.pollAnswers.forEach(pollAnswer => {
+            const answer = pollAnswer.answer
+            if (answer !== '') {
+              validAnswers.push(index)
+              this.pollContent += '<div class="row justify-content-center"><div class="align-self-center"><input type="radio" id=' + '"' +
+              index + '"></div><div class="col-sm-auto"><b>' + answer + '</b></div></div>'
+              index++
+            }
+          })
+          this.pollContent += '</div>'
+          if (validAnswers.length <= 1) {
+            alert(this.$t('editor.poll.missingAnswers'))
+            this.pollContent = ''
+          } else {
+            this.$emit('create-poll', this.pollTitle, this.pollContent, validAnswers)
+            console.log(validAnswers)
+          }
         }
-        index++
-      })
-      this.pollContent += '</div>'
-      this.$emit('create-poll', this.pollTitle, this.pollContent)
+      }
     }
   }
 }

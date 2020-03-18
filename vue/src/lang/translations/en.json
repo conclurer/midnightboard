@@ -54,7 +54,9 @@
             "heading":"Create your poll:",
             "title":"Your question?",
             "templateAnswer":"Answer A",
-            "post":"Post poll"
+            "post":"Post poll",
+            "missingQuestion":"You have to enter a question!",
+            "missingAnswers":"You have to create at least two answers!"
         },
         "survey":{
             "heading":"Create your survey:",
