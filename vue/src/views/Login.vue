@@ -81,17 +81,20 @@ export default {
 </script>
 
 <style scoped>
-@import '../../../configuration/styles.css';
-.login {
-  position: relative;
-  overflow-x: hidden;
-  overflow-y: hidden;
-  background: var(--background-board);
-  height: 100vh;
-}
+  a {
+    color: var(--link);
+  }
 
-.loginBox {
-  width: 400px;
-  margin: 20px auto;
-}
+  .login {
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    background: var(--background-board);
+    height: 100vh;
+  }
+
+  .loginBox {
+    width: 400px;
+    margin: 20px auto;
+  }
 </style>

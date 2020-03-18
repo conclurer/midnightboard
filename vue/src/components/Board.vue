@@ -392,50 +392,53 @@ export default {
 </script>
 
 <style scoped>
-@import '../../../configuration/styles.css';
-.board {
-  position: sticky;
-  width: 100vw;
-  min-height: 100vh;
-  background: var(--background-board);
-  display: grid;
-  grid-auto-rows: min-content;
-}
+  .board {
+    position: sticky;
+    width: 100vw;
+    min-height: 100vh;
+    background: var(--background-board);
+    display: grid;
+    grid-auto-rows: min-content;
+  }
 
-.inner-board {
-  grid-row: 1 / 1;
-}
+  .inner-board {
+    grid-row: 1 / 1;
+  }
 
-hr {
-  height: 1px;
-  border: none;
-  background-color: #aaa;
-}
+  hr {
+    height: 1px;
+    border: none;
+    background-color: #aaa;
+  }
 
-li {
-  display: list-item;
-}
+  li {
+    display: list-item;
+  }
 
-ul {
-  text-align: left;
-}
+  ul {
+    text-align: left;
+  }
 
-.content {
-  position: static;
-  margin: 10px 10px;
-}
+  a {
+    color: var(--link);
+  }
 
-.note {
-  width: 480px;
-  margin: 10px;
-}
+  .content {
+    position: static;
+    margin: 10px 10px;
+  }
 
-.rightBar {
-  grid-column: 2 / 3;
-  width: 500px;
-  height: 100%;
-  position: fixed;
-  right: 0px;
-  background: #fff;
-}
+  .note {
+    width: 480px;
+    margin: 10px;
+  }
+
+  .rightBar {
+    grid-column: 2 / 3;
+    width: 500px;
+    height: 100%;
+    position: fixed;
+    right: 0px;
+    background: #fff;
+  }
 </style>

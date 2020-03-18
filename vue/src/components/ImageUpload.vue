@@ -1,7 +1,7 @@
 <template>
   <div class="imageUpload">
     <br>
-    <h2>{{$t('editor.image.title')}}</h2>
+    <h2>{{$t('editor.image.heading')}}</h2>
     <b-form-input
       class="imageTitle"
       v-bind:value="imageTitle"
@@ -55,7 +55,7 @@ export default {
   data () {
     return {
       imageRef: '',
-      imageTitle: 'Your image title', // i18n?
+      imageTitle: this.$t('editor.image.title'),
       maxImageTitleLength: 50
     }
   },
@@ -72,6 +72,7 @@ export default {
       }
     },
     onRemove () {
+      this.imageTitle = this.$t('editor.image.title')
       this.imageRef = ''
     }
   }

@@ -14,10 +14,12 @@
     "editor":{
         "note":{
             "create":"Erstellen",
-            "title":"Titel hier eingeben"
+            "title":"Titel hier einfügen",
+            "content":"<p>Inhalt hier einf&uuml;gen</p><ul><li><p>Beginne eine Liste</p></li></ul><ol><li><p>Oder eine Aufz&auml;hlung</p></li></ol>"
         },
         "image":{
-            "title":"Bild hochladen:",
+            "heading":"Bild hochladen:",
+            "title":"Titel des Bildes",
             "post":"Bild posten",
             "upload":"Dein Gerät unterstützt kein Hochladen von Bildern.",
             "drag":"Ziehe hierher ein Bild oder klicke darauf, um eins auszuwählen",
@@ -31,7 +33,8 @@
             "aspect":"Landschaft/Porträt"
         },
         "file":{
-            "title":"Datei hochladen:",
+            "heading":"Datei hochladen:",
+            "title":"Titel der Datei",
             "post":"Datei posten",
             "upload":"Dein Gerät unterstützt kein Hochladen von Dateien.",
             "drag":"Ziehe hierher eine Datei oder klicke darauf, um eine auszuwählen",
@@ -42,6 +45,11 @@
             "selected":"Datei erfolgreich ausgewählt!",
             "fileSize":"Die Dateigröße überschreitet das Limit!",
             "fileType":"Es werden nur PDF, DOC(X), XLS(X) und PPT(X) unterstützt!"
+        },
+        "datePicker":{
+            "dueDate":"Wählen Sie ein Enddatum",
+            "currentDate":"Heute",
+            "language":"de"
         }
     },
     "profile":{
@@ -57,6 +65,7 @@
         "welcome":"Willkommen zurück!",
         "login":"Anmelden",
         "toLogin":"Ich habe bereits einen Account",
+        "register":"Registrierung",
         "createAccount":"Erstellen Sie einen<br>neuen Account:",
         "signUp":"Registrieren",
         "toSignUp":"Ich habe noch keinen Account"
