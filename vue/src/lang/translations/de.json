@@ -17,15 +17,13 @@
     },
     "editor":{
         "note":{
-            "heading":"Dein Notizname",
-            "paragraph":"Inhalt hier einfügen",
-            "unorderdList":"Starte hier eine Aufzählung",
-            "orderedList":"Oder starte hier eine numerische Liste",
-            "create":"Erstellen"
+            "create":"Erstellen",
+            "title":"Titel hier einfügen",
+            "content":"<p>Inhalt hier einf&uuml;gen</p><ul><li><p>Beginne eine Liste</p></li></ul><ol><li><p>Oder eine Aufz&auml;hlung</p></li></ol>"
         },
         "image":{
-            "title":"Bild hochladen:",
-            "heading":"Dein Bildname",
+            "heading":"Bild hochladen:",
+            "title":"Titel des Bildes",
             "post":"Bild posten",
             "upload":"Dein Gerät unterstützt kein Hochladen von Bildern.",
             "drag":"Ziehe hierher ein Bild oder klicke darauf, um eins auszuwählen",
@@ -39,8 +37,8 @@
             "aspect":"Landschaft/Porträt"
         },
         "file":{
-            "title":"Datei hochladen:",
-            "heading":"Dein Dateiname",
+            "heading":"Datei hochladen:",
+            "title":"Titel der Datei",
             "post":"Datei posten",
             "upload":"Dein Gerät unterstützt kein Hochladen von Dateien.",
             "drag":"Ziehe hierher eine Datei oder klicke darauf, um eine auszuwählen",
@@ -63,6 +61,11 @@
             "title":"Dein Umfragentitel",
             "templateAnswer":"Antwort A",
             "post":"Umfrage posten"
+        },
+        "datePicker":{
+            "dueDate":"Wählen Sie ein Enddatum",
+            "currentDate":"Heute",
+            "language":"de"
         }
     },
     "profile":{
@@ -78,6 +81,7 @@
         "welcome":"Willkommen zurück!",
         "login":"Anmelden",
         "toLogin":"Ich habe bereits einen Account",
+        "register":"Registrierung",
         "createAccount":"Erstellen Sie einen<br>neuen Account:",
         "signUp":"Registrieren",
         "toSignUp":"Ich habe noch keinen Account"

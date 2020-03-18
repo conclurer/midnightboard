@@ -1,12 +1,16 @@
 <template>
   <div class="editor">
     <br>
-
-    <!-- Text fields -->
-    <editor-content
-      class="editor__title"
-      :editor="titleEditor"
-    />
+    <h2>
+      <input
+        type="text"
+        class="editor__title"
+        name="title"
+        v-model="titleContent"
+        maxlength="25"
+        autocomplete="off"
+      >
+    </h2>
     <hr>
     <editor-content
       class="editor__content"
@@ -139,8 +143,10 @@
       format="DD-MM-YYYY"
       formatted="ll"
       onlyDate v-model="date"
-      label="Select due date"
       color="#F9A618"
+      :label="$t('editor.datePicker.dueDate')"
+      :buttonNowTranslation="$t('editor.datePicker.currentDate')"
+      :locale="$t('editor.datePicker.language')"
     >
     </VueCtkDateTimePicker>
 
@@ -188,24 +194,8 @@ export default {
   data () {
     return {
       date: null,
-      titleContent: this.$t('editor.note.heading'),
-      textContent: '<p>' + this.$t('editor.note.paragraph') + '</p><ul><li><p>' +
-        this.$t('editor.note.unorderdList') + '</p></li></ul><ol><li><p>' +
-        this.$t('editor.note.orderedList') + '</p></li></ol>',
-      titleEditor: new Editor({
-        extensions: [
-          new Heading({ levels: [2] })
-        ],
-        content: `
-          <h2>
-            Your note title
-          </h2>
-        `,
-        onUpdate: ({ getHTML }) => {
-          this.titleContent = getHTML()
-          this.titleContent = this.titleContent.replace(/<[^>]*>?/gm, '')
-        }
-      }),
+      titleContent: this.$t('editor.note.title'),
+      textContent: this.$t('editor.note.content'),
       contentEditor: new Editor({
         extensions: [
           new Blockquote(),
@@ -226,17 +216,21 @@ export default {
           new Underline(),
           new History()
         ],
-        content: '<p>' + this.$t('editor.note.paragraph') + '</p><ul><li><p>' +
-        this.$t('editor.note.unorderdList') + '</p></li></ul><ol><li><p>' +
-        this.$t('editor.note.orderedList') + '</p></li></ol>',
+        content: this.$t('editor.note.content'),
         onUpdate: ({ getHTML }) => {
           this.textContent = getHTML()
+          this.textContent = this.textContent.replace('Ä', '&Auml;')
+          this.textContent = this.textContent.replace('ä', '&auml;')
+          this.textContent = this.textContent.replace('Ö', '&Ouml;')
+          this.textContent = this.textContent.replace('ö', '&ouml;')
+          this.textContent = this.textContent.replace('Ü', '&Uuml;')
+          this.textContent = this.textContent.replace('ü', '&uuml;')
+          this.textContent = this.textContent.replace('ß', '&szlig;')
         }
       })
     }
   },
   beforeDestroy () {
-    this.titleEditor.destroy()
     this.contentEditor.destroy()
   }
 }
@@ -246,10 +240,20 @@ export default {
   button {
     width: 43px;
   }
+
   .editor {
     margin-left: 12px;
     margin-right: 12px;
   }
+
+  .editor__title {
+    width: 480px;
+    text-align: center;
+    border: 1px solid #4d90fe;
+    border-radius: 3px;
+    outline: none;
+  }
+
   .lowerGap {
     position: relative;
     top: 0px;
@@ -257,9 +261,11 @@ export default {
     height: 35px;
     width: 100%;
   }
+
   .button {
     width: auto;
   }
+
   .datePicker {
     width: 300px;
     z-index: 10003;

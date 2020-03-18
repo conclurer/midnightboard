@@ -1,7 +1,7 @@
 <template>
   <div class="fileUpload">
     <br>
-    <h2>{{$t('editor.file.title')}}</h2>
+    <h2>{{$t('editor.file.heading')}}</h2>
     <b-form-input
       class="fileTitle"
       v-bind:value="fileTitle"
@@ -72,7 +72,6 @@
     >
     {{$t('editor.file.post')}}
     </button>
-    <br><br><br><br> <!-- For scrollbar -->
   </div>
 </template>
 
@@ -84,7 +83,7 @@ export default {
   data () {
     return {
       fileRef: '',
-      fileTitle: this.$t('editor.file.heading'),
+      fileTitle: this.$t('editor.file.title'),
       maxFileTitleLength: 50,
       pdfSelected: false,
       wordSelected: false,
@@ -122,7 +121,7 @@ export default {
     onRemove () {
       document.getElementsByClassName('preview-container')[1].style.display = 'block'
       this.fileRef = ''
-      this.fileTitle = this.$t('editor.file.heading')
+      this.fileTitle = this.$t('editor.file.title')
       this.pdfSelected = false
       this.wordSelected = false
       this.excelSelected = false

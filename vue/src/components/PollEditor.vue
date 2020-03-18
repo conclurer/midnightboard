@@ -56,8 +56,10 @@
       format="DD-MM-YYYY"
       formatted="ll"
       onlyDate v-model="date"
-      label="Select due date"
       color="#F9A618"
+      :label="$t('editor.datePicker.dueDate')"
+      :buttonNowTranslation="$t('editor.datePicker.currentDate')"
+      :locale="$t('editor.datePicker.language')"
     >
     </VueCtkDateTimePicker>
     <br>
@@ -68,7 +70,6 @@
     >
       {{$t('editor.poll.post')}}
     </b-button>
-    <br><br><br><br><br>
   </div>
 </template>
 

@@ -17,15 +17,13 @@
     },
     "editor":{
         "note":{
-            "heading":"Your note title",
-            "paragraph":"Insert content here",
-            "unorderdList":"Start a bulleted list",
-            "orderedList":"Or start a numerical list",
-            "create":"Create"
+            "create":"Create",
+            "title":"Insert title here",
+            "content":"<p>Insert content here</p><ul><li><p>Start a bulleted list</p></li></ul><ol><li><p>Or start a numerical list</p></li></ol>"
         },
         "image":{
-            "title":"Upload your image:",
-            "heading":"Your image title",
+            "heading":"Upload your image:",
+            "title":"Your image title",
             "post":"Post image",
             "upload":"Your device does not support file uploading.",
             "drag":"Drag an image or click here to select a image",
@@ -39,8 +37,8 @@
             "aspect":"Landscape/Portrait"
         },
         "file":{
-            "title":"Upload your file:",
-            "heading":"Your file title",
+            "heading":"Upload your file:",
+            "title":"Your file title",
             "post":"Post file",
             "upload":"Your device does not support file uploading.",
             "drag":"Drag an file or click here to select a file",
@@ -63,6 +61,11 @@
             "title":"Your survery title",
             "templateAnswer":"Answer A",
             "post":"Post survey"
+        },
+        "datePicker":{
+            "dueDate":"Select a due date",
+            "currentDate":"Today",
+            "language":"en"
         }
     },
     "profile":{
@@ -78,6 +81,7 @@
         "welcome":"Welcome back!",
         "login":"Log In",
         "toLogin":"Or log in with an existing account",
+        "register":"Sign Up",
         "createAccount":"Create a new account:",
         "signUp":"Sign Up",
         "toSignUp":"Or create a new account"

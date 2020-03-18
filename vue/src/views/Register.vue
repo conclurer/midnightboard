@@ -4,7 +4,7 @@
   >
     <Header
       id="titlebar"
-      title="Sign Up"
+      :title="$t('ui.register')"
       @change-language="changeLanguage"
       :english="english"
       :buttonsActive=false
@@ -87,17 +87,20 @@ export default {
 </script>
 
 <style scoped>
-@import '../../../configuration/styles.css';
-.register {
-  position: relative;
-  overflow-x: hidden;
-  overflow-y: hidden;
-  background: var(--background-board);
-  height: 100vh;
-}
+  a {
+    color: var(--link);
+  }
 
-.loginBox {
-  width: 400px;
-  margin: 20px auto;
-}
+  .register {
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    background: var(--background-board);
+    height: 100vh;
+  }
+
+  .loginBox {
+    width: 400px;
+    margin: 20px auto;
+  }
 </style>
