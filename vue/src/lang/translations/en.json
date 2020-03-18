@@ -18,8 +18,8 @@
             "content":"<p>Insert content here</p><ul><li><p>Start a bulleted list</p></li></ul><ol><li><p>Or start a numerical list</p></li></ol>"
         },
         "image":{
-            "title":"Upload your image:",
-            "imageTitle":"Your image title",
+            "heading":"Upload your image:",
+            "title":"Your image title",
             "post":"Post image",
             "upload":"Your device does not support file uploading.",
             "drag":"Drag an image or click here to select a image",
@@ -33,8 +33,8 @@
             "aspect":"Landscape/Portrait"
         },
         "file":{
-            "title":"Upload your file:",
-            "fileTitle":"Your file title",
+            "heading":"Upload your file:",
+            "title":"Your file title",
             "post":"Post file",
             "upload":"Your device does not support file uploading.",
             "drag":"Drag an file or click here to select a file",

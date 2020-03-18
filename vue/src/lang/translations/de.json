@@ -15,11 +15,11 @@
         "note":{
             "create":"Erstellen",
             "title":"Titel hier einfügen",
-            "content":"<p>Inhalt hier einf&uuml;gen</p><ul><li><p>Beginnen Sie eine Liste</p></li></ul><ol><li><p>Oder eine Aufz&auml;hlung</p></li></ol>"
+            "content":"<p>Inhalt hier einf&uuml;gen</p><ul><li><p>Beginne eine Liste</p></li></ul><ol><li><p>Oder eine Aufz&auml;hlung</p></li></ol>"
         },
         "image":{
-            "title":"Bild hochladen:",
-            "imageTitle":"Titel des Bildes",
+            "heading":"Bild hochladen:",
+            "title":"Titel des Bildes",
             "post":"Bild posten",
             "upload":"Dein Gerät unterstützt kein Hochladen von Bildern.",
             "drag":"Ziehe hierher ein Bild oder klicke darauf, um eins auszuwählen",
@@ -33,8 +33,8 @@
             "aspect":"Landschaft/Porträt"
         },
         "file":{
-            "title":"Datei hochladen:",
-            "fileTitle":"Titel der Datei",
+            "heading":"Datei hochladen:",
+            "title":"Titel der Datei",
             "post":"Datei posten",
             "upload":"Dein Gerät unterstützt kein Hochladen von Dateien.",
             "drag":"Ziehe hierher eine Datei oder klicke darauf, um eine auszuwählen",
