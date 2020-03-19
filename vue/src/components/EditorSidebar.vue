@@ -117,21 +117,19 @@ export default {
           }
         }
         )
-        .then(res => {
-          // TODO
-          // console.log(res)
+        .then(async postResponse => {
           const jsonBodyPoll = JSON.stringify({
-            postId: res.id,
+            postId: postResponse.data.id,
             answerIds: answerIndexes
           })
-          axios
-            .post('http://localhost:1337/api/polls/' + this.boardId, jsonBodyPoll, {
+          await axios
+            .post('http://localhost:1337/api/polls', jsonBodyPoll, {
               headers: {
                 'Content-Type': 'application/json'
               }
             }
             )
-            .then(res => {})
+            .then(pollResponse => {})
             .catch(err => this.$log.error(err))
         })
         .catch(err => this.$log.error(err))

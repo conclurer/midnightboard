@@ -54,6 +54,7 @@
             "heading":"Poll erstellen:",
             "title":"Deine Frage?",
             "templateAnswer":"Antwort A",
+            "allowMultipleVotes":"Mehrfachauswahl erlauben",
             "post":"Poll posten",
             "missingQuestion":"Du musst eine Frage eingeben!",
             "missingAnswers":"Du musst mindestens zwei Antworten erstellen!"

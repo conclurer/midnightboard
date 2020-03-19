@@ -61,8 +61,8 @@ module.exports = {
     }
 
     sails.log.debug('POLL_CREATE::: Creating new Poll . . .');
-    var createdPolls = {};
-    var createData = {};
+    var createdPoll = [];
+    var createData = null;
     // Create all entries in 'poll' table
     inputs.answerIds.forEach(async answerId => {
       createData = {
@@ -70,14 +70,15 @@ module.exports = {
         answerId: answerId,
         votes: 0
       };
-      createdPolls.push(await Poll.create(createData).fetch());
+      await Poll.create(createData).fetch()
+        .then(answer => {
+          createdPoll.push(answer);
+        })
+        .catch(() => {
+          return exits.serverError('POLL_CREATE::: Failed to create a Poll!');
+        });
     });
-
-    if(createdPolls.length >= 2) {
-      sails.log.debug('POLL_CREATE::: Created new Poll successfully!');
-      return exits.success(createdPolls);
-    } else {
-      return exits.serverError('POLL_CREATE::: Failed to create a Poll!');
-    }
+    sails.log.debug('POLL_CREATE::: Created new Poll successfully!');
+    return exits.success(createdPoll);
   }
 };

@@ -49,6 +49,15 @@
     >
     <font-awesome-icon icon="plus"/>
     </b-button>
+    <br>
+    <b-form-checkbox
+      v-model="allowMultipleVotes"
+      name="checkbox-mv"
+      value="true"
+      unchecked-value="false"
+    >
+      {{$t('editor.poll.allowMultipleVotes')}}
+    </b-form-checkbox>
     <hr>
     <VueCtkDateTimePicker
       id="DatePicker"
@@ -103,6 +112,17 @@ export default {
       } else {
         var index = 0
         var validAnswers = []
+        // Need unique radio button name for single vote polls
+        var radioButtonName = ''
+        if (!this.allowMultipleVotes) {
+          const birthday = new Date()
+          const yearM = birthday.getFullYear() + '-'
+          const dayM = birthday.getDay() + '-'
+          const time = birthday.getHours() + '' + birthday.getMinutes() + '' +
+          birthday.getSeconds() + '' + birthday.getMilliseconds()
+          radioButtonName = 'rb-' + yearM + dayM + time
+        }
+        // 2 or more answers = valid poll
         if (this.pollAnswers.length <= 1) {
           alert(this.$t('editor.poll.missingAnswers'))
         } else {
@@ -111,8 +131,9 @@ export default {
             const answer = pollAnswer.answer
             if (answer !== '') {
               validAnswers.push(index)
-              this.pollContent += '<div class="row justify-content-center"><div class="align-self-center"><input type="radio" id=' + '"' +
-              index + '"></div><div class="col-sm-auto"><b>' + answer + '</b></div></div>'
+              this.pollContent += '<div class="row justify-content-center"><div class="align-self-center">' +
+              '<input type="radio" name="' + radioButtonName + '" id="' + index +
+              '"></div><div class="col-sm-auto"><b>' + answer + '</b></div></div>'
               index++
             }
           })
@@ -122,7 +143,6 @@ export default {
             this.pollContent = ''
           } else {
             this.$emit('create-poll', this.pollTitle, this.pollContent, validAnswers)
-            console.log(validAnswers)
           }
         }
       }

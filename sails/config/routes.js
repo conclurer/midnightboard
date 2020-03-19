@@ -85,22 +85,22 @@ module.exports.routes = {
     },
 
     //POLLS
-    'POST   /api/polls/': {
+    'POST   /api/polls': {
         controller: 'polls',
         action: 'create',
         skipAssets: true
     },
-    'GET   /api/polls/': {
+    'GET   /api/polls': {
         controller: 'polls',
         action: 'get',
         skipAssets: true
     },
-    'DELETE   /api/polls/': {
+    'DELETE   /api/polls': {
         controller: 'polls',
         action: 'delete',
         skipAssets: true
     },
-    'PUT   /api/posts/': {
+    'PUT   /api/posts': {
         controller: 'polls',
         action: 'update',
         skipAssets: true

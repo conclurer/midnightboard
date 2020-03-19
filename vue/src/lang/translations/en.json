@@ -54,6 +54,7 @@
             "heading":"Create your poll:",
             "title":"Your question?",
             "templateAnswer":"Answer A",
+            "allowMultipleVotes":"Allow multiple answers",
             "post":"Post poll",
             "missingQuestion":"You have to enter a question!",
             "missingAnswers":"You have to create at least two answers!"
