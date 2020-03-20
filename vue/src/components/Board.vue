@@ -183,20 +183,29 @@
             <b-card-text>
               <div v-html="note.content" />
               <br>
-              <b-button
-                variant="primary"
-                class="voteButton"
-                @click="votePoll()"
-              >
-                {{$t('board.poll.vote')}}
-              </b-button>
-              <b-button
-                variant="light"
-                class="showResultButton"
-                @click="showResult()"
-              >
-                {{$t('board.poll.showResult')}}
-              </b-button>
+              <b-button-group>
+                <b-button
+                  variant="primary"
+                  class="voteButton"
+                  @click="votePoll"
+                >
+                  {{$t('board.poll.vote')}}
+                </b-button>
+                <b-button
+                  variant="info"
+                  class="showResultButton"
+                  @click="showResult"
+                >
+                  {{$t('board.poll.showResult')}}
+                </b-button>
+                <b-button
+                  variant="danger"
+                  class="resetRadioButtons"
+                  @click="resetRadioButtons"
+                >
+                  {{$t('board.poll.resetRadioButtons')}}
+                </b-button>
+              </b-button-group>
             </b-card-text>
           </b-card>
         </div>
@@ -388,20 +397,29 @@
             <b-card-text>
               <div v-html="note.content" />
               <br>
-              <b-button
-                variant="primary"
-                class="voteButton"
-                @click="votePoll()"
-              >
-                {{$t('board.poll.vote')}}
-              </b-button>
-              <b-button
-                variant="light"
-                class="showResultButton"
-                @click="showResult()"
-              >
-                {{$t('board.poll.showResult')}}
-              </b-button>
+              <b-button-group>
+                <b-button
+                  variant="primary"
+                  class="voteButton"
+                  @click="votePoll()"
+                >
+                  {{$t('board.poll.vote')}}
+                </b-button>
+                <b-button
+                  variant="info"
+                  class="showResultButton"
+                  @click="showResult()"
+                >
+                  {{$t('board.poll.showResult')}}
+                </b-button>
+                <b-button
+                  variant="danger"
+                  class="resetRadioButtons"
+                  @click="resetRadioButtons()"
+                >
+                  {{$t('board.poll.resetRadioButtons')}}
+                </b-button>
+              </b-button-group>
             </b-card-text>
           </b-card>
         </div>
@@ -444,15 +462,23 @@ export default {
       // Notify notice board
       this.$emit('add-note')
     },
-    votePoll: async function () {
+    votePoll: async function (element) {
       // TODO
       // Check if multiple answers are allowed
       // Check index(es) of the poll answers
       // Axios PUT to update votes for the answer
     },
-    showResult: async function () {
+    showResult: async function (element) {
       // Show current results
       // Show back button -> hide Vote & show resultResult buttons
+    },
+    resetRadioButtons: function (element) {
+      // Reset radio buttons to inital state
+      for (const child of element.target.parentElement.parentElement.firstChild.firstChild.children) {
+        if (child.firstChild.firstChild.type === 'radio') {
+          child.firstChild.firstChild.checked = false
+        }
+      }
     }
   },
   props: ['notes', 'editorActive']

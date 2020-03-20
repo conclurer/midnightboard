@@ -117,10 +117,11 @@ export default {
         if (!this.allowMultipleVotes) {
           const birthday = new Date()
           const yearM = birthday.getFullYear() + '-'
+          const monthM = birthday.getMonth() + '-'
           const dayM = birthday.getDay() + '-'
           const time = birthday.getHours() + '' + birthday.getMinutes() + '' +
           birthday.getSeconds() + '' + birthday.getMilliseconds()
-          radioButtonName = 'rb-' + yearM + dayM + time
+          radioButtonName = 'rb-' + yearM + monthM + dayM + time
         }
         // 2 or more answers = valid poll
         if (this.pollAnswers.length <= 1) {

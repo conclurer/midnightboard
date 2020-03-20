@@ -12,7 +12,8 @@
         },
         "poll":{
             "vote":"Vote",
-            "showResult":"Show result"
+            "showResult":"Show result",
+            "resetRadioButtons":"Reset options"
         }
     },
     "editor":{

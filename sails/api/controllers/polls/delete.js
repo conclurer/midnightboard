@@ -30,7 +30,7 @@ module.exports = {
     if(!inputs.postId) {
       return exits.missingParams();
     }
-    sails.log.info('POLL_DELETE::: Trying to delete all answers for poll with postId' + inputs.postId);
+    sails.log.debug('POLL_DELETE::: Trying to delete all answers for poll with postId ' + inputs.postId);
     var deletedPolls = await Poll.destroy({postId: inputs.postId}).fetch();
     if(!deletedPolls) {
       return exits.nonExistent();

@@ -34,20 +34,20 @@ module.exports = {
     if(!inputs.postId || !inputs.answerId) {
       return exits.missingParams();
     }
-    sails.log.verbose('POLL_GET::: Updating poll with postId ' + inputs.postId
+    sails.log.debug('POLL_GET::: Updating poll with postId ' + inputs.postId
       + ' and answerId ' + inputs.answerId);
-    var poll = await Poll.findOne({
+    const poll = await Poll.findOne({
       postId: inputs.postId,
       answerId: inputs.answerId
     });
     if(poll) {
-      await Poll.updateOne({
+      const updatedPoll = await Poll.updateOne({
         postId: inputs.postId,
         answerId: inputs.answerId
       }).set({
         votes: poll.votes + 1
       });
-      return exits.success(poll);
+      return exits.success(updatedPoll);
     } else {
       return exits.nonExistent();
     }
