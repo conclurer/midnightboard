@@ -97,10 +97,13 @@ export default {
     overflow-y: hidden;
     background: var(--background-board);
     height: 100vh;
+    display: grid;
+    grid-template-rows: 70px auto;
   }
 
   .loginBox {
     width: 400px;
-    margin: 20px auto;
+    height: auto;
+    margin: 20px auto auto auto;
   }
 </style>

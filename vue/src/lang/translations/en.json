@@ -57,7 +57,12 @@
         "lastName":"Last name",
         "email":"E-Mail",
         "username":"Username",
-        "password":"Password"
+        "password":"Password",
+        "role":"Role",
+        "user":"User",
+        "admin":"Admin",
+        "addUser":"Add a new user:",
+        "affiliate":"Affiliate"
     },
     "ui":{
         "add":"Add",
@@ -70,5 +75,15 @@
         "signUp":"Sign Up",
         "toSignUp":"Or create a new account"
     },
-    "HelloWorld": "Hello World!"
+    "cms":{
+        "userMgmt":"User Management",
+        "userList":"User List",
+        "newUser":"New User",
+        "userRights":"User Rights",
+        "contentMgmt":"Content Management",
+        "editBoards":"Edit Notice Boards",
+        "groupMgmt":"Group Management",
+        "editGroups":"Edit Groups"
+    },
+    "HelloWorld":"Hello World!"
 }

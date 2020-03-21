@@ -394,7 +394,7 @@ export default {
 <style scoped>
   .board {
     position: sticky;
-    width: 100vw;
+    width: 100%;
     min-height: 100vh;
     background: var(--background-board);
     display: grid;
@@ -402,7 +402,7 @@ export default {
   }
 
   .inner-board {
-    grid-row: 1 / 1;
+    grid-row: 1 / 2;
   }
 
   hr {

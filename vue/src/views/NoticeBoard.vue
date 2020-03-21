@@ -87,7 +87,8 @@ export default {
 <style scoped>
   .home {
     position: relative;
-    overflow-x: hidden;
+    display: grid;
+    grid-template-rows: 70px 1fr;
   }
 
   .smooth-vuebar {

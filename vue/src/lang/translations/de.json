@@ -57,7 +57,12 @@
         "lastName":"Nachname",
         "email":"E-Mail",
         "username":"Nutzername",
-        "password":"Passwort"
+        "password":"Passwort",
+        "role":"Rolle",
+        "user":"Benutzer",
+        "admin":"Admin",
+        "addUser":"Benutzer hinzufügen:",
+        "affiliate":"Aufnehmen"
     },
     "ui":{
         "add":"Neu",
@@ -70,5 +75,15 @@
         "signUp":"Registrieren",
         "toSignUp":"Ich habe noch keinen Account"
     },
-    "HelloWorld": "Hallo Welt!"
+    "cms":{
+        "userMgmt":"Benutzerverwaltung",
+        "userList":"Nutzerliste",
+        "newUser":"Neuer Benutzer",
+        "userRights":"Nutzerrechte",
+        "contentMgmt":"Inhaltsverwaltung",
+        "editBoards":"Tafeln verwalten",
+        "groupMgmt":"Gruppenverwaltung",
+        "editGroups":"Gruppen bearbeiten"
+    },
+    "HelloWorld":"Hallo Welt!"
 }
