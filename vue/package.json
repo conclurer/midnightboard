@@ -1,8 +1,8 @@
 {
-    "name": "vue",
+    "name": "midnightboard-frontend",
     "private": true,
     "version": "0.0.3",
-    "description": "midnightboard frontend",
+    "description": "Frontend of application midnightboard",
     "keywords": [],
     "dependencies": {
         "@babel/runtime": "^7.8.4",
