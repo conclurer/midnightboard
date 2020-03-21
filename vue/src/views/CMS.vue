@@ -43,67 +43,21 @@
         <div
           v-if="selected === 'user list'"
         >
-          <table
-            border
-          >
-            <tr>
-              <th>Member ID</th>
-              <th>Creation date</th>
-              <th>Last updated</th>
-              <th>Last seen</th>
-              <th>Username</th>
-              <th>First name</th>
-              <th>Last name</th>
-              <th>E-mail</th>
-            </tr>
-            <tr
-              v-for="member in members"
-              :key="member.id"
-            >
-              <td>{{member.id}}</td>
-              <td>{{member.createdAt}}</td>
-              <td>{{member.updatedAt}}</td>
-              <td>{{member.lastSeen}}</td>
-              <td>{{member.username}}</td>
-              <td>{{member.firstName}}</td>
-              <td>{{member.lastName}}</td>
-              <td>{{member.email}}</td>
-            </tr>
-          </table>
+          <UserList />
         </div>
 
         <!-- Show user creation if selected -->
         <div
           v-if="selected === 'new user'"
         >
-          <b-card
-            class="creationBox"
-            align="center"
-            bg-variant="dark"
-            text-variant="white"
-          >
-            <br>
-            <form>
-              <h2 v-html="$t('profile.addUser')"></h2>
-              <br>
-              <input type="text" id="fname" name="fname" :placeholder="$t('profile.firstName')" size="36">
-              <br><br>
-              <input type="text" id="lname" name="lname" :placeholder="$t('profile.lastName')" size="36">
-              <br><br>
-              <input type="text" id="uname" name="uname" :placeholder="$t('profile.username')" size="36">
-              <br><br>
-              <input type="text" id="email" name="email" :placeholder="$t('profile.email')" size="36">
-              <br><br>
-              <input type="submit" :value="$t('profile.affiliate')">
-              <br><br>
-            </form>
-          </b-card>
+          <AddUser />
         </div>
 
         <!-- Show permission configuration if selected -->
         <div
           v-if="selected === 'permissions'"
         >
+          <!-- TODO -->
         </div>
 
         <!-- Show permission configuration if selected -->
@@ -126,37 +80,19 @@
 // @ is an alias to /src
 // import axios from 'axios'
 import Header from '@/components/Header.vue'
+import UserList from '@/components/UserList.vue'
+import AddUser from '@/components/AddUser.vue'
 import { i18n } from '@/main.js'
 
 export default {
   name: 'CMS',
   components: {
-    Header
+    Header,
+    UserList,
+    AddUser
   },
   data () {
     return {
-      members: [
-        {
-          id: 0,
-          createdAt: 0,
-          updatedAt: 0,
-          lastSeen: 0,
-          username: 'Sillian',
-          firstName: 'Simon',
-          lastName: 'Deuring',
-          email: 'simon@gmail.de'
-        },
-        {
-          id: 1,
-          createdAt: 0,
-          updatedAt: 0,
-          lastSeen: 0,
-          username: 'Sillian',
-          firstName: 'Simon',
-          lastName: 'Deuring',
-          email: 'simon@gmail.de'
-        }
-      ],
       english: true,
       selected: 'user list'
     }
@@ -172,8 +108,6 @@ export default {
       default:
         this.english = true
     }
-
-    // Set default view
   },
   methods: {
     changeLanguage () {
@@ -201,19 +135,10 @@ export default {
 </script>
 
 <style scoped>
-  table {
-    width: 100%;
-  }
-
   hr {
     height: 1px;
     border: none;
     background-color: var(--background-board);
-  }
-
-  th, td {
-    text-align: center;
-    padding: 0px 20px;
   }
 
   .cms {
@@ -244,10 +169,5 @@ export default {
   .cmsContent {
     grid-column: 2 / 3;
     padding: 20px;
-  }
-
-  .creationBox {
-    width: 400px;
-    margin: 20px auto;
   }
 </style>
