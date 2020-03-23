@@ -89,11 +89,10 @@
     "userList":{
         "id":"Benutzer-ID",
         "creationDate":"Erstelldatum",
-        "lastUpdated":"Zuletzt verändert",
         "lastSeen":"Zuletzt online",
-        "username":"Benutzername",
         "firstName":"Vorname",
         "lastName":"Nachname",
+        "username":"Benutzername",
         "email":"E-Mail"
     },
     "rights":{
