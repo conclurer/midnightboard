@@ -162,20 +162,20 @@ test('POLL::: Vote for poll answer', () => {
   }, 1000);
 });
 
-const deletePollData = {
+const getPollData = {
   postId: postId
 };
 
-// Delete the poll
-test('POLL::: Delete poll', () => {
+// Get the poll votes
+test('POLL::: Get poll votes', () => {
   setTimeout(() => {
     return fetch('http://localhost:1337/api/polls', {
-      method: 'DELETE',
+      method: 'GET',
       headers: {
         Authorization: 'Bearer ' + adminLogin.token,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(deletePollData)
+      body: JSON.stringify(getPollData)
     })
       .then((response) => {
         expect(response.status).toBe(200);

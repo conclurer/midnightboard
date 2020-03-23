@@ -132,7 +132,7 @@ export default {
             const answer = pollAnswer.answer
             if (answer !== '') {
               validAnswers.push(index)
-              this.pollContent += '<div class="row justify-content-center"><div class="align-self-center">' +
+              this.pollContent += '<div class="row justify-content-flex-start"><div class="align-self-center">' +
               '<input type="radio" name="' + radioButtonName + '" id="' + index +
               '"></div><div class="col-sm-auto"><b>' + answer + '</b></div></div>'
               index++

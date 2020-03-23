@@ -30,10 +30,6 @@ module.exports = {
       description: 'Invalid parameters',
       statusCode: 400
     },
-    authRequired: {
-      description: 'Valid Authorization header required',
-      statusCode: 401
-    },
     nonExistent: {
       description: 'Post does not exist',
       statusCode: 404

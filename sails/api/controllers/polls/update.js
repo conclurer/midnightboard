@@ -20,8 +20,8 @@ module.exports = {
       responseType: '',
       statusCode: 200
     },
-    invalidParams: {
-      description: 'One or more parameters do not match',
+    missingParams: {
+      description: 'Missing parameters',
       statusCode: 400
     },
     nonExistent: {
@@ -31,7 +31,7 @@ module.exports = {
   },
 
   fn: async function(inputs, exits) {
-    if(!inputs.postId || !inputs.answerId) {
+    if(!inputs.postId || !inputs.answerId && inputs.answerId !== 0) {
       return exits.missingParams();
     }
     sails.log.debug('POLL_GET::: Updating poll with postId ' + inputs.postId

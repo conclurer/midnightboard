@@ -12,6 +12,7 @@
         },
         "poll":{
             "vote":"Vote",
+            "invalidVote":"You have to choose an answer!",
             "showResult":"Show result",
             "resetRadioButtons":"Reset options"
         }
