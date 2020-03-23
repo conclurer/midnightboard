@@ -73,7 +73,8 @@
         "register":"Sign Up",
         "createAccount":"Create a new account:",
         "signUp":"Sign Up",
-        "toSignUp":"Or create a new account"
+        "toSignUp":"Or create a new account",
+        "adopt":"Adopt"
     },
     "cms":{
         "userMgmt":"User Management",
@@ -84,6 +85,32 @@
         "editBoards":"Edit Notice Boards",
         "groupMgmt":"Group Management",
         "editGroups":"Edit Groups"
+    },
+    "userList":{
+        "id":"User ID",
+        "creationDate":"Creation date",
+        "lastUpdated":"Last updated",
+        "lastSeen":"Last seen",
+        "username":"Username",
+        "firstName":"First name",
+        "lastName":"Last name",
+        "email":"E-mail"
+    },
+    "rights":{
+        "guestRights":"Guest rights",
+        "userRights":"User rights",
+        "publicBoards":"View public boards",
+        "privateBoards":"View private boards",
+        "createBoards":"Create new boards",
+        "deleteBoards":"Delete boards",
+        "postNotes":"Post text notes",
+        "postImages":"Post images",
+        "postFiles":"Post files",
+        "postPolls":"Create new polls",
+        "postSurveys":"Create new surveys",
+        "deletePosts":"Delete content",
+        "like":"Like/dislike content",
+        "comment":"Comment content"
     },
     "HelloWorld":"Hello World!"
 }

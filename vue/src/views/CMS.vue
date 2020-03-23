@@ -5,7 +5,7 @@
   >
     <Header
       id="titlebar"
-      title="Content Managament System"
+      title="Content Management System"
       @change-language="changeLanguage"
       :english="english"
       :buttonsActive=false
@@ -57,19 +57,21 @@
         <div
           v-if="selected === 'permissions'"
         >
-          <!-- TODO -->
+          <PermissionPanel />
         </div>
 
         <!-- Show permission configuration if selected -->
         <div
           v-if="selected === 'notice boards'"
         >
+          <!-- TODO -->
         </div>
 
         <!-- Show permission configuration if selected -->
         <div
           v-if="selected === 'groups'"
         >
+          <!-- TODO -->
         </div>
       </div>
     </div>
@@ -82,6 +84,7 @@
 import Header from '@/components/Header.vue'
 import UserList from '@/components/UserList.vue'
 import AddUser from '@/components/AddUser.vue'
+import PermissionPanel from '@/components/PermissionPanel.vue'
 import { i18n } from '@/main.js'
 
 export default {
@@ -89,6 +92,7 @@ export default {
   components: {
     Header,
     UserList,
+    PermissionPanel,
     AddUser
   },
   data () {

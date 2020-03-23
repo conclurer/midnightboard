@@ -73,7 +73,8 @@
         "register":"Registrierung",
         "createAccount":"Erstellen Sie einen<br>neuen Account:",
         "signUp":"Registrieren",
-        "toSignUp":"Ich habe noch keinen Account"
+        "toSignUp":"Ich habe noch keinen Account",
+        "adopt":"Übernehmen"
     },
     "cms":{
         "userMgmt":"Benutzerverwaltung",
@@ -81,9 +82,35 @@
         "newUser":"Neuer Benutzer",
         "userRights":"Nutzerrechte",
         "contentMgmt":"Inhaltsverwaltung",
-        "editBoards":"Tafeln verwalten",
+        "editBoards":"Boards verwalten",
         "groupMgmt":"Gruppenverwaltung",
         "editGroups":"Gruppen bearbeiten"
+    },
+    "userList":{
+        "id":"Benutzer-ID",
+        "creationDate":"Erstelldatum",
+        "lastUpdated":"Zuletzt verändert",
+        "lastSeen":"Zuletzt online",
+        "username":"Benutzername",
+        "firstName":"Vorname",
+        "lastName":"Nachname",
+        "email":"E-Mail"
+    },
+    "rights":{
+        "guestRights":"Gastrechte",
+        "userRights":"Nutzerrechte",
+        "publicBoards":"Öffentliche Boards anschauen",
+        "privateBoards":"Private Boards anschauen",
+        "createBoards":"Neue Boards erstellen",
+        "deleteBoards":"Boards löschen",
+        "postNotes":"Text hochladen",
+        "postImages":"Bilder hochladen",
+        "postFiles":"Dateien hochladen",
+        "postPolls":"Abstimmungen erstellen",
+        "postSurveys":"Umfragen erstellen",
+        "deletePosts":"Inhalte löschen",
+        "like":"Inhalte mit \"Gefällt mir\" markieren",
+        "comment":"Inhalte kommentieren"
     },
     "HelloWorld":"Hallo Welt!"
 }

@@ -6,14 +6,14 @@
       border
     >
       <tr>
-        <th>Member ID</th>
-        <th>Creation date</th>
-        <th>Last updated</th>
-        <th>Last seen</th>
-        <th>Username</th>
-        <th>First name</th>
-        <th>Last name</th>
-        <th>E-mail</th>
+        <th>{{$t('userList.id')}}</th>
+        <th>{{$t('userList.creationDate')}}</th>
+        <th>{{$t('userList.lastUpdated')}}</th>
+        <th>{{$t('userList.lastSeen')}}</th>
+        <th>{{$t('userList.username')}}</th>
+        <th>{{$t('userList.firstName')}}</th>
+        <th>{{$t('userList.lastName')}}</th>
+        <th>{{$t('userList.email')}}</th>
       </tr>
       <tr
         v-for="member in members"
@@ -63,21 +63,7 @@ export default {
           lastName: 'Deuring',
           email: 'simon@gmail.de'
         }
-      ],
-      english: true,
-      selected: 'user list'
-    }
-  },
-  methods: {
-    changeContent (choice) {
-      switch (choice) {
-        case 'user list':
-        case 'new user':
-        case 'permissions':
-        case 'notice boards':
-        case 'groups':
-          this.selected = choice
-      }
+      ]
     }
   }
 }
