@@ -57,7 +57,9 @@
         "lastName":"Last name",
         "email":"E-Mail",
         "username":"Username",
-        "password":"Password"
+        "password":"Password",
+        "confirmPassword":"Confirm password",
+        "displayname":"Display name"
     },
     "ui":{
         "add":"Add",
@@ -69,6 +71,9 @@
         "createAccount":"Create a new account:",
         "signUp":"Sign Up",
         "toSignUp":"Or create a new account"
+    },
+    "register":{
+        "passwordMissmatch":"Passwords do not match"
     },
     "HelloWorld": "Hello World!"
 }

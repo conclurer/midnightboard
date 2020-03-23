@@ -19,19 +19,33 @@
       <form>
         <h2 v-html="$t('ui.createAccount')"></h2>
         <br>
-        <input type="text" id="fname" name="fname" :placeholder="$t('profile.firstName')" size="36">
+        <input type="text" id="fname" name="fname" v-model="fname" required
+          minlength="3" maxlength="20" :placeholder="$t('profile.firstName')" size="36">
         <br>
         <br>
-        <input type="text" id="lname" name="lname" :placeholder="$t('profile.lastName')" size="36">
+        <input type="text" id="lname" name="lname" v-model="lname" required
+          minlength="3" maxlength="20" :placeholder="$t('profile.lastName')" size="36">
         <br>
         <br>
-        <input type="text" id="email" name="email" :placeholder="$t('profile.email')" size="36">
+        <input type="text" id="email" name="email" v-model="email" required
+          minlength="3"  maxlength="127" :placeholder="$t('profile.email')" size="36">
         <br>
         <br>
-        <input type="text" id="passwd" name="passwd" :placeholder="$t('profile.password')" size="36">
+        <input type="text" id="dispname" name="dispname" v-model="dispname" required
+          minlength="3" maxlength="30" :placeholder="$t('profile.displayname')" size="36">
         <br>
         <br>
-        <input type="submit" :value="$t('ui.signUp')">
+        <input type="password" id="passwd" name="passwd" v-model="passwd" required
+          minlength="8" maxlength="127" autocomplete="new-password"
+          :placeholder="$t('profile.password')" size="36">
+        <br>
+        <br>
+        <input type="password" id="passwd2" name="passwd2" v-model="passwd2" required
+          inlength="8" maxlength="127" autocomplete="new-password"
+          :placeholder="$t('profile.confirmPassword')" size="36">
+        <br>
+        <br>
+        <button v-on:click.prevent="submit">{{$t('ui.signUp')}}</button>
         <br>
         <br>
         <router-link
@@ -46,6 +60,7 @@
 
 <script>
 // @ is an alias to /src
+import axios from 'axios'
 import Header from '@/components/Header.vue'
 import { i18n } from '@/main.js'
 
@@ -55,7 +70,14 @@ export default {
     Header
   },
   data () {
+    
     return {
+      fname: '',
+      lname: '',
+      dispname: '',
+      email : '',
+      passwd: '',
+      passwd2: '',
       english: true
     }
   },
@@ -72,6 +94,37 @@ export default {
     }
   },
   methods: {
+    submit() {
+      if(this.passwd !== this.passwd2){
+          // TODO display error
+          return
+      }
+
+      axios
+      .post('http://localhost:1337/api/users/register', {
+        userName: this.dispname,
+        email: this.email,
+        password: this.passwd,
+        firstName: this.fname,
+        lastName: this.lname
+      })
+      .then(response => { 
+        window.localStorage.setItem('mnb_uid', response.data.id)
+        window.location = '/login'
+      })
+      .catch(err => {
+        switch(err.response.status){
+          case 400:
+            // TODO Display Error
+            break;
+          case 500:
+            this.$log.error(err);
+            break;
+          default:
+            this.$log.error(err);
+        }
+      })
+    },
     changeLanguage () {
       this.english = !this.english
       if (this.english) {

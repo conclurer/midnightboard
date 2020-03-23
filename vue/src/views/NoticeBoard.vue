@@ -40,10 +40,51 @@ export default {
     }
   },
   created () {
+    if (!window.localStorage.getItem('mnb_atok')){ window.location = '/login' }
     axios
-      .get('http://localhost:1337/api/posts/all/' + this.boardId)
+      .post('http://localhost:1337/api/users/refresh', {
+          token: window.localStorage.getItem('mnb_rtok')
+      })
+      .then(response => {
+        window.localStorage.setItem('mnb_atok', response.data.accessToken)
+      })
+      .catch(err => {
+        alert(err.response.config.token)
+        this.$log.error(err.response.config.token)
+        switch(err.response.status){
+          case 400:
+          case 403:
+            window.location = '/login'
+            break;
+          case 500:
+            this.$log.error(err)
+            break;
+          default:
+            this.$log.error(err)
+        }
+      })
+
+    axios
+      .get('http://localhost:1337/api/posts/all/' + this.boardId, {
+        headers: {
+          'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
+        }
+      })
       .then(response => { this.notes = response.data.posts })
-      .catch(err => this.$log.error(err))
+      .catch(err => {
+        switch(err.response.status){
+          case 400:
+            window.location = '/login'
+            break;
+          case 401:
+            break;
+          case 500:
+            this.$log.error(err)
+            break;
+          default:
+            this.$log.error(err)
+        }
+      })
 
     switch (i18n.locale.substring(0, 2)) {
       case 'en':
@@ -59,10 +100,50 @@ export default {
   methods: {
     addNote () {
       // Refresh notice board
-      axios
-        .get('http://localhost:1337/api/posts/all/' + this.boardId)
-        .then(response => { this.notes = response.data.posts })
-        .catch(err => this.$log.error(err))
+      if (!window.localStorage.getItem('mnb_atok')){ window.location = '/login' }
+    axios
+      .post('http://localhost:1337/api/users/refresh', {
+          token: window.localStorage.getItem('mnb_rtok')
+      })
+      .then(response => {
+        window.localStorage.setItem('mnb_atok', response.data.accessToken)
+      })
+      .catch(err => {
+        this.$log.error(err.response.config.token)
+        switch(err.response.status){
+          case 400:
+          case 403:
+            window.location = '/login'
+            break;
+          case 500:
+            this.$log.error(err)
+            break;
+          default:
+            this.$log.error(err)
+        }
+      })
+
+    axios
+      .get('http://localhost:1337/api/posts/all/' + this.boardId, {
+        headers: {
+          'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
+        }
+      })
+      .then(response => { this.notes = response.data.posts })
+      .catch(err => {
+        switch(err.response.status){
+          case 400:
+            window.location = '/login'
+            break;
+          case 401:
+            break;
+          case 500:
+            this.$log.error(err)
+            break;
+          default:
+            this.$log.error(err)
+        }
+      })
 
       this.editorActive = false
     },

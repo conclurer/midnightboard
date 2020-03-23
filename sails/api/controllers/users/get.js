@@ -39,8 +39,10 @@ module.exports = {
     if(!usr) {
       return exits.missingParams();
     }
-    if(sails.config.custom.ALLOW_HIDE_LAST_NAME && usr['hideLastName'] === true) {
-      delete usr['lastName'];
+    if(!this.req.me['privReq']) {
+      if(sails.config.custom.ALLOW_HIDE_LAST_NAME && usr['hideLastName'] === true) {
+        delete usr['lastName'];
+      }
     }
     if(inputs.skipAvatar === true) {
       delete usr['avatar'];

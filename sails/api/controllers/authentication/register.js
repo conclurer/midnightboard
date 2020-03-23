@@ -75,6 +75,16 @@ module.exports = {
     }
 
     sails.log.verbose('AUTH_REGISTER::: Trying to create user ' + inputs.userName);
+
+    var usrRole = 'user';
+    var usrList = await Member.find({
+      select: ['id', 'role']
+    });
+    if(usrList.length === 0) {
+      sails.log.info('AUTH_REGISTER::: Registering new Admin user!');
+      usrRole = 'admin';
+    }
+
     var hashedPassword = '';
     try {
       hashedPassword = await bcrypt.hash(inputs.password, 10);
@@ -82,13 +92,15 @@ module.exports = {
       sails.log.debug('AUTH_REGISTER_ERR::: ' + err);
       return exits.serverError();
     }
+
     try {
       var createdUser = await Member.create({
         userName: inputs.userName,
         email: inputs.email.toLowerCase(),
         password: hashedPassword,
         firstName: inputs.firstName,
-        lastName: inputs.lastName
+        lastName: inputs.lastName,
+        role: usrRole
       }).fetch();
 
       ['updatedAt',

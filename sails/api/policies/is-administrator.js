@@ -1,8 +1,7 @@
 /**
- * isLoggedIn
+ * isAdministrator
  *
- * Checks if the request had a valid JWT attached.
- * The 'req.me' attribute is attached within sails/api/hooks/custom/index.js
+ * Checks if the request was sent from an admin account.
  *
  * For more information about policies, see here:
  * https://sailsjs.com/config/policies
@@ -11,9 +10,10 @@
  */
 module.exports = async function(req, res, proceed) {
   // 'req.me' gets defined in api/hooks/custom/index.js, before any request gets processed.
-  // When a valid auth token was provided, 'req.me' contains the data provided within the sent JWT
-  if(req.me) {
-    return proceed();
+  if(!req.me || req.me['role'] !== 'admin') {
+    return res.status(401).send();
   }
-  return res.status(401).send();
+  req.me['privReq'] = true;
+  return proceed();
 };
+
