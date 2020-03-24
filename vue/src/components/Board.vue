@@ -182,7 +182,7 @@
           >
             <hr />
             <b-card-text>
-              <div v-if="!result">
+              <div v-if="!pollShowResults[pollResultMap[note.id]]">
                 <div v-html="note.content" />
                 <br>
                 <b-button-group>
@@ -208,25 +208,25 @@
                     {{$t('board.poll.resetRadioButtons')}}
                   </b-button>
                 </b-button-group>
-                <br><br>
               </div>
-              <div v-if="result">
+              <div v-if="pollShowResults[pollResultMap[note.id]]">
                 <div class="bar-chart">
                   <ul class="chart-horizonzal">
                     <div
-                      v-for="(answer, index) in pollAnswers"
+                      v-for="index of pollAVVPMap[pollResultMap[note.id]]"
                       :key="index"
                       >
-                    <b>{{ pollVotesPercent[index] }}% ({{ pollVotes[index] }} votes)</b>
-                    <li class="chart-bar" :style="{width: pollVotesPercent[index] + '%'}">
-                      <span class="chart-label">
-                        {{ answer }}
-                      </span>
-                    </li>
+                      <b>{{ pollVotesPercent[index] }}% ({{ pollVotes[index] }} votes)</b>
+                      <li class="chart-bar" :style="{width: pollVotesPercent[index] + '%'}">
+                        <span class="chart-label">
+                          {{ pollAnswers[index] }}
+                        </span>
+                      </li>
                     </div>
                   </ul>
                 </div>
               </div>
+              <br><br><br><br><br> <!-- Style has to be changed to match different sizes -->
             </b-card-text>
           </b-card>
         </div>
@@ -417,7 +417,7 @@
           >
             <hr />
             <b-card-text>
-              <div v-if="!result">
+              <div v-if="!pollShowResults[pollResultMap[note.id]]">
                 <div v-html="note.content" />
                 <br>
                 <b-button-group>
@@ -443,25 +443,25 @@
                     {{$t('board.poll.resetRadioButtons')}}
                   </b-button>
                 </b-button-group>
-                <br><br>
               </div>
-              <div v-if="result">
+              <div v-if="pollShowResults[pollResultMap[note.id]]">
                 <div class="bar-chart">
                   <ul class="chart-horizonzal">
                     <div
-                      v-for="(answer, index) in pollAnswers"
+                      v-for="index of pollAVVPMap[pollResultMap[note.id]]"
                       :key="index"
                       >
-                    <b>{{ pollVotesPercent[index] }}% ({{ pollVotes[index] }} votes)</b>
-                    <li class="chart-bar" :style="{width: pollVotesPercent[index] + '%'}">
-                      <span class="chart-label">
-                        {{ answer }}
-                      </span>
-                    </li>
+                      <b>{{ pollVotesPercent[index] }}% ({{ pollVotes[index] }} votes)</b>
+                      <li class="chart-bar" :style="{width: pollVotesPercent[index] + '%'}">
+                        <span class="chart-label">
+                          {{ pollAnswers[index] }}
+                        </span>
+                      </li>
                     </div>
                   </ul>
                 </div>
               </div>
+              <br><br><br><br><br>
             </b-card-text>
           </b-card>
         </div>
@@ -498,7 +498,9 @@ export default {
     return {
       listener: () => {},
       options: {},
-      result: false,
+      pollResultMap: [], // links to pollShowResults
+      pollShowResults: [],
+      pollAVVPMap: [], // links to pollAnswers/pollVotes/pollVotesPercent
       pollAnswers: [],
       pollVotes: [],
       pollVotesPercent: []
@@ -510,6 +512,9 @@ export default {
       this.$emit('add-note')
     },
     initPoll: async function (postId, element) {
+      // Add poll to result map
+      this.pollResultMap[postId] = this.pollShowResults.length
+      this.pollShowResults[this.pollResultMap[postId]] = false
       // Get current votes
       // Axios GET
       await axios
@@ -521,9 +526,9 @@ export default {
         )
         .then(response => {
           const votes = response.data.votes
-          this.pollAnswers = []
-          this.pollVotes = []
-          this.pollVotesPercent = []
+          var answers = []
+          var votesNumber = []
+          var votesPercent = []
           var votesSum = 0
           // Calculate sum of votes
           votes.forEach(vote => {
@@ -536,14 +541,45 @@ export default {
             if (votesSum > 0) {
               votePercent = (voteNumber / votesSum) * 100
             }
-            this.pollAnswers.push(child.innerText)
-            this.pollVotes.push(voteNumber)
-            this.pollVotesPercent.push(votePercent.toFixed(2))
+            // Save data local
+            answers.push(child.innerText)
+            votesNumber.push(voteNumber)
+            votesPercent.push(votePercent.toFixed(2))
           }
-          this.$log.debug(this.pollAnswers)
-          this.$log.debug(this.pollVotes)
-          this.$log.debug(this.pollVotesPercent)
-          this.result = true
+          // Check if map has indices for this poll
+          if (this.pollAVVPMap[this.pollResultMap[postId]]) {
+            this.pollAVVPMap[this.pollResultMap[postId]].forEach(function (index, counter) {
+              this.pollAnswers[index] = answers[counter]
+              this.pollVotes[index] = votesNumber[counter]
+              this.pollVotesPercent[index] = votesPercent[counter].toFixed(2)
+            })
+          } else {
+            // No indices in map
+            var indices = []
+            answers.forEach(answer => {
+              indices.push(this.pollAnswers.length)
+              this.pollAnswers.push(answer)
+            })
+            votesNumber.forEach(voteNumber => {
+              this.pollVotes.push(voteNumber)
+            })
+            votesPercent.forEach(votePercent => {
+              this.pollVotesPercent.push(votePercent)
+            })
+            this.pollAVVPMap[this.pollResultMap[postId]] = indices
+          }
+          // Needed for array change detection
+          this.pollAnswers.push('')
+          this.pollAnswers.pop()
+          this.pollVotes.push('')
+          this.pollVotes.pop()
+          this.pollVotesPercent.push('')
+          this.pollVotesPercent.pop()
+          // Show result for this poll
+          this.pollShowResults[this.pollResultMap[postId]] = true
+          // Also needed for array change detection
+          this.pollShowResults.push('')
+          this.pollShowResults.pop()
         })
         .catch(err => this.$log.error(err))
     },
@@ -556,7 +592,6 @@ export default {
           answerIds.push(child.firstChild.firstChild.id)
         }
       }
-      console.log(answerIds)
       if (answerIds.length <= 0) {
         alert(this.$t('board.poll.invalidVote'))
       } else {
@@ -579,7 +614,7 @@ export default {
         this.initPoll(postId, element)
       }
     },
-    showResult: async function (element) {
+    showResult: function (element) {
       // Show current results
       const postId = element.target.parentElement.parentElement.parentElement.parentElement.parentElement.id
       this.initPoll(postId, element)
