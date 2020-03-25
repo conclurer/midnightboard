@@ -22,38 +22,46 @@
         <input type="text" id="fname" name="fname" v-model="fname" required
           minlength="3" maxlength="20" :placeholder="$t('profile.firstName')" size="36">
         <p v-if="err.includes(107)" style="color: #E22">{{$t('register.malFirstName')}}</p>
-        <br v-else>
-        <br>
+        <div
+          v-else>
+          <br>
+        </div>
         <input type="text" id="lname" name="lname" v-model="lname" required
           minlength="3" maxlength="20" :placeholder="$t('profile.lastName')" size="36">
         <p v-if="err.includes(106)" style="color: #E22">{{$t('register.malLastName')}}</p>
-        <br v-else>
-        <br>
+        <div
+          v-else>
+          <br>
+        </div>
         <input type="text" id="email" name="email" v-model="email" required
           minlength="3"  maxlength="127" :placeholder="$t('profile.email')" size="36">
         <p v-if="err.includes(104)" style="color: #E22">{{$t('register.malEmail')}}</p>
-        <br v-else>
-        <br>
+        <div
+          v-else>
+          <br>
+        </div>
         <input type="text" id="dispname" name="dispname" v-model="dispname" required
           minlength="3" maxlength="30" :placeholder="$t('profile.displayname')" size="36">
         <p v-if="err.includes(105)" style="color: #E22">{{$t('register.malUsername')}}</p>
-        <br v-else>
-        <p v-if="err.includes(101)" style="color: #E22">{{$t('register.nameTaken')}}</p>
-        <br v-else>
+        <p v-else-if="err.includes(101)" style="color: #E22">{{$t('register.nameTaken')}}</p>
+        <div
+          v-else>
+          <br>
+        </div>
         <input type="password" id="passwd" name="passwd" v-model="passwd" required
           minlength="8" maxlength="127" autocomplete="new-password"
           :placeholder="$t('profile.password')" size="36">
-        <br>
         <br>
         <input type="password" id="passwd2" name="passwd2" v-model="passwd2" required
           inlength="8" maxlength="127" autocomplete="new-password"
           :placeholder="$t('profile.confirmPassword')" size="36">
         <p v-if="err.includes(103)" style="color: #E22">{{$t('register.malPassword')}}</p>
-        <br v-else>
-        <p v-if="err.includes(110)" style="color: #E22">{{$t('register.passwordMissmatch')}}</p>
-        <br v-else>
-        <p v-if="err.includes(102)" style="color: #E22">{{$t('register.missingForms')}}</p>
-        <br v-else>
+        <p v-else-if="err.includes(110)" style="color: #E22">{{$t('register.passwordMissmatch')}}</p>
+        <p v-else-if="err.includes(102)" style="color: #E22">{{$t('register.missingForms')}}</p>
+        <div
+          v-else>
+          <br>
+        </div>
         <button v-on:click.prevent="submit">{{$t('ui.signUp')}}</button>
         <br>
         <br>

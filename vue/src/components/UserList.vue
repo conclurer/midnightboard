@@ -90,8 +90,6 @@ export default {
             case 400:
               break
             case 401:
-              window.location = '/login'
-              break
             case 500:
             default:
               this.$log.error(err)
@@ -111,8 +109,6 @@ export default {
           switch (err.response.status) {
             case 400:
             case 401:
-              window.location = '/login'
-              break
             case 500:
             default:
               this.$log.error(err)
