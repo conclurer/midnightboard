@@ -2,6 +2,10 @@
   <div
     class="add-user"
   >
+    <div v-if="success" class="bg-success">
+      {{$t('ui.userAdded')}}
+    </div>
+    <br v-if="success">
     <b-card
       class="creationBox"
       align="center"
@@ -29,10 +33,6 @@
       <br><br>
       <input type="button" :value="$t('profile.affiliate')" @click="addUser">
       <br><br>
-      <div v-if="success" class="text-success">
-        {{$t('ui.userAdded')}}
-        <br><br>
-      </div>
       </form>
     </b-card>
   </div>
