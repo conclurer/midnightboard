@@ -11,6 +11,7 @@
         v-masonry
         transition-duration="0.4s"
         item-selector=".item"
+        :key="refreshBoard"
       >
         <div
           v-for="note in notes.slice().reverse()"
@@ -168,6 +169,64 @@
             <b-card-text>
               <font-awesome-icon icon="file-powerpoint" size="10x"/><br><br>
               <a v-bind:href="'data:application/vnd.openxmlformats-officedocument.presentationml.presentation;base64,' + note.content" :download="note.title + '.pptx'">{{$t('board.download.powerpoint')}}</a>
+            </b-card-text>
+          </b-card>
+
+          <!-- Display polls -->
+          <b-card
+            v-bind:id="note.id"
+            v-if="note.typeOfPost === 'application/poll'"
+            class="note"
+            bg-variant="dark"
+            text-variant="white"
+            :title="note.title"
+          >
+            <hr />
+            <b-card-text>
+              <div v-if="!pollShowResults[pollResultMap[note.id]]">
+                <div v-html="note.content" />
+                <br>
+                <b-button-group>
+                  <b-button
+                    variant="primary"
+                    class="voteButton"
+                    @click="votePoll"
+                  >
+                    {{$t('board.poll.vote')}}
+                  </b-button>
+                  <b-button
+                    variant="info"
+                    class="showResultButton"
+                    @click="showResult"
+                  >
+                    {{$t('board.poll.showResult')}}
+                  </b-button>
+                  <b-button
+                    variant="danger"
+                    class="resetRadioButtons"
+                    @click="resetRadioButtons"
+                  >
+                    {{$t('board.poll.resetRadioButtons')}}
+                  </b-button>
+                </b-button-group>
+              </div>
+              <div v-if="pollShowResults[pollResultMap[note.id]]">
+                <div class="bar-chart">
+                  <ul class="chart-horizontal">
+                    <div
+                      v-for="index of pollAVVPMap[pollResultMap[note.id]]"
+                      :key="index"
+                      >
+                      <b>{{ pollVotesPercent[index] }}% ({{ pollVotes[index] }} votes)</b>
+                      <li class="chart-bar" :style="{width: pollVotesPercent[index] + '%'}">
+                        <span class="chart-label">
+                          {{ pollAnswers[index] }}
+                        </span>
+                      </li>
+                    </div>
+                  </ul>
+                </div>
+              </div>
             </b-card-text>
           </b-card>
         </div>
@@ -346,6 +405,64 @@
               <a v-bind:href="'data:application/vnd.openxmlformats-officedocument.presentationml.presentation;base64,' + note.content" :download="note.title + '.pptx'">{{$t('board.download.powerpoint')}}</a>
             </b-card-text>
           </b-card>
+
+           <!-- Display polls -->
+          <b-card
+            v-bind:id="note.id"
+            v-if="note.typeOfPost === 'application/poll'"
+            class="note"
+            bg-variant="dark"
+            text-variant="white"
+            :title="note.title"
+          >
+            <hr />
+            <b-card-text>
+              <div v-if="!pollShowResults[pollResultMap[note.id]]">
+                <div v-html="note.content" />
+                <br>
+                <b-button-group>
+                  <b-button
+                    variant="primary"
+                    class="voteButton"
+                    @click="votePoll"
+                  >
+                    {{$t('board.poll.vote')}}
+                  </b-button>
+                  <b-button
+                    variant="info"
+                    class="showResultButton"
+                    @click="showResult"
+                  >
+                    {{$t('board.poll.showResult')}}
+                  </b-button>
+                  <b-button
+                    variant="danger"
+                    class="resetRadioButtons"
+                    @click="resetRadioButtons"
+                  >
+                    {{$t('board.poll.resetRadioButtons')}}
+                  </b-button>
+                </b-button-group>
+              </div>
+              <div v-if="pollShowResults[pollResultMap[note.id]]">
+                <div class="bar-chart">
+                  <ul class="chart-horizontal">
+                    <div
+                      v-for="index of pollAVVPMap[pollResultMap[note.id]]"
+                      :key="index"
+                      >
+                      <b>{{ pollVotesPercent[index] }}% ({{ pollVotes[index] }} votes)</b>
+                      <li class="chart-bar" :style="{width: pollVotesPercent[index] + '%'}">
+                        <span class="chart-label">
+                          {{ pollAnswers[index] }}
+                        </span>
+                      </li>
+                    </div>
+                  </ul>
+                </div>
+              </div>
+            </b-card-text>
+          </b-card>
         </div>
       </div>
 
@@ -366,6 +483,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import EditorSidebar from '@/components/EditorSidebar.vue'
 import pdf from 'vue-pdf'
 
@@ -377,14 +495,138 @@ export default {
   },
   data () {
     return {
+      refreshBoard: false,
       listener: () => {},
-      options: {}
+      options: {},
+      pollResultMap: [], // links to pollShowResults
+      pollShowResults: [],
+      pollAVVPMap: [], // links to pollAnswers/pollVotes/pollVotesPercent
+      pollAnswers: [],
+      pollVotes: [],
+      pollVotesPercent: []
     }
   },
   methods: {
     addNote: async function () {
       // Notify notice board
       this.$emit('add-note')
+    },
+    initPoll: async function (postId, element) {
+      // Add poll to result map
+      this.pollResultMap[postId] = this.pollShowResults.length
+      this.pollShowResults[this.pollResultMap[postId]] = false
+      // Get current votes
+      // Axios GET
+      await axios
+        .get('http://localhost:1337/api/polls/' + postId, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+        )
+        .then(response => {
+          const votes = response.data.votes
+          var answers = []
+          var votesNumber = []
+          var votesPercent = []
+          var votesSum = 0
+          // Calculate sum of votes
+          votes.forEach(vote => {
+            votesSum += vote
+          })
+          // Extract poll data from html
+          for (const child of element.target.parentElement.parentElement.firstChild.firstChild.children) {
+            const voteNumber = votes[child.firstChild.firstChild.id]
+            var votePercent = 0
+            if (votesSum > 0) {
+              votePercent = (voteNumber / votesSum) * 100
+            }
+            // Save data local
+            answers.push(child.innerText)
+            votesNumber.push(voteNumber)
+            votesPercent.push(votePercent.toFixed(2))
+          }
+          // Check if map has indices for this poll
+          if (this.pollAVVPMap[this.pollResultMap[postId]]) {
+            this.pollAVVPMap[this.pollResultMap[postId]].forEach(function (index, counter) {
+              this.pollAnswers[index] = answers[counter]
+              this.pollVotes[index] = votesNumber[counter]
+              this.pollVotesPercent[index] = votesPercent[counter].toFixed(2)
+            })
+          } else {
+            // No indices in map
+            var indices = []
+            answers.forEach(answer => {
+              indices.push(this.pollAnswers.length)
+              this.pollAnswers.push(answer)
+            })
+            votesNumber.forEach(voteNumber => {
+              this.pollVotes.push(voteNumber)
+            })
+            votesPercent.forEach(votePercent => {
+              this.pollVotesPercent.push(votePercent)
+            })
+            this.pollAVVPMap[this.pollResultMap[postId]] = indices
+          }
+          // Needed for array change detection
+          this.pollAnswers.push('')
+          this.pollAnswers.pop()
+          this.pollVotes.push('')
+          this.pollVotes.pop()
+          this.pollVotesPercent.push('')
+          this.pollVotesPercent.pop()
+          // Show result for this poll
+          this.pollShowResults[this.pollResultMap[postId]] = true
+          // Also needed for array change detection
+          this.pollShowResults.push('')
+          this.pollShowResults.pop()
+          this.refreshBoard = !this.refreshBoard
+        })
+        .catch(err => this.$log.error(err))
+    },
+    votePoll: async function (element) {
+      const postId = element.target.parentElement.parentElement.parentElement.parentElement.parentElement.id
+      // Axios PUT to update votes for the answer
+      const answerIds = []
+      for (const child of element.target.parentElement.parentElement.firstChild.firstChild.children) {
+        if (child.firstChild.firstChild.checked === true) {
+          answerIds.push(child.firstChild.firstChild.id)
+        }
+      }
+      if (answerIds.length <= 0) {
+        alert(this.$t('board.poll.invalidVote'))
+      } else {
+        for (const answerId of answerIds) {
+          const jsonBody = JSON.stringify({
+            postId: postId,
+            answerId: answerId
+          })
+
+          await axios
+            .put('http://localhost:1337/api/polls', jsonBody, {
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            }
+            )
+            .then(res => {})
+            .catch(err => this.$log.error(err))
+        }
+        this.initPoll(postId, element)
+      }
+    },
+    showResult: function (element) {
+      // Show current results
+      const postId = element.target.parentElement.parentElement.parentElement.parentElement.parentElement.id
+      this.initPoll(postId, element)
+    },
+    resetRadioButtons: function (element) {
+      // Reset radio buttons to inital state
+      for (const child of element.target.parentElement.parentElement.firstChild.firstChild.children) {
+        if (child.firstChild.firstChild.type === 'radio') {
+          child.firstChild.firstChild.checked = false
+        }
+      }
     }
   },
   props: ['notes', 'editorActive']
@@ -440,5 +682,29 @@ export default {
     position: fixed;
     right: 0px;
     background: #fff;
+  }
+
+  .chart-horizontal {
+    height: 100%;
+    position: relative;
+    list-style: none;
+  }
+
+  .chart-bar {
+    height: 30px;
+    margin-bottom: 10px;
+
+    background: linear-gradient(to left, #4cb8c4, #3cd3ad);
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+
+  .chart-label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-left: 10px;
+    line-height: 30px;
+    color: rgb(255, 255, 255);
   }
 </style>

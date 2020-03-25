@@ -1,4 +1,3 @@
-
 //#region Test data
 const fetch = require('node-fetch');
 const returnedData = {};

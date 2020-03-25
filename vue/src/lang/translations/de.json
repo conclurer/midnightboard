@@ -9,6 +9,12 @@
             "word":"Hier klicken um das Word-Dokument herunterzuladen",
             "excel":"Hier klicken um die Excel-Tabelle herunterzuladen",
             "powerpoint":"Hier klicken um die PowerPoint-Präsentation herunterzuladen"
+        },
+        "poll":{
+            "vote":"Abstimmen",
+            "invalidVote":"Bitte wähle ein Antwort aus!",
+            "showResult":"Ergebnis anzeigen",
+            "resetRadioButtons":"Auswahl zurücksetzen"
         }
     },
     "editor":{
@@ -46,8 +52,23 @@
             "fileSize":"Die Dateigröße überschreitet das Limit!",
             "fileType":"Es werden nur PDF, DOC(X), XLS(X) und PPT(X) unterstützt!"
         },
+        "poll":{
+            "heading":"Poll erstellen:",
+            "title":"Deine Frage?",
+            "templateAnswer":"Antwort A",
+            "allowMultipleVotes":"Mehrfachauswahl erlauben",
+            "post":"Poll posten",
+            "missingQuestion":"Du musst eine Frage eingeben!",
+            "missingAnswers":"Du musst mindestens zwei Antworten erstellen!"
+        },
+        "survey":{
+            "heading":"Umfrage erstellen:",
+            "title":"Dein Umfragentitel",
+            "templateAnswer":"Antwort A",
+            "post":"Umfrage posten"
+        },
         "datePicker":{
-            "dueDate":"Wählen Sie ein Enddatum",
+            "dueDate":"Wähle ein Enddatum",
             "currentDate":"Heute",
             "language":"de"
         }
@@ -73,7 +94,7 @@
         "login":"Anmelden",
         "toLogin":"Ich habe bereits einen Account",
         "register":"Registrierung",
-        "createAccount":"Erstellen Sie einen<br>neuen Account:",
+        "createAccount":"Erstelle einen<br>neuen Account:",
         "signUp":"Registrieren",
         "toSignUp":"Ich habe noch keinen Account",
         "adopt":"Übernehmen",

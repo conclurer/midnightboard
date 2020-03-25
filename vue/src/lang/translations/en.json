@@ -9,6 +9,12 @@
             "word":"Click here to download the Word document",
             "excel":"Click here to download the Excel spreadsheet",
             "powerpoint":"Click here to download the PowerPoint presentation"
+        },
+        "poll":{
+            "vote":"Vote",
+            "invalidVote":"You have to choose an answer!",
+            "showResult":"Show result",
+            "resetRadioButtons":"Reset options"
         }
     },
     "editor":{
@@ -45,6 +51,21 @@
             "selected":"File successfully selected!",
             "fileSize":"The file size exceeds the limit",
             "fileType":"Only PDF, DOC(X), XLS(X) and PPT(X) are supported!"
+        },
+        "poll":{
+            "heading":"Create your poll:",
+            "title":"Your question?",
+            "templateAnswer":"Answer A",
+            "allowMultipleVotes":"Allow multiple answers",
+            "post":"Post poll",
+            "missingQuestion":"You have to enter a question!",
+            "missingAnswers":"You have to create at least two answers!"
+        },
+        "survey":{
+            "heading":"Create your survey:",
+            "title":"Your survery title",
+            "templateAnswer":"Answer A",
+            "post":"Post survey"
         },
         "datePicker":{
             "dueDate":"Select a due date",
