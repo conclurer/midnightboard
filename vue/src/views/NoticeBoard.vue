@@ -41,24 +41,8 @@ export default {
   },
   created () {
     if (!window.localStorage.getItem('mnb_atok')) { window.location = '/login' }
-    axios
-      .post('http://localhost:1337/api/users/refresh', {
-        token: window.localStorage.getItem('mnb_rtok')
-      })
-      .then(response => {
-        window.localStorage.setItem('mnb_atok', response.data.accessToken)
-      })
-      .catch(err => {
-        switch (err.response.status) {
-          case 400:
-          case 403:
-            window.location = '/login'
-            break
-          case 500:
-          default:
-            this.$log.error(err)
-        }
-      })
+
+    this.refreshToken()
 
     axios
       .get('http://localhost:1337/api/posts/all/' + this.boardId, {
@@ -92,9 +76,7 @@ export default {
     }
   },
   methods: {
-    addNote () {
-      // Refresh notice board
-      if (!window.localStorage.getItem('mnb_atok')) { window.location = '/login' }
+    refreshToken () {
       axios
         .post('http://localhost:1337/api/users/refresh', {
           token: window.localStorage.getItem('mnb_rtok')
@@ -105,16 +87,18 @@ export default {
         .catch(err => {
           this.$log.error(err.response.config.token)
           switch (err.response.status) {
-            case 400:
-            case 403:
-              window.location = '/login'
-              break
             case 500:
+              this.$log.error(err)
+              break
             default:
               this.$log.error(err)
           }
         })
-
+    },
+    addNote () {
+      // Refresh notice board
+      if (!window.localStorage.getItem('mnb_atok')) { window.location = '/login' }
+      this.refreshToken()
       axios
         .get('http://localhost:1337/api/posts/all/' + this.boardId, {
           headers: {

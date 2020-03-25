@@ -52,6 +52,25 @@ export default {
     }
   },
   methods: {
+    refreshToken () {
+      axios
+        .post('http://localhost:1337/api/users/refresh', {
+          token: window.localStorage.getItem('mnb_rtok')
+        })
+        .then(response => {
+          window.localStorage.setItem('mnb_atok', response.data.accessToken)
+        })
+        .catch(err => {
+          this.$log.error(err.response.config.token)
+          switch (err.response.status) {
+            case 500:
+              this.$log.error(err)
+              break
+            default:
+              this.$log.error(err)
+          }
+        })
+    },
     addUser () {
       var userName = document.getElementById('uname').value
       var email = document.getElementById('email').value
@@ -77,6 +96,7 @@ export default {
         console.log(jsonData)
 
         // Database request
+        this.refreshToken()
         axios
           .post('http://localhost:1337/api/users/register', jsonData, {
             headers: {
@@ -87,13 +107,13 @@ export default {
           .then(response => { this.success = true })
           .catch(err => {
             switch (err.response.status) {
-            case 400:
-            case 401:
-              window.location = '/login'
-              break
-            case 500:
-            default:
-              this.$log.error(err)
+              case 400:
+              case 401:
+                window.location = '/login'
+                break
+              case 500:
+              default:
+                this.$log.error(err)
             }
           })
 

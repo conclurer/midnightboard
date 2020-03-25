@@ -520,6 +520,7 @@ export default {
       await axios
         .get('http://localhost:1337/api/polls/' + postId, {
           headers: {
+            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
             'Content-Type': 'application/json'
           }
         }
@@ -605,6 +606,7 @@ export default {
           await axios
             .put('http://localhost:1337/api/polls', jsonBody, {
               headers: {
+                'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
                 'Content-Type': 'application/json'
               }
             }
