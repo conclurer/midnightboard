@@ -11,6 +11,7 @@
         v-masonry
         transition-duration="0.4s"
         item-selector=".item"
+        :key="refreshBoard"
       >
         <div
           v-for="note in notes.slice().reverse()"
@@ -211,7 +212,7 @@
               </div>
               <div v-if="pollShowResults[pollResultMap[note.id]]">
                 <div class="bar-chart">
-                  <ul class="chart-horizonzal">
+                  <ul class="chart-horizontal">
                     <div
                       v-for="index of pollAVVPMap[pollResultMap[note.id]]"
                       :key="index"
@@ -226,7 +227,6 @@
                   </ul>
                 </div>
               </div>
-              <br><br><br><br><br> <!-- Style has to be changed to match different sizes -->
             </b-card-text>
           </b-card>
         </div>
@@ -446,7 +446,7 @@
               </div>
               <div v-if="pollShowResults[pollResultMap[note.id]]">
                 <div class="bar-chart">
-                  <ul class="chart-horizonzal">
+                  <ul class="chart-horizontal">
                     <div
                       v-for="index of pollAVVPMap[pollResultMap[note.id]]"
                       :key="index"
@@ -461,7 +461,6 @@
                   </ul>
                 </div>
               </div>
-              <br><br><br><br><br>
             </b-card-text>
           </b-card>
         </div>
@@ -496,6 +495,7 @@ export default {
   },
   data () {
     return {
+      refreshBoard: false,
       listener: () => {},
       options: {},
       pollResultMap: [], // links to pollShowResults
@@ -580,6 +580,7 @@ export default {
           // Also needed for array change detection
           this.pollShowResults.push('')
           this.pollShowResults.pop()
+          this.refreshBoard = !this.refreshBoard
         })
         .catch(err => this.$log.error(err))
     },
@@ -686,6 +687,7 @@ export default {
   .chart-horizontal {
     height: 100%;
     position: relative;
+    list-style: none;
   }
 
   .chart-bar {
