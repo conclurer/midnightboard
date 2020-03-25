@@ -102,6 +102,7 @@ export default {
     }
   },
   created () {
+    if (!window.localStorage.getItem('mnb_atok')) { window.location = '/login' }
     switch (i18n.locale.substring(0, 2)) {
       case 'en':
         this.english = true

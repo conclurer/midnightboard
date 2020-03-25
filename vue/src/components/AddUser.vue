@@ -80,23 +80,20 @@ export default {
         axios
           .post('http://localhost:1337/api/users/register', jsonData, {
             headers: {
-              'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJpZCI6MSwiaWF0IjoxNTg0OTc1MzYxLCJleHAiOjE2MTY1MTEzNjF9.ZS_N0zQ2lxKVlMIrkOMoWhbp1ujZSPrIiqNLH2NdUyo',
+              'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
               'Content-Type': 'application/json'
             }
           })
           .then(response => { this.success = true })
           .catch(err => {
             switch (err.response.status) {
-              case 400:
-                window.location = '/login'
-                break
-              case 401:
-                break
-              case 500:
-                this.$log.error(err)
-                break
-              default:
-                this.$log.error(err)
+            case 400:
+            case 401:
+              window.location = '/login'
+              break
+            case 500:
+            default:
+              this.$log.error(err)
             }
           })
 

@@ -61,20 +61,17 @@ export default {
       axios
         .delete('http://localhost:1337/api/users/' + id, {
           headers: {
-            'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJpZCI6MSwiaWF0IjoxNTg0OTc1MzYxLCJleHAiOjE2MTY1MTEzNjF9.ZS_N0zQ2lxKVlMIrkOMoWhbp1ujZSPrIiqNLH2NdUyo'
+            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
           }
         })
         .then(response => { this.success = true; this.loadUserData() })
         .catch(err => {
           switch (err.response.status) {
             case 400:
+            case 401:
               window.location = '/login'
               break
-            case 401:
-              break
             case 500:
-              this.$log.error(err)
-              break
             default:
               this.$log.error(err)
           }
@@ -84,20 +81,17 @@ export default {
       axios
         .get('http://localhost:1337/api/users/all?skipAvatar=true', {
           headers: {
-            'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJpZCI6MSwiaWF0IjoxNTg0OTc1MzYxLCJleHAiOjE2MTY1MTEzNjF9.ZS_N0zQ2lxKVlMIrkOMoWhbp1ujZSPrIiqNLH2NdUyo'
+            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
           }
         })
         .then(response => { this.members = response.data.sort(compare) })
         .catch(err => {
           switch (err.response.status) {
             case 400:
+            case 401:
               window.location = '/login'
               break
-            case 401:
-              break
             case 500:
-              this.$log.error(err)
-              break
             default:
               this.$log.error(err)
           }

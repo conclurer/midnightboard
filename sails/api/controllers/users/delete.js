@@ -35,6 +35,7 @@ module.exports = {
     if(!deletedUser) {
       return exits.nonExistent();
     }
+    await RefreshToken.destroy({uid: inputs.userId});
     return exits.success();
   }
 };
