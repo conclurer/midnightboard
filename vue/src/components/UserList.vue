@@ -2,6 +2,13 @@
   <div
     class="user-list"
   >
+    <div
+      v-if="success"
+      class="bg-success"
+    >
+      {{$t('ui.userDeleted')}}
+    </div>
+    <br v-if="success">
     <table
       border
     >
@@ -13,6 +20,7 @@
         <th>{{$t('userList.email')}}</th>
         <th>{{$t('userList.creationDate')}}</th>
         <th>{{$t('userList.lastSeen')}}</th>
+        <th>{{$t('userList.delete')}}</th>
       </tr>
       <tr
         v-for="member in members"
@@ -25,6 +33,7 @@
         <td>{{member.email}}</td>
         <td>{{member.createdAt}}</td>
         <td>{{member.lastSeen}}</td>
+        <td><a @click="deleteUser(member.id)"><font-awesome-icon icon="times-circle" class="text-danger" /></a></td>
       </tr>
     </table>
   </div>
@@ -40,38 +49,67 @@ export default {
   },
   data () {
     return {
-      members: []
+      members: [],
+      success: false
     }
   },
   created () {
-    axios
-      .get('http://localhost:1337/api/users/all?skipAvatar=true', {
-        headers: {
-          'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJpZCI6MSwiaWF0IjoxNTg0OTc1MzYxLCJleHAiOjE2MTY1MTEzNjF9.ZS_N0zQ2lxKVlMIrkOMoWhbp1ujZSPrIiqNLH2NdUyo'
-        }
-      })
-      .then(response => { this.members = response.data.sort(compare) })
-      .catch(err => {
-        switch (err.response.status) {
-          case 400:
-            window.location = '/login'
-            break
-          case 401:
-            break
-          case 500:
-            this.$log.error(err)
-            break
-          default:
-            this.$log.error(err)
-        }
-      })
+    this.loadUserData()
+  },
+  methods: {
+    deleteUser (id) {
+      axios
+        .delete('http://localhost:1337/api/users/' + id, {
+          headers: {
+            'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJpZCI6MSwiaWF0IjoxNTg0OTc1MzYxLCJleHAiOjE2MTY1MTEzNjF9.ZS_N0zQ2lxKVlMIrkOMoWhbp1ujZSPrIiqNLH2NdUyo'
+          }
+        })
+        .then(response => { this.success = true; this.loadUserData() })
+        .catch(err => {
+          switch (err.response.status) {
+            case 400:
+              window.location = '/login'
+              break
+            case 401:
+              break
+            case 500:
+              this.$log.error(err)
+              break
+            default:
+              this.$log.error(err)
+          }
+        })
+    },
+    loadUserData () {
+      axios
+        .get('http://localhost:1337/api/users/all?skipAvatar=true', {
+          headers: {
+            'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJpZCI6MSwiaWF0IjoxNTg0OTc1MzYxLCJleHAiOjE2MTY1MTEzNjF9.ZS_N0zQ2lxKVlMIrkOMoWhbp1ujZSPrIiqNLH2NdUyo'
+          }
+        })
+        .then(response => { this.members = response.data.sort(compare) })
+        .catch(err => {
+          switch (err.response.status) {
+            case 400:
+              window.location = '/login'
+              break
+            case 401:
+              break
+            case 500:
+              this.$log.error(err)
+              break
+            default:
+              this.$log.error(err)
+          }
+        })
 
-    function compare (a, b) {
-      if (a.id < b.id) {
-        return -1
-      } else if (a.id > b.id) {
-        return 1
-      } else { return 0 }
+      function compare (a, b) {
+        if (a.id < b.id) {
+          return -1
+        } else if (a.id > b.id) {
+          return 1
+        } else { return 0 }
+      }
     }
   }
 }

@@ -74,7 +74,9 @@
         "createAccount":"Erstellen Sie einen<br>neuen Account:",
         "signUp":"Registrieren",
         "toSignUp":"Ich habe noch keinen Account",
-        "adopt":"Übernehmen"
+        "adopt":"Übernehmen",
+        "userAdded":"Benutzer erfolgreich hinzugefügt",
+        "userDeleted":"Benutzer erfolgreich gelöscht"
     },
     "cms":{
         "userMgmt":"Benutzerverwaltung",
@@ -93,23 +95,15 @@
         "firstName":"Vorname",
         "lastName":"Nachname",
         "username":"Benutzername",
-        "email":"E-Mail"
+        "email":"E-Mail",
+        "delete":"Löschen"
     },
     "rights":{
-        "guestRights":"Gastrechte",
         "userRights":"Nutzerrechte",
-        "publicBoards":"Öffentliche Boards anschauen",
-        "privateBoards":"Private Boards anschauen",
-        "createBoards":"Neue Boards erstellen",
-        "deleteBoards":"Boards löschen",
-        "postNotes":"Text hochladen",
-        "postImages":"Bilder hochladen",
-        "postFiles":"Dateien hochladen",
-        "postPolls":"Abstimmungen erstellen",
-        "postSurveys":"Umfragen erstellen",
-        "deletePosts":"Inhalte löschen",
-        "like":"Inhalte mit \"Gefällt mir\" markieren",
-        "comment":"Inhalte kommentieren"
+        "createBoards":"Benutzer können neue Boards erstellen",
+        "register":"Benutzer können sich selbst registrieren",
+        "like":"Benutzer können Inhalte mit \"Gefällt mir\" markieren",
+        "comment":"Benutzer können Inhalte kommentieren"
     },
     "HelloWorld":"Hallo Welt!"
 }

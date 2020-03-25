@@ -113,8 +113,9 @@ export default {
 </script>
 
 <style scoped>
-  a {
-    cursor: pointer;
+  li {
+    display: inline-block;
+    margin: 0 10px;
   }
 
   .dropdown-menu {
@@ -135,11 +136,6 @@ export default {
 
   #flag {
     font-size: 25px;
-  }
-
-  li {
-    display: inline-block;
-    margin: 0 10px;
   }
 
   /* Alternative highlight styles:
