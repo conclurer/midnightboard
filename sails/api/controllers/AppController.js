@@ -3,7 +3,7 @@ module.exports = {
     const fs = require('fs');
 
     const app = sails.config.appPath + '/assets/index.html';
-    sails.log(app);
+    //sails.log(app);
     fs.createReadStream(app).pipe(res);
   }
 };

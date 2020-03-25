@@ -18,11 +18,11 @@ module.exports = {
     },
     missingParams: {
       description: 'Missing parameters',
-      statusCode: 401
+      statusCode: 400
     },
     nonExistent: {
       description: 'User does not exist in database',
-      statusCode: 400
+      statusCode: 404
     }
   },
 

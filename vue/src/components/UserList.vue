@@ -88,6 +88,7 @@ export default {
         .catch(err => {
           switch (err.response.status) {
             case 400:
+              break
             case 401:
               window.location = '/login'
               break

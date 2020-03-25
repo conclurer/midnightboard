@@ -9,18 +9,23 @@
  */
 
 module.exports.policies = {
-    '*': 'is-logged-in',
+    '*': true,
 
+    'boards/*': 'is-logged-in',
     'boards/delete': 'is-board-owner',
     'boards/update': 'is-board-owner',
 
+    'posts/*': 'is-logged-in',
     'posts/delete': 'is-post-owner',
     'posts/update': 'is-post-owner',
 
+    'users/*': 'is-logged-in',
     'users/delete': 'is-self',
     'users/update': 'is-self',
     'users/update-email': 'is-self',
     'users/update-password': 'is-self',
 
+    'polls/*': 'is-logged-in',
+    
     'authentication/*': true
 };

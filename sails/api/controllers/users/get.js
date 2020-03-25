@@ -22,7 +22,7 @@ module.exports = {
     },
     missingParams: {
       description: 'Missing parameters',
-      statusCode: 401
+      statusCode: 400
     },
     nonExistent: {
       description: 'User does not exist',

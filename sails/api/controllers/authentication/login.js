@@ -63,8 +63,8 @@ module.exports = {
       if(await bcrypt.compare(inputs.password, usr.password)) {
         const tokenData = {name: usr.userName, id: usr.id}; // Data that is stored within each JWT
 
-        if(usr.role === 'admin') {
-          tokenData.role = 'admin';
+        if(usr.role === 0) {
+          tokenData.role = 0;
         }
 
         const accessToken = jwt.sign(tokenData, sails.config.jwts.ACCESS_TOKEN_SECRET,
