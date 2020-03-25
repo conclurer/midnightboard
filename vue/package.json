@@ -1,7 +1,7 @@
 {
     "name": "midnightboard-frontend",
     "private": true,
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "Frontend of application midnightboard",
     "keywords": [],
     "dependencies": {

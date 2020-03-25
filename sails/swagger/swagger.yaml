@@ -4,7 +4,7 @@ info:
   description: API for [midnightboard](https://github.com/conclurer/midnightboard).<br>
     Generated as JSON by [sails-hook-swagger-generator](https://github.com/theo4u/sails-hook-swagger-generator).<br>
     Converted to YAML by [Swagger Editor](https://editor.swagger.io).
-  version: 0.0.3
+  version: 0.0.4
   license:
     name: MIT License
     url: 'https://github.com/conclurer/midnightboard/blob/master/LICENSE'
@@ -16,15 +16,21 @@ tags:
   - name: Board
     description: Notice board
   - name: BoardSubscription
-    description: Subscribed to a notice board
+    description: Members who are subscribed to a notice board
   - name: Member
     description: Members of the application
+  - name: Poll
+    description: Answers and their votes for a poll
   - name: Post
     description: Posts on a notice board
   - name: PostLocation
     description: Location of posts on a notice board
+  - name: RefreshToken
+    description: Valid tokens for getting a new bearer token
+  - name: Survey
+    description: Questions, answers and their votes for a survey
   - name: Team
-    description: Teams
+    description: Group of members
   - name: TeamMembership
     description: Membership of the teams
 definitions:
@@ -44,6 +50,8 @@ definitions:
       - boardName
   boardsubscription:
     properties:
+      id:
+        type: string
       boardId:
         type: string
       memberId:
@@ -55,6 +63,8 @@ definitions:
       createdAt:
         type: string
       updatedAt:
+        type: string
+      lastSeen:
         type: string
       userName:
         type: string
@@ -72,10 +82,22 @@ definitions:
         type: string
       hideLastName:
         type: boolean
+      role:
+        type: string
     required:
       - userName
       - email
       - password
+  poll:
+    properties:
+      id:
+        type: string
+      postId:
+        type: string
+      answerId:
+        type: string
+      votes:
+        type: string
   post:
     properties:
       id:
@@ -106,6 +128,31 @@ definitions:
         type: string
       postId:
         type: string
+  refreshtoken:
+    properties:
+      id:
+        type: string
+      createdAt:
+        type: string
+      uid:
+        type: string
+      refreshToken:
+        type: string
+    required:
+      - uid
+      - refreshToken
+  survey:
+    properties:
+      id:
+        type: string
+      postId:
+        type: string
+      questionId:
+        type: string
+      answer:
+        type: string
+      votes:
+        type: string
   team:
     properties:
       id:
@@ -122,6 +169,8 @@ definitions:
       - teamName
   teammembership:
     properties:
+      id:
+        type: string
       teamId:
         type: string
       memberId:
@@ -182,7 +231,7 @@ parameters:
     name: token
     required: false
     type: string
-    description: Incase we want to send header information along our request
+    description: In case we want to send header information along our request
   IDPathParam:
     in: path
     name: id
@@ -196,6 +245,82 @@ parameters:
     type: integer
     description: This helps with pagination and when the limit is known for pagify
 paths:
+  /api/users/register:
+    post:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/TokenHeaderParam'
+      responses:
+        '200':
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+  /api/users/login:
+    post:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/TokenHeaderParam'
+      responses:
+        '200':
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+  /api/users/logout:
+    delete:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/TokenHeaderParam'
+      responses:
+        '200':
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+  /api/users/refresh:
+    post:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/TokenHeaderParam'
+      responses:
+        '200':
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
   '/api/users/{userId}':
     get:
       summary: ''
@@ -259,6 +384,12 @@ paths:
           type: string
           description: This is a path param for userId
         - $ref: '#/parameters/TokenHeaderParam'
+        - name: body
+          in: body
+          required: true
+          description: 'An object defining our schema for '
+          schema:
+            $ref: '#/definitions/member'
       responses:
         '200':
           description: The requested resource
@@ -266,8 +397,56 @@ paths:
           description: Resource not found
         '500':
           description: Internal server error
-  /api/users/register:
-    post:
+  '/api/users/{userId}/updatepassword':
+    put:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          type: string
+          description: This is a path param for userId
+        - $ref: '#/parameters/TokenHeaderParam'
+      responses:
+        '200':
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+  '/api/users/{userId}/updateemail':
+    put:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          type: string
+          description: This is a path param for userId
+        - $ref: '#/parameters/TokenHeaderParam'
+      responses:
+        '200':
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+  /api/users/all:
+    get:
       summary: ''
       description: ''
       tags:
@@ -348,6 +527,41 @@ paths:
           type: string
           description: This is a path param for boardId
         - $ref: '#/parameters/TokenHeaderParam'
+        - name: body
+          in: body
+          required: true
+          description: 'An object defining our schema for '
+          schema:
+            $ref: '#/definitions/post'
+      responses:
+        '200':
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+    post:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          name: boardId
+          required: true
+          type: string
+          description: This is a path param for boardId
+        - $ref: '#/parameters/TokenHeaderParam'
+        - name: body
+          in: body
+          required: true
+          description: 'An object defining our schema for '
+          schema:
+            $ref: '#/definitions/post'
       responses:
         '200':
           description: The requested resource
@@ -367,6 +581,12 @@ paths:
         - application/json
       parameters:
         - $ref: '#/parameters/TokenHeaderParam'
+        - name: body
+          in: body
+          required: true
+          description: 'An object defining our schema for '
+          schema:
+            $ref: '#/definitions/board'
       responses:
         '200':
           description: The requested resource
@@ -374,8 +594,81 @@ paths:
           description: Resource not found
         '500':
           description: Internal server error
-  '/api/boards/{boardId}':
+  '/api/polls/{postId}':
+    get:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          name: postId
+          required: true
+          type: string
+          description: This is a path param for postId
+        - $ref: '#/parameters/TokenHeaderParam'
+      responses:
+        '200':
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+  /api/polls:
     post:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/TokenHeaderParam'
+        - name: body
+          in: body
+          required: true
+          description: 'An object defining our schema for '
+          schema:
+            $ref: '#/definitions/poll'
+      responses:
+        '200':
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+    put:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/TokenHeaderParam'
+        - name: body
+          in: body
+          required: true
+          description: 'An object defining our schema for '
+          schema:
+            $ref: '#/definitions/poll'
+      responses:
+        '200':
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+  '/api/posts/all/{boardId}':
+    get:
       summary: ''
       description: ''
       tags:
@@ -461,30 +754,12 @@ paths:
           type: string
           description: This is a path param for postId
         - $ref: '#/parameters/TokenHeaderParam'
-      responses:
-        '200':
-          description: The requested resource
-        '404':
-          description: Resource not found
-        '500':
-          description: Internal server error
-  '/api/posts/all/{boardId}':
-    get:
-      summary: ''
-      description: ''
-      tags:
-        - ''
-      produces:
-        - application/json
-      consumes:
-        - application/json
-      parameters:
-        - in: path
-          name: boardId
+        - name: body
+          in: body
           required: true
-          type: string
-          description: This is a path param for boardId
-        - $ref: '#/parameters/TokenHeaderParam'
+          description: 'An object defining our schema for '
+          schema:
+            $ref: '#/definitions/post'
       responses:
         '200':
           description: The requested resource
