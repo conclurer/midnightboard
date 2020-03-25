@@ -21,20 +21,25 @@
         <br>
         <input type="text" id="fname" name="fname" v-model="fname" required
           minlength="3" maxlength="20" :placeholder="$t('profile.firstName')" size="36">
-        <br>
+        <p v-if="err.includes(107)" style="color: #E22">{{$t('register.malFirstName')}}</p>
+        <br v-else>
         <br>
         <input type="text" id="lname" name="lname" v-model="lname" required
           minlength="3" maxlength="20" :placeholder="$t('profile.lastName')" size="36">
-        <br>
+        <p v-if="err.includes(106)" style="color: #E22">{{$t('register.malLastName')}}</p>
+        <br v-else>
         <br>
         <input type="text" id="email" name="email" v-model="email" required
           minlength="3"  maxlength="127" :placeholder="$t('profile.email')" size="36">
-        <br>
+        <p v-if="err.includes(104)" style="color: #E22">{{$t('register.malEmail')}}</p>
+        <br v-else>
         <br>
         <input type="text" id="dispname" name="dispname" v-model="dispname" required
           minlength="3" maxlength="30" :placeholder="$t('profile.displayname')" size="36">
-        <br>
-        <br>
+        <p v-if="err.includes(105)" style="color: #E22">{{$t('register.malUsername')}}</p>
+        <br v-else>
+        <p v-if="err.includes(101)" style="color: #E22">{{$t('register.nameTaken')}}</p>
+        <br v-else>
         <input type="password" id="passwd" name="passwd" v-model="passwd" required
           minlength="8" maxlength="127" autocomplete="new-password"
           :placeholder="$t('profile.password')" size="36">
@@ -43,8 +48,12 @@
         <input type="password" id="passwd2" name="passwd2" v-model="passwd2" required
           inlength="8" maxlength="127" autocomplete="new-password"
           :placeholder="$t('profile.confirmPassword')" size="36">
-        <br>
-        <br>
+        <p v-if="err.includes(103)" style="color: #E22">{{$t('register.malPassword')}}</p>
+        <br v-else>
+        <p v-if="err.includes(110)" style="color: #E22">{{$t('register.passwordMissmatch')}}</p>
+        <br v-else>
+        <p v-if="err.includes(102)" style="color: #E22">{{$t('register.missingForms')}}</p>
+        <br v-else>
         <button v-on:click.prevent="submit">{{$t('ui.signUp')}}</button>
         <br>
         <br>
@@ -70,15 +79,15 @@ export default {
     Header
   },
   data () {
-    
     return {
       fname: '',
       lname: '',
       dispname: '',
-      email : '',
+      email: '',
       passwd: '',
       passwd2: '',
-      english: true
+      english: true,
+      err: []
     }
   },
   created () {
@@ -94,36 +103,49 @@ export default {
     }
   },
   methods: {
-    submit() {
-      if(this.passwd !== this.passwd2){
-          // TODO display error
-          return
-      }
+    validate () {
+      var usernameRegex = new RegExp('^[a-zA-Z0-9]{5,30}$')
+      var realnameRegex = new RegExp('^[\'\-\. a-zA-ZŠŽšžŸÀ-ÖÙ-öù-ÿ]{2,20}$')
+      var passwordRegex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]|.*[\-=._#§@$!%*?&])[A-Za-z0-9\-=._#§@$!%*?&]{8,}$')
+      var emailRegex = new RegExp('^(?=[a-zA-Z0-9][a-zA-Z0-9@._%+-]{5,253}$)[a-zA-Z0-9._%+-]{1,64}@(?:(?=[a-zA-Z0-9-]{1,63}\.)[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*\.){1,8}[a-zA-Z]{2,63}$')
 
+      this.err = []
+      if (!emailRegex.test(this.email)) { this.err.push(104) }
+      if (!usernameRegex.test(this.dispname)) { this.err.push(105) }
+      if (!passwordRegex.test(this.passwd)) { this.err.push(103) }
+      if (!realnameRegex.test(this.fname)) { this.err.push(107) }
+      if (!realnameRegex.test(this.lname)) { this.err.push(106) }
+      if (this.passwd !== this.passwd2) { this.err.push(110) }
+    },
+    submit () {
+      this.validate()
+      if (this.err.length !== 0) { return }
       axios
-      .post('http://localhost:1337/api/users/register', {
-        userName: this.dispname,
-        email: this.email,
-        password: this.passwd,
-        firstName: this.fname,
-        lastName: this.lname
-      })
-      .then(response => { 
-        window.localStorage.setItem('mnb_uid', response.data.id)
-        window.location = '/login'
-      })
-      .catch(err => {
-        switch(err.response.status){
-          case 400:
-            // TODO Display Error
-            break;
-          case 500:
-            this.$log.error(err);
-            break;
-          default:
-            this.$log.error(err);
-        }
-      })
+        .post('http://localhost:1337/api/users/register', {
+          userName: this.dispname,
+          email: this.email,
+          password: this.passwd,
+          firstName: this.fname,
+          lastName: this.lname
+        })
+        .then(response => {
+          window.localStorage.setItem('mnb_uid', response.data.id)
+          window.location = '/login'
+        })
+        .catch(error => {
+          switch (error.response.status) {
+            case 400:
+            case 409:
+              this.err.push(error.response.data.error.code)
+              break
+            case 500:
+              // TODO redirect to err500 page
+              this.$log.error(error)
+              break
+            default:
+              this.$log.error(error)
+          }
+        })
     },
     changeLanguage () {
       this.english = !this.english

@@ -12,7 +12,7 @@ module.exports = async function(req, res, proceed) {
   if(!req.me) {
     return res.status(401).send();
   }
-  if(req.me['role'] === 'admin') {
+  if(req.me['role'] === 0) {
     req.me['privReq'] = true;
     return proceed();
   }

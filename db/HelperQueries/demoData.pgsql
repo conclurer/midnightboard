@@ -1,7 +1,7 @@
 
 /* Create demo admin member */
 INSERT INTO member (created_at,updated_at,user_name,first_name,last_name,email,password,user_role)
-    VALUES (1577833200000, 1577833200000, 'admin', 'Max', 'Admin', 'admin@ma.il','$2b$10$0mjxHpG1qnZzU5PBCW9PSe2BZ19299625/x53nkV510Ljcj3ph3Ia', 'admin');
+    VALUES (1577833200000, 1577833200000, 'admin', 'Max', 'Admin', 'admin@ma.il','$2b$10$0mjxHpG1qnZzU5PBCW9PSe2BZ19299625/x53nkV510Ljcj3ph3Ia', 0);
 
 /* Create demo members */
 INSERT INTO member (created_at,updated_at,user_name,first_name,last_name,email,password)

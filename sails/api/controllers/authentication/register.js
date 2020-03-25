@@ -38,7 +38,7 @@ module.exports = {
     },
     nameTaken: {
       description: 'Username or email are already in use',
-      statusCode: 400
+      statusCode: 409
     },
     missingParams: {
       description: 'Missing parameters',
@@ -58,31 +58,64 @@ module.exports = {
     let usernameRegex = new RegExp(sails.config.custom.USERNAME_REGEX);
 
     if(!inputs.email || !inputs.userName || !inputs.password || !inputs.firstName || !inputs.lastName) {
-      return exits.missingParams('Missing parameters. email, userName, password, firstName and lastName are required');
+      return exits.missingParams({
+        error: {
+          code: 102,
+          message: 'Missing parameters. email, userName, password, firstName and lastName are required'
+        }
+      });
     }
     if(!emailRegex.test(inputs.email)) {
-      return exits.invalidParams('Invalid E-Mail address');
+      return exits.invalidParams({
+        error: {
+          code: 104,
+          message: 'Invalid email address'
+        }
+      });
     }
     if(!passwordRegex.test(inputs.password)) {
-      return exits.invalidParams('Password must be atleast 8 characters long,'
-        + ' and must contain one uppercase letter, one lowercase letter, and 1 number or special character');
+      return exits.invalidParams({
+        error: {
+          code: 103,
+          message: 'Password must be atleast 8 characters long,'
+          + ' and must contain one uppercase letter, one lowercase letter, and 1 number or special character'
+        }
+      });
     }
     if(!usernameRegex.test(inputs.userName)) {
-      return exits.invalidParams('Username is too short/long or contains illegal characters');
+      return exits.invalidParams({
+        error: {
+          code: 105,
+          message: 'Username is too short/long or contains illegal characters'
+        }
+      });
     }
-    if(!realnameRegex.test(inputs.firstName) || !realnameRegex.test(inputs.lastName)) {
-      return exits.invalidParams('First or last name is too short/long or contains illegal characters');
+    if(!realnameRegex.test(inputs.lastName)) {
+      return exits.invalidParams({
+        error: {
+          code: 106,
+          message: 'Last name is too short/long or contains illegal characters'
+        }
+      });
+    }
+    if(!realnameRegex.test(inputs.firstName)) {
+      return exits.invalidParams({
+        error: {
+          code: 107,
+          message: 'First name is too short/long or contains illegal characters'
+        }
+      });
     }
 
     sails.log.verbose('AUTH_REGISTER::: Trying to create user ' + inputs.userName);
 
-    var usrRole = 'user';
+    var usrRole = 1;
     var usrList = await Member.find({
       select: ['id', 'role']
     });
     if(usrList.length === 0) {
       sails.log.info('AUTH_REGISTER::: Registering new Admin user!');
-      usrRole = 'admin';
+      usrRole = 0;
     }
 
     var hashedPassword = '';
@@ -110,7 +143,12 @@ module.exports = {
       ].forEach(attribute => delete createdUser[attribute]);
     } catch(err) {
       if(err.code === 'E_UNIQUE') {
-        return exits.nameTaken('Username or email already taken');
+        return exits.nameTaken({
+          error: {
+            code: 101,
+            message: 'Username or email already taken'
+          }
+        });
       }
       sails.log.debug('AUTH_REGISTER_ERR::: ' + err);
       return exits.serverError();

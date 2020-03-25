@@ -57,7 +57,7 @@ test('TEST:USER::: Register duplicate user', () => {
     body: JSON.stringify(validRegistrationData)
   })
     .then((response) => {
-      expect(response.status).toBe(400);
+      expect(response.status).toBe(409);
     })
     .catch(() => {
       expect(null).not.toBeNull();

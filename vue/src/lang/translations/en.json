@@ -73,7 +73,17 @@
         "toSignUp":"Or create a new account"
     },
     "register":{
-        "passwordMissmatch":"Passwords do not match"
+        "passwordMissmatch":"Passwords do not match",
+        "nameTaken":"Username or email already taken",
+        "malEmail":"Invalid email",
+        "malFirstName":"Invalid last name",
+        "malLastName":"Invalid first name",
+        "malUsername":"Invalid usernamename",
+        "malPassword":"Password must be atleast 8 characters long, and must contain 1 special character or number, 1 uppercase letter and 1 lowercase letter",
+        "missingForms":"Please fill in all fields"
+    },
+    "login":{
+        "invalidLogin":"Email and password do not match"
     },
     "HelloWorld": "Hello World!"
 }

@@ -11,7 +11,7 @@ CREATE TABLE public.member (
     avatar jsonb,
     language_preference  CHAR(2) DEFAULT 'en' NOT NULL,
     hide_last_name boolean DEFAULT TRUE NOT NULL,
-    user_role VARCHAR(16) DEFAULT 'user' NOT NULL
+    user_role integer DEFAULT 1 NOT NULL
 );
 
 CREATE TABLE public.team (

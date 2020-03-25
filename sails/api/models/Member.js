@@ -19,7 +19,7 @@ module.exports = {
       columnName: 'language_preference'
     },
     hideLastName: { type: 'boolean', defaultsTo: true, columnName: 'hide_last_name' },
-    role: { type: 'string', isIn: ['user', 'admin'], defaultsTo: 'user', columnName: 'user_role'}
+    role: { type: 'integer', defaultsTo: 1, columnName: 'user_role'}
   },
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

@@ -10,7 +10,7 @@
  */
 module.exports = async function(req, res, proceed) {
   // 'req.me' gets defined in api/hooks/custom/index.js, before any request gets processed.
-  if(!req.me || req.me['role'] !== 'admin') {
+  if(!req.me || req.me['role'] !== 0) {
     return res.status(401).send();
   }
   req.me['privReq'] = true;
