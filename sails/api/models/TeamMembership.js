@@ -4,5 +4,5 @@ module.exports = {
     id: { type: 'number', autoIncrement: true, unique: true, columnName: 'id' },
     teamId: { type: 'number', columnName: 'team_id' },
     memberId: { type: 'number', columnName: 'member_id' }
-  },
+  }
 };

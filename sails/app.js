@@ -51,3 +51,7 @@ try {
 
 // Start server
 sails.lift(rc('sails'));
+// Server is ready for requests
+sails.on('lifted', function() {
+  console.error('Midnightboard is now available at: http://localhost:1337');
+});

@@ -5,6 +5,8 @@
     <ImageUpload @upload-image="uploadImage"/>
     <hr />
     <FileUpload @upload-file="uploadFile"/>
+    <hr />
+    <PollEditor @create-poll="createPoll"/>
     <br><br><br><br><br> <!-- For scrollbar -->
   </div>
 </template>
@@ -14,12 +16,14 @@ import axios from 'axios'
 import FileUpload from '@/components/FileUpload.vue'
 import ImageUpload from '@/components/ImageUpload.vue'
 import NoteEditor from '@/components/NoteEditor.vue'
+import PollEditor from '@/components/PollEditor.vue'
 
 export default {
   components: {
     NoteEditor,
     ImageUpload,
-    FileUpload
+    FileUpload,
+    PollEditor
   },
   data () {
     return {
@@ -93,6 +97,41 @@ export default {
         }
         )
         .then(res => {})
+        .catch(err => this.$log.error(err))
+
+      // Notify notice board
+      this.$emit('add-note')
+    },
+    createPoll: async function (titleContent, jsonContent, answerIndexes) {
+      const jsonBodyNote = JSON.stringify({
+        title: titleContent,
+        typeOfPost: 'application/poll',
+        content: jsonContent
+      })
+
+      // Post request to api
+      await axios
+        .post('http://localhost:1337/api/boards/' + this.boardId, jsonBodyNote, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+        )
+        .then(async postResponse => {
+          const jsonBodyPoll = JSON.stringify({
+            postId: postResponse.data.id,
+            answerIds: answerIndexes
+          })
+          await axios
+            .post('http://localhost:1337/api/polls', jsonBodyPoll, {
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            }
+            )
+            .then(pollResponse => {})
+            .catch(err => this.$log.error(err))
+        })
         .catch(err => this.$log.error(err))
 
       // Notify notice board

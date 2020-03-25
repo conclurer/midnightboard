@@ -33,6 +33,21 @@ CREATE TABLE public.post (
     interactive_due_date bigint
 );
 
+CREATE TABLE public.poll (
+    id serial NOT NULL PRIMARY KEY,
+    post_id integer REFERENCES post (id) ON DELETE CASCADE,
+    answer_id integer NOT NULL,
+    vote integer NOT NULL
+);
+
+CREATE TABLE public.survey (
+    id serial NOT NULL PRIMARY KEY,
+    post_id integer REFERENCES post (id) ON DELETE CASCADE,
+    question_id integer NOT NULL,
+    answer text,
+    vote integer
+);
+
 CREATE TABLE public.board (
     id serial NOT NULL PRIMARY KEY,
     created_at bigint NOT NULL,

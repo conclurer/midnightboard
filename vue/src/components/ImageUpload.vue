@@ -72,8 +72,8 @@ export default {
       }
     },
     onRemove () {
-      this.imageTitle = this.$t('editor.image.title')
       this.imageRef = ''
+      this.imageTitle = this.$t('editor.image.title')
     }
   }
 }

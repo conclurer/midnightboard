@@ -3,6 +3,8 @@ DROP TABLE team_membership;
 DROP TABLE board_subscription;
 DROP TABLE team;
 DROP TABLE board;
+DROP TABLE poll;
+DROP TABLE survey;
 DROP TABLE post;
 DROP TABLE member;
 DROP TABLE token;

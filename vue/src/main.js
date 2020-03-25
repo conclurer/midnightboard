@@ -49,7 +49,8 @@ import {
   faFilePdf,
   faFileWord,
   faFileExcel,
-  faFilePowerpoint
+  faFilePowerpoint,
+  faMinus
 } from '@fortawesome/free-solid-svg-icons'
 library.add(
   faPlus,
@@ -70,7 +71,8 @@ library.add(
   faFilePdf,
   faFileWord,
   faFileExcel,
-  faFilePowerpoint
+  faFilePowerpoint,
+  faMinus
 )
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
