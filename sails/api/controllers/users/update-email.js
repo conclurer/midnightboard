@@ -34,7 +34,7 @@ module.exports = {
     },
     nonExistent: {
       description: 'User does not exist',
-      statusCode: 400
+      statusCode: 404
     }
   },
 

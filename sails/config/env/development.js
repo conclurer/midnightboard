@@ -393,8 +393,6 @@ module.exports = {
         EXPIRATION_TIME: "365d"
     },
     
-    policies: {
-        '*': true
-    }
+    // policies: {'*': true}
 
 };

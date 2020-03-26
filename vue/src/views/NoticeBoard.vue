@@ -40,10 +40,29 @@ export default {
     }
   },
   created () {
+    if (!window.localStorage.getItem('mnb_atok')) { window.location = '/login' }
+
+    this.refreshToken()
+
     axios
-      .get('http://localhost:1337/api/posts/all/' + this.boardId)
+      .get('http://localhost:1337/api/posts/all/' + this.boardId, {
+        headers: {
+          'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
+        }
+      })
       .then(response => { this.notes = response.data.posts })
-      .catch(err => this.$log.error(err))
+      .catch(err => {
+        switch (err.response.status) {
+          case 400:
+            window.location = '/login'
+            break
+          case 401:
+            break
+          case 500:
+          default:
+            this.$log.error(err)
+        }
+      })
 
     switch (i18n.locale.substring(0, 2)) {
       case 'en':
@@ -57,12 +76,48 @@ export default {
     }
   },
   methods: {
+    refreshToken () {
+      axios
+        .post('http://localhost:1337/api/users/refresh', {
+          token: window.localStorage.getItem('mnb_rtok')
+        })
+        .then(response => {
+          window.localStorage.setItem('mnb_atok', response.data.accessToken)
+        })
+        .catch(err => {
+          this.$log.error(err.response.config.token)
+          switch (err.response.status) {
+            case 500:
+              this.$log.error(err)
+              break
+            default:
+              this.$log.error(err)
+          }
+        })
+    },
     addNote () {
       // Refresh notice board
+      if (!window.localStorage.getItem('mnb_atok')) { window.location = '/login' }
+      this.refreshToken()
       axios
-        .get('http://localhost:1337/api/posts/all/' + this.boardId)
+        .get('http://localhost:1337/api/posts/all/' + this.boardId, {
+          headers: {
+            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
+          }
+        })
         .then(response => { this.notes = response.data.posts })
-        .catch(err => this.$log.error(err))
+        .catch(err => {
+          switch (err.response.status) {
+            case 400:
+              window.location = '/login'
+              break
+            case 401:
+              break
+            case 500:
+            default:
+              this.$log.error(err)
+          }
+        })
 
       this.editorActive = false
     },
@@ -87,7 +142,8 @@ export default {
 <style scoped>
   .home {
     position: relative;
-    overflow-x: hidden;
+    display: grid;
+    grid-template-rows: 70px 1fr;
   }
 
   .smooth-vuebar {

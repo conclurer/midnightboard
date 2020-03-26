@@ -63,12 +63,16 @@ module.exports = {
       if(await bcrypt.compare(inputs.password, usr.password)) {
         const tokenData = {name: usr.userName, id: usr.id}; // Data that is stored within each JWT
 
-        const acessToken = jwt.sign(tokenData, sails.config.jwts.ACCESS_TOKEN_SECRET,
+        if(usr.role === 0) {
+          tokenData.role = 0;
+        }
+
+        const accessToken = jwt.sign(tokenData, sails.config.jwts.ACCESS_TOKEN_SECRET,
           { expiresIn: sails.config.jwts.EXPIRATION_TIME });
         const refreshToken = jwt.sign(tokenData, sails.config.jwts.REFRESH_TOKEN_SECRET);
         await RefreshToken.create({uid: usr.id, refreshToken: refreshToken}); // Save refresh token to database
 
-        return exits.success({accessToken: acessToken, refreshToken: refreshToken,
+        return exits.success({accessToken: accessToken, refreshToken: refreshToken,
           expiresIn: sails.config.jwts.EXPIRATION_TIME});
       } else {
         return exits.invalidLogin('Incorrect username or password');

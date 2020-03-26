@@ -36,7 +36,7 @@ module.exports.custom = {
     
     // Allows letters and numbers only
     BOARDNAME_REGEX: '^[a-zA-Z0-9äÄöÖüÜß \'\-\.\,\/\&]{2,50}$',
-    POSTTITLE_REGEX: '^[a-zA-Z0-9äÄöÖüÜß \_\'\-\.\,]{2,49}[?]?$',
+    POSTTITLE_REGEX: '^[a-zA-Z0-9äÄöÖüÜß \_\'\-\.\,]{2,49}[?!]?$',
     USERNAME_REGEX: '^[a-zA-Z0-9]{5,30}$',
 
     // Disallow all non-letter Ascii Characters, except -.'

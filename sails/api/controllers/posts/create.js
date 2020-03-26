@@ -203,14 +203,15 @@ module.exports = {
       title: inputs.title,
       content: inputs.content,
       dueDate: uDueDate,
-      interactiveDueDate: uInteractiveDueDate
+      interactiveDueDate: uInteractiveDueDate,
+      creatorId: this.req.me['id']
     };
-    //creatorId: this.req.me['id']
 
     var createdPost = await Post.create(createData).fetch();
     await PostLocation.create({
       boardId: inputs.boardId,
       postId: createdPost.id
+
     });
 
     if(inputs.skipReturn && inputs.skipReturn === true) {

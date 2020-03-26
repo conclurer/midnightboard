@@ -3,7 +3,7 @@
     class="header"
   >
     <!-- Bootstrap-Vue navbar -->
-    <b-navbar variant="dark" type="white" fixed="top" style="a{color: #fff;}">
+    <b-navbar variant="dark" type="white" fixed="top">
       <b-navbar-brand href="#">
         <img src="../../../configuration/logo.png" height="40px" alt="Logo">
       </b-navbar-brand>
@@ -113,8 +113,9 @@ export default {
 </script>
 
 <style scoped>
-  a {
-    cursor: pointer;
+  li {
+    display: inline-block;
+    margin: 0 10px;
   }
 
   .dropdown-menu {
@@ -123,7 +124,7 @@ export default {
 
   .header {
     width: 100%;
-    height: 70px;
+    max-height: 72px;
     color: #fff;
     font-size: 20pt;
   }
@@ -135,11 +136,6 @@ export default {
 
   #flag {
     font-size: 25px;
-  }
-
-  li {
-    display: inline-block;
-    margin: 0 10px;
   }
 
   /* Alternative highlight styles:

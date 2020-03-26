@@ -10,7 +10,8 @@ CREATE TABLE public.member (
     password TEXT NOT NULL,
     avatar jsonb,
     language_preference  CHAR(2) DEFAULT 'en' NOT NULL,
-    hide_last_name boolean DEFAULT TRUE NOT NULL 
+    hide_last_name boolean DEFAULT TRUE NOT NULL,
+    user_role integer DEFAULT 1 NOT NULL
 );
 
 CREATE TABLE public.team (
@@ -54,12 +55,6 @@ CREATE TABLE public.board (
     updated_at bigint NOT NULL,
     creator_id integer REFERENCES member (id) ON DELETE SET NULL,
     board_name VARCHAR(50) NOT NULL UNIQUE
-);
-
-CREATE TABLE public.board_subscription (
-    id serial NOT NULL PRIMARY KEY,
-    board_id integer NOT NULL REFERENCES board (id) ON DELETE CASCADE,
-    member_id integer NOT NULL REFERENCES member (id) ON DELETE CASCADE
 );
 
 CREATE TABLE public.post_location (

@@ -61,6 +61,11 @@ module.exports.routes = {
         action: 'update-email',
         skipAssets: true
     },
+    'GET    /api/users/all': {
+        controller: 'users',
+        action: 'get-all',
+        skipAssets: true
+    },
 
     //BOARDS
     'GET    /api/boards/:boardId': {

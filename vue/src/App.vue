@@ -11,7 +11,12 @@
   }
 
   body {
+    overflow-x: hidden;
     overflow-y: scroll;
+  }
+
+  a {
+    cursor: pointer;
   }
 
   #app {

@@ -520,6 +520,7 @@ export default {
       await axios
         .get('http://localhost:1337/api/polls/' + postId, {
           headers: {
+            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
             'Content-Type': 'application/json'
           }
         }
@@ -605,6 +606,7 @@ export default {
           await axios
             .put('http://localhost:1337/api/polls', jsonBody, {
               headers: {
+                'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
                 'Content-Type': 'application/json'
               }
             }
@@ -636,7 +638,7 @@ export default {
 <style scoped>
   .board {
     position: sticky;
-    width: 100vw;
+    width: 100%;
     min-height: 100vh;
     background: var(--background-board);
     display: grid;
@@ -644,7 +646,7 @@ export default {
   }
 
   .inner-board {
-    grid-row: 1 / 1;
+    grid-row: 1 / 2;
   }
 
   hr {
