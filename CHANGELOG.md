@@ -37,4 +37,22 @@
 **Fixed bugs:**
 - No scroll option in editor sidebar
 
+<!--- Version of the docker image with hyperlink and date --->
+## [v0.0.4](https://hub.docker.com/r/tvsjsdock/midnightboard-app/tags) (2020-03-26)
+
+<!--- List of implemented features --->
+**Implemented features:**
+- PDF upload and display
+- Office file upload and display
+- Interactive polls
+- CMS page
+- Login and registration page
+- Language selection dropdown
+
+<!--- List of fixed bugs --->
+**Fixed bugs:**
+- Fixed bullet points not being displayed in notes
+- Fixed date picker transparency
+- Added missing translations
+- Increased file upload limit
 ---
