@@ -3,9 +3,8 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-// Import regenerator-runtime
-import 'core-js/stable'
-import 'regenerator-runtime/runtime'
+// Import @babel/runtime/regenerator
+import '@babel/runtime/regenerator'
 
 // Import Bootstrap
 import BootstrapVue from 'bootstrap-vue'
@@ -35,6 +34,7 @@ import {
   faPlus,
   faUser,
   faUserCircle,
+  faTimesCircle,
   faBold,
   faItalic,
   faStrikethrough,
@@ -46,12 +46,18 @@ import {
   faQuoteRight,
   faTerminal,
   faUndo,
-  faRedo
+  faRedo,
+  faFilePdf,
+  faFileWord,
+  faFileExcel,
+  faFilePowerpoint,
+  faMinus
 } from '@fortawesome/free-solid-svg-icons'
 library.add(
   faPlus,
   faUser,
   faUserCircle,
+  faTimesCircle,
   faBold,
   faItalic,
   faStrikethrough,
@@ -63,7 +69,12 @@ library.add(
   faQuoteRight,
   faTerminal,
   faUndo,
-  faRedo
+  faRedo,
+  faFilePdf,
+  faFileWord,
+  faFileExcel,
+  faFilePowerpoint,
+  faMinus
 )
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
@@ -75,6 +86,22 @@ Vue.use(VueMasonryPlugin)
 import VueCtkDateTimePicker from 'vue-ctk-date-time-picker'
 import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css'
 Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker)
+
+// Import own stylesheet
+import '../../configuration/styles.css'
+
+import VueLogger from 'vuejs-logger'
+const isProduction = process.env.NODE_ENV === 'production'
+const options = {
+  isEnabled: true,
+  logLevel: isProduction ? 'error' : 'debug',
+  stringifyArguments: false,
+  showLogLevel: true,
+  showMethodName: true,
+  separator: '|',
+  showConsoleColors: true
+}
+Vue.use(VueLogger, options)
 
 Vue.config.productionTip = false
 

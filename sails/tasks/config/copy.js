@@ -10,7 +10,6 @@
  *
  */
 module.exports = function(grunt) {
-
   grunt.config.set('copy', {
     dev: {
       files: [{
@@ -61,5 +60,4 @@ module.exports = function(grunt) {
   // grunt.loadNpmTasks('grunt-contrib-copy');
   // ```
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 };

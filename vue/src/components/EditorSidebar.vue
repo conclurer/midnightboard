@@ -1,22 +1,29 @@
 <template>
   <div class="editorSidebar">
     <NoteEditor @create-note="createNote"/>
+    <hr />
     <ImageUpload @upload-image="uploadImage"/>
-    <!-- <FileUpload @upload-file="uploadFile"/> -->
+    <hr />
+    <FileUpload @upload-file="uploadFile"/>
+    <hr />
+    <PollEditor @create-poll="createPoll"/>
+    <br><br><br><br><br> <!-- For scrollbar -->
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-// import FileUpload from '@/components/FileUpload.vue'
+import FileUpload from '@/components/FileUpload.vue'
 import ImageUpload from '@/components/ImageUpload.vue'
 import NoteEditor from '@/components/NoteEditor.vue'
+import PollEditor from '@/components/PollEditor.vue'
 
 export default {
   components: {
     NoteEditor,
-    ImageUpload
-    // FileUpload
+    ImageUpload,
+    FileUpload,
+    PollEditor
   },
   data () {
     return {
@@ -24,24 +31,44 @@ export default {
     }
   },
   methods: {
+    refreshToken: async function () {
+      await axios
+        .post('http://localhost:1337/api/users/refresh', {
+          token: window.localStorage.getItem('mnb_rtok')
+        })
+        .then(response => {
+          window.localStorage.setItem('mnb_atok', response.data.accessToken)
+        })
+        .catch(err => {
+          this.$log.error(err.response.config.token)
+          switch (err.response.status) {
+            case 500:
+              this.$log.error(err)
+              break
+            default:
+              this.$log.error(err)
+          }
+        })
+    },
     createNote: async function (titleContent, jsonContent) {
       const jsonBody = JSON.stringify({
         title: titleContent,
         typeOfPost: 'application/note',
         content: jsonContent
       })
-      console.log(jsonBody)
 
       // Post request to api
+      this.refreshToken()
       await axios
-        .post('http://localhost:1337/api/boards/' + this.boardId + '/new', jsonBody, {
+        .post('http://localhost:1337/api/boards/' + this.boardId, jsonBody, {
           headers: {
+            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
             'Content-Type': 'application/json'
           }
         }
         )
         .then(res => {})
-        .catch(err => console.log(err))
+        .catch(err => this.$log.error(err))
 
       // Notify notice board
       this.$emit('add-note')
@@ -56,18 +83,19 @@ export default {
         typeOfPost: dataType,
         content: base64Data
       })
-      console.log(jsonBody)
 
       // Post request to api
+      this.refreshToken()
       await axios
-        .post('http://localhost:1337/api/boards/' + this.boardId + '/new', jsonBody, {
+        .post('http://localhost:1337/api/boards/' + this.boardId, jsonBody, {
           headers: {
+            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
             'Content-Type': 'application/json'
           }
         }
         )
         .then(res => {})
-        .catch(err => console.log(err))
+        .catch(err => this.$log.error(err))
 
       // Notify board component
       this.$emit('add-note')
@@ -82,18 +110,57 @@ export default {
         typeOfPost: dataType,
         content: base64Data
       })
-      console.log(jsonBody)
 
       // Post request to api
+      this.refreshToken()
       await axios
-        .post('http://localhost:1337/api/boards/' + this.boardId + '/new', jsonBody, {
+        .post('http://localhost:1337/api/boards/' + this.boardId, jsonBody, {
           headers: {
+            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
             'Content-Type': 'application/json'
           }
         }
         )
         .then(res => {})
-        .catch(err => console.log(err))
+        .catch(err => this.$log.error(err))
+
+      // Notify notice board
+      this.$emit('add-note')
+    },
+    createPoll: async function (titleContent, jsonContent, answerIndexes) {
+      const jsonBodyNote = JSON.stringify({
+        title: titleContent,
+        typeOfPost: 'application/poll',
+        content: jsonContent
+      })
+
+      // Post request to api
+      this.refreshToken()
+      await axios
+        .post('http://localhost:1337/api/boards/' + this.boardId, jsonBodyNote, {
+          headers: {
+            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
+            'Content-Type': 'application/json'
+          }
+        }
+        )
+        .then(async postResponse => {
+          const jsonBodyPoll = JSON.stringify({
+            postId: postResponse.data.id,
+            answerIds: answerIndexes
+          })
+          await axios
+            .post('http://localhost:1337/api/polls', jsonBodyPoll, {
+              headers: {
+                'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
+                'Content-Type': 'application/json'
+              }
+            }
+            )
+            .then(pollResponse => {})
+            .catch(err => this.$log.error(err))
+        })
+        .catch(err => this.$log.error(err))
 
       // Notify notice board
       this.$emit('add-note')
@@ -101,3 +168,11 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  hr {
+    height: 1px;
+    border: none;
+    background-color: #aaa;
+  }
+</style>

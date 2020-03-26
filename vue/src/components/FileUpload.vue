@@ -1,12 +1,38 @@
 <template>
   <div class="fileUpload">
-    <br> <!-- Should be deleted if design is fixed -->
-    <h2>{{$t('editor.file.post')}}</h2>
-    <input
-      v-bind:value="fileTitel"
-      v-on:input="fileTitel = $event.target.value"
+    <br>
+    <h2>{{$t('editor.file.heading')}}</h2>
+    <b-form-input
+      class="fileTitle"
+      v-bind:value="fileTitle"
+      v-on:input="fileTitle = $event"
+      :maxlength="maxFileTitleLength"
     />
     <br><br>
+    <div
+      v-if="this.pdfSelected"
+      :key="pdfSelected"
+    >
+      <font-awesome-icon icon="file-pdf" size="10x"/>
+    </div>
+    <div
+      v-if="this.wordSelected"
+      :key="wordSelected"
+    >
+      <font-awesome-icon icon="file-word" size="10x"/>
+    </div>
+        <div
+      v-if="this.excelSelected"
+      :key="excelSelected"
+    >
+      <font-awesome-icon icon="file-excel" size="10x"/>
+    </div>
+    <div
+      v-if="this.powerpointSelected"
+      :key="powerpointSelected"
+    >
+      <font-awesome-icon icon="file-powerpoint" size="10x"/>
+    </div>
     <picture-input
       ref="pictureInput"
       @change="onChange"
@@ -16,10 +42,10 @@
       margin="16"
       accept="application/pdf,
             application/msword,
-            application/msexcel,
-            application/mspowerpoint,
+            application/vnd.ms-excel,
+            application/vnd.ms-powerpoint,
             application/vnd.openxmlformats-officedocument.wordprocessingml.document,
-            vnd.openxmlformats-officedocument.spreadsheetml.sheet,
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
             application/vnd.openxmlformats-officedocument.presentationml.presentation"
       size="10"
       buttonClass="btn btn-info button"
@@ -42,7 +68,7 @@
     <button
       v-if="fileRef !== ''"
       class="btn btn-primary button"
-      v-on:click="$emit('upload-file', fileTitel, fileRef)"
+      v-on:click="$emit('upload-file', fileTitle, fileRef)"
     >
     {{$t('editor.file.post')}}
     </button>
@@ -57,7 +83,12 @@ export default {
   data () {
     return {
       fileRef: '',
-      fileTitel: 'Your file title'
+      fileTitle: this.$t('editor.file.title'),
+      maxFileTitleLength: 50,
+      pdfSelected: false,
+      wordSelected: false,
+      excelSelected: false,
+      powerpointSelected: false
     }
   },
   components: {
@@ -65,46 +96,62 @@ export default {
   },
   methods: {
     onChange (file) {
-      console.log('New picture selected!')
+      this.pdfSelected = false
+      this.wordSelected = false
+      this.excelSelected = false
+      this.powerpointSelected = false
       if (file) {
+        // Hide image preview
+        document.getElementsByClassName('preview-container')[1].style.display = 'none'
+        const fileType = file.split(';')[0].split(':')[1]
+        if (fileType === 'application/pdf') {
+          this.pdfSelected = true
+        } else if (fileType === 'application/msword' || fileType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+          this.wordSelected = true
+        } else if (fileType === 'application/vnd.ms-excel' || fileType === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+          this.excelSelected = true
+        } else { // application/vnd.ms-powerpoint || application/vnd.openxmlformats-officedocument.presentationml.presentation
+          this.powerpointSelected = true
+        }
         this.fileRef = this.$refs.pictureInput.image
       } else {
         this.fileRef = ''
-        console.log('FileReader API not supported: use the <form>!')
       }
     },
     onRemove () {
-      this.imagfileRef = ''
+      document.getElementsByClassName('preview-container')[1].style.display = 'block'
+      this.fileRef = ''
+      this.fileTitle = this.$t('editor.file.title')
+      this.pdfSelected = false
+      this.wordSelected = false
+      this.excelSelected = false
+      this.powerpointSelected = false
     }
   }
 }
 </script>
 
-<style>
-  #fileUpload {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style scoped>
+  .fileTitle {
+    width: 90%;
+    margin-right: auto;
+    margin-left: auto;
   }
 
   h1, h2 {
-  font-weight: normal;
+    font-weight: normal;
   }
 
   ul {
-  list-style-type: none;
-  padding: 0;
+    list-style-type: none;
+    padding: 0;
   }
 
   li {
-  display: inline-block;
-  margin: 0 10px;
+    margin: 0 10px;
   }
 
   a {
-  color: #42b983;
+    color: #42b983;
   }
 </style>

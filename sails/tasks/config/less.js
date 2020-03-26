@@ -10,7 +10,6 @@
  *
  */
 module.exports = function(grunt) {
-
   grunt.config.set('less', {
     dev: {
       files: [{
@@ -46,5 +45,4 @@ module.exports = function(grunt) {
   // grunt.loadNpmTasks('grunt-contrib-less');
   // ```
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 };

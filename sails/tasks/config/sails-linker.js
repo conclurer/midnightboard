@@ -12,7 +12,6 @@
  *
  */
 module.exports = function(grunt) {
-
   grunt.config.set('sails-linker', {
 
 
@@ -180,5 +179,4 @@ module.exports = function(grunt) {
   // grunt.loadNpmTasks('grunt-sails-linker');
   // ```
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 };

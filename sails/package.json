@@ -1,25 +1,28 @@
 {
-    "name": "sails",
+    "name": "midnightboard-backend",
     "private": true,
-    "version": "0.1.0",
-    "description": "midnightboard backend",
+    "version": "0.0.4",
+    "description": "Backend of application midnightboard",
     "keywords": [],
     "dependencies": {
         "@sailshq/lodash": "^3.10.4",
+        "bcrypt": "^3.0.8",
         "core-js": "^3.6.4",
-        "grunt": "^1.0.4",
-        "sails": "^1.2.3",
+        "grunt": "^1.1.0",
+        "jsonwebtoken": "^8.5.1",
+        "sails": "^1.2.4",
         "sails-hook-cron": "^3.0.1",
         "sails-hook-grunt": "^4.0.1",
         "sails-hook-orm": "^2.1.1",
         "sails-hook-sockets": "^2.0.0",
         "sails-postgresql": "^1.0.2",
-        "typescript": "^3.7.3"
+        "typescript": "^3.8.3"
     },
     "devDependencies": {
-        "eslint": "^6.7.2",
-        "eslint-plugin-jest": "^23.1.1",
-        "jest": "^24.9.0"
+        "eslint": "^6.8.0",
+        "eslint-plugin-jest": "^23.8.2",
+        "jest": "^25.1.0",
+        "node-fetch": "^2.6.0"
     },
     "scripts": {
         "start-dev": "env NODE_ENV=development node app.js",
@@ -27,7 +30,7 @@
         "test": "npm run lint && npm run custom-tests",
         "lint": "eslint .",
         "lint-fix": "eslint . --fix",
-        "custom-tests": "jest"
+        "custom-tests": "jest --runInBand"
     },
     "main": "app.js",
     "repository": {

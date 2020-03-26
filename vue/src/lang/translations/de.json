@@ -2,13 +2,30 @@
     "about":{
         "message":"Das ist eine About Seite"
     },
+    "board":{
+        "download":{
+            "image":"Hier klicken um das Bild herunterzuladen",
+            "pdf":"Hier klicken um die PDF-Datei herunterzuladen",
+            "word":"Hier klicken um das Word-Dokument herunterzuladen",
+            "excel":"Hier klicken um die Excel-Tabelle herunterzuladen",
+            "powerpoint":"Hier klicken um die PowerPoint-Präsentation herunterzuladen"
+        },
+        "poll":{
+            "vote":"Abstimmen",
+            "invalidVote":"Bitte wähle ein Antwort aus!",
+            "showResult":"Ergebnis anzeigen",
+            "resetRadioButtons":"Auswahl zurücksetzen"
+        }
+    },
     "editor":{
         "note":{
             "create":"Erstellen",
-            "title":"Titel hier eingeben"
+            "title":"Titel hier einfügen",
+            "content":"<p>Inhalt hier einf&uuml;gen</p><ul><li><p>Beginne eine Liste</p></li></ul><ol><li><p>Oder eine Aufz&auml;hlung</p></li></ol>"
         },
         "image":{
-            "title":"Bild hochladen:",
+            "heading":"Bild hochladen:",
+            "title":"Titel des Bildes",
             "post":"Bild posten",
             "upload":"Dein Gerät unterstützt kein Hochladen von Bildern.",
             "drag":"Ziehe hierher ein Bild oder klicke darauf, um eins auszuwählen",
@@ -22,7 +39,8 @@
             "aspect":"Landschaft/Porträt"
         },
         "file":{
-            "title":"Datei hochladen:",
+            "heading":"Datei hochladen:",
+            "title":"Titel der Datei",
             "post":"Datei posten",
             "upload":"Dein Gerät unterstützt kein Hochladen von Dateien.",
             "drag":"Ziehe hierher eine Datei oder klicke darauf, um eine auszuwählen",
@@ -33,6 +51,26 @@
             "selected":"Datei erfolgreich ausgewählt!",
             "fileSize":"Die Dateigröße überschreitet das Limit!",
             "fileType":"Es werden nur PDF, DOC(X), XLS(X) und PPT(X) unterstützt!"
+        },
+        "poll":{
+            "heading":"Poll erstellen:",
+            "title":"Deine Frage?",
+            "templateAnswer":"Antwort A",
+            "allowMultipleVotes":"Mehrfachauswahl erlauben",
+            "post":"Poll posten",
+            "missingQuestion":"Du musst eine Frage eingeben!",
+            "missingAnswers":"Du musst mindestens zwei Antworten erstellen!"
+        },
+        "survey":{
+            "heading":"Umfrage erstellen:",
+            "title":"Dein Umfragentitel",
+            "templateAnswer":"Antwort A",
+            "post":"Umfrage posten"
+        },
+        "datePicker":{
+            "dueDate":"Wähle ein Enddatum",
+            "currentDate":"Heute",
+            "language":"de"
         }
     },
     "profile":{
@@ -40,7 +78,14 @@
         "lastName":"Nachname",
         "email":"E-Mail",
         "username":"Nutzername",
-        "password":"Passwort"
+        "password":"Passwort",
+        "role":"Rolle",
+        "user":"Benutzer",
+        "admin":"Admin",
+        "addUser":"Benutzer hinzufügen:",
+        "affiliate":"Aufnehmen",
+        "confirmPassword":"Passwort bestätigen",
+        "displayname":"Anzeigename"
     },
     "ui":{
         "add":"Neu",
@@ -48,9 +93,53 @@
         "welcome":"Willkommen zurück!",
         "login":"Anmelden",
         "toLogin":"Ich habe bereits einen Account",
-        "createAccount":"Erstellen Sie einen<br>neuen Account:",
+        "register":"Registrierung",
+        "createAccount":"Erstelle einen<br>neuen Account:",
         "signUp":"Registrieren",
-        "toSignUp":"Ich habe noch keinen Account"
+        "toSignUp":"Ich habe noch keinen Account",
+        "adopt":"Übernehmen",
+        "userAdded":"Benutzer erfolgreich hinzugefügt",
+        "userDeleted":"Benutzer erfolgreich gelöscht"
+    },
+    "cms":{
+        "userMgmt":"Benutzerverwaltung",
+        "userList":"Nutzerliste",
+        "newUser":"Neuer Benutzer",
+        "userRights":"Nutzerrechte",
+        "contentMgmt":"Inhaltsverwaltung",
+        "editBoards":"Boards verwalten",
+        "groupMgmt":"Gruppenverwaltung",
+        "editGroups":"Gruppen bearbeiten"
+    },
+    "userList":{
+        "id":"Benutzer-ID",
+        "creationDate":"Erstelldatum",
+        "lastSeen":"Zuletzt online",
+        "firstName":"Vorname",
+        "lastName":"Nachname",
+        "username":"Benutzername",
+        "email":"E-Mail",
+        "delete":"Löschen"
+    },
+    "rights":{
+        "userRights":"Nutzerrechte",
+        "createBoards":"Benutzer können neue Boards erstellen",
+        "register":"Benutzer können sich selbst registrieren",
+        "like":"Benutzer können Inhalte mit \"Gefällt mir\" markieren",
+        "comment":"Benutzer können Inhalte kommentieren"
+    },
+    "register":{
+        "passwordMissmatch":"Passwörter stimmen nicht überein",
+        "nameTaken":"Nutzername oder Email bereits vergeben",
+        "malEmail":"Invalide Email",
+        "malFirstName":"Invalider Vorname",
+        "malLastName":"Invalider Nachname",
+        "malUsername":"Invalider Nutzername",
+        "malPassword":"Passwort muss mindestens 8 stellen lang sein, und 1 Groß-, 1 Kleinbuchstabe und 1 Sonderzeichen oder Zahl enthalten",
+        "missingForms":"Bitte fülle alle Felder aus"
+    },
+    "login":{
+        "invalidLogin":"Email und Passwort stimmen nicht überein"
     },
     "HelloWorld": "Hallo Welt!"
 }

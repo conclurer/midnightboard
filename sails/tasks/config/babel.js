@@ -10,7 +10,6 @@
  *
  */
 module.exports = function(grunt) {
-
   grunt.config.set('babel', {
     dist: {
       options: {
@@ -50,5 +49,4 @@ module.exports = function(grunt) {
   // grunt.loadNpmTasks('grunt-babel');
   // ```
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 };

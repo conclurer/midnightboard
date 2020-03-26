@@ -1,10 +1,12 @@
 <template>
   <div class="imageUpload">
     <br>
-    <h2>{{$t('editor.image.title')}}</h2>
-    <input
-      v-bind:value="imageTitel"
-      v-on:input="imageTitel = $event.target.value"
+    <h2>{{$t('editor.image.heading')}}</h2>
+    <b-form-input
+      class="imageTitle"
+      v-bind:value="imageTitle"
+      v-on:input="imageTitle = $event"
+      :maxlength="maxImageTitleLength"
     />
     <br><br>
     <picture-input
@@ -14,7 +16,8 @@
       width="300"
       height="300"
       margin="16"
-      accept="image/jpeg,image/png"
+      accept="image/jpeg,
+            image/png"
       size="10"
       buttonClass="btn btn-info button"
       removeButtonClass="btn btn-danger button"
@@ -36,11 +39,11 @@
     <button
       v-if="imageRef !== ''"
       class="btn btn-primary button"
-      v-on:click="$emit('upload-image', imageTitel, imageRef)"
+      v-on:click="$emit('upload-image', imageTitle, imageRef)"
     >
-    {{$t('editor.image.post')}}
+      {{$t('editor.image.post')}}
     </button>
-    <br><br><br><br> <!-- For scrollbar -->
+    <br>
   </div>
 </template>
 
@@ -52,7 +55,8 @@ export default {
   data () {
     return {
       imageRef: '',
-      imageTitel: 'Your image title' // i18n?
+      imageTitle: this.$t('editor.image.title'),
+      maxImageTitleLength: 50
     }
   },
   components: {
@@ -60,30 +64,26 @@ export default {
   },
   methods: {
     onChange (image) {
-      console.log('New picture selected!')
       if (image) {
         this.image = image
         this.imageRef = this.$refs.pictureInput.image
       } else {
         this.imageRef = ''
-        console.log('FileReader API not supported: use the <form>!')
       }
     },
     onRemove () {
       this.imageRef = ''
+      this.imageTitle = this.$t('editor.image.title')
     }
   }
 }
 </script>
 
-<style>
-  #imageUpload {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
+<style scoped>
+  .imageTitle {
+    width: 90%;
+    margin-right: auto;
+    margin-left: auto;
   }
 
   h1, h2 {
@@ -96,7 +96,6 @@ export default {
   }
 
   li {
-    display: inline-block;
     margin: 0 10px;
   }
 

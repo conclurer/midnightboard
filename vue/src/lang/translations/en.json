@@ -2,13 +2,30 @@
     "about":{
         "message":"This is an About page"
     },
+    "board":{
+        "download":{
+            "image":"Click here to download the image",
+            "pdf":"Click here to download the PDF file",
+            "word":"Click here to download the Word document",
+            "excel":"Click here to download the Excel spreadsheet",
+            "powerpoint":"Click here to download the PowerPoint presentation"
+        },
+        "poll":{
+            "vote":"Vote",
+            "invalidVote":"You have to choose an answer!",
+            "showResult":"Show result",
+            "resetRadioButtons":"Reset options"
+        }
+    },
     "editor":{
         "note":{
             "create":"Create",
-            "title":"Insert title here"
+            "title":"Insert title here",
+            "content":"<p>Insert content here</p><ul><li><p>Start a bulleted list</p></li></ul><ol><li><p>Or start a numerical list</p></li></ol>"
         },
         "image":{
-            "title":"Upload your image:",
+            "heading":"Upload your image:",
+            "title":"Your image title",
             "post":"Post image",
             "upload":"Your device does not support file uploading.",
             "drag":"Drag an image or click here to select a image",
@@ -22,7 +39,8 @@
             "aspect":"Landscape/Portrait"
         },
         "file":{
-            "title":"Upload your file:",
+            "heading":"Upload your file:",
+            "title":"Your file title",
             "post":"Post file",
             "upload":"Your device does not support file uploading.",
             "drag":"Drag an file or click here to select a file",
@@ -33,6 +51,26 @@
             "selected":"File successfully selected!",
             "fileSize":"The file size exceeds the limit",
             "fileType":"Only PDF, DOC(X), XLS(X) and PPT(X) are supported!"
+        },
+        "poll":{
+            "heading":"Create your poll:",
+            "title":"Your question?",
+            "templateAnswer":"Answer A",
+            "allowMultipleVotes":"Allow multiple answers",
+            "post":"Post poll",
+            "missingQuestion":"You have to enter a question!",
+            "missingAnswers":"You have to create at least two answers!"
+        },
+        "survey":{
+            "heading":"Create your survey:",
+            "title":"Your survery title",
+            "templateAnswer":"Answer A",
+            "post":"Post survey"
+        },
+        "datePicker":{
+            "dueDate":"Select a due date",
+            "currentDate":"Today",
+            "language":"en"
         }
     },
     "profile":{
@@ -40,7 +78,14 @@
         "lastName":"Last name",
         "email":"E-Mail",
         "username":"Username",
-        "password":"Password"
+        "password":"Password",
+        "role":"Role",
+        "user":"User",
+        "admin":"Admin",
+        "addUser":"Add a new user:",
+        "affiliate":"Affiliate",
+        "confirmPassword":"Confirm password",
+        "displayname":"Display name"
     },
     "ui":{
         "add":"Add",
@@ -48,9 +93,53 @@
         "welcome":"Welcome back!",
         "login":"Log In",
         "toLogin":"Or log in with an existing account",
+        "register":"Sign Up",
         "createAccount":"Create a new account:",
         "signUp":"Sign Up",
-        "toSignUp":"Or create a new account"
+        "toSignUp":"Or create a new account",
+        "adopt":"Adopt",
+        "userAdded":"User successfully added",
+        "userDeleted":"User successfully deleted"
+    },
+    "cms":{
+        "userMgmt":"User Management",
+        "userList":"User List",
+        "newUser":"New User",
+        "userRights":"User Rights",
+        "contentMgmt":"Content Management",
+        "editBoards":"Edit Notice Boards",
+        "groupMgmt":"Group Management",
+        "editGroups":"Edit Groups"
+    },
+    "userList":{
+        "id":"User ID",
+        "creationDate":"Creation date",
+        "lastSeen":"Last seen",
+        "firstName":"First name",
+        "lastName":"Last name",
+        "username":"Username",
+        "email":"E-mail",
+        "delete":"Delete"
+    },
+    "rights":{
+        "userRights":"User rights",
+        "createBoards":"Users can create new boards",
+        "register":"Users can register themselves",
+        "like":"Users can like/dislike content",
+        "comment":"Users can comment content"
+    },
+    "register":{
+        "passwordMissmatch":"Passwords do not match",
+        "nameTaken":"Username or email already taken",
+        "malEmail":"Invalid email",
+        "malFirstName":"Invalid last name",
+        "malLastName":"Invalid first name",
+        "malUsername":"Invalid usernamename",
+        "malPassword":"Password must be atleast 8 characters long, and must contain 1 special character or number, 1 uppercase letter and 1 lowercase letter",
+        "missingForms":"Please fill in all fields"
+    },
+    "login":{
+        "invalidLogin":"Email and password do not match"
     },
     "HelloWorld": "Hello World!"
 }

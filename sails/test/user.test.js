@@ -1,88 +1,294 @@
-// Testing the UserController with Jest
-const http = require('./fetch.js');
+//#region Test data
+const fetch = require('node-fetch');
+const returnedData = {};
 
-// getUser
-test('Check getUser with userId = 1', () => {
-  return http.fetch('http://localhost:1337/api/users/1', {
-    method: 'GET'
-  })
-  .then((response) => {
-    expect(response.status).toBe(200);
-    response.json();
-  })
-  .then((jsonData) => {
-    // Check for valid data
-    expect(jsonData).not.toBeNull();
-  })
-  .catch(() => {
-    expect(null).not.toBeNull();
-  });
-});
-
-// registerUser
-const createData = {
-  createdAt: 1577833200000,
-  updateAt: 1577833200000,
-  userName: 'User Name',
-  firstName: 'First Name',
-  lastName: 'Last Name',
-  email: 'username@provider.com',
-  password: 'password',
-  languagePreference: 'en'
+const validRegistrationData = {
+  userName: 'JESTUser1',
+  email: 'JEST@test.mail',
+  password: 'P@ssw0rd',
+  firstName: 'JESTMax',
+  lastName: 'JESTMustermann'
 };
-test('Check registerUser with createData', () => {
-  return http.fetch('http://localhost:1337/api/users/register', {
+const updatedUserData = {
+  userName: 'JESTUserUp',
+  firstName: 'JESTMaxUp',
+  lastName: 'JESTMustermannUp',
+  hideLastName: false
+};
+const updatedLoginData = {
+  email: 'JESTUp@test.mail',
+  password: 'P@ssw0rdUp'
+};
+//#endregion
+
+//#region Register and Login
+test('TEST:USER::: Register user:  Valid user', () => {
+  return fetch('http://localhost:1337/api/users/register', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(createData)
+    body: JSON.stringify(validRegistrationData)
   })
-  .then((response) => {
-    expect(response.status).toBe(200);
-    response.json();
-  })
-  .then((jsonData) => {
-    // Check for valid data
-    expect(jsonData).not.toBeNull();
-  })
-  .catch(() => {
-    expect(null).not.toBeNull();
-  });
+    .then((response) => {
+      expect(response.status).toBe(201);
+      return response.json();
+    })
+    .then((jsonString) => {
+      expect(jsonString.userName).toBe(validRegistrationData.userName);
+      expect(jsonString.email).toBe(validRegistrationData.email.toLocaleLowerCase());
+      expect(jsonString.firstName).toBe(validRegistrationData.firstName);
+      expect(jsonString.lastName).toBe(validRegistrationData.lastName);
+      expect(jsonString.id).not.toBeUndefined();
+      returnedData.id = jsonString.id;
+    })
+    .catch(() => {
+      expect(null).not.toBeNull();
+    });
 });
 
-// deleteUser
-test('Check deleteUser with userId = 2', () => {
-  return http.fetch('http://localhost:1337/api/users/2', {
-    method: 'DELETE'
-  })
-  .then((response) => expect(response.status).toBe(200))
-  .catch(() => {
-    expect(null).not.toBeNull();
-  });
-});
-
-// updateUser
-const updateData = {
-  createdAt: 1577833300000,
-  updateAt: 1577833300000,
-  userName: 'User Name',
-  firstName: 'FirstName',
-  lastName: 'LastName',
-  email: 'username@provider.com',
-  password: 'Password',
-  languagePreference: 'de'
-};
-test('Check updatePost with updateData', () => {
-  return http.fetch('http://localhost:1337/api/users/1', {
-    method: 'PUT',
+test('TEST:USER::: Register duplicate user', () => {
+  return fetch('http://localhost:1337/api/users/register', {
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(updateData)
+    body: JSON.stringify(validRegistrationData)
   })
-  .then((response) => expect(response.status).toBe(200))
-  .catch(() => {
-    expect(null).not.toBeNull();
-  });
+    .then((response) => {
+      expect(response.status).toBe(409);
+    })
+    .catch(() => {
+      expect(null).not.toBeNull();
+    });
 });
+
+test('TEST:USER::: Login using email', () => {
+  var loginData = {
+    email: validRegistrationData.email,
+    password: validRegistrationData.password
+  };
+
+  return fetch('http://localhost:1337/api/users/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(loginData)
+  })
+    .then((response) => {
+      expect(response.status).toBe(200);
+      return response.json();
+    })
+    .then((jsonString) => {
+      expect(jsonString).not.toBeNull();
+      expect(jsonString.accessToken).not.toBeUndefined();
+      expect(jsonString.refreshToken).not.toBeUndefined();
+    })
+    .catch(() => {
+      expect(null).not.toBeNull();
+    });
+});
+
+test('TEST:USER::: Login using username', () => {
+  var loginData = {
+    userName: validRegistrationData.userName,
+    password: validRegistrationData.password
+  };
+
+  return fetch('http://localhost:1337/api/users/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(loginData)
+  })
+    .then((response) => {
+      expect(response.status).toBe(200);
+      return response.json();
+    })
+    .then((jsonString) => {
+      expect(jsonString).not.toBeNull();
+      expect(jsonString.accessToken).not.toBeUndefined();
+      expect(jsonString.refreshToken).not.toBeUndefined();
+      returnedData.accessToken = jsonString.accessToken;
+      returnedData.refreshToken = jsonString.refreshToken;
+    })
+    .catch(() => {
+      expect(null).not.toBeNull();
+    });
+});
+
+test('TEST:USER::: Refresh access token', () => {
+  var tokenBody = {token: returnedData.refreshToken};
+  return fetch('http://localhost:1337/api/users/refresh', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(tokenBody)
+  })
+    .then((response) => {
+      expect(response.status).toBe(200);
+      return response.json();
+    })
+    .then((jsonString) => {
+      expect(jsonString).not.toBeNull();
+      expect(jsonString.accessToken).not.toBeUndefined();
+      returnedData.accessToken = jsonString.accessToken;
+    })
+    .catch(() => {
+      expect(null).not.toBeNull();
+    });
+});
+//#endregion
+
+//#region Update and Get
+test('TEST:USER::: Check update with updated data', () => {
+  return fetch('http://localhost:1337/api/users/' + returnedData.id, {
+    method: 'PUT',
+    headers: {
+      Authorization: 'Bearer ' + returnedData.accessToken,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(updatedUserData)
+  })
+    .then((response) => expect(response.status).toBe(200))
+    .catch(() => {
+      expect(null).not.toBeNull();
+    });
+});
+test('TEST:USER::: Update email', () => {
+  return fetch('http://localhost:1337/api/users/' + returnedData.id + '/updateemail', {
+    method: 'PUT',
+    headers: {
+      Authorization: 'Bearer ' + returnedData.accessToken,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({email: updatedLoginData.email})
+  })
+    .then((response) => expect(response.status).toBe(200))
+    .catch(() => {
+      expect(null).not.toBeNull();
+    });
+});
+test('TEST:USER::: Update password', () => {
+  return fetch('http://localhost:1337/api/users/' + returnedData.id + '/updatepassword', {
+    method: 'PUT',
+    headers: {
+      Authorization: 'Bearer ' + returnedData.accessToken,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      oldPassword: validRegistrationData.password,
+      newPassword: updatedLoginData.password
+    })
+  })
+    .then((response) => expect(response.status).toBe(200))
+    .catch(() => {
+      expect(null).not.toBeNull();
+    });
+});
+test('TEST:USER::: Check get with created user', () => {
+  return fetch('http://localhost:1337/api/users/' + returnedData.id, {
+    method: 'GET',
+    headers: {
+      Authorization: 'Bearer ' + returnedData.accessToken,
+    }
+  })
+    .then((response) => {
+      expect(response.status).toBe(200);
+      return response.json();
+    })
+    .then((jsonString) => {
+      expect(jsonString).not.toBeNull();
+      expect(jsonString.userName).toBe(updatedUserData.userName);
+      expect(jsonString.firstName).toBe(updatedUserData.firstName);
+      expect(jsonString.lastName).toBe(updatedUserData.lastName);
+      expect(jsonString.email).toBe(updatedLoginData.email.toLowerCase());
+    })
+    .catch(() => {
+      expect(null).not.toBeNull();
+    });
+});
+test('TEST:USER::: Login using updated data', () => {
+  var loginData = {
+    email: updatedLoginData.email,
+    password: updatedLoginData.password
+  };
+
+  return fetch('http://localhost:1337/api/users/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(loginData)
+  })
+    .then((response) => {
+      expect(response.status).toBe(200);
+      return response.json();
+    })
+    .then((jsonString) => {
+      expect(jsonString).not.toBeNull();
+      expect(jsonString.accessToken).not.toBeUndefined();
+      expect(jsonString.refreshToken).not.toBeUndefined();
+    })
+    .catch(() => {
+      expect(null).not.toBeNull();
+    });
+});
+//#endregion
+
+//#region Logout and Delete
+test('TEST:USER::: Logout user, using accessToken', () => {
+  return fetch('http://localhost:1337/api/users/logout', {
+    method: 'DELETE',
+    headers: {
+      Authorization: 'Bearer ' + returnedData.accessToken,
+    }
+  })
+    .then((response) => {
+      expect(response.status).toBe(200);
+    })
+    .catch(() => {
+      expect(null).not.toBeNull();
+    });
+});
+
+test('TEST:USER::: Check if refresh token has been invalidated', () => {
+  return fetch('http://localhost:1337/api/users/refresh', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({token: returnedData.refreshToken})
+  })
+    .then((response) => {
+      expect(response.status).toBe(200);
+      return response.json();
+    })
+    .then((jsonString) => {
+      expect(jsonString).not.toBeNull();
+      expect(jsonString.accessToken).not.toBeUndefined();
+      returnedData.accessToken = jsonString.accessToken;
+    })
+    .catch(() => {
+      expect(null).not.toBeNull();
+    });
+});
+
+test('TEST:USER::: Delete User', () => {
+  return fetch('http://localhost:1337/api/users/' + returnedData.id, {
+    method: 'DELETE',
+    headers: {
+      Authorization: 'Bearer ' + returnedData.accessToken,
+    }
+  })
+    .then((response) => {
+      expect(response.status).toBe(200);
+    })
+    .catch(() => {
+      expect(null).not.toBeNull();
+    });
+});
+//#endregion

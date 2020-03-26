@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.1 (Debian 12.1-1.pgdg100+1)
--- Dumped by pg_dump version 12.1 (Debian 12.1-1.pgdg100+1)
+-- Dumped from database version 12.2 (Debian 12.2-2.pgdg100+1)
+-- Dumped by pg_dump version 12.2 (Debian 12.2-2.pgdg100+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -25,7 +25,7 @@ SET default_table_access_method = heap;
 --
 
 CREATE TABLE public.board (
-    board_id integer NOT NULL,
+    id integer NOT NULL,
     created_at bigint NOT NULL,
     updated_at bigint NOT NULL,
     creator_id integer,
@@ -36,10 +36,10 @@ CREATE TABLE public.board (
 ALTER TABLE public.board OWNER TO dev;
 
 --
--- Name: board_board_id_seq; Type: SEQUENCE; Schema: public; Owner: dev
+-- Name: board_id_seq; Type: SEQUENCE; Schema: public; Owner: dev
 --
 
-CREATE SEQUENCE public.board_board_id_seq
+CREATE SEQUENCE public.board_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -48,48 +48,13 @@ CREATE SEQUENCE public.board_board_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.board_board_id_seq OWNER TO dev;
+ALTER TABLE public.board_id_seq OWNER TO dev;
 
 --
--- Name: board_board_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dev
+-- Name: board_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dev
 --
 
-ALTER SEQUENCE public.board_board_id_seq OWNED BY public.board.board_id;
-
-
---
--- Name: board_subscription; Type: TABLE; Schema: public; Owner: dev
---
-
-CREATE TABLE public.board_subscription (
-    id integer NOT NULL,
-    board_id integer NOT NULL,
-    member_id integer NOT NULL
-);
-
-
-ALTER TABLE public.board_subscription OWNER TO dev;
-
---
--- Name: board_subscription_id_seq; Type: SEQUENCE; Schema: public; Owner: dev
---
-
-CREATE SEQUENCE public.board_subscription_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.board_subscription_id_seq OWNER TO dev;
-
---
--- Name: board_subscription_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dev
---
-
-ALTER SEQUENCE public.board_subscription_id_seq OWNED BY public.board_subscription.id;
+ALTER SEQUENCE public.board_id_seq OWNED BY public.board.id;
 
 
 --
@@ -97,9 +62,10 @@ ALTER SEQUENCE public.board_subscription_id_seq OWNED BY public.board_subscripti
 --
 
 CREATE TABLE public.member (
-    member_id integer NOT NULL,
+    id integer NOT NULL,
     created_at bigint NOT NULL,
     updated_at bigint NOT NULL,
+    last_seen bigint,
     user_name character varying(30) NOT NULL,
     first_name character varying(20),
     last_name character varying(20),
@@ -107,17 +73,18 @@ CREATE TABLE public.member (
     password text NOT NULL,
     avatar jsonb,
     language_preference character(2) DEFAULT 'en'::bpchar NOT NULL,
-    hide_last_name boolean DEFAULT true NOT NULL
+    hide_last_name boolean DEFAULT true NOT NULL,
+    user_role integer DEFAULT 1 NOT NULL
 );
 
 
 ALTER TABLE public.member OWNER TO dev;
 
 --
--- Name: member_member_id_seq; Type: SEQUENCE; Schema: public; Owner: dev
+-- Name: member_id_seq; Type: SEQUENCE; Schema: public; Owner: dev
 --
 
-CREATE SEQUENCE public.member_member_id_seq
+CREATE SEQUENCE public.member_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -126,13 +93,64 @@ CREATE SEQUENCE public.member_member_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.member_member_id_seq OWNER TO dev;
+ALTER TABLE public.member_id_seq OWNER TO dev;
 
 --
--- Name: member_member_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dev
+-- Name: member_id_seq1; Type: SEQUENCE; Schema: public; Owner: dev
 --
 
-ALTER SEQUENCE public.member_member_id_seq OWNED BY public.member.member_id;
+CREATE SEQUENCE public.member_id_seq1
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.member_id_seq1 OWNER TO dev;
+
+--
+-- Name: member_id_seq1; Type: SEQUENCE OWNED BY; Schema: public; Owner: dev
+--
+
+ALTER SEQUENCE public.member_id_seq1 OWNED BY public.member.id;
+
+
+--
+-- Name: poll; Type: TABLE; Schema: public; Owner: dev
+--
+
+CREATE TABLE public.poll (
+    id integer NOT NULL,
+    post_id integer,
+    answer_id integer NOT NULL,
+    vote integer NOT NULL
+);
+
+
+ALTER TABLE public.poll OWNER TO dev;
+
+--
+-- Name: poll_id_seq; Type: SEQUENCE; Schema: public; Owner: dev
+--
+
+CREATE SEQUENCE public.poll_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.poll_id_seq OWNER TO dev;
+
+--
+-- Name: poll_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dev
+--
+
+ALTER SEQUENCE public.poll_id_seq OWNED BY public.poll.id;
 
 
 --
@@ -140,7 +158,7 @@ ALTER SEQUENCE public.member_member_id_seq OWNED BY public.member.member_id;
 --
 
 CREATE TABLE public.post (
-    post_id integer NOT NULL,
+    id integer NOT NULL,
     created_at bigint NOT NULL,
     updated_at bigint NOT NULL,
     creator_id integer,
@@ -153,6 +171,28 @@ CREATE TABLE public.post (
 
 
 ALTER TABLE public.post OWNER TO dev;
+
+--
+-- Name: post_id_seq; Type: SEQUENCE; Schema: public; Owner: dev
+--
+
+CREATE SEQUENCE public.post_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.post_id_seq OWNER TO dev;
+
+--
+-- Name: post_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dev
+--
+
+ALTER SEQUENCE public.post_id_seq OWNED BY public.post.id;
+
 
 --
 -- Name: post_location; Type: TABLE; Schema: public; Owner: dev
@@ -190,10 +230,25 @@ ALTER SEQUENCE public.post_location_id_seq OWNED BY public.post_location.id;
 
 
 --
--- Name: post_post_id_seq; Type: SEQUENCE; Schema: public; Owner: dev
+-- Name: survey; Type: TABLE; Schema: public; Owner: dev
 --
 
-CREATE SEQUENCE public.post_post_id_seq
+CREATE TABLE public.survey (
+    id integer NOT NULL,
+    post_id integer,
+    question_id integer NOT NULL,
+    answer text,
+    vote integer
+);
+
+
+ALTER TABLE public.survey OWNER TO dev;
+
+--
+-- Name: survey_id_seq; Type: SEQUENCE; Schema: public; Owner: dev
+--
+
+CREATE SEQUENCE public.survey_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -202,13 +257,13 @@ CREATE SEQUENCE public.post_post_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.post_post_id_seq OWNER TO dev;
+ALTER TABLE public.survey_id_seq OWNER TO dev;
 
 --
--- Name: post_post_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dev
+-- Name: survey_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dev
 --
 
-ALTER SEQUENCE public.post_post_id_seq OWNED BY public.post.post_id;
+ALTER SEQUENCE public.survey_id_seq OWNED BY public.survey.id;
 
 
 --
@@ -216,7 +271,7 @@ ALTER SEQUENCE public.post_post_id_seq OWNED BY public.post.post_id;
 --
 
 CREATE TABLE public.team (
-    team_id integer NOT NULL,
+    id integer NOT NULL,
     created_at bigint NOT NULL,
     updated_at bigint NOT NULL,
     team_leader_id integer,
@@ -225,6 +280,28 @@ CREATE TABLE public.team (
 
 
 ALTER TABLE public.team OWNER TO dev;
+
+--
+-- Name: team_id_seq; Type: SEQUENCE; Schema: public; Owner: dev
+--
+
+CREATE SEQUENCE public.team_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.team_id_seq OWNER TO dev;
+
+--
+-- Name: team_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dev
+--
+
+ALTER SEQUENCE public.team_id_seq OWNED BY public.team.id;
+
 
 --
 -- Name: team_membership; Type: TABLE; Schema: public; Owner: dev
@@ -262,10 +339,24 @@ ALTER SEQUENCE public.team_membership_id_seq OWNED BY public.team_membership.id;
 
 
 --
--- Name: team_team_id_seq; Type: SEQUENCE; Schema: public; Owner: dev
+-- Name: token; Type: TABLE; Schema: public; Owner: dev
 --
 
-CREATE SEQUENCE public.team_team_id_seq
+CREATE TABLE public.token (
+    id integer NOT NULL,
+    created_at bigint NOT NULL,
+    uid integer NOT NULL,
+    refresh_token text
+);
+
+
+ALTER TABLE public.token OWNER TO dev;
+
+--
+-- Name: token_id_seq; Type: SEQUENCE; Schema: public; Owner: dev
+--
+
+CREATE SEQUENCE public.token_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -274,41 +365,41 @@ CREATE SEQUENCE public.team_team_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.team_team_id_seq OWNER TO dev;
+ALTER TABLE public.token_id_seq OWNER TO dev;
 
 --
--- Name: team_team_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dev
+-- Name: token_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dev
 --
 
-ALTER SEQUENCE public.team_team_id_seq OWNED BY public.team.team_id;
-
-
---
--- Name: board board_id; Type: DEFAULT; Schema: public; Owner: dev
---
-
-ALTER TABLE ONLY public.board ALTER COLUMN board_id SET DEFAULT nextval('public.board_board_id_seq'::regclass);
+ALTER SEQUENCE public.token_id_seq OWNED BY public.token.id;
 
 
 --
--- Name: board_subscription id; Type: DEFAULT; Schema: public; Owner: dev
+-- Name: board id; Type: DEFAULT; Schema: public; Owner: dev
 --
 
-ALTER TABLE ONLY public.board_subscription ALTER COLUMN id SET DEFAULT nextval('public.board_subscription_id_seq'::regclass);
-
-
---
--- Name: member member_id; Type: DEFAULT; Schema: public; Owner: dev
---
-
-ALTER TABLE ONLY public.member ALTER COLUMN member_id SET DEFAULT nextval('public.member_member_id_seq'::regclass);
+ALTER TABLE ONLY public.board ALTER COLUMN id SET DEFAULT nextval('public.board_id_seq'::regclass);
 
 
 --
--- Name: post post_id; Type: DEFAULT; Schema: public; Owner: dev
+-- Name: member id; Type: DEFAULT; Schema: public; Owner: dev
 --
 
-ALTER TABLE ONLY public.post ALTER COLUMN post_id SET DEFAULT nextval('public.post_post_id_seq'::regclass);
+ALTER TABLE ONLY public.member ALTER COLUMN id SET DEFAULT nextval('public.member_id_seq1'::regclass);
+
+
+--
+-- Name: poll id; Type: DEFAULT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public.poll ALTER COLUMN id SET DEFAULT nextval('public.poll_id_seq'::regclass);
+
+
+--
+-- Name: post id; Type: DEFAULT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public.post ALTER COLUMN id SET DEFAULT nextval('public.post_id_seq'::regclass);
 
 
 --
@@ -319,10 +410,17 @@ ALTER TABLE ONLY public.post_location ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
--- Name: team team_id; Type: DEFAULT; Schema: public; Owner: dev
+-- Name: survey id; Type: DEFAULT; Schema: public; Owner: dev
 --
 
-ALTER TABLE ONLY public.team ALTER COLUMN team_id SET DEFAULT nextval('public.team_team_id_seq'::regclass);
+ALTER TABLE ONLY public.survey ALTER COLUMN id SET DEFAULT nextval('public.survey_id_seq'::regclass);
+
+
+--
+-- Name: team id; Type: DEFAULT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public.team ALTER COLUMN id SET DEFAULT nextval('public.team_id_seq'::regclass);
 
 
 --
@@ -333,30 +431,20 @@ ALTER TABLE ONLY public.team_membership ALTER COLUMN id SET DEFAULT nextval('pub
 
 
 --
+-- Name: token id; Type: DEFAULT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public.token ALTER COLUMN id SET DEFAULT nextval('public.token_id_seq'::regclass);
+
+
+--
 -- Data for Name: board; Type: TABLE DATA; Schema: public; Owner: dev
 --
 
-COPY public.board (board_id, created_at, updated_at, creator_id, board_name) FROM stdin;
+COPY public.board (id, created_at, updated_at, creator_id, board_name) FROM stdin;
 1	1577833200000	1577833200000	1	Board1
-2	1577833200000	1577833200000	2	Board2
-3	1577833200000	1577833200000	3	Board3
-\.
-
-
---
--- Data for Name: board_subscription; Type: TABLE DATA; Schema: public; Owner: dev
---
-
-COPY public.board_subscription (id, board_id, member_id) FROM stdin;
-1	1	1
-2	1	2
-3	1	3
-4	1	4
-5	1	5
-6	2	2
-7	3	3
-8	2	5
-9	3	5
+2	1577833200000	1577833200000	1	Board2
+3	1577833200000	1577833200000	1	Board3
 \.
 
 
@@ -364,12 +452,21 @@ COPY public.board_subscription (id, board_id, member_id) FROM stdin;
 -- Data for Name: member; Type: TABLE DATA; Schema: public; Owner: dev
 --
 
-COPY public.member (member_id, created_at, updated_at, user_name, first_name, last_name, email, password, avatar, language_preference, hide_last_name) FROM stdin;
-1	1577833200000	1577833200000	user1	Max	Mustermann	Max.Mustermann@ma.il	passwordA	\N	en	t
-2	1577833200000	1577833200000	user2	Peter	Mustermann	Peter.Mustermann@ma.il	passwordB	\N	en	t
-3	1577833200000	1577833200000	user3	Hans	Mustermann	Hans.Mustermann@ma.il	passwordC	\N	en	t
-4	1577833200000	1577833200000	user4	Bibi	Mustermann	Bibi.Mustermann@ma.il	passwordD	\N	en	t
-5	1577833200000	1577833200000	user5	Heidi	Mustermann	Heidi.Mustermann@ma.il	passwordE	\N	en	t
+COPY public.member (id, created_at, updated_at, last_seen, user_name, first_name, last_name, email, password, avatar, language_preference, hide_last_name, user_role) FROM stdin;
+1	1577833200000	1577833200000	\N	admin	Max	Admin	admin@ma.il	$2b$10$0mjxHpG1qnZzU5PBCW9PSe2BZ19299625/x53nkV510Ljcj3ph3Ia	\N	en	t	0
+2	1577833200000	1577833200000	\N	user1	Max	Mustermann	max.mustermann@ma.il	$2b$10$B2gmqgKGsSbm8G2VIjulKOadTUMctZ7LC3ETxyOn49XnkVrgS.Ghy	\N	en	t	1
+3	1577833200000	1577833200000	\N	user2	Peter	Mustermann	peter.mustermann@ma.il	$2b$10$oPMKDfrsHctVQwU2KPoOfOdeef0ZD0WAKCvSKFgS5Ayv6HS1umEwG	\N	en	t	1
+4	1577833200000	1577833200000	\N	user3	Hans	Mustermann	hans.mustermann@ma.il	$2b$10$byrA4n1xu4uOzJm4W71bneIyjh0EChk6wAPN4n2r0.jWaopLLVIFO	\N	en	t	1
+5	1577833200000	1577833200000	\N	user4	Bibi	Mustermann	bibi.mustermann@ma.il	$2b$10$k9yjuXtnda9eqmYoLGGlTumNsqR8WyaEMMtSj.qrtKpE1mRhTvQzq	\N	en	t	1
+6	1577833200000	1577833200000	\N	user5	Heidi	Mustermann	heidi.mustermann@ma.il	$2b$10$f5E5wmCfNVE2blW0L1ucNOu5.7F3FbdR.n6p30m.07TzwY/u2kTce	\N	en	t	1
+\.
+
+
+--
+-- Data for Name: poll; Type: TABLE DATA; Schema: public; Owner: dev
+--
+
+COPY public.poll (id, post_id, answer_id, vote) FROM stdin;
 \.
 
 
@@ -377,7 +474,7 @@ COPY public.member (member_id, created_at, updated_at, user_name, first_name, la
 -- Data for Name: post; Type: TABLE DATA; Schema: public; Owner: dev
 --
 
-COPY public.post (post_id, created_at, updated_at, creator_id, type_of_post, title, content, due_date, interactive_due_date) FROM stdin;
+COPY public.post (id, created_at, updated_at, creator_id, type_of_post, title, content, due_date, interactive_due_date) FROM stdin;
 1	1577833200000	1577833200000	1	application/note	Note 1	<h1>Content</h1>	1587333600000	0
 2	1577833200000	1577833200000	2	application/note	Note 2	<h1>Content</h1>	1587333600000	0
 3	1577833200000	1577833200000	3	application/note	Note 3	<h1>Content</h1>	1587333600000	0
@@ -390,6 +487,7 @@ COPY public.post (post_id, created_at, updated_at, creator_id, type_of_post, tit
 10	1577833200000	1577833200000	2	application/note	Old Note 2	<h1>Content</h1>	1577833200000	0
 11	1577833200000	1577833200000	3	application/note	Old Note 3	<h1>Content</h1>	1577833200000	0
 \.
+
 
 --
 -- Data for Name: post_location; Type: TABLE DATA; Schema: public; Owner: dev
@@ -416,12 +514,20 @@ COPY public.post_location (id, board_id, post_id) FROM stdin;
 
 
 --
+-- Data for Name: survey; Type: TABLE DATA; Schema: public; Owner: dev
+--
+
+COPY public.survey (id, post_id, question_id, answer, vote) FROM stdin;
+\.
+
+
+--
 -- Data for Name: team; Type: TABLE DATA; Schema: public; Owner: dev
 --
 
-COPY public.team (team_id, created_at, updated_at, team_leader_id, team_name) FROM stdin;
+COPY public.team (id, created_at, updated_at, team_leader_id, team_name) FROM stdin;
 1	1577833200000	1577833200000	1	Team1
-2	1577833200000	1577833200000	2	Team2
+2	1577833200000	1577833200000	1	Team2
 \.
 
 
@@ -430,32 +536,50 @@ COPY public.team (team_id, created_at, updated_at, team_leader_id, team_name) FR
 --
 
 COPY public.team_membership (id, team_id, member_id) FROM stdin;
-1	1	1
-2	2	2
-3	1	3
-4	2	3
 \.
 
 
 --
--- Name: board_board_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dev
+-- Data for Name: token; Type: TABLE DATA; Schema: public; Owner: dev
 --
 
-SELECT pg_catalog.setval('public.board_board_id_seq', 3, true);
-
-
---
--- Name: board_subscription_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dev
---
-
-SELECT pg_catalog.setval('public.board_subscription_id_seq', 9, true);
+COPY public.token (id, created_at, uid, refresh_token) FROM stdin;
+\.
 
 
 --
--- Name: member_member_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dev
+-- Name: board_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dev
 --
 
-SELECT pg_catalog.setval('public.member_member_id_seq', 5, true);
+SELECT pg_catalog.setval('public.board_id_seq', 3, true);
+
+
+--
+-- Name: member_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dev
+--
+
+SELECT pg_catalog.setval('public.member_id_seq', 1, false);
+
+
+--
+-- Name: member_id_seq1; Type: SEQUENCE SET; Schema: public; Owner: dev
+--
+
+SELECT pg_catalog.setval('public.member_id_seq1', 6, true);
+
+
+--
+-- Name: poll_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dev
+--
+
+SELECT pg_catalog.setval('public.poll_id_seq', 1, false);
+
+
+--
+-- Name: post_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dev
+--
+
+SELECT pg_catalog.setval('public.post_id_seq', 11, true);
 
 
 --
@@ -466,24 +590,31 @@ SELECT pg_catalog.setval('public.post_location_id_seq', 16, true);
 
 
 --
--- Name: post_post_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dev
+-- Name: survey_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dev
 --
 
-SELECT pg_catalog.setval('public.post_post_id_seq', 11, true);
+SELECT pg_catalog.setval('public.survey_id_seq', 1, false);
+
+
+--
+-- Name: team_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dev
+--
+
+SELECT pg_catalog.setval('public.team_id_seq', 2, true);
 
 
 --
 -- Name: team_membership_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dev
 --
 
-SELECT pg_catalog.setval('public.team_membership_id_seq', 4, true);
+SELECT pg_catalog.setval('public.team_membership_id_seq', 1, false);
 
 
 --
--- Name: team_team_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dev
+-- Name: token_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dev
 --
 
-SELECT pg_catalog.setval('public.team_team_id_seq', 2, true);
+SELECT pg_catalog.setval('public.token_id_seq', 1, false);
 
 
 --
@@ -499,15 +630,7 @@ ALTER TABLE ONLY public.board
 --
 
 ALTER TABLE ONLY public.board
-    ADD CONSTRAINT board_pkey PRIMARY KEY (board_id);
-
-
---
--- Name: board_subscription board_subscription_pkey; Type: CONSTRAINT; Schema: public; Owner: dev
---
-
-ALTER TABLE ONLY public.board_subscription
-    ADD CONSTRAINT board_subscription_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT board_pkey PRIMARY KEY (id);
 
 
 --
@@ -523,7 +646,7 @@ ALTER TABLE ONLY public.member
 --
 
 ALTER TABLE ONLY public.member
-    ADD CONSTRAINT member_pkey PRIMARY KEY (member_id);
+    ADD CONSTRAINT member_pkey PRIMARY KEY (id);
 
 
 --
@@ -532,6 +655,14 @@ ALTER TABLE ONLY public.member
 
 ALTER TABLE ONLY public.member
     ADD CONSTRAINT member_user_name_key UNIQUE (user_name);
+
+
+--
+-- Name: poll poll_pkey; Type: CONSTRAINT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public.poll
+    ADD CONSTRAINT poll_pkey PRIMARY KEY (id);
 
 
 --
@@ -547,7 +678,15 @@ ALTER TABLE ONLY public.post_location
 --
 
 ALTER TABLE ONLY public.post
-    ADD CONSTRAINT post_pkey PRIMARY KEY (post_id);
+    ADD CONSTRAINT post_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: survey survey_pkey; Type: CONSTRAINT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public.survey
+    ADD CONSTRAINT survey_pkey PRIMARY KEY (id);
 
 
 --
@@ -563,7 +702,7 @@ ALTER TABLE ONLY public.team_membership
 --
 
 ALTER TABLE ONLY public.team
-    ADD CONSTRAINT team_pkey PRIMARY KEY (team_id);
+    ADD CONSTRAINT team_pkey PRIMARY KEY (id);
 
 
 --
@@ -575,27 +714,27 @@ ALTER TABLE ONLY public.team
 
 
 --
+-- Name: token token_pkey; Type: CONSTRAINT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public.token
+    ADD CONSTRAINT token_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: board board_creator_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: dev
 --
 
 ALTER TABLE ONLY public.board
-    ADD CONSTRAINT board_creator_id_fkey FOREIGN KEY (creator_id) REFERENCES public.member(member_id) ON DELETE SET NULL;
+    ADD CONSTRAINT board_creator_id_fkey FOREIGN KEY (creator_id) REFERENCES public.member(id) ON DELETE SET NULL;
 
 
 --
--- Name: board_subscription board_subscription_board_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: dev
+-- Name: poll poll_post_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: dev
 --
 
-ALTER TABLE ONLY public.board_subscription
-    ADD CONSTRAINT board_subscription_board_id_fkey FOREIGN KEY (board_id) REFERENCES public.board(board_id) ON DELETE CASCADE;
-
-
---
--- Name: board_subscription board_subscription_member_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: dev
---
-
-ALTER TABLE ONLY public.board_subscription
-    ADD CONSTRAINT board_subscription_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.member(member_id) ON DELETE CASCADE;
+ALTER TABLE ONLY public.poll
+    ADD CONSTRAINT poll_post_id_fkey FOREIGN KEY (post_id) REFERENCES public.post(id) ON DELETE CASCADE;
 
 
 --
@@ -603,7 +742,7 @@ ALTER TABLE ONLY public.board_subscription
 --
 
 ALTER TABLE ONLY public.post
-    ADD CONSTRAINT post_creator_id_fkey FOREIGN KEY (creator_id) REFERENCES public.member(member_id) ON DELETE SET NULL;
+    ADD CONSTRAINT post_creator_id_fkey FOREIGN KEY (creator_id) REFERENCES public.member(id) ON DELETE SET NULL;
 
 
 --
@@ -611,7 +750,7 @@ ALTER TABLE ONLY public.post
 --
 
 ALTER TABLE ONLY public.post_location
-    ADD CONSTRAINT post_location_board_id_fkey FOREIGN KEY (board_id) REFERENCES public.board(board_id) ON DELETE CASCADE;
+    ADD CONSTRAINT post_location_board_id_fkey FOREIGN KEY (board_id) REFERENCES public.board(id) ON DELETE CASCADE;
 
 
 --
@@ -619,7 +758,15 @@ ALTER TABLE ONLY public.post_location
 --
 
 ALTER TABLE ONLY public.post_location
-    ADD CONSTRAINT post_location_post_id_fkey FOREIGN KEY (post_id) REFERENCES public.post(post_id) ON DELETE CASCADE;
+    ADD CONSTRAINT post_location_post_id_fkey FOREIGN KEY (post_id) REFERENCES public.post(id) ON DELETE CASCADE;
+
+
+--
+-- Name: survey survey_post_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public.survey
+    ADD CONSTRAINT survey_post_id_fkey FOREIGN KEY (post_id) REFERENCES public.post(id) ON DELETE CASCADE;
 
 
 --
@@ -627,7 +774,7 @@ ALTER TABLE ONLY public.post_location
 --
 
 ALTER TABLE ONLY public.team_membership
-    ADD CONSTRAINT team_membership_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.member(member_id) ON DELETE CASCADE;
+    ADD CONSTRAINT team_membership_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.member(id) ON DELETE CASCADE;
 
 
 --
@@ -635,7 +782,7 @@ ALTER TABLE ONLY public.team_membership
 --
 
 ALTER TABLE ONLY public.team_membership
-    ADD CONSTRAINT team_membership_team_id_fkey FOREIGN KEY (team_id) REFERENCES public.team(team_id) ON DELETE CASCADE;
+    ADD CONSTRAINT team_membership_team_id_fkey FOREIGN KEY (team_id) REFERENCES public.team(id) ON DELETE CASCADE;
 
 
 --
@@ -643,7 +790,7 @@ ALTER TABLE ONLY public.team_membership
 --
 
 ALTER TABLE ONLY public.team
-    ADD CONSTRAINT team_team_leader_id_fkey FOREIGN KEY (team_leader_id) REFERENCES public.member(member_id) ON DELETE SET NULL;
+    ADD CONSTRAINT team_team_leader_id_fkey FOREIGN KEY (team_leader_id) REFERENCES public.member(id) ON DELETE SET NULL;
 
 
 --

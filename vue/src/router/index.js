@@ -44,6 +44,11 @@ export default new Router({
         path: 'register',
         name: 'Register',
         component: () => import('../views/Register.vue')
+      },
+      {
+        path: 'cms',
+        name: 'CMS',
+        component: () => import('../views/CMS.vue')
       }
     ]
 
@@ -51,7 +56,6 @@ export default new Router({
   // Redirect to 404 page if trying to visit invalid path
   {
     path: '*',
-    // redirect: '/home'
     component: () => import('../views/404.vue')
   }
   ]
