@@ -6,8 +6,6 @@
       id="titlebar"
       title="Quality Assurance"
       @plus-clicked="plusClicked"
-      @change-language="changeLanguage"
-      :english="english"
       :buttonsActive=true
     />
     <Board
@@ -23,7 +21,6 @@
 import axios from 'axios'
 import Board from '@/components/Board.vue'
 import Header from '@/components/Header.vue'
-import { i18n } from '@/main.js'
 
 export default {
   name: 'NoticeBoard',
@@ -35,45 +32,13 @@ export default {
     return {
       notes: [],
       boardId: 1,
-      editorActive: false,
-      english: true
+      editorActive: false
     }
   },
   created () {
     if (!window.localStorage.getItem('mnb_atok')) { window.location = '/login' }
-
     this.refreshToken()
-
-    axios
-      .get('http://localhost:1337/api/posts/all/' + this.boardId, {
-        headers: {
-          'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
-        }
-      })
-      .then(response => { this.notes = response.data.posts })
-      .catch(err => {
-        switch (err.response.status) {
-          case 400:
-            window.location = '/login'
-            break
-          case 401:
-            break
-          case 500:
-          default:
-            this.$log.error(err)
-        }
-      })
-
-    switch (i18n.locale.substring(0, 2)) {
-      case 'en':
-        this.english = true
-        break
-      case 'de':
-        this.english = false
-        break
-      default:
-        this.english = true
-    }
+    this.fetchPosts()
   },
   methods: {
     refreshToken () {
@@ -85,20 +50,18 @@ export default {
           window.localStorage.setItem('mnb_atok', response.data.accessToken)
         })
         .catch(err => {
-          this.$log.error(err.response.config.token)
           switch (err.response.status) {
-            case 500:
-              this.$log.error(err)
+            case 401:
+              window.location = '/login'
               break
+            case 400:
+            case 500:
             default:
               this.$log.error(err)
           }
         })
     },
-    addNote () {
-      // Refresh notice board
-      if (!window.localStorage.getItem('mnb_atok')) { window.location = '/login' }
-      this.refreshToken()
+    fetchPosts () {
       axios
         .get('http://localhost:1337/api/posts/all/' + this.boardId, {
           headers: {
@@ -108,32 +71,25 @@ export default {
         .then(response => { this.notes = response.data.posts })
         .catch(err => {
           switch (err.response.status) {
-            case 400:
+            case 401:
               window.location = '/login'
               break
-            case 401:
-              break
             case 500:
+            case 400:
             default:
               this.$log.error(err)
           }
         })
+    },
+    addNote () {
+      this.refreshToken()
+      this.fetchPosts()
 
       this.editorActive = false
     },
     plusClicked () {
       // Show/hide editor sidebar
       this.editorActive = !this.editorActive
-    },
-    changeLanguage () {
-      this.english = !this.english
-      if (this.english) {
-        i18n.locale = 'en-GB'
-      } else {
-        i18n.locale = 'de-DE'
-      }
-      // TODO: Change user settings
-      // User system does not exist yet.
     }
   }
 }
