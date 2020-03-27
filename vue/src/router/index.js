@@ -14,13 +14,16 @@ export default new Router({
     path: '/',
     component: RouterView, // Empty router object. Do not delete.
     beforeEnter (to, from, next) {
-      // Retrieve browser locale
-      var lang = window.navigator.userLanguage || window.navigator.language
-      // Check if browser locale is supported. Change to 'en-GB' if not.
-      if (!I18N_LANGUAGES.includes(lang)) { i18n.locale = 'en-GB' } else {
-        if (i18n.locale !== lang) { i18n.locale = lang }
+      // Change locale to prefered locale, if available within local storage
+      // If not, change to browser locale
+      if(window.localStorage.getItem('mnb_lang')){
+        i18n.locale = window.localStorage.getItem('mnb_lang')
+      } else {
+        var lang = window.navigator.userLanguage || window.navigator.language
+        if (!I18N_LANGUAGES.includes(lang)) { i18n.locale = 'en-GB' } else {
+          if (i18n.locale !== lang) { i18n.locale = lang }
+        }
       }
-      // alert('lang: ' + lang + '  i18n: ' + i18n.locale);
       return next()
     },
 

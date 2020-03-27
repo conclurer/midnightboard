@@ -6,8 +6,6 @@
     <Header
       id="titlebar"
       title="Content Management System"
-      @change-language="changeLanguage"
-      :english="english"
       :buttonsActive=false
     />
     <div
@@ -85,7 +83,6 @@ import Header from '@/components/Header.vue'
 import UserList from '@/components/UserList.vue'
 import AddUser from '@/components/AddUser.vue'
 import PermissionPanel from '@/components/PermissionPanel.vue'
-import { i18n } from '@/main.js'
 
 export default {
   name: 'CMS',
@@ -97,34 +94,13 @@ export default {
   },
   data () {
     return {
-      english: true,
       selected: 'user list'
     }
   },
   created () {
     if (!window.localStorage.getItem('mnb_atok')) { window.location = '/login' }
-    switch (i18n.locale.substring(0, 2)) {
-      case 'en':
-        this.english = true
-        break
-      case 'de':
-        this.english = false
-        break
-      default:
-        this.english = true
-    }
   },
   methods: {
-    changeLanguage () {
-      this.english = !this.english
-      if (this.english) {
-        i18n.locale = 'en-GB'
-      } else {
-        i18n.locale = 'de-DE'
-      }
-      // TODO: Change user settings
-      // User system does not exist yet.
-    },
     changeContent (choice) {
       switch (choice) {
         case 'user list':
