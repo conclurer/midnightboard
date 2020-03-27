@@ -67,7 +67,7 @@ beforeAll(() => {
         });
     })
     .catch((err) => {
-      console.log('JEST:Board::: Error on setup: ' + err);
+      console.log('JEST:Poll::: Error on setup: ' + err);
       expect(null).not.toBeNull();
     });
 });
@@ -195,9 +195,27 @@ afterAll(() => {
       Authorization: 'Bearer ' + adminLogin.token,
     }
   })
-    .then((response) => expect(response.status).toBe(200))
-    .catch(() => {
-      expect(null).not.toBeNull();
+    .then((response) => {
+      expect(response.status).toBe(200);
+    })
+  //+
+    .then(() => {
+      return fetch('http://localhost:1337/api/boards/' + boardId, {
+        method: 'DELETE',
+        headers: {
+          Authorization: 'Bearer ' + adminLogin.token,
+        }
+      })
+        .then((response) => {
+          expect(response.status).toBe(200);
+        })
+        .catch((err) => {
+          throw err;
+        });
+    })
+  //+
+    .catch((err) => {
+      throw err;
     });
 });
 //#endregion
