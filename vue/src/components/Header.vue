@@ -81,14 +81,14 @@ export default {
     cToEN (e) {
       e.preventDefault()
       if (this.selLanguage === 'en') { return }
-      window.localStorage.setItem('mnb_lang','en-GB')
+      window.localStorage.setItem('mnb_lang', 'en-GB')
       this.selLanguage = 'en'
       i18n.locale = 'en-GB'
     },
     cToDE (e) {
       e.preventDefault()
       if (this.selLanguage === 'de') { return }
-      window.localStorage.setItem('mnb_lang','de-DE')
+      window.localStorage.setItem('mnb_lang', 'de-DE')
       this.selLanguage = 'de'
       i18n.locale = 'de-DE'
     }

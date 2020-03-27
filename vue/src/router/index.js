@@ -16,7 +16,7 @@ export default new Router({
     beforeEnter (to, from, next) {
       // Change locale to prefered locale, if available within local storage
       // If not, change to browser locale
-      if(window.localStorage.getItem('mnb_lang')){
+      if (window.localStorage.getItem('mnb_lang')) {
         i18n.locale = window.localStorage.getItem('mnb_lang')
       } else {
         var lang = window.navigator.userLanguage || window.navigator.language
