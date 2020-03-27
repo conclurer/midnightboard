@@ -32,6 +32,10 @@ module.exports = {
     avatar: {
       description: 'New Avatar. Must be base64 encoded',
       type: 'ref'
+    },
+    role: {
+      description: 'User role within the system.',
+      type: 'number'
     }
   },
 
@@ -55,6 +59,10 @@ module.exports = {
     nonExistent: {
       description: 'User does not exist',
       statusCode: 404
+    },
+    unauthorized: {
+      description: 'Unauthorized request',
+      statusCode: 403
     }
   },
 
@@ -98,6 +106,17 @@ module.exports = {
       // TODO Validate avatar
       valuesToChange.avatar = inputs.avatar;
     }
+
+    if(inputs.role) {
+      if(!this.req.me['role'] === 0) {
+        return exits.unauthorized();
+      }
+      if(![0, 1].includes(inputs.role)) {
+        return exits.invalidParams('Invalud user role');
+      }
+      valuesToChange.role = inputs.role;
+    }
+
 
     try {
       var updatedUser = await Member.updateOne({ id: inputs.userId })
