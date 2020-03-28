@@ -99,7 +99,9 @@
         "toSignUp":"Ich habe noch keinen Account",
         "adopt":"Übernehmen",
         "userAdded":"Benutzer erfolgreich hinzugefügt",
-        "userDeleted":"Benutzer erfolgreich gelöscht"
+        "userDeleted":"Benutzer erfolgreich gelöscht",
+        "submit":"Bestätigen",
+        "reset":"Zurücksetzen"
     },
     "cms":{
         "userMgmt":"Benutzerverwaltung",
@@ -109,7 +111,8 @@
         "contentMgmt":"Inhaltsverwaltung",
         "editBoards":"Boards verwalten",
         "groupMgmt":"Gruppenverwaltung",
-        "editGroups":"Gruppen bearbeiten"
+        "editGroups":"Gruppen bearbeiten",
+        "unexpectedError":"Etwas ist schiefgelaufen..."
     },
     "userList":{
         "id":"Benutzer-ID",
@@ -131,11 +134,11 @@
     "register":{
         "passwordMissmatch":"Passwörter stimmen nicht überein",
         "nameTaken":"Nutzername oder Email bereits vergeben",
-        "malEmail":"Invalide Email",
-        "malFirstName":"Invalider Vorname",
-        "malLastName":"Invalider Nachname",
-        "malUsername":"Invalider Nutzername",
-        "malPassword":"Passwort muss mindestens 8 stellen lang sein, und 1 Groß-, 1 Kleinbuchstabe und 1 Sonderzeichen oder Zahl enthalten",
+        "malEmail":"Muss eine valide Email Addresse sein",
+        "malFirstName":"Muss mindestens 2 zeichen enthalten und darf keine Sonderzeichen enthalten",
+        "malLastName":"Muss mindestens 2 zeichen enthalten und darf keine Sonderzeichen enthalten",
+        "malUsername":"Muss mindestens 5 zeichen enthalten und darf keine Sonderzeichen enthalten",
+        "malPassword":"Muss mindestens 8 stellen lang sein und 1 Groß-, 1 Kleinbuchstabe und 1 Sonderzeichen oder Zahl enthalten",
         "missingForms":"Bitte fülle alle Felder aus"
     },
     "login":{

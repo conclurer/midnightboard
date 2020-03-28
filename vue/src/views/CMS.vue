@@ -78,11 +78,10 @@
 
 <script>
 // @ is an alias to /src
-// import axios from 'axios'
 import Header from '@/components/Header.vue'
-import UserList from '@/components/UserList.vue'
-import AddUser from '@/components/AddUser.vue'
-import PermissionPanel from '@/components/PermissionPanel.vue'
+import UserList from '@/components/cms/UserList.vue'
+import AddUser from '@/components/cms/AddUser.vue'
+import PermissionPanel from '@/components/cms/PermissionPanel.vue'
 
 export default {
   name: 'CMS',
