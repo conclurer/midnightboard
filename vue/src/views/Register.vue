@@ -5,8 +5,6 @@
     <Header
       id="titlebar"
       :title="$t('ui.register')"
-      @change-language="changeLanguage"
-      :english="english"
       :buttonsActive=false
     />
     <b-card
@@ -17,7 +15,7 @@
     >
       <br>
       <form>
-        <h2 v-html="$t('ui.createAccount')"></h2>
+        <h4 v-html="$t('ui.createAccount')"></h4>
         <br>
         <input type="text" id="fname" name="fname" v-model="fname" required
           minlength="3" maxlength="20" :placeholder="$t('profile.firstName')" size="36">
@@ -79,7 +77,6 @@
 // @ is an alias to /src
 import axios from 'axios'
 import Header from '@/components/Header.vue'
-import { i18n } from '@/main.js'
 
 export default {
   name: 'NoticeBoard',
@@ -94,20 +91,7 @@ export default {
       email: '',
       passwd: '',
       passwd2: '',
-      english: true,
       err: []
-    }
-  },
-  created () {
-    switch (i18n.locale.substring(0, 2)) {
-      case 'en':
-        this.english = true
-        break
-      case 'de':
-        this.english = false
-        break
-      default:
-        this.english = true
     }
   },
   methods: {
@@ -147,23 +131,10 @@ export default {
               this.err.push(error.response.data.error.code)
               break
             case 500:
-              // TODO redirect to err500 page
-              this.$log.error(error)
-              break
             default:
               this.$log.error(error)
           }
         })
-    },
-    changeLanguage () {
-      this.english = !this.english
-      if (this.english) {
-        i18n.locale = 'en-GB'
-      } else {
-        i18n.locale = 'de-DE'
-      }
-      // TODO: Change user settings
-      // User system does not exist yet.
     }
   }
 }

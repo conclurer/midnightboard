@@ -14,77 +14,38 @@
         {{ title }}
       </b-nav-text>
       <b-navbar-nav class="ml-auto">
-        <div
-          v-if="buttonsActive"
-        >
-          <b-nav-item>
+        <div>
+          <b-nav-item v-if="buttonsActive">
             <span
               class="unselectable"
               unselectable="on"
             ><a @click="plusClicked"><font-awesome-icon icon="plus" /> {{$t('ui.add')}}</a></span>
           </b-nav-item>
-          <b-nav-item>
+          <b-nav-item v-if="buttonsActive">
             <span
               class="unselectable"
               unselectable="on"
             ><font-awesome-icon icon="user-circle" /> {{$t('ui.profile')}}</span>
           </b-nav-item>
+
           <b-nav-item-dropdown
-            v-if="english"
             id="flag"
             class="unselectable"
             unselectable="on"
             right
           >
-            <template v-slot:button-content>
+
+            <template v-if="selLanguage === 'en'" v-slot:button-content>
               &#127468;&#127463;
             </template>
-            <b-dropdown-item>&#127468;&#127463;</b-dropdown-item>
-            <b-dropdown-item @click="changeLanguage">&#127465;&#127466;</b-dropdown-item>
-          </b-nav-item-dropdown>
-          <b-nav-item-dropdown
-            v-if="!english"
-            id="flag"
-            class="unselectable"
-            unselectable="on"
-            right
-          >
-            <template v-slot:button-content>
+            <template v-else-if="selLanguage === 'de'" v-slot:button-content>
               &#127465;&#127466;
             </template>
-            <b-dropdown-item @click="changeLanguage">&#127468;&#127463;</b-dropdown-item>
-            <b-dropdown-item>&#127465;&#127466;</b-dropdown-item>
+
+            <b-dropdown-item @click="cToEN">&#127468;&#127463;</b-dropdown-item>
+            <b-dropdown-item @click="cToDE">&#127465;&#127466;</b-dropdown-item>
           </b-nav-item-dropdown>
-        </div>
-        <div
-          v-else
-        >
-          <b-nav-item-dropdown
-            v-if="english"
-            id="flag"
-            class="unselectable"
-            unselectable="on"
-            right
-          >
-            <template v-slot:button-content>
-              &#127468;&#127463;
-            </template>
-            <b-dropdown-item>&#127468;&#127463;</b-dropdown-item>
-            <b-dropdown-item @click="changeLanguage">&#127465;&#127466;</b-dropdown-item>
-          </b-nav-item-dropdown>
-          <b-nav-item-dropdown
-            v-if="!english"
-            id="flag"
-            class="unselectable"
-            unselectable="on"
-            right
-          >
-            <template v-slot:button-content>
-              &#127465;&#127466;
-            </template>
-            <b-dropdown-item @click="changeLanguage">&#127468;&#127463;</b-dropdown-item>
-            <b-dropdown-item>&#127465;&#127466;</b-dropdown-item>
-          </b-nav-item-dropdown>
+
         </div>
       </b-navbar-nav>
     </b-navbar>
@@ -92,21 +53,44 @@
 </template>
 
 <script>
+import { i18n } from '@/main.js'
 export default {
   name: 'Header',
-  props: ['english', 'buttonsActive', 'title'],
+  props: ['buttonsActive', 'title'],
+  data () {
+    return {
+      selLanguage: ''
+    }
+  },
+  created () {
+    switch (i18n.locale.substring(0, 2)) {
+      case 'de':
+        this.selLanguage = 'de'
+        break
+      case 'en':
+      default:
+        this.selLanguage = 'en'
+    }
+  },
   methods: {
     plusClicked (e) {
       e.preventDefault()
-
       // Send up to parent
       this.$emit('plus-clicked')
     },
-    changeLanguage (e) {
+    cToEN (e) {
       e.preventDefault()
-
-      // Send up to parent
-      this.$emit('change-language')
+      if (this.selLanguage === 'en') { return }
+      window.localStorage.setItem('mnb_lang', 'en-GB')
+      this.selLanguage = 'en'
+      i18n.locale = 'en-GB'
+    },
+    cToDE (e) {
+      e.preventDefault()
+      if (this.selLanguage === 'de') { return }
+      window.localStorage.setItem('mnb_lang', 'de-DE')
+      this.selLanguage = 'de'
+      i18n.locale = 'de-DE'
     }
   }
 }
@@ -136,14 +120,15 @@ export default {
 
   #flag {
     font-size: 25px;
+    color: #FFF
   }
 
   /* Alternative highlight styles:
-
    padding: 5px;
    border: 2px solid var(--accent);
    border-style: none none solid none;
 
    text-shadow: 1px 1px #aaa;
+
   */
 </style>

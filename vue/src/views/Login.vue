@@ -5,8 +5,6 @@
     <Header
       id="titlebar"
       title="Login"
-      @change-language="changeLanguage"
-      :english="english"
       :buttonsActive=false
     />
     <b-card
@@ -47,7 +45,6 @@
 // @ is an alias to /src
 import axios from 'axios'
 import Header from '@/components/Header.vue'
-import { i18n } from '@/main.js'
 
 export default {
   name: 'NoticeBoard',
@@ -58,20 +55,7 @@ export default {
     return {
       email: '',
       passwd: '',
-      english: true,
       inval: false
-    }
-  },
-  created () {
-    switch (i18n.locale.substring(0, 2)) {
-      case 'en':
-        this.english = true
-        break
-      case 'de':
-        this.english = false
-        break
-      default:
-        this.english = true
     }
   },
   methods: {
@@ -91,7 +75,6 @@ export default {
           switch (err.response.status) {
             case 400:
             case 403:
-              this.$log.debug(err)
               this.inval = true
               break
             case 500:
@@ -99,16 +82,6 @@ export default {
               this.$log.error(err)
           }
         })
-    },
-    changeLanguage () {
-      this.english = !this.english
-      if (this.english) {
-        i18n.locale = 'en-GB'
-      } else {
-        i18n.locale = 'de-DE'
-      }
-      // TODO: Change user settings
-      // User system does not exist yet.
     }
   }
 }
