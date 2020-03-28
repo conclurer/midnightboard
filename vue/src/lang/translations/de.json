@@ -109,7 +109,9 @@
         "contentMgmt":"Inhaltsverwaltung",
         "editBoards":"Boards verwalten",
         "groupMgmt":"Gruppenverwaltung",
-        "editGroups":"Gruppen bearbeiten"
+        "editGroups":"Gruppen bearbeiten",
+        "noSelfDelete":"Admins können sich nicht selbst löschen",
+        "unexpectedError":"Etwas ist schiefgelaufen..."
     },
     "userList":{
         "id":"Benutzer-ID",

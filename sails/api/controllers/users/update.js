@@ -32,6 +32,10 @@ module.exports = {
     avatar: {
       description: 'New Avatar. Must be base64 encoded',
       type: 'ref'
+    },
+    role: {
+      description: 'User role within the system.',
+      type: 'number'
     }
   },
 
@@ -55,6 +59,10 @@ module.exports = {
     nonExistent: {
       description: 'User does not exist',
       statusCode: 404
+    },
+    unauthorized: {
+      description: 'Unauthorized request',
+      statusCode: 403
     }
   },
 
@@ -70,7 +78,7 @@ module.exports = {
       if(['en', 'de'].includes(inputs.languagePreference)) {
         valuesToChange.languagePreference = inputs.languagePreference;
       } else {
-        return exits.invalidParams('Invalid langaugePreference');
+        return exits.invalidParams('Invalid languagePreference');
       }
     }
     if(inputs.firstName) {
@@ -98,6 +106,16 @@ module.exports = {
       // TODO Validate avatar
       valuesToChange.avatar = inputs.avatar;
     }
+
+    if([0, 1].includes(inputs.role)) {
+      if(!this.req.me['role'] === 0) {
+        return exits.unauthorized();
+      }
+      valuesToChange.role = inputs.role;
+    } else if(inputs.role) {
+      return exits.invalidParams('Invalid user role');
+    }
+
 
     try {
       var updatedUser = await Member.updateOne({ id: inputs.userId })

@@ -2,13 +2,14 @@
   <div
     class="user-list"
   >
-    <div
-      v-if="success"
-      class="bg-success"
-    >
-      {{$t('ui.userDeleted')}}
+    <div>
+      <br v-if="delStatus===0">
+      <h4 v-else-if="delStatus===200" class="bg-success">{{$t('ui.userDeleted')}}</h4>
+      <h4 v-else-if="delStatus===403" class="bg-danger">{{$t('cms.noSelfDelete')}}</h4>
+      <h4 v-else class="bg-danger">{{$t('cms.unexpectedError')}}</h4>
+    <br>
     </div>
-    <br v-if="success">
+
     <table
       border
     >
@@ -50,7 +51,7 @@ export default {
   data () {
     return {
       members: [],
-      success: false
+      delStatus: 0
     }
   },
   created () {
@@ -69,8 +70,6 @@ export default {
           this.$log.error(err.response.config.token)
           switch (err.response.status) {
             case 500:
-              this.$log.error(err)
-              break
             default:
               this.$log.error(err)
           }
@@ -84,11 +83,16 @@ export default {
             'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
           }
         })
-        .then(response => { this.success = true; this.loadUserData() })
+        .then(response => {
+          this.delStatus = 200
+          this.loadUserData()
+        })
         .catch(err => {
           switch (err.response.status) {
-            case 400:
+            case 403:
+              this.delStatus = err.response.status
               break
+            case 400:
             case 401:
             case 500:
             default:
@@ -107,8 +111,8 @@ export default {
         .then(response => { this.members = response.data.sort(compare) })
         .catch(err => {
           switch (err.response.status) {
-            case 400:
             case 401:
+            case 400:
             case 500:
             default:
               this.$log.error(err)
