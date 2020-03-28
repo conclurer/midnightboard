@@ -2,6 +2,8 @@
 const fetch = require('node-fetch');
 const returnedData = {};
 
+const adminLoginToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJp'
+  + 'ZCI6MSwicm9sZSI6MCwiaWF0IjoxNTg1NDAwMDM2LCJleHAiOjE2MTY5MzYwMzZ9.ZeNk9pB6a4lEYyD2ihlAGocy5Q2RLzhc117_ZVDMgB0';
 const validRegistrationData = {
   userName: 'JESTUser1',
   email: 'JEST@test.mail',
@@ -42,8 +44,8 @@ test('TEST:USER::: Register user:  Valid user', () => {
       expect(jsonString.id).not.toBeUndefined();
       returnedData.id = jsonString.id;
     })
-    .catch(() => {
-      expect(null).not.toBeNull();
+    .catch((err) => {
+      throw err;
     });
 });
 
@@ -58,8 +60,8 @@ test('TEST:USER::: Register duplicate user', () => {
     .then((response) => {
       expect(response.status).toBe(409);
     })
-    .catch(() => {
-      expect(null).not.toBeNull();
+    .catch((err) => {
+      throw err;
     });
 });
 
@@ -85,8 +87,8 @@ test('TEST:USER::: Login using email', () => {
       expect(jsonString.accessToken).not.toBeUndefined();
       expect(jsonString.refreshToken).not.toBeUndefined();
     })
-    .catch(() => {
-      expect(null).not.toBeNull();
+    .catch((err) => {
+      throw err;
     });
 });
 
@@ -114,8 +116,8 @@ test('TEST:USER::: Login using username', () => {
       returnedData.accessToken = jsonString.accessToken;
       returnedData.refreshToken = jsonString.refreshToken;
     })
-    .catch(() => {
-      expect(null).not.toBeNull();
+    .catch((err) => {
+      throw err;
     });
 });
 
@@ -137,8 +139,8 @@ test('TEST:USER::: Refresh access token', () => {
       expect(jsonString.accessToken).not.toBeUndefined();
       returnedData.accessToken = jsonString.accessToken;
     })
-    .catch(() => {
-      expect(null).not.toBeNull();
+    .catch((err) => {
+      throw err;
     });
 });
 //#endregion
@@ -154,8 +156,8 @@ test('TEST:USER::: Check update with updated data', () => {
     body: JSON.stringify(updatedUserData)
   })
     .then((response) => expect(response.status).toBe(200))
-    .catch(() => {
-      expect(null).not.toBeNull();
+    .catch((err) => {
+      throw err;
     });
 });
 test('TEST:USER::: Update email', () => {
@@ -168,8 +170,8 @@ test('TEST:USER::: Update email', () => {
     body: JSON.stringify({email: updatedLoginData.email})
   })
     .then((response) => expect(response.status).toBe(200))
-    .catch(() => {
-      expect(null).not.toBeNull();
+    .catch((err) => {
+      throw err;
     });
 });
 test('TEST:USER::: Update password', () => {
@@ -185,8 +187,26 @@ test('TEST:USER::: Update password', () => {
     })
   })
     .then((response) => expect(response.status).toBe(200))
-    .catch(() => {
-      expect(null).not.toBeNull();
+    .catch((err) => {
+      throw err;
+    });
+});
+test('TEST:USER::: Update user role using admin token', () => {
+  return fetch('http://localhost:1337/api/users/' + returnedData.id, {
+    method: 'PUT',
+    headers: {
+      Authorization: 'Bearer ' + adminLoginToken,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      role: 0
+    })
+  })
+    .then((response) => {
+      expect(response.status).toBe(200);
+    })
+    .catch((err) => {
+      throw err;
     });
 });
 test('TEST:USER::: Check get with created user', () => {
@@ -206,9 +226,10 @@ test('TEST:USER::: Check get with created user', () => {
       expect(jsonString.firstName).toBe(updatedUserData.firstName);
       expect(jsonString.lastName).toBe(updatedUserData.lastName);
       expect(jsonString.email).toBe(updatedLoginData.email.toLowerCase());
+      expect(jsonString.role).toBe(0);
     })
-    .catch(() => {
-      expect(null).not.toBeNull();
+    .catch((err) => {
+      throw err;
     });
 });
 test('TEST:USER::: Login using updated data', () => {
@@ -233,8 +254,8 @@ test('TEST:USER::: Login using updated data', () => {
       expect(jsonString.accessToken).not.toBeUndefined();
       expect(jsonString.refreshToken).not.toBeUndefined();
     })
-    .catch(() => {
-      expect(null).not.toBeNull();
+    .catch((err) => {
+      throw err;
     });
 });
 //#endregion
@@ -250,8 +271,8 @@ test('TEST:USER::: Logout user, using accessToken', () => {
     .then((response) => {
       expect(response.status).toBe(200);
     })
-    .catch(() => {
-      expect(null).not.toBeNull();
+    .catch((err) => {
+      throw err;
     });
 });
 
@@ -272,8 +293,8 @@ test('TEST:USER::: Check if refresh token has been invalidated', () => {
       expect(jsonString.accessToken).not.toBeUndefined();
       returnedData.accessToken = jsonString.accessToken;
     })
-    .catch(() => {
-      expect(null).not.toBeNull();
+    .catch((err) => {
+      throw err;
     });
 });
 
@@ -287,8 +308,8 @@ test('TEST:USER::: Delete User', () => {
     .then((response) => {
       expect(response.status).toBe(200);
     })
-    .catch(() => {
-      expect(null).not.toBeNull();
+    .catch((err) => {
+      throw err;
     });
 });
 //#endregion

@@ -112,6 +112,7 @@
         "editBoards":"Edit Notice Boards",
         "groupMgmt":"Group Management",
         "editGroups":"Edit Groups",
+        "noSelfDelete":"Admins cannot delete themselves",
         "unexpectedError":"Something went wrong..."
     },
     "userList":{

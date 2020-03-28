@@ -50,8 +50,7 @@ module.exports = {
     ['updatedAt',
       'password',
       'languagePreference',
-      'hideLastName',
-      'role'
+      'hideLastName'
     ].forEach(attribute => delete usr[attribute]);
 
     return exits.success(usr);
