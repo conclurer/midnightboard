@@ -136,10 +136,10 @@
         "passwordMissmatch":"Passwords do not match",
         "nameTaken":"Username or email already taken",
         "malEmail":"Must be a valid email address",
-        "malFirstName":"Must be atleast 2 characters and may not contain special characters",
-        "malLastName":"Must be atleast 2 characters and may not contain special characters",
-        "malUsername":"Must be atleast 5 characters and may not contain special characters",
-        "malPassword":"Must be atleast 8 characters long, and must contain 1 special character or number, 1 uppercase letter and 1 lowercase letter",
+        "malFirstName":"Must be at least 2 characters and may not contain special characters",
+        "malLastName":"Must be at least 2 characters and may not contain special characters",
+        "malUsername":"Must be at least 5 characters and may not contain special characters",
+        "malPassword":"Must be at least 8 characters long, and must contain 1 special character or number, 1 uppercase letter and 1 lowercase letter",
         "missingForms":"Please fill in all fields"
     },
     "login":{

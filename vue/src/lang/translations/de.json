@@ -136,10 +136,10 @@
         "passwordMissmatch":"Passwörter stimmen nicht überein",
         "nameTaken":"Nutzername oder Email bereits vergeben",
         "malEmail":"Muss eine valide Email Addresse sein",
-        "malFirstName":"Muss mindestens 2 zeichen enthalten und darf keine Sonderzeichen enthalten",
-        "malLastName":"Muss mindestens 2 zeichen enthalten und darf keine Sonderzeichen enthalten",
-        "malUsername":"Muss mindestens 5 zeichen enthalten und darf keine Sonderzeichen enthalten",
-        "malPassword":"Muss mindestens 8 stellen lang sein und 1 Groß-, 1 Kleinbuchstabe und 1 Sonderzeichen oder Zahl enthalten",
+        "malFirstName":"Muss mindestens 2 Zeichen enthalten und darf keine Sonderzeichen enthalten",
+        "malLastName":"Muss mindestens 2 Zeichen enthalten und darf keine Sonderzeichen enthalten",
+        "malUsername":"Muss mindestens 5 Zeichen enthalten und darf keine Sonderzeichen enthalten",
+        "malPassword":"Muss mindestens 8 Stellen lang sein und 1 Groß-, 1 Kleinbuchstabe und 1 Sonderzeichen oder Zahl enthalten",
         "missingForms":"Bitte fülle alle Felder aus"
     },
     "login":{
