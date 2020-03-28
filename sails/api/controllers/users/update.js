@@ -78,7 +78,7 @@ module.exports = {
       if(['en', 'de'].includes(inputs.languagePreference)) {
         valuesToChange.languagePreference = inputs.languagePreference;
       } else {
-        return exits.invalidParams('Invalid langaugePreference');
+        return exits.invalidParams('Invalid languagePreference');
       }
     }
     if(inputs.firstName) {
@@ -113,7 +113,7 @@ module.exports = {
       }
       valuesToChange.role = inputs.role;
     } else if(inputs.role) {
-      return exits.invalidParams('Invalud user role');
+      return exits.invalidParams('Invalid user role');
     }
 
 

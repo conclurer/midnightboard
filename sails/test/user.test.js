@@ -2,7 +2,8 @@
 const fetch = require('node-fetch');
 const returnedData = {};
 
-const adminLoginToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJpZCI6MSwicm9sZSI6MCwiaWF0IjoxNTg1NDAwMDM2LCJleHAiOjE2MTY5MzYwMzZ9.ZeNk9pB6a4lEYyD2ihlAGocy5Q2RLzhc117_ZVDMgB0';
+const adminLoginToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJp'
+  + 'ZCI6MSwicm9sZSI6MCwiaWF0IjoxNTg1NDAwMDM2LCJleHAiOjE2MTY5MzYwMzZ9.ZeNk9pB6a4lEYyD2ihlAGocy5Q2RLzhc117_ZVDMgB0';
 const validRegistrationData = {
   userName: 'JESTUser1',
   email: 'JEST@test.mail',
