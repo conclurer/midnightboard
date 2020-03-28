@@ -49,8 +49,7 @@ beforeAll(() => {
       adminLogin.token = json.accessToken;
     })
     .catch((err) => {
-      console.log('JEST:Board::: Error on setup: ' + err);
-      expect(null).not.toBeNull();
+      throw err;
     });
 });
 
@@ -73,8 +72,8 @@ test('BOARD::: Create board', () => {
       expect(jsonString.id).not.toBeUndefined();
       returnedData.id = jsonString.id;
     })
-    .catch(() => {
-      expect(null).not.toBeNull();
+    .catch((err) => {
+      throw err;
     });
 });
 
@@ -88,8 +87,8 @@ test('BOARD::: Update created board', () => {
     body: JSON.stringify(boardDataUpdated)
   })
     .then((response) => expect(response.status).toBe(200))
-    .catch(() => {
-      expect(null).not.toBeNull();
+    .catch((err) => {
+      throw err;
     });
 });
 
@@ -109,8 +108,8 @@ test('BOARD::: Get updated board', () => {
       expect(jsonString.boardName).toBe(boardDataUpdated.boardName);
       returnedData.id = jsonString.id;
     })
-    .catch(() => {
-      expect(null).not.toBeNull();
+    .catch((err) => {
+      throw err;
     });
 });
 //#endregion
@@ -136,8 +135,8 @@ test('POST::: Create new post : Note', () => {
       expect(jsonString.id).not.toBeUndefined();
       returnedData.postIdNote = jsonString.id;
     })
-    .catch(() => {
-      expect(null).not.toBeNull();
+    .catch((err) => {
+      throw err;
     });
 });
 
@@ -162,8 +161,8 @@ test('POST::: Create new post : PDF', () => {
       expect(jsonString.id).not.toBeFalsy();
       returnedData.postIdPDF = jsonString.id;
     })
-    .catch(() => {
-      expect(null).not.toBeNull();
+    .catch((err) => {
+      throw err;
     });
 });
 
@@ -179,8 +178,8 @@ test('POST::: Create new post : Note, skip return', () => {
     .then((response) => {
       expect(response.status).toBe(201);
     })
-    .catch(() => {
-      expect(null).not.toBeNull();
+    .catch((err) => {
+      throw err;
     });
 });
 
@@ -206,8 +205,8 @@ test('POST::: Get all', () => {
         }
       });
     })
-    .catch(() => {
-      expect(null).not.toBeNull();
+    .catch((err) => {
+      throw err;
     });
 });
 //#endregion
@@ -221,8 +220,8 @@ test('POST::: Delete post A', () => {
     }
   })
     .then((response) => expect(response.status).toBe(200))
-    .catch(() => {
-      expect(null).not.toBeNull();
+    .catch((err) => {
+      throw err;
     });
 });
 
@@ -234,8 +233,8 @@ test('POST::: Delete post B', () => {
     }
   })
     .then((response) => expect(response.status).toBe(200))
-    .catch(() => {
-      expect(null).not.toBeNull();
+    .catch((err) => {
+      throw err;
     });
 });
 
@@ -247,8 +246,8 @@ test('POST::: Delete post C', () => {
     }
   })
     .then((response) => expect(response.status).toBe(200))
-    .catch(() => {
-      expect(null).not.toBeNull();
+    .catch((err) => {
+      throw err;
     });
 });
 
@@ -260,8 +259,8 @@ test('BOARD::: Delete board', () => {
     }
   })
     .then((response) => expect(response.status).toBe(200))
-    .catch(() => {
-      expect(null).not.toBeNull();
+    .catch((err) => {
+      throw err;
     });
 });
 //#endregion

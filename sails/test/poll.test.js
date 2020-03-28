@@ -62,13 +62,12 @@ beforeAll(() => {
           expect(jsonString.id).not.toBeUndefined();
           boardId = jsonString.id;
         })
-        .catch(() => {
-          expect(null).not.toBeNull();
+        .catch((err) => {
+          throw err;
         });
     })
     .catch((err) => {
-      console.log('JEST:Poll::: Error on setup: ' + err);
-      expect(null).not.toBeNull();
+      throw err;
     });
 });
 
@@ -93,8 +92,8 @@ test('POST::: Create poll post', () => {
       expect(jsonString.id).not.toBeUndefined();
       postId = jsonString.id;
     })
-    .catch(() => {
-      expect(null).not.toBeNull();
+    .catch((err) => {
+      throw err;
     });
 });
 
@@ -124,8 +123,8 @@ test('POLL::: Create poll answers', () => {
         // postId = jsonString.id;
         expect(null).toBeNull();
       })
-      .catch(() => {
-        expect(null).not.toBeNull();
+      .catch((err) => {
+        throw err;
       });
   }, 1000);
 });
@@ -156,8 +155,8 @@ test('POLL::: Vote for poll answer', () => {
         // postId = jsonString.id;
         expect(null).toBeNull();
       })
-      .catch(() => {
-        expect(null).not.toBeNull();
+      .catch((err) => {
+        throw err;
       });
   }, 1000);
 });
@@ -180,8 +179,8 @@ test('POLL::: Get poll votes', () => {
       .then((response) => {
         expect(response.status).toBe(200);
       })
-      .catch(() => {
-        expect(null).not.toBeNull();
+      .catch((err) => {
+        throw err;
       });
   }, 1000);
 });

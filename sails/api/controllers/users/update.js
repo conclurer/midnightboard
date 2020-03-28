@@ -107,14 +107,13 @@ module.exports = {
       valuesToChange.avatar = inputs.avatar;
     }
 
-    if(inputs.role) {
+    if([0, 1].includes(inputs.role)) {
       if(!this.req.me['role'] === 0) {
         return exits.unauthorized();
       }
-      if(![0, 1].includes(inputs.role)) {
-        return exits.invalidParams('Invalud user role');
-      }
       valuesToChange.role = inputs.role;
+    } else if(inputs.role) {
+      return exits.invalidParams('Invalud user role');
     }
 
 
