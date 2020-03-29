@@ -1,12 +1,30 @@
 <template>
   <div class="editorSidebar">
-    <NoteEditor @create-note="createNote"/>
+    <div v-if="editorId === 0">
+      <NoteEditor @create-note="createNote"/>
+    </div>
+    <div v-else-if="editorId === 1">
+      <ImageUpload @upload-image="uploadImage"/>
+    </div>
+    <div v-else-if="editorId === 2">
+      <FileUpload @upload-file="uploadFile"/>
+    </div>
+    <div v-else-if="editorId === 3">
+      <PollEditor @create-poll="createPoll"/>
+    </div>
     <hr />
-    <ImageUpload @upload-image="uploadImage"/>
-    <hr />
-    <FileUpload @upload-file="uploadFile"/>
-    <hr />
-    <PollEditor @create-poll="createPoll"/>
+    <VueCtkDateTimePicker
+      id="DatePicker"
+      class="datePicker"
+      format="DD-MM-YYYY"
+      formatted="ll"
+      onlyDate v-model="date"
+      color="#F9A618"
+      :label="$t('editor.datePicker.dueDate')"
+      :buttonNowTranslation="$t('editor.datePicker.currentDate')"
+      :locale="$t('editor.datePicker.language')"
+    >
+    </VueCtkDateTimePicker>
     <br><br><br><br><br> <!-- For scrollbar -->
   </div>
 </template>
@@ -27,6 +45,8 @@ export default {
   },
   data () {
     return {
+      editorId: 0,
+      date: null,
       boardId: 1
     }
   },
@@ -174,5 +194,10 @@ export default {
     height: 1px;
     border: none;
     background-color: #aaa;
+  }
+
+  .datePicker {
+    width: 300px;
+    z-index: 10003;
   }
 </style>

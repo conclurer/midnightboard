@@ -43,7 +43,6 @@
     >
       {{$t('editor.image.post')}}
     </button>
-    <br>
   </div>
 </template>
 

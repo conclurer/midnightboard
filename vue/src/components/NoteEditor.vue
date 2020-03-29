@@ -134,24 +134,7 @@
         </button>
       </div>
     </editor-menu-bar>
-
     <br>
-
-    <VueCtkDateTimePicker
-      id="DatePicker"
-      class="datePicker"
-      format="DD-MM-YYYY"
-      formatted="ll"
-      onlyDate v-model="date"
-      color="#F9A618"
-      :label="$t('editor.datePicker.dueDate')"
-      :buttonNowTranslation="$t('editor.datePicker.currentDate')"
-      :locale="$t('editor.datePicker.language')"
-    >
-    </VueCtkDateTimePicker>
-
-    <div class="lowerGap" />
-
     <b-button
       class="button"
       @click="$emit('create-note', titleContent, textContent)"
@@ -193,7 +176,6 @@ export default {
   },
   data () {
     return {
-      date: null,
       titleContent: this.$t('editor.note.title'),
       textContent: this.$t('editor.note.content'),
       contentEditor: new Editor({
@@ -254,20 +236,7 @@ export default {
     outline: none;
   }
 
-  .lowerGap {
-    position: relative;
-    top: 0px;
-    left: 0px;
-    height: 35px;
-    width: 100%;
-  }
-
   .button {
     width: auto;
-  }
-
-  .datePicker {
-    width: 300px;
-    z-index: 10003;
   }
 </style>

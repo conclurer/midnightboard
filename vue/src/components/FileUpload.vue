@@ -9,28 +9,16 @@
       :maxlength="maxFileTitleLength"
     />
     <br><br>
-    <div
-      v-if="this.pdfSelected"
-      :key="pdfSelected"
-    >
+    <div v-if="pdfSelected">
       <font-awesome-icon icon="file-pdf" size="10x"/>
     </div>
-    <div
-      v-if="this.wordSelected"
-      :key="wordSelected"
-    >
+    <div v-else-if="wordSelected">
       <font-awesome-icon icon="file-word" size="10x"/>
     </div>
-        <div
-      v-if="this.excelSelected"
-      :key="excelSelected"
-    >
+    <div v-else-if="excelSelected">
       <font-awesome-icon icon="file-excel" size="10x"/>
     </div>
-    <div
-      v-if="this.powerpointSelected"
-      :key="powerpointSelected"
-    >
+    <div v-else-if="powerpointSelected">
       <font-awesome-icon icon="file-powerpoint" size="10x"/>
     </div>
     <picture-input
@@ -102,7 +90,7 @@ export default {
       this.powerpointSelected = false
       if (file) {
         // Hide image preview
-        document.getElementsByClassName('preview-container')[1].style.display = 'none'
+        document.getElementsByClassName('preview-container')[0].style.display = 'none'
         const fileType = file.split(';')[0].split(':')[1]
         if (fileType === 'application/pdf') {
           this.pdfSelected = true
@@ -119,7 +107,7 @@ export default {
       }
     },
     onRemove () {
-      document.getElementsByClassName('preview-container')[1].style.display = 'block'
+      document.getElementsByClassName('preview-container')[0].style.display = 'block'
       this.fileRef = ''
       this.fileTitle = this.$t('editor.file.title')
       this.pdfSelected = false

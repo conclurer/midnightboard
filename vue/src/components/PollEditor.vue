@@ -59,19 +59,6 @@
       {{$t('editor.poll.allowMultipleVotes')}}
     </b-form-checkbox>
     <hr>
-    <VueCtkDateTimePicker
-      id="DatePicker"
-      class="datePicker"
-      format="DD-MM-YYYY"
-      formatted="ll"
-      onlyDate v-model="date"
-      color="#F9A618"
-      :label="$t('editor.datePicker.dueDate')"
-      :buttonNowTranslation="$t('editor.datePicker.currentDate')"
-      :locale="$t('editor.datePicker.language')"
-    >
-    </VueCtkDateTimePicker>
-    <br>
     <b-button
       variant="secondary"
       class="postButton"
@@ -87,7 +74,6 @@ export default {
   name: 'PollEditor',
   data () {
     return {
-      date: null,
       pollTitle: this.$t('editor.poll.title'),
       pollAnswers: [
         { answer: this.$t('editor.poll.templateAnswer') },
@@ -165,10 +151,5 @@ export default {
 
   .postButton {
     width: auto;
-  }
-
-  .datePicker {
-    width: 300px;
-    z-index: 10003;
   }
 </style>
