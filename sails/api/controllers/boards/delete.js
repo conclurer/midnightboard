@@ -22,7 +22,7 @@ module.exports = {
     },
     nonExistent: {
       description: 'Board does not exist in database',
-      statusCode: 400
+      statusCode: 404
     }
   },
 
@@ -38,4 +38,3 @@ module.exports = {
     return exits.success();
   }
 };
-

@@ -25,6 +25,7 @@
         <b-nav vertical>
           <b-nav-text>{{$t('cms.contentMgmt')}}</b-nav-text>
           <b-nav-item @click="changeContent('notice boards')">{{$t('cms.editBoards')}}</b-nav-item> <!-- Manage notice boards and default board -->
+          <b-nav-item @click="changeContent('new board')">{{$t('cms.newBoard')}}</b-nav-item>
         </b-nav>
         <hr>
         <b-nav vertical>
@@ -44,7 +45,7 @@
           <UserList />
         </div>
 
-        <!-- Show user creation if selected -->
+        <!-- Show user creation panel if selected -->
         <div
           v-if="selected === 'new user'"
         >
@@ -58,14 +59,21 @@
           <PermissionPanel />
         </div>
 
-        <!-- Show permission configuration if selected -->
+        <!-- Show all notice boards if selected -->
         <div
           v-if="selected === 'notice boards'"
         >
-          <!-- TODO -->
+          <BoardList />
         </div>
 
-        <!-- Show permission configuration if selected -->
+        <!-- Show notice board creation panel if selected -->
+        <div
+          v-if="selected === 'new board'"
+        >
+          <AddBoard />
+        </div>
+
+        <!-- Show all groups if selected -->
         <div
           v-if="selected === 'groups'"
         >
@@ -82,14 +90,18 @@ import Header from '@/components/Header.vue'
 import UserList from '@/components/cms/UserList.vue'
 import AddUser from '@/components/cms/AddUser.vue'
 import PermissionPanel from '@/components/cms/PermissionPanel.vue'
+import BoardList from '@/components/cms/BoardList.vue'
+import AddBoard from '@/components/cms/AddBoard.vue'
 
 export default {
   name: 'CMS',
   components: {
     Header,
     UserList,
+    AddUser,
     PermissionPanel,
-    AddUser
+    BoardList,
+    AddBoard
   },
   data () {
     return {
@@ -106,6 +118,7 @@ export default {
         case 'new user':
         case 'permissions':
         case 'notice boards':
+        case 'new board':
         case 'groups':
           this.selected = choice
       }

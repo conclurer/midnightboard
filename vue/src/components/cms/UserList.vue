@@ -3,11 +3,10 @@
     class="user-list"
   >
     <div>
-      <br v-if="delStatus===0">
-      <h4 v-else-if="delStatus===200" class="bg-success">{{$t('ui.userDeleted')}}</h4>
-      <h4 v-else-if="delStatus===403" class="bg-danger">{{$t('cms.noSelfDelete')}}</h4>
-      <h4 v-else class="bg-danger">{{$t('cms.unexpectedError')}}</h4>
-    <br>
+      <div v-if="delStatus===0"></div>
+      <div v-else-if="delStatus===200"><h4 class="bg-success">{{$t('ui.userDeleted')}}</h4><br></div>
+      <div v-else-if="delStatus===403"><h4 class="bg-danger">{{$t('cms.noSelfDelete')}}</h4><br></div>
+      <div v-else><h4 class="bg-danger">{{$t('cms.unexpectedError')}}</h4><br></div>
     </div>
 
     <table
@@ -21,7 +20,7 @@
         <th>{{$t('userList.email')}}</th>
         <th>{{$t('userList.creationDate')}}</th>
         <th>{{$t('userList.lastSeen')}}</th>
-        <th>{{$t('userList.delete')}}</th>
+        <th>{{$t('cms.delete')}}</th>
       </tr>
       <tr
         v-for="member in members"
@@ -41,7 +40,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import axios from 'axios'
 
 export default {

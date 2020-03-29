@@ -11,7 +11,7 @@
       required
     >
       <br>
-      <h2 v-html="$t('profile.addUser')"></h2>
+      <h2 v-html="$t('ui.addUser')"></h2>
       <br>
       <div>
         <b-form @submit="onSubmit" @reset="onReset">
@@ -114,7 +114,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import axios from 'axios'
 
 export default {
@@ -243,14 +242,5 @@ export default {
 
   .radio-button {
     margin-left: 10px;
-  }
-
-  .wrapper {
-    display: inline-block;
-  }
-
-  .user-values {
-    display: block;
-    text-align: left;
   }
 </style>

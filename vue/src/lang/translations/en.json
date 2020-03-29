@@ -82,7 +82,6 @@
         "role":"Role",
         "user":"User",
         "admin":"Admin",
-        "addUser":"Add a new user:",
         "affiliate":"Affiliate",
         "confirmPassword":"Confirm password",
         "displayname":"Display name"
@@ -98,8 +97,10 @@
         "signUp":"Sign Up",
         "toSignUp":"I don't have an account",
         "adopt":"Adopt",
+        "addUser":"Add a new user:",
         "userAdded":"User successfully added",
         "userDeleted":"User successfully deleted",
+        "addBoard":"Create a new notice board:",
         "submit":"Submit",
         "reset":"Reset"
     },
@@ -110,8 +111,10 @@
         "userRights":"User Rights",
         "contentMgmt":"Content Management",
         "editBoards":"Edit Notice Boards",
+        "newBoard":"New notice board",
         "groupMgmt":"Group Management",
         "editGroups":"Edit Groups",
+        "delete":"Delete",
         "noSelfDelete":"Admins cannot delete themselves",
         "unexpectedError":"Something went wrong..."
     },
@@ -122,8 +125,7 @@
         "firstName":"First name",
         "lastName":"Last name",
         "username":"Username",
-        "email":"E-mail",
-        "delete":"Delete"
+        "email":"E-mail"
     },
     "rights":{
         "userRights":"User rights",
@@ -131,6 +133,17 @@
         "register":"Users can register themselves",
         "like":"Users can like/dislike content",
         "comment":"Users can comment content"
+    },
+    "boards":{
+        "id":"Board ID",
+        "boardName":"Board name",
+        "creatorID":"Creator ID",
+        "creatorName":"Creator name",
+        "creationDate":"Creation date",
+        "boardAdded":"Board created successfully",
+        "boardDeleted":"Board deleted successfully",
+        "notFound":"Creator not found",
+        "malBoardName":"Must be at least 2 characters and may not contain special characters"
     },
     "register":{
         "passwordMissmatch":"Passwords do not match",
