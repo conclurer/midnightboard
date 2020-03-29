@@ -108,7 +108,7 @@ export default {
     },
     createPoll () {
       if (this.pollTitle === '') {
-        alert(this.$t('editor.poll.missingQuestion'))
+        alert(this.$t('editor.poll.missingTitle'))
       } else {
         var index = 0
         var validAnswers = []

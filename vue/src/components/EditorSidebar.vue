@@ -1,5 +1,6 @@
 <template>
   <div class="editorSidebar">
+    <!--
     <NoteEditor @create-note="createNote"/>
     <hr />
     <ImageUpload @upload-image="uploadImage"/>
@@ -7,23 +8,27 @@
     <FileUpload @upload-file="uploadFile"/>
     <hr />
     <PollEditor @create-poll="createPoll"/>
+    <hr /> -->
+    <SurveyEditor @create-survey="createSurvey"/>
     <br><br><br><br><br> <!-- For scrollbar -->
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import FileUpload from '@/components/FileUpload.vue'
+/* import FileUpload from '@/components/FileUpload.vue'
 import ImageUpload from '@/components/ImageUpload.vue'
 import NoteEditor from '@/components/NoteEditor.vue'
-import PollEditor from '@/components/PollEditor.vue'
+import PollEditor from '@/components/PollEditor.vue' */
+import SurveyEditor from '@/components/SurveyEditor.vue'
 
 export default {
   components: {
-    NoteEditor,
-    ImageUpload,
-    FileUpload,
-    PollEditor
+    // NoteEditor,
+    // ImageUpload,
+    // FileUpload,
+    // PollEditor,
+    SurveyEditor
   },
   data () {
     return {
@@ -158,6 +163,44 @@ export default {
             }
             )
             .then(pollResponse => {})
+            .catch(err => this.$log.error(err))
+        })
+        .catch(err => this.$log.error(err))
+
+      // Notify notice board
+      this.$emit('add-note')
+    },
+    createSurvey: async function (titleContent, jsonContent, answerIndexes) {
+      const jsonBodyNote = JSON.stringify({
+        title: titleContent,
+        typeOfPost: 'application/survey',
+        content: jsonContent
+      })
+
+      // Post request to api
+      this.refreshToken()
+      await axios
+        .post('http://localhost:1337/api/boards/' + this.boardId, jsonBodyNote, {
+          headers: {
+            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
+            'Content-Type': 'application/json'
+          }
+        }
+        )
+        .then(async postResponse => {
+          const jsonBodySurvey = JSON.stringify({
+            postId: postResponse.data.id,
+            answerIds: answerIndexes
+          })
+          await axios
+            .post('http://localhost:1337/api/surveys', jsonBodySurvey, {
+              headers: {
+                'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
+                'Content-Type': 'application/json'
+              }
+            }
+            )
+            .then(surveyResponse => {})
             .catch(err => this.$log.error(err))
         })
         .catch(err => this.$log.error(err))

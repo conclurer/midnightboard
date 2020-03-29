@@ -58,14 +58,22 @@
             "templateAnswer":"Answer A",
             "allowMultipleVotes":"Allow multiple answers",
             "post":"Post poll",
-            "missingQuestion":"You have to enter a question!",
+            "missingTitle":"You have to enter a question!",
             "missingAnswers":"You have to create at least two answers!"
         },
         "survey":{
             "heading":"Create your survey:",
             "title":"Your survery title",
+            "templateQuestion":"Question A?",
             "templateAnswer":"Answer A",
-            "post":"Post survey"
+            "allowMultipleVotes":"Allow multiple answers",
+            "questionWith":"Add question with...",
+            "addInputFieldQuestion":"regular input field",
+            "addTextAreaQuestion":"large text area",
+            "addMultipleChoiceQuestion":"single/multiple choice(s)",
+            "post":"Post survey",
+            "missingTitle":"You have to enter a title!",
+            "missingAnswers":"You have to create at least two answers!"
         },
         "datePicker":{
             "dueDate":"Select a due date",

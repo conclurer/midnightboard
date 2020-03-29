@@ -58,14 +58,22 @@
             "templateAnswer":"Antwort A",
             "allowMultipleVotes":"Mehrfachauswahl erlauben",
             "post":"Poll posten",
-            "missingQuestion":"Du musst eine Frage eingeben!",
+            "missingTitle":"Du musst eine Frage eingeben!",
             "missingAnswers":"Du musst mindestens zwei Antworten erstellen!"
         },
         "survey":{
             "heading":"Umfrage erstellen:",
             "title":"Dein Umfragentitel",
+            "templateQuestion":"Frage A?",
             "templateAnswer":"Antwort A",
-            "post":"Umfrage posten"
+            "allowMultipleVotes":"Mehrfachauswahl erlauben",
+            "questionWith":"(Weitere) Frage mit...",
+            "addInputFieldQuestion":"normalem Eingabefeld hinzufügen",
+            "addTextAreaQuestion":"großem Eingabefeld hinzufügen",
+            "addMultipleChoiceQuestion":"Auswahlmöglichkeiten hinzufügen",
+            "post":"Umfrage posten",
+            "missingTitle":"Du musst eine Frage eingeben!",
+            "missingAnswers":"Du musst mindestens zwei Antworten erstellen!"
         },
         "datePicker":{
             "dueDate":"Wähle ein Enddatum",
