@@ -72,8 +72,8 @@
             "addTextAreaQuestion":"großem Eingabefeld hinzufügen",
             "addMultipleChoiceQuestion":"Auswahlmöglichkeiten hinzufügen",
             "post":"Umfrage posten",
-            "missingTitle":"Du musst eine Frage eingeben!",
-            "missingAnswers":"Du musst mindestens zwei Antworten erstellen!"
+            "missingTitle":"Du musst einen Umfragentitel eingeben!",
+            "missingMCQAnswers":"Du musst mindestens zwei Antworten pro Frage mit Auswahlmöglichkeit erstellen!"
         },
         "datePicker":{
             "dueDate":"Wähle ein Enddatum",

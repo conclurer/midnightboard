@@ -132,7 +132,7 @@ export default {
       // Notify notice board
       this.$emit('add-note')
     },
-    createPoll: async function (titleContent, jsonContent, answerIndexes) {
+    createPoll: async function (titleContent, jsonContent, answerIndices) {
       const jsonBodyNote = JSON.stringify({
         title: titleContent,
         typeOfPost: 'application/poll',
@@ -152,7 +152,7 @@ export default {
         .then(async postResponse => {
           const jsonBodyPoll = JSON.stringify({
             postId: postResponse.data.id,
-            answerIds: answerIndexes
+            answerIds: answerIndices
           })
           await axios
             .post('http://localhost:1337/api/polls', jsonBodyPoll, {
@@ -170,7 +170,7 @@ export default {
       // Notify notice board
       this.$emit('add-note')
     },
-    createSurvey: async function (titleContent, jsonContent, answerIndexes) {
+    createSurvey: async function (titleContent, jsonContent, questionIndices, mcqAnswers) {
       const jsonBodyNote = JSON.stringify({
         title: titleContent,
         typeOfPost: 'application/survey',
@@ -190,7 +190,7 @@ export default {
         .then(async postResponse => {
           const jsonBodySurvey = JSON.stringify({
             postId: postResponse.data.id,
-            answerIds: answerIndexes
+            questionIds: questionIndices
           })
           await axios
             .post('http://localhost:1337/api/surveys', jsonBodySurvey, {

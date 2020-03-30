@@ -72,8 +72,8 @@
             "addTextAreaQuestion":"large text area",
             "addMultipleChoiceQuestion":"single/multiple choice(s)",
             "post":"Post survey",
-            "missingTitle":"You have to enter a title!",
-            "missingAnswers":"You have to create at least two answers!"
+            "missingTitle":"You have to enter a survey title!",
+            "missingMCQAnswers":"You have to create at least two answers per single/multiple choice question!"
         },
         "datePicker":{
             "dueDate":"Select a due date",
