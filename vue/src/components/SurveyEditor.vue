@@ -27,8 +27,8 @@
           </b-col>
           <b-col cols="10">
           <b-form-input
-            v-bind:input="surveyQuestions[index].question"
-            v-on:input="surveyQuestions[index].question = $event"
+            v-bind:input="surveyQuestions[index]"
+            v-on:input="surveyQuestions[index] = $event"
             :placeholder="$t('editor.survey.templateQuestion')"
             :maxlength="maxSurveyInputFieldQuestionLength"
           />
@@ -38,8 +38,8 @@
         <!-- Regular input field questions -->
         <div v-if="surveyQuestionType[index] === 'IFQ'">
           <b-form-input
-            v-bind:value="surveyQuestionElement[index].answer"
-            v-on:input="surveyQuestionElement[index].answer = $event"
+            v-bind:value="surveyQuestionElement[index]"
+            v-on:input="surveyQuestionElement[index] = $event"
             :placeholder="$t('editor.survey.templateAnswer')"
             :maxlength="maxSurveyInputFieldAnswerLength"
           />
@@ -48,8 +48,8 @@
         <div v-else-if="surveyQuestionType[index] === 'TAQ'">
           <b-form-textarea
             id="textarea-default"
-            v-bind:input="surveyQuestionElement[index].answer"
-            v-on:input="surveyQuestionElement[index].answer = $event"
+            v-bind:input="surveyQuestionElement[index]"
+            v-on:input="surveyQuestionElement[index] = $event"
             :placeholder="$t('editor.survey.templateAnswer')"
             :maxlength="maxSurveyTextAreaAnswerLength"
           >
@@ -59,7 +59,7 @@
         <div v-else-if="surveyQuestionType[index] === 'MCQ'">
           <b-container>
             <div
-              v-for="answerIndex of surveyQuestionElement[index].answer"
+              v-for="(answer, answerIndex) in surveyQuestionElement[index]"
               :key="answerIndex"
             >
               <b-row>
@@ -70,8 +70,8 @@
                 </b-col>
                 <b-col cols="8">
                   <b-form-input
-                    v-bind:input="surveyChoiceAnswers[answerIndex]"
-                    v-on:input="surveyChoiceAnswers[answerIndex] = $event"
+                    v-bind:input="answer"
+                    v-on:input="answer = $event"
                     :placeholder="$t('editor.survey.templateAnswer')"
                     :maxlength="maxSurveyChoiceAnswerLength"
                   >
@@ -150,23 +150,15 @@ export default {
   data () {
     return {
       surveyTitle: this.$t('editor.survey.title'),
-      surveyQuestions: [ // link to surveyQuestionType
-        { question: this.$t('editor.survey.templateQuestion') },
-        { question: 'What did you do yesterday?' },
-        { question: 'What is you favorite color?' }
-      ],
+      // Index of surveyQuestions links to the other arrays
+      surveyQuestions: [this.$t('editor.survey.templateQuestion'), 'What did you do yesterday?', 'What is you favorite color?'],
       /*
         InputFieldQuestion: IFQ
         TextAreaQuestion: TAQ
         MultipleChoiceQuestion: MCQ
       */
       surveyQuestionType: ['IFQ', 'TAQ', 'MCQ'],
-      surveyQuestionElement: [
-        { answer: '' },
-        { answer: '' },
-        { answer: [0, 1] } // link to surveyChoiceAnswer
-      ],
-      surveyChoiceAnswers: ['Blue', 'Green'],
+      surveyQuestionElement: ['', '', ['', '']],
       allowMultipleVotes: [null, null, false],
       maxSurveyTitleLength: 50,
       maxSurveyInputFieldQuestionLength: 40,
@@ -179,31 +171,27 @@ export default {
   methods: {
     addInputFieldQuestion () {
       this.allowMultipleVotes.push(null)
-      this.surveyQuestions.push({ question: '' })
+      this.surveyQuestions.push('')
       this.surveyQuestionType.push('IFQ')
-      this.surveyQuestionElement.push({ answer: '' })
+      this.surveyQuestionElement.push('')
     },
     addTextAreaQuestion () {
       this.allowMultipleVotes.push(null)
-      this.surveyQuestions.push({ question: '' })
+      this.surveyQuestions.push('')
       this.surveyQuestionType.push('TAQ')
-      this.surveyQuestionElement.push({ answer: '' })
+      this.surveyQuestionElement.push('')
     },
     addMultipleChoiceQuestion () {
       this.allowMultipleVotes.push(false)
-      this.surveyQuestions.push({ question: '' })
+      this.surveyQuestions.push('')
       this.surveyQuestionType.push('MCQ')
-      this.surveyQuestionElement.push({ answer: [this.surveyChoiceAnswers.length] })
-      this.surveyChoiceAnswers.push('')
+      this.surveyQuestionElement.push([''])
     },
     removeQuestion (questionIndex) {
       this.allowMultipleVotes.splice(questionIndex, 1)
       this.surveyQuestions.splice(questionIndex, 1)
       if (this.surveyQuestionType[questionIndex] === 'MCQ') {
         this.surveyQuestionType.splice(questionIndex, 1)
-        for (const answerIndex of this.surveyQuestionElement[questionIndex]) {
-          this.surveyChoiceAnswers.splice(answerIndex, 1)
-        }
         this.surveyQuestionElement.splice(questionIndex, 1)
       } else {
         this.surveyQuestionType.splice(questionIndex, 1)
@@ -211,19 +199,20 @@ export default {
       }
     },
     addChoiceAnswer (questionIndex) {
-      this.surveyQuestionElement[questionIndex].answer.push(this.surveyChoiceAnswers.length)
-      this.surveyChoiceAnswers.push('')
+      this.surveyQuestionElement[questionIndex].push('')
+      this.$log.debug(this.surveyQuestionElement)
     },
     removeChoiceAnswer (answerIndex, questionIndex) {
-      this.surveyChoiceAnswers.splice(answerIndex, 1)
-      this.surveyQuestionElement[questionIndex].answer.splice(answerIndex, 1)
+      this.surveyQuestionElement[questionIndex].splice(answerIndex, 1)
+      this.$log.debug(this.surveyQuestionElement)
     },
     createSurvey () {
       if (this.surveyTitle === '') {
         alert(this.$t('editor.survey.missingTitle'))
       } else {
+        /*
         var index = 0
-        var validAnswers = []
+        // var validAnswers = []
         // Need unique checkbox name for single vote surveys
         var checkBoxName = ''
         if (!this.allowMultipleVotes[index]) {
@@ -241,7 +230,7 @@ export default {
         } else {
           this.surveyContent = '<div class="container">'
           this.surveyChoiceAnswers.forEach(surveyAnswer => {
-            const answer = surveyAnswer.answer
+            const answer = surveyAnswer
             if (answer !== '') {
               validAnswers.push(index)
               this.surveyContent += '<div class="row justify-content-flex-start"><div class="align-self-center">' +
@@ -258,6 +247,8 @@ export default {
             this.$emit('create-survey', this.surveyTitle, this.surveyContent, validAnswers)
           }
         }
+        */
+        alert('WIP!')
       }
     }
   }
