@@ -207,8 +207,10 @@ export default {
       this.surveyQuestionElement[questionIndex].splice(answerIndex, 1)
     },
     createSurvey () {
+      var invalidInput = false
       if (this.surveyTitle === '') {
         alert(this.$t('editor.survey.missingTitle'))
+        invalidInput = true
       } else {
         var questionIndices = []
         var mcqAnswers = []
@@ -220,50 +222,66 @@ export default {
           const questionElement = this.surveyQuestionElement[index]
           const allowMultipleVote = this.allowMultipleVotes[index]
           if (questionType === 'IFQ') {
-            this.surveyContent += '<div class="form-group"><label for="inputText' + index + '">' +
-            question + '</label><input type="text" class="form-control is-valid" id="inputText' + index +
-            '" placeholder="' + questionElement + '" required></div>'
-          } else if (questionType === 'TAQ') {
-            this.surveyContent += '<div class="form-group"><label for="inputTextArea' + index + '">' +
-            question + '</label><textarea class="form-control is-valid" id="inputTextArea' + index +
-            '" rows="3" placeholder="' + questionElement + '" required></textarea></div>'
-          } else if (questionType === 'MCQ') {
-            var answerIndex = 0
-            // Need unique checkbox name for single vote surveys
-            var checkBoxName = ''
-            if (!allowMultipleVote) {
-              const birthday = new Date()
-              const yearM = birthday.getFullYear() + '-'
-              const monthM = birthday.getMonth() + '-'
-              const dayM = birthday.getDay() + '-'
-              const time = birthday.getHours() + '' + birthday.getMinutes() + '' +
-              birthday.getSeconds() + '' + birthday.getMilliseconds()
-              checkBoxName = 'cb-' + yearM + monthM + dayM + time
-            }
-            // 2 or more answers = valid MCQ
-            if (questionElement.length <= 1) {
-              alert(this.$t('editor.survey.missingMCQAnswers'))
+            if (question === '') {
+              alert(this.$t('editor.survey.missingIFQQuestion'))
+              invalidInput = true
             } else {
-              this.surveyContent += '<div class="form-check">'
-              questionElement.forEach(answer => {
-                if (answer !== '') {
-                  mcqAnswers.push(answer)
-                  this.surveyContent += '<input class="form-check-input" type="checkbox" name="' +
-                    checkBoxName + '" id="cbSvy' + index + 'Idx' + answerIndex + '">' +
-                    '<label class="form-check-label" for="cbSvy' + index + 'Idx' + answerIndex + '>' +
-                    question + '</label>'
-                  answerIndex++
-                }
-              })
-              this.surveyContent += '</div>'
+              this.surveyContent += '<div class="form-group"><label for="inputText' + index + '">' +
+                question + '</label><input type="text" class="form-control is-valid" id="inputText' + index +
+                '" placeholder="' + questionElement + '" required></div>'
+            }
+          } else if (questionType === 'TAQ') {
+            if (question === '') {
+              alert(this.$t('editor.survey.missingTAQQuestion'))
+              invalidInput = true
+            } else {
+              this.surveyContent += '<div class="form-group"><label for="inputTextArea' + index + '">' +
+                question + '</label><textarea class="form-control is-valid" id="inputTextArea' + index +
+                '" rows="3" placeholder="' + questionElement + '" required></textarea></div>'
+            }
+          } else if (questionType === 'MCQ') {
+            if (question === '') {
+              alert(this.$t('editor.survey.missingMCQQuestion'))
+              invalidInput = true
+            } else {
+              var answerIndex = 0
+              // Need unique checkbox name for single vote surveys
+              var checkBoxName = ''
+              if (!allowMultipleVote) {
+                const birthday = new Date()
+                const yearM = birthday.getFullYear() + '-'
+                const monthM = birthday.getMonth() + '-'
+                const dayM = birthday.getDay() + '-'
+                const time = birthday.getHours() + '' + birthday.getMinutes() + '' +
+                birthday.getSeconds() + '' + birthday.getMilliseconds()
+                checkBoxName = 'cb-' + yearM + monthM + dayM + time
+              }
+              // 2 or more answers = valid MCQ
+              if (questionElement.length <= 1) {
+                alert(this.$t('editor.survey.missingMCQAnswers'))
+                invalidInput = true
+              } else {
+                this.surveyContent += '<div class="form-check">'
+                questionElement.forEach(answer => {
+                  if (answer !== '') {
+                    mcqAnswers.push(answer)
+                    this.surveyContent += '<input class="form-check-input" type="checkbox" name="' +
+                      checkBoxName + '" id="cbSvy' + index + 'Idx' + answerIndex + '">' +
+                      '<label class="form-check-label" for="cbSvy' + index + 'Idx' + answerIndex + '>' +
+                      question + '</label>'
+                    answerIndex++
+                  }
+                })
+                this.surveyContent += '</div>'
+              }
             }
           }
         })
         // Form end
         this.surveyContent += '</form>'
-        if (mcqAnswers.length <= 1) {
-          alert(this.$t('editor.survey.missingMCQAnswers'))
-        } else {
+        if (!invalidInput && mcqAnswers.length <= 1) {
+          alert(this.$t('editor.survey.emptyMCQAnswers'))
+        } else if (!invalidInput) {
           this.$log.debug(this.surveyContent)
           this.$log.debug(questionIndices)
           this.$log.debug(mcqAnswers)

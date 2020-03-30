@@ -73,7 +73,11 @@
             "addMultipleChoiceQuestion":"Auswahlmöglichkeiten hinzufügen",
             "post":"Umfrage posten",
             "missingTitle":"Du musst einen Umfragentitel eingeben!",
-            "missingMCQAnswers":"Du musst mindestens zwei Antworten pro Frage mit Auswahlmöglichkeit erstellen!"
+            "missingIFQQuestion":"Du musst noch eine Frage für ein normales Eingabefeld eingeben!",
+            "missingTAQQuestion":"Du musst noch eine Frage für ein großes Eingabefeld eingeben!",
+            "missingMCQQuestion":"Du musst noch eine Frage für eine Auswahlmöglichkeit eingeben!",
+            "missingMCQAnswers":"Du musst mindestens zwei Antworten pro Frage mit Auswahlmöglichkeit erstellen!",
+            "emptyMCQAnswers":"Du musst mindestens zwei nicht leere Antworten pro Frage mit Auswahlmöglichkeit erstellen!"
         },
         "datePicker":{
             "dueDate":"Wähle ein Enddatum",

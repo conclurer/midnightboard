@@ -73,7 +73,11 @@
             "addMultipleChoiceQuestion":"single/multiple choice(s)",
             "post":"Post survey",
             "missingTitle":"You have to enter a survey title!",
-            "missingMCQAnswers":"You have to create at least two answers per single/multiple choice question!"
+            "missingIFQQuestion":"You have to enter a question for a regular input field!",
+            "missingTAQQuestion":"You have to enter a question for a large text area!",
+            "missingMCQQuestion":"You have to enter a question for a single/multiple choice element!",
+            "missingMCQAnswers":"You have to create at least two answers per single/multiple choice question!",
+            "emptyMCQAnswers":"You have to create at least two non-empty answers per single/multiple choice question!"
         },
         "datePicker":{
             "dueDate":"Select a due date",
