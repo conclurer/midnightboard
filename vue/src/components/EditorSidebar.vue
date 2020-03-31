@@ -43,11 +43,11 @@ export default {
     FileUpload,
     PollEditor
   },
+  props: ['editorId'],
   data () {
     return {
-      editorId: 0,
       date: null,
-      boardId: 1
+      boardId: null
     }
   },
   methods: {

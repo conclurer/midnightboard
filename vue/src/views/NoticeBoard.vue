@@ -5,13 +5,14 @@
     <Header
       id="titlebar"
       title="Quality Assurance"
-      @plus-clicked="plusClicked"
+      @select-editor="selectEditor"
       :buttonsActive=true
     />
     <Board
       @add-note="addNote"
       :notes="notes"
       :editorActive="editorActive"
+      :editorId="editorId"
     />
   </div>
 </template>
@@ -32,7 +33,8 @@ export default {
     return {
       notes: [],
       boardId: 1,
-      editorActive: false
+      editorActive: false,
+      editorId: 0
     }
   },
   created () {
@@ -87,9 +89,10 @@ export default {
 
       this.editorActive = false
     },
-    plusClicked () {
-      // Show/hide editor sidebar
-      this.editorActive = !this.editorActive
+    selectEditor (selection) {
+      this.editorActive = true
+      this.editorId = selection
+      console.log(selection)
     }
   }
 }

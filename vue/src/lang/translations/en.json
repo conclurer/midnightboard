@@ -103,6 +103,13 @@
         "submit":"Submit",
         "reset":"Reset"
     },
+    "type":{
+        "text":"Text note",
+        "image":"Image",
+        "file":"File",
+        "poll":"Poll",
+        "survey":"Survey"
+    },
     "cms":{
         "userMgmt":"User Management",
         "userList":"User List",

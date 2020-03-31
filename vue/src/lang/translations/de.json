@@ -103,6 +103,13 @@
         "submit":"Bestätigen",
         "reset":"Zurücksetzen"
     },
+    "type":{
+        "text":"Textnotiz",
+        "image":"Bild",
+        "file":"Datei",
+        "poll":"Abstimmung",
+        "survey":"Umfrage"
+    },
     "cms":{
         "userMgmt":"Benutzerverwaltung",
         "userList":"Nutzerliste",

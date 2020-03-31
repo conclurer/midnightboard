@@ -474,6 +474,7 @@
           <div v-smoothscrollbar="{ listener, options }">
             <EditorSidebar
               @add-note="addNote"
+              :editorId="editorId"
             />
           </div>
         </div>
@@ -631,7 +632,7 @@ export default {
       }
     }
   },
-  props: ['notes', 'editorActive']
+  props: ['notes', 'editorActive', 'editorId']
 }
 </script>
 

@@ -16,7 +16,7 @@
       class="editor__content"
       :editor="contentEditor"
     />
-    <div class="lowerGap" />
+    <br>
 
     <!-- Formatting tools -->
     <editor-menu-bar
