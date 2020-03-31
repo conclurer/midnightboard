@@ -6,7 +6,7 @@
     <Header
       id="titlebar"
       title="Content Management System"
-      :buttonsActive=false
+      :profileActive="true"
     />
     <div
       class="inner-cms"
@@ -34,41 +34,29 @@
       </div>
 
       <!-- Display CMS surface -->
-      <div
-        class="cmsContent" align="center"
-      >
+      <div class="cmsContent" align="center">
         <!-- Show user list if selected -->
-        <div
-          v-if="selected === 'user list'"
-        >
-          <UserList />
+        <div v-if="selected === 'user list'">
+          <UserList/>
         </div>
 
         <!-- Show user creation if selected -->
-        <div
-          v-if="selected === 'new user'"
-        >
+        <div v-if="selected === 'new user'">
           <AddUser />
         </div>
 
         <!-- Show permission configuration if selected -->
-        <div
-          v-if="selected === 'permissions'"
-        >
+        <div v-if="selected === 'permissions'">
           <PermissionPanel />
         </div>
 
         <!-- Show permission configuration if selected -->
-        <div
-          v-if="selected === 'notice boards'"
-        >
+        <div v-if="selected === 'notice boards'">
           <!-- TODO -->
         </div>
 
         <!-- Show permission configuration if selected -->
-        <div
-          v-if="selected === 'groups'"
-        >
+        <div v-if="selected === 'groups'">
           <!-- TODO -->
         </div>
       </div>
@@ -101,14 +89,7 @@ export default {
   },
   methods: {
     changeContent (choice) {
-      switch (choice) {
-        case 'user list':
-        case 'new user':
-        case 'permissions':
-        case 'notice boards':
-        case 'groups':
-          this.selected = choice
-      }
+      this.selected = choice
     }
   }
 }
@@ -149,5 +130,6 @@ export default {
   .cmsContent {
     grid-column: 2 / 3;
     padding: 20px;
+    height: 100%;
   }
 </style>

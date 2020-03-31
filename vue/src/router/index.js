@@ -52,6 +52,11 @@ export default new Router({
         path: 'cms',
         name: 'CMS',
         component: () => import('../views/CMS.vue')
+      },
+      {
+        path: 'profile',
+        name: 'Profile',
+        component: () => import('../views/ProfilePage.vue')
       }
     ]
 

@@ -15,13 +15,13 @@
       </b-nav-text>
       <b-navbar-nav class="ml-auto">
         <div>
-          <b-nav-item v-if="buttonsActive">
+          <b-nav-item v-if="addActive">
             <span
               class="unselectable"
               unselectable="on"
             ><a @click="plusClicked"><font-awesome-icon icon="plus" /> {{$t('ui.add')}}</a></span>
           </b-nav-item>
-          <b-nav-item v-if="buttonsActive">
+          <b-nav-item v-if="profileActive">
             <span
               class="unselectable"
               unselectable="on"
@@ -56,7 +56,7 @@
 import { i18n } from '@/main.js'
 export default {
   name: 'Header',
-  props: ['buttonsActive', 'title'],
+  props: ['addActive', 'profileActive', 'title'],
   data () {
     return {
       selLanguage: ''

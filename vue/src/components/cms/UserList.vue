@@ -1,42 +1,84 @@
 <template>
-  <div
-    class="user-list"
-  >
+  <div class="m">
     <div>
-      <br v-if="delStatus===0">
-      <h4 v-else-if="delStatus===200" class="bg-success">{{$t('ui.userDeleted')}}</h4>
-      <h4 v-else-if="delStatus===403" class="bg-danger">{{$t('cms.noSelfDelete')}}</h4>
-      <h4 v-else class="bg-danger">{{$t('cms.unexpectedError')}}</h4>
-    <br>
-    </div>
+      <b-container fluid>
+        <b-row>
+          <b-col lg="6">
+            <b-form-group class="mb-0">
+              <b-input-group size="sm">
+                <b-form-input
+                  v-model="filter"
+                  type="search"
+                  id="filterInput"
+                  placeholder="Type to Search"
+                ></b-form-input>
+                <b-input-group-append>
+                  <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
+                </b-input-group-append>
+              </b-input-group>
+            </b-form-group>
+          </b-col>
 
-    <table
-      border
-    >
-      <tr>
-        <th>{{$t('userList.id')}}</th>
-        <th>{{$t('userList.firstName')}}</th>
-        <th>{{$t('userList.lastName')}}</th>
-        <th>{{$t('userList.username')}}</th>
-        <th>{{$t('userList.email')}}</th>
-        <th>{{$t('userList.creationDate')}}</th>
-        <th>{{$t('userList.lastSeen')}}</th>
-        <th>{{$t('userList.delete')}}</th>
-      </tr>
-      <tr
-        v-for="member in members"
-        :key="member.id"
+          <b-col sm="7" md="6">
+            <b-pagination
+              v-model="currentPage"
+              :total-rows="totalRows"
+              :per-page="perPage"
+              align="fill"
+              size="sm"
+            ></b-pagination>
+          </b-col>
+        </b-row>
+
+      <b-table
+        class="table"
+        dark
+        striped
+        hover
+        small
+        :items="members"
+        :fields="fields"
+        :per-page="perPage"
+        :current-page="currentPage"
+        :filter="filter"
+        :filterIncludedFields="filterOn"
+        @filtered="onFiltered"
+        sort-by="id"
+        >
+        <template v-slot:cell(delete)="row">
+          <b-button size="sm" @click="deleteUser(row.item.id)" class="mr-1">X</b-button>
+        </template>
+        <template v-slot:cell(image)="row">
+          <!-- TODO remove random image -->
+          <b-avatar :src="'https://placem.at/people?w=174&&random='+row.item.id"></b-avatar>
+        </template>
+        </b-table>
+      </b-container>
+    </div>
+    <div id="alert">
+      <br>
+      <b-alert
+        :show="delStatus === 200"
+        variant="success"
+        dismissible
       >
-        <td>{{member.id}}</td>
-        <td>{{member.firstName}}</td>
-        <td>{{member.lastName}}</td>
-        <td>{{member.userName}}</td>
-        <td>{{member.email}}</td>
-        <td>{{member.createdAt}}</td>
-        <td>{{member.lastSeen}}</td>
-        <td><a @click="deleteUser(member.id)"><font-awesome-icon icon="times-circle" class="text-danger" /></a></td>
-      </tr>
-    </table>
+        <h>{{$t('ui.userAdded')}}</h>
+      </b-alert>
+      <b-alert
+        :show="delStatus === 403"
+        variant="danger"
+        dismissible
+      >
+        <h>{{$t('cms.noSelfDelete')}}</h>
+      </b-alert>
+      <b-alert
+        :show="delStatus === 400"
+        variant="danger"
+        dismissible
+      >
+        <h>{{$t('cms.unexpectedError')}}</h>
+      </b-alert>
+    </div>
   </div>
 </template>
 
@@ -51,15 +93,41 @@ export default {
   data () {
     return {
       members: [],
-      delStatus: 0
+      delStatus: 0,
+      fields: [
+        { key: 'image', label: '' },
+        { key: 'id', label: 'ID', sortable: true },
+        { key: 'createdAt',
+          label: 'Created',
+          sortable: true,
+          formatter: (value, key, item) => { return value ? new Date(value).toGMTString() : ' ' }
+        },
+        /*
+        { key: 'lastSeen',
+          label: 'Last Seen',
+          formatter: (value,key,item) => { return value ? new Date(value) : ' ' }
+        },
+        */
+        { key: 'fullName', label: 'Name', sortable: true },
+        { key: 'email', label: 'Email', sortable: true },
+        { key: 'userName', label: 'Username', sortable: true },
+        { key: 'delete', label: 'Delete' }
+      ],
+      totalRows: 6,
+      currentPage: 1,
+      perPage: 5,
+      sortBy: '',
+      filter: null,
+      filterOn: ['fullName', 'userName', 'email']
     }
   },
   created () {
     this.loadUserData()
+    this.totalRows = this.items.length
   },
   methods: {
-    refreshToken () {
-      axios
+    refreshToken: async function () {
+      await axios
         .post('http://localhost:1337/api/users/refresh', {
           token: window.localStorage.getItem('mnb_rtok')
         })
@@ -75,9 +143,10 @@ export default {
           }
         })
     },
-    deleteUser (id) {
+    deleteUser: async function (id) {
+      this.delStatus = 0
       this.refreshToken()
-      axios
+      await axios
         .delete('http://localhost:1337/api/users/' + id, {
           headers: {
             'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
@@ -100,15 +169,20 @@ export default {
           }
         })
     },
-    loadUserData () {
+    loadUserData: async function () {
       this.refreshToken()
-      axios
+      await axios
         .get('http://localhost:1337/api/users/all?skipAvatar=true', {
           headers: {
             'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
           }
         })
-        .then(response => { this.members = response.data.sort(compare) })
+        .then(response => {
+          this.members = response.data
+          this.members.forEach((val) => {
+            val.fullName = val.lastName + ', ' + val.firstName
+          })
+        })
         .catch(err => {
           switch (err.response.status) {
             case 401:
@@ -118,26 +192,16 @@ export default {
               this.$log.error(err)
           }
         })
-
-      function compare (a, b) {
-        if (a.id < b.id) {
-          return -1
-        } else if (a.id > b.id) {
-          return 1
-        } else { return 0 }
-      }
+    },
+    onFiltered (filteredItems) {
+      // Trigger pagination to update the number of buttons/pages due to filtering
+      this.totalRows = filteredItems.length
+      this.currentPage = 1
     }
+
   }
 }
 </script>
-
 <style scoped>
-  table {
-    width: 100%;
-  }
 
-  th, td {
-    text-align: center;
-    padding: 0px 20px;
-  }
 </style>

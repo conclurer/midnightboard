@@ -5,7 +5,6 @@
     <Header
       id="titlebar"
       title="Login"
-      :buttonsActive=false
     />
     <b-card
       class="loginBox"

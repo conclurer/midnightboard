@@ -6,7 +6,8 @@
       id="titlebar"
       title="Quality Assurance"
       @plus-clicked="plusClicked"
-      :buttonsActive=true
+      :addActive="true"
+      :profileActive="true"
     />
     <Board
       @add-note="addNote"

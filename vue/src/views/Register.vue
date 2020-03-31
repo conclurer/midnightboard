@@ -5,7 +5,6 @@
     <Header
       id="titlebar"
       :title="$t('ui.register')"
-      :buttonsActive=false
     />
     <b-card
       class="loginBox"
