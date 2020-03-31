@@ -26,7 +26,7 @@
         <td>{{board.id}}</td>
         <td>{{board.boardName}}</td>
         <td>{{board.creatorId}}</td>
-        <td>{{getCreator(board.creatorId)}}</td>
+        <td :key="computed" v-html="creatorNames[board.id]"></td>
         <td>{{board.createdAt}}</td>
         <td><a @click="deleteBoard(board.id)"><font-awesome-icon icon="times-circle" class="text-danger" /></a></td>
       </tr>
@@ -44,6 +44,8 @@ export default {
   data () {
     return {
       boards: [],
+      creatorNames: [],
+      computed: false,
       delStatus: 0
     }
   },
@@ -94,7 +96,7 @@ export default {
             'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
           }
         })
-        .then(response => { /* TODO: Load fitting creator names */ this.boards = response.data.sort(compare) })
+        .then(response => { this.boards = response.data.sort(compare); this.getCreatorNames(response.data.sort(compare)) })
         .catch(err => {
           switch (err.response.status) {
             case 400:
@@ -115,24 +117,35 @@ export default {
       }
     },
     // Method used to get names of board creators
-    getCreator (id) {
-      axios
-        .get('http://localhost:1337/api/users/' + id + '?skipAvatar=true', {
-          headers: {
-            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
-          }
-        })
-        .then(response => { console.log(response.data.firstName + ' ' + response.data.lastName); return (response.data.firstName + ' ' + response.data.lastName) })
-        .catch(err => {
-          switch (err.response.status) {
-            case 404:
-              return this.$t('boards.notFound')
-            case 400:
-            case 500:
-            default:
-              this.$log.error(err)
-          }
-        })
+    async getCreatorNames (members) {
+      this.refreshToken()
+
+      // Initialize array
+      this.creatorNames = new Array(members[members.length - 1].id + 1)
+
+      // Fill array with names
+      for (var i = 0; i < members.length; i++) {
+        await axios
+          .get('http://localhost:1337/api/users/' + members[i].creatorId + '?skipAvatar=true', {
+            headers: {
+              'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
+            }
+          })
+          .then(response => { this.creatorNames[members[i].id] = (response.data.firstName + ' ' + response.data.lastName) })
+          .catch(err => {
+            switch (err.response.status) {
+              case 404:
+                this.creatorNames[members[i].id] = this.$t('boards.notFound')
+                break
+              case 400:
+              case 500:
+              default:
+                this.$log.error(err)
+            }
+          })
+      }
+
+      this.computed = true
     }
   }
 }

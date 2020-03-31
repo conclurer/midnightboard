@@ -16,20 +16,20 @@
         class="cmsMenu bg-dark text-white"
       >
         <b-nav vertical>
-          <b-nav-text>{{$t('cms.userMgmt')}}</b-nav-text>
+          <b-nav-text><b>{{$t('cms.userMgmt')}}</b></b-nav-text>
           <b-nav-item active @click="changeContent('user list')">{{$t('cms.userList')}}</b-nav-item>
           <b-nav-item @click="changeContent('new user')">{{$t('cms.newUser')}}</b-nav-item>
           <b-nav-item @click="changeContent('permissions')">{{$t('cms.userRights')}}</b-nav-item>
         </b-nav>
         <hr>
         <b-nav vertical>
-          <b-nav-text>{{$t('cms.contentMgmt')}}</b-nav-text>
+          <b-nav-text><b>{{$t('cms.contentMgmt')}}</b></b-nav-text>
           <b-nav-item @click="changeContent('notice boards')">{{$t('cms.editBoards')}}</b-nav-item> <!-- Manage notice boards and default board -->
           <b-nav-item @click="changeContent('new board')">{{$t('cms.newBoard')}}</b-nav-item>
         </b-nav>
         <hr>
         <b-nav vertical>
-          <b-nav-text>{{$t('cms.groupMgmt')}}</b-nav-text>
+          <b-nav-text><b>{{$t('cms.groupMgmt')}}</b></b-nav-text>
           <b-nav-item @click="changeContent('groups')">{{$t('cms.editGroups')}}</b-nav-item>
         </b-nav>
       </div>

@@ -22,7 +22,7 @@
             :placeholder="$t('boards.boardName')"
             trim
           ></b-form-input>
-          <b-tooltip target="bname" variant="info" triggers="hover" :show.sync="bnameState">
+          <b-tooltip target="bname" variant="info" triggers="hover">
              {{$t('boards.malBoardName')}}
           </b-tooltip>
           <br>
@@ -44,14 +44,14 @@
         variant="success"
         dismissible
       >
-        <h>{{$t('boards.boardAdded')}}</h>
+        <h5>{{$t('boards.boardAdded')}}</h5>
       </b-alert>
       <b-alert
         :show="addStatus === 400"
         variant="danger"
         dismissible
       >
-        <h>{{$t('cms.unexpectedError')}}</h>
+        <h5>{{$t('cms.unexpectedError')}}</h5>
       </b-alert>
     </div>
   </div>
@@ -78,7 +78,6 @@ export default {
       event.preventDefault()
       if (!this.bnameState) { return }
       this.addStatus = 0
-      console.log(this.bname)
 
       this.refreshToken()
       axios
