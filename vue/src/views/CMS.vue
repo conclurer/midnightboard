@@ -6,71 +6,54 @@
     <Header
       id="titlebar"
       title="Content Management System"
-      :buttonsActive=false
+      :buttonsActive="false"
     />
     <div
       class="inner-cms"
     >
       <!-- Display CMS menu -->
-      <div
-        class="cmsMenu bg-dark text-white"
-      >
-        <b-nav vertical>
-          <b-nav-text>{{$t('cms.userMgmt')}}</b-nav-text>
-          <b-nav-item active @click="changeContent('user list')">{{$t('cms.userList')}}</b-nav-item>
-          <b-nav-item @click="changeContent('new user')">{{$t('cms.newUser')}}</b-nav-item>
-          <b-nav-item @click="changeContent('permissions')">{{$t('cms.userRights')}}</b-nav-item>
+      <div class="cmsMenu bg-dark text-white">
+        <b-nav vertical pills>
+          <b-nav-text class="navHeader">{{$t('cms.userMgmt')}}</b-nav-text>
+          <b-nav-item :active="selectedPanel === 'userList'" @click="selectedPanel='userList'">{{$t('cms.userList')}}</b-nav-item>
+          <b-nav-item :active="selectedPanel === 'registration'" @click="selectedPanel='registration'">{{$t('cms.newUser')}}</b-nav-item>
+          <b-nav-item :active="selectedPanel === 'permissions'" @click="selectedPanel='permissions'">{{$t('cms.userRights')}}</b-nav-item>
         </b-nav>
         <hr>
-        <b-nav vertical>
-          <b-nav-text>{{$t('cms.contentMgmt')}}</b-nav-text>
-          <b-nav-item @click="changeContent('notice boards')">{{$t('cms.editBoards')}}</b-nav-item> <!-- Manage notice boards and default board -->
+        <b-nav vertical pills>
+          <b-nav-text class="navHeader">{{$t('cms.contentMgmt')}}</b-nav-text>
+          <b-nav-item :active="selectedPanel === 'noticeBoards'" @click="selectedPanel='noticeBoards'">{{$t('cms.editBoards')}}</b-nav-item> <!-- Manage notice boards and default board -->
         </b-nav>
         <hr>
-        <b-nav vertical>
-          <b-nav-text>{{$t('cms.groupMgmt')}}</b-nav-text>
-          <b-nav-item @click="changeContent('groups')">{{$t('cms.editGroups')}}</b-nav-item>
+        <b-nav vertical pills>
+          <b-nav-text class="navHeader">{{$t('cms.groupMgmt')}}</b-nav-text>
+          <b-nav-item :active="selectedPanel === 'groups'" @click="selectedPanel='groups'">{{$t('cms.editGroups')}}</b-nav-item>
         </b-nav>
       </div>
 
-      <!-- Display CMS surface -->
-      <div
-        class="cmsContent" align="center"
-      >
-        <!-- Show user list if selected -->
-        <div
-          v-if="selected === 'user list'"
-        >
+      <div class="cmsContent" align="center">
+
+        <div v-if="selectedPanel === 'userList'">
           <UserList />
         </div>
 
-        <!-- Show user creation if selected -->
-        <div
-          v-if="selected === 'new user'"
-        >
+        <div v-if="selectedPanel === 'registration'">
           <AddUser />
         </div>
 
-        <!-- Show permission configuration if selected -->
-        <div
-          v-if="selected === 'permissions'"
-        >
+        <div v-if="selectedPanel === 'permissions'">
           <PermissionPanel />
         </div>
 
-        <!-- Show permission configuration if selected -->
-        <div
-          v-if="selected === 'notice boards'"
-        >
+        <div v-if="selectedPanel === 'noticeBoards'">
           <!-- TODO -->
         </div>
 
-        <!-- Show permission configuration if selected -->
-        <div
-          v-if="selected === 'groups'"
-        >
+
+        <div v-if="selectedPanel === 'groups'">
           <!-- TODO -->
         </div>
+
       </div>
     </div>
   </div>
@@ -93,23 +76,14 @@ export default {
   },
   data () {
     return {
-      selected: 'user list'
+      selectedPanel: 'userList'
     }
   },
   created () {
     if (!window.localStorage.getItem('mnb_atok')) { window.location = '/login' }
   },
   methods: {
-    changeContent (choice) {
-      switch (choice) {
-        case 'user list':
-        case 'new user':
-        case 'permissions':
-        case 'notice boards':
-        case 'groups':
-          this.selected = choice
-      }
-    }
+    
   }
 }
 </script>
@@ -149,5 +123,11 @@ export default {
   .cmsContent {
     grid-column: 2 / 3;
     padding: 20px;
+  }
+
+  .navHeader {
+    font-size: 1.3em;
+    font-weight: bold;
+    text-decoration: underline;
   }
 </style>
