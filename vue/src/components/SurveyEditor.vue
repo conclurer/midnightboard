@@ -267,10 +267,11 @@ export default {
                 questionElement.forEach(answer => {
                   if (answer !== '') {
                     mcqAnswers.push([index, answer])
-                    this.surveyContent += '<input class="form-check-input" type="checkbox" name="' +
+                    this.surveyContent += '<p><strong>' + question + '</strong></p>' +
+                      '<input class="form-check-input" type="checkbox" name="' +
                       checkBoxName + '" id="cbSvy' + index + 'Idx' + answerIndex + '">' +
                       '<label class="form-check-label" for="cbSvy' + index + 'Idx' + answerIndex + '>' +
-                      question + '</label>'
+                      answer + '</label>'
                     answerIndex++
                   }
                 })

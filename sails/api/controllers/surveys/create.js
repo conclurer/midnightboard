@@ -1,6 +1,6 @@
 module.exports = {
 
-  friendlyName: 'Create survey with answers',
+  friendlyName: 'Create survey with questions',
 
   description: 'Create a new survey with questions and answer(s), postId must exist.'
     + 'A copy of the created survey entries is returned.',

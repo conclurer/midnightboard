@@ -4,7 +4,7 @@ content-type: application/json
 
 {
 	"postId": 11,
-  "questionIds": [0,1,2],
+  "questionIds": [0, 1, 2],
   "questions": ["Ja?","Nein?","Ja oder Nein?"],
   "answers": [[2, "Vielleicht"], [2, "Möglicherweiße"]]
 }
@@ -20,7 +20,7 @@ content-type: application/json
 
 {
 	"postId": 11,
-	"questionIds": ["0", "1"],
+	"questionIds": [0, 1],
 	"answers": ["Ja", "Nein"]
 }
 ###
