@@ -1,6 +1,5 @@
 <template>
   <div class="editorSidebar">
-    <!--
     <NoteEditor @create-note="createNote"/>
     <hr />
     <ImageUpload @upload-image="uploadImage"/>
@@ -8,7 +7,7 @@
     <FileUpload @upload-file="uploadFile"/>
     <hr />
     <PollEditor @create-poll="createPoll"/>
-    <hr /> -->
+    <hr />
     <SurveyEditor @create-survey="createSurvey"/>
     <br><br><br><br><br> <!-- For scrollbar -->
   </div>
@@ -16,18 +15,18 @@
 
 <script>
 import axios from 'axios'
-/* import FileUpload from '@/components/FileUpload.vue'
+import FileUpload from '@/components/FileUpload.vue'
 import ImageUpload from '@/components/ImageUpload.vue'
 import NoteEditor from '@/components/NoteEditor.vue'
-import PollEditor from '@/components/PollEditor.vue' */
+import PollEditor from '@/components/PollEditor.vue'
 import SurveyEditor from '@/components/SurveyEditor.vue'
 
 export default {
   components: {
-    // NoteEditor,
-    // ImageUpload,
-    // FileUpload,
-    // PollEditor,
+    NoteEditor,
+    ImageUpload,
+    FileUpload,
+    PollEditor,
     SurveyEditor
   },
   data () {

@@ -6,6 +6,7 @@
       class="pollTitle"
       v-bind:value="pollTitle"
       v-on:input="pollTitle = $event"
+      :placeholder="$t('editor.poll.title')"
       :maxlength="maxPollTitleLength"
     />
     <br>
@@ -26,6 +27,7 @@
             <b-form-input
               v-bind:value="pollAnswers[index].answer"
               v-on:input="pollAnswers[index].answer = $event"
+              :placeholder="$t('editor.poll.templateAnswer')"
               :maxlength="maxPollAnswerLength"
             >
             </b-form-input>
@@ -88,9 +90,9 @@ export default {
   data () {
     return {
       date: null,
-      pollTitle: this.$t('editor.poll.title'),
+      pollTitle: '',
       pollAnswers: [
-        { answer: this.$t('editor.poll.templateAnswer') },
+        { answer: '' },
         { answer: '' }
       ],
       allowMultipleVotes: false,
