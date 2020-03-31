@@ -49,7 +49,6 @@
           <!-- TODO -->
         </div>
 
-
         <div v-if="selectedPanel === 'groups'">
           <!-- TODO -->
         </div>
@@ -83,7 +82,7 @@ export default {
     if (!window.localStorage.getItem('mnb_atok')) { window.location = '/login' }
   },
   methods: {
-    
+
   }
 }
 </script>

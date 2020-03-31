@@ -118,7 +118,6 @@ export default {
   data () {
     return {
       loading: false,
-      invalidLogin: false,
       uname: '',
       email: '',
       passwd: '',
@@ -220,7 +219,6 @@ export default {
           switch (err.response.status) {
             case 400:
             case 403:
-              this.inval = true
               break
             case 500:
             default:

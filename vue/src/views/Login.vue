@@ -1,43 +1,58 @@
 <template>
-  <div
-    class="login"
-  >
+  <div class="login">
     <Header
       id="titlebar"
       title="Login"
-      :buttonsActive=false
+      :buttonsActive="false"
     />
-    <b-card
-      class="loginBox"
-      align="center"
-      bg-variant="dark"
-      text-variant="white"
+
+    <b-overlay
+          :show="loading"
+          variant="light"
+          opacity="0.6"
+          blur="2px"
+          rounded="sm"
     >
-      <br>
-      <form>
+      <b-card
+        class="loginBox"
+        align="center"
+        bg-variant="dark"
+        text-variant="white"
+      >
+        <br>
         <h2>{{$t('ui.welcome')}}</h2>
         <br>
-        <input type="text" id="email" name="email" v-model="email"
-        minlength="3" maxlength="127" required
-        :placeholder="$t('profile.email')" size="36">
-        <br>
-        <br>
-        <input type="password" id="passwd" name="passwd" v-model="passwd"
-        minlength="8" maxlength="127" autocomplete="current-password" required
-        :placeholder="$t('profile.password')" size="36">
-        <p v-if="inval" style="color: #E22">{{$t('login.invalidLogin')}}</p>
-        <br>
-        <br>
-        <button v-on:click.prevent="submit">{{$t('ui.login')}}</button>
-        <br>
-        <br>
-        <router-link
-          to="/register"
-        >
-          {{$t('ui.toSignUp')}}
-        </router-link>
-      </form>
-    </b-card>
+        <b-form @submit="onSubmit">
+          <b-form-input
+            id="email"
+            v-model="email"
+            :state="loginState"
+            :placeholder="$t('profile.email')"
+            trim
+          ></b-form-input>
+          <br>
+          <b-form-input
+            type="password"
+            id="passwd"
+            v-model="passwd"
+            :state="loginState"
+            :placeholder="$t('profile.password')"
+            trim
+          ></b-form-input>
+          <b-tooltip :show.sync="tooltipState" target="passwd" variant="danger" placement="bottom" v-if="loginState === false" triggers="blur">
+            {{$t('login.invalidLogin')}}
+          </b-tooltip>
+
+          <br>
+          <b-button type="submit" variant="primary">{{$t('ui.submit')}}</b-button>
+        </b-form>
+
+          <br>
+          <router-link to="/register">
+            {{$t('ui.toSignUp')}}
+          </router-link>
+      </b-card>
+    </b-overlay>
   </div>
 </template>
 
@@ -55,18 +70,23 @@ export default {
     return {
       email: '',
       passwd: '',
-      inval: false
+      loginState: null,
+      tooltipState: false,
+      loading: false
     }
   },
   methods: {
-    submit () {
-      this.inval = false
+    onSubmit (event) {
+      event.preventDefault()
+      this.loginState = null
+      this.loading = true
       axios
         .post('http://localhost:1337/api/users/login', {
           email: this.email,
           password: this.passwd
         })
         .then(response => {
+          this.loginState = true
           window.localStorage.setItem('mnb_atok', response.data.accessToken)
           window.localStorage.setItem('mnb_rtok', response.data.refreshToken)
           window.location = '/'
@@ -75,13 +95,16 @@ export default {
           switch (err.response.status) {
             case 400:
             case 403:
-              this.inval = true
+              this.loginState = false
+              this.tooltipState = true
               break
             case 500:
             default:
               this.$log.error(err)
           }
         })
+
+      this.loading = false
     }
   }
 }
