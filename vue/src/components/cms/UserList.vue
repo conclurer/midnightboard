@@ -29,30 +29,40 @@
             ></b-pagination>
           </b-col>
         </b-row>
-
-      <b-table
-        class="table"
-        dark
-        striped
-        hover
-        small
-        :items="members"
-        :fields="fields"
-        :per-page="perPage"
-        :current-page="currentPage"
-        :filter="filter"
-        :filterIncludedFields="filterOn"
-        @filtered="onFiltered"
-        sort-by="id"
+        <b-overlay
+          id="overlay-background"
+          :show="loading"
+          :variant="variant"
+          :opacity="opacity"
+          :blur="blur"
+          rounded="sm"
         >
-        <template v-slot:cell(delete)="row">
-          <b-button size="sm" @click="deleteUser(row.item.id)" class="mr-1">X</b-button>
-        </template>
-        <template v-slot:cell(image)="row">
-          <!-- TODO remove random image -->
-          <b-avatar :src="'https://placem.at/people?w=174&&random='+row.item.id"></b-avatar>
-        </template>
-        </b-table>
+          <b-table
+            class="table"
+            dark
+            striped
+            hover
+            small
+            :items="members"
+            :fields="fields"
+            :per-page="perPage"
+            :current-page="currentPage"
+            :filter="filter"
+            :filterIncludedFields="filterOn"
+            @filtered="onFiltered"
+            @row-dblclicked="onDoubleClicked"
+            sort-by="id"
+            >
+            <template v-slot:cell(delete)="row">
+              <b-button size="sm" @click="deleteUser(row.item.id)" class="mr-1">X</b-button>
+            </template>
+            <template v-slot:cell(image)="row">
+              <!-- TODO remove random image -->
+              <b-avatar :src="'https://placem.at/people?w=174&&random='+row.item.id"></b-avatar>
+            </template>
+          </b-table>
+        </b-overlay>
+
       </b-container>
     </div>
     <div id="alert">
@@ -94,18 +104,19 @@ export default {
     return {
       members: [],
       delStatus: 0,
+      loading: false,
       fields: [
         { key: 'image', label: '' },
         { key: 'id', label: 'ID', sortable: true },
         { key: 'createdAt',
           label: 'Created',
           sortable: true,
-          formatter: (value, key, item) => { return value ? new Date(value).toGMTString() : ' ' }
+          formatter: (value, key, item) => { return value ? new Date(value).toDateString() : ' ' }
         },
         /*
         { key: 'lastSeen',
           label: 'Last Seen',
-          formatter: (value,key,item) => { return value ? new Date(value) : ' ' }
+          formatter: (value,key,item) => { return value ? new Date(value).toDateString() : ' ' }
         },
         */
         { key: 'fullName', label: 'Name', sortable: true },
@@ -113,9 +124,9 @@ export default {
         { key: 'userName', label: 'Username', sortable: true },
         { key: 'delete', label: 'Delete' }
       ],
-      totalRows: 6,
+      totalRows: 1,
       currentPage: 1,
-      perPage: 5,
+      perPage: 12,
       sortBy: '',
       filter: null,
       filterOn: ['fullName', 'userName', 'email']
@@ -145,6 +156,7 @@ export default {
     },
     deleteUser: async function (id) {
       this.delStatus = 0
+      this.loading = true
       this.refreshToken()
       await axios
         .delete('http://localhost:1337/api/users/' + id, {
@@ -168,8 +180,10 @@ export default {
               this.$log.error(err)
           }
         })
+      this.loading = false
     },
     loadUserData: async function () {
+      this.loading = true
       this.refreshToken()
       await axios
         .get('http://localhost:1337/api/users/all?skipAvatar=true', {
@@ -192,11 +206,14 @@ export default {
               this.$log.error(err)
           }
         })
+      this.loading = false
     },
     onFiltered (filteredItems) {
-      // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length
       this.currentPage = 1
+    },
+    onDoubleClicked (item, index, event){
+      // TODO redirect to profile page (item.id)
     }
 
   }
