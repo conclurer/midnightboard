@@ -62,7 +62,7 @@ import axios from 'axios'
 import Header from '@/components/Header.vue'
 
 export default {
-  name: 'NoticeBoard',
+  name: 'Login',
   components: {
     Header
   },
