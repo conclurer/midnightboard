@@ -170,7 +170,7 @@ export default {
       // Notify notice board
       this.$emit('add-note')
     },
-    createSurvey: async function (titleContent, jsonContent, questionIndices, mcqAnswers) {
+    createSurvey: async function (titleContent, jsonContent, questionIndices, questions, mcqAnswers) {
       const jsonBodyNote = JSON.stringify({
         title: titleContent,
         typeOfPost: 'application/survey',
@@ -190,7 +190,9 @@ export default {
         .then(async postResponse => {
           const jsonBodySurvey = JSON.stringify({
             postId: postResponse.data.id,
-            questionIds: questionIndices
+            questionIds: questionIndices,
+            questions: questions,
+            answers: mcqAnswers
           })
           await axios
             .post('http://localhost:1337/api/surveys', jsonBodySurvey, {

@@ -24,9 +24,17 @@ module.exports = {
       description: 'Missing parameters',
       statusCode: 400
     },
+    forbidden: {
+      description: 'This user have already voted!',
+      statusCode: 403
+    },
     nonExistent: {
       description: 'Poll does not exist in database',
       statusCode: 404
+    },
+    serverError: {
+      description: 'Unexpected server error',
+      statusCode: 500
     }
   },
 
@@ -34,20 +42,40 @@ module.exports = {
     if(!inputs.postId || !inputs.answerId && inputs.answerId !== 0) {
       return exits.missingParams();
     }
-    sails.log.debug('POLL_GET::: Updating poll with postId ' + inputs.postId
-      + ' and answerId ' + inputs.answerId);
+    const postId = inputs.postId;
+    const answerId = inputs.answerId;
+    sails.log.verbose('POLL_UPDATE::: Updating poll with postId ' + postId
+      + ' and answerId ' + answerId);
     const poll = await Poll.findOne({
-      postId: inputs.postId,
-      answerId: inputs.answerId
+      postId: postId,
+      answerId: answerId
     });
     if(poll) {
-      const updatedPoll = await Poll.updateOne({
-        postId: inputs.postId,
-        answerId: inputs.answerId
-      }).set({
-        votes: poll.votes + 1
+      // Check if participant has already voted
+      const existingParticipant = await PollSurveyParticipant.findOne({
+        postId: postId,
+        memberId: this.req.me['id']
       });
-      return exits.success(updatedPoll);
+      if(!existingParticipant) {
+        const savedAsParticipant = await PollSurveyParticipant.create({
+          postId: postId,
+          memberId: this.req.me['id']
+        }).fetch();
+        const updatedPoll = await Poll.updateOne({
+          postId: postId,
+          answerId: answerId
+        }).set({
+          votes: poll.votes + 1
+        });
+        if(savedAsParticipant && updatedPoll) {
+          return exits.success(updatedPoll);
+        } else {
+          return exits.serverError('POLL_UPDATE::: Failed to update poll with postId ' + postId
+            + ' and answerId ' + answerId + '!');
+        }
+      } else {
+        return exits.forbidden();
+      }
     } else {
       return exits.nonExistent();
     }

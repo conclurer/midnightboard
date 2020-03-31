@@ -213,11 +213,13 @@ export default {
         invalidInput = true
       } else {
         var questionIndices = []
+        var questions = []
         var mcqAnswers = []
         // Start form
         this.surveyContent = '<form>'
         this.surveyQuestions.forEach((question, index) => {
           questionIndices.push(index)
+          questions.push(question)
           const questionType = this.surveyQuestionType[index]
           const questionElement = this.surveyQuestionElement[index]
           const allowMultipleVote = this.allowMultipleVotes[index]
@@ -264,7 +266,7 @@ export default {
                 this.surveyContent += '<div class="form-check">'
                 questionElement.forEach(answer => {
                   if (answer !== '') {
-                    mcqAnswers.push(answer)
+                    mcqAnswers.push([index, answer])
                     this.surveyContent += '<input class="form-check-input" type="checkbox" name="' +
                       checkBoxName + '" id="cbSvy' + index + 'Idx' + answerIndex + '">' +
                       '<label class="form-check-label" for="cbSvy' + index + 'Idx' + answerIndex + '>' +
@@ -282,10 +284,7 @@ export default {
         if (!invalidInput && mcqAnswers.length <= 1) {
           alert(this.$t('editor.survey.emptyMCQAnswers'))
         } else if (!invalidInput) {
-          this.$log.debug(this.surveyContent)
-          this.$log.debug(questionIndices)
-          this.$log.debug(mcqAnswers)
-          // this.$emit('create-survey', this.surveyTitle, this.surveyContent, questionIndices, mcqAnswers)
+          this.$emit('create-survey', this.surveyTitle, this.surveyContent, questionIndices, questions, mcqAnswers)
         }
       }
     }

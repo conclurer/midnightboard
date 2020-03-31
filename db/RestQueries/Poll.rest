@@ -1,0 +1,23 @@
+POST http://localhost:1337/api/polls HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJpZCI6MSwicm9sZSI6MCwiaWF0IjoxNTg1NjgxNjM4LCJleHAiOjE2MTcyMTc2Mzh9.tzsHSMYkECM_0Pnl2FKlCFgNw8Emz7zl5GKZc54fLYU
+content-type: application/json
+
+{
+	"postId": 10,
+  "answerIds": [0,1,2]
+}
+###
+GET http://localhost:1337/api/polls/10 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJpZCI6MSwicm9sZSI6MCwiaWF0IjoxNTg1NjgxNjM4LCJleHAiOjE2MTcyMTc2Mzh9.tzsHSMYkECM_0Pnl2FKlCFgNw8Emz7zl5GKZc54fLYU
+content-type: application/json
+
+###
+PUT http://localhost:1337/api/surveys HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJpZCI6MSwicm9sZSI6MCwiaWF0IjoxNTg1NjgxNjM4LCJleHAiOjE2MTcyMTc2Mzh9.tzsHSMYkECM_0Pnl2FKlCFgNw8Emz7zl5GKZc54fLYU
+content-type: application/json
+
+{
+	"postId": 19,
+	"answerId": 0
+}
+###

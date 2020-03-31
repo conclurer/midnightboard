@@ -11,7 +11,7 @@ module.exports = {
       type: 'number'
     },
     answerIds: {
-      description: 'Displayed title of created post',
+      description: 'IDs of the poll answers',
       type: 'json',
       columnType: 'array'
     }
@@ -56,7 +56,7 @@ module.exports = {
       return exits.nonExistent();
     }
 
-    sails.log.debug('POLL_CREATE::: Creating new Poll . . .');
+    sails.log.verbose('POLL_CREATE::: Creating new Poll . . .');
     var createdPoll = [];
     var createData = null;
     // Create all entries in 'poll' table
@@ -74,7 +74,7 @@ module.exports = {
           return exits.serverError('POLL_CREATE::: Failed to create a Poll!');
         });
     });
-    sails.log.debug('POLL_CREATE::: Created new Poll successfully!');
+    sails.log.verbose('POLL_CREATE::: Created new Poll successfully!');
     return exits.success(createdPoll);
   }
 };

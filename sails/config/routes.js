@@ -132,6 +132,23 @@ module.exports.routes = {
         action: 'update',
         skipAssets: true
     },
+
+    //SURVEYS
+    'GET    /api/surveys/:postId': {
+        controller: 'surveys',
+        action: 'get',
+        skipAssets: true
+    },
+    'POST   /api/surveys': {
+        controller: 'surveys',
+        action: 'create',
+        skipAssets: true
+    },
+    'PUT   /api/surveys': {
+        controller: 'surveys',
+        action: 'update',
+        skipAssets: true
+    },
     //#endregion
 
     //Default
