@@ -12,6 +12,7 @@
         },
         "poll":{
             "vote":"Vote",
+            "votes":"votes | vote | votes",
             "invalidVote":"You have to choose an answer!",
             "showResult":"Show result",
             "resetRadioButtons":"Reset options"
@@ -97,7 +98,7 @@
         "createAccount":"Create a new account:",
         "signUp":"Sign Up",
         "toSignUp":"I don't have an account",
-        "adopt":"Adopt",
+        "adopt":"Apply",
         "userAdded":"User successfully added",
         "userDeleted":"User successfully deleted",
         "submit":"Submit",
