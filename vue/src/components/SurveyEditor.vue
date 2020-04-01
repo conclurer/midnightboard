@@ -52,6 +52,7 @@
             v-on:input="surveyQuestionElement[index] = $event"
             :placeholder="$t('editor.survey.templateAnswer')"
             :maxlength="maxSurveyTextAreaAnswerLength"
+            no-resize
           >
           </b-form-textarea>
         </div>
@@ -216,7 +217,7 @@ export default {
         var questions = []
         var mcqAnswers = []
         // Start form
-        this.surveyContent = '<form>'
+        this.surveyContent = '<form class="d-flex flex-column">'
         this.surveyQuestions.forEach((question, index) => {
           questionIndices.push(index)
           questions.push(question)
@@ -228,8 +229,9 @@ export default {
               alert(this.$t('editor.survey.missingIFQQuestion'))
               invalidInput = true
             } else {
-              this.surveyContent += '<div class="form-group"><label for="inputText' + index + '">' +
-                question + '</label><input type="text" class="form-control is-valid" id="inputText' + index +
+              this.surveyContent += '<div class="form-group"><div class="d-flex align-self-start">' +
+                '<label for="inputText' + index + '">' + question + '</label></div>' +
+                '<input type="text" class="form-control" id="inputText' + index +
                 '" placeholder="' + questionElement + '" required></div>'
             }
           } else if (questionType === 'TAQ') {
@@ -237,44 +239,62 @@ export default {
               alert(this.$t('editor.survey.missingTAQQuestion'))
               invalidInput = true
             } else {
-              this.surveyContent += '<div class="form-group"><label for="inputTextArea' + index + '">' +
-                question + '</label><textarea class="form-control is-valid" id="inputTextArea' + index +
-                '" rows="3" placeholder="' + questionElement + '" required></textarea></div>'
+              this.surveyContent += '<div class="form-group"><div class="d-flex align-self-start">' +
+                '<label for="inputTextArea' + index + '">' + question + '</label></div>' +
+                '<textarea class="form-control" id="inputTextArea' + index +
+                '" placeholder="' + questionElement + '" style="resize:none;" rows="3" required>' +
+                '</textarea></div>'
             }
           } else if (questionType === 'MCQ') {
             if (question === '') {
               alert(this.$t('editor.survey.missingMCQQuestion'))
               invalidInput = true
             } else {
-              var answerIndex = 0
-              // Need unique checkbox name for single vote surveys
-              var checkBoxName = ''
-              if (!allowMultipleVote) {
-                const birthday = new Date()
-                const yearM = birthday.getFullYear() + '-'
-                const monthM = birthday.getMonth() + '-'
-                const dayM = birthday.getDay() + '-'
-                const time = birthday.getHours() + '' + birthday.getMinutes() + '' +
-                birthday.getSeconds() + '' + birthday.getMilliseconds()
-                checkBoxName = 'cb-' + yearM + monthM + dayM + time
-              }
               // 2 or more answers = valid MCQ
               if (questionElement.length <= 1) {
                 alert(this.$t('editor.survey.missingMCQAnswers'))
                 invalidInput = true
               } else {
-                this.surveyContent += '<div class="form-check">'
-                questionElement.forEach(answer => {
-                  if (answer !== '') {
-                    mcqAnswers.push([index, answer])
-                    this.surveyContent += '<p><strong>' + question + '</strong></p>' +
-                      '<input class="form-check-input" type="checkbox" name="' +
-                      checkBoxName + '" id="cbSvy' + index + 'Idx' + answerIndex + '">' +
-                      '<label class="form-check-label" for="cbSvy' + index + 'Idx' + answerIndex + '>' +
-                      answer + '</label>'
-                    answerIndex++
-                  }
-                })
+                var answerIndex = 0
+                this.surveyContent += '<div class="form-group">' +
+                  '<div class="d-flex align-self-start"><p>' + question + '</p></div>'
+                // Need unique radio button name for single vote surveys
+                var radioButtonName = ''
+                if (!allowMultipleVote) {
+                  const birthday = new Date()
+                  const yearM = birthday.getFullYear() + '-'
+                  const monthM = birthday.getMonth() + '-'
+                  const dayM = birthday.getDay() + '-'
+                  const time = birthday.getHours() + '' + birthday.getMinutes() + '' +
+                  birthday.getSeconds() + '' + birthday.getMilliseconds()
+                  radioButtonName = 'rb-' + yearM + monthM + dayM + time
+                  // Use radio buttons
+                  questionElement.forEach(answer => {
+                    if (answer !== '') {
+                      mcqAnswers.push([index, answer])
+                      this.surveyContent += '<div class="form-check">' +
+                        '<div class="d-flex align-self-start">' +
+                        '<input class="form-check-input" type="radio" name="' + radioButtonName +
+                        'id="rbSvy' + index + 'Idx' + answerIndex + '">'
+                      this.surveyContent += '<label class="form-check-label" for="rbSvy' + index +
+                        'Idx' + answerIndex + '">' + answer + '</label></div></div>'
+                      answerIndex++
+                    }
+                  })
+                } else {
+                  // Use checkboxes
+                  questionElement.forEach(answer => {
+                    if (answer !== '') {
+                      mcqAnswers.push([index, answer])
+                      this.surveyContent += '<div class="form-check">' +
+                        '<div class="d-flex align-self-start">' +
+                        '<input class="form-check-input" type="checkbox" id="cbSvy' + index + 'Idx' + answerIndex + '">'
+                      this.surveyContent += '<label class="form-check-label" for="cbSvy' + index +
+                        'Idx' + answerIndex + '">' + answer + '</label></div></div>'
+                      answerIndex++
+                    }
+                  })
+                }
                 this.surveyContent += '</div>'
               }
             }

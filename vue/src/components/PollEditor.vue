@@ -112,35 +112,55 @@ export default {
       if (this.pollTitle === '') {
         alert(this.$t('editor.poll.missingTitle'))
       } else {
-        var index = 0
-        var validAnswers = []
-        // Need unique radio button name for single vote polls
-        var radioButtonName = ''
-        if (!this.allowMultipleVotes) {
-          const birthday = new Date()
-          const yearM = birthday.getFullYear() + '-'
-          const monthM = birthday.getMonth() + '-'
-          const dayM = birthday.getDay() + '-'
-          const time = birthday.getHours() + '' + birthday.getMinutes() + '' +
-          birthday.getSeconds() + '' + birthday.getMilliseconds()
-          radioButtonName = 'rb-' + yearM + monthM + dayM + time
-        }
         // 2 or more answers = valid poll
         if (this.pollAnswers.length <= 1) {
           alert(this.$t('editor.poll.missingAnswers'))
         } else {
-          this.pollContent = '<div class="container">'
-          this.pollAnswers.forEach(pollAnswer => {
-            const answer = pollAnswer.answer
-            if (answer !== '') {
-              validAnswers.push(index)
-              this.pollContent += '<div class="row justify-content-flex-start"><div class="align-self-center">' +
-              '<input type="radio" name="' + radioButtonName + '" id="' + index +
-              '"></div><div class="col-sm-auto"><b>' + answer + '</b></div></div>'
-              index++
-            }
-          })
-          this.pollContent += '</div>'
+          var index = 0
+          var validAnswers = []
+          // Start form
+          this.pollContent = '<form class="d-flex flex-column">'
+          // Need unique radio button name for single vote polls
+          var radioButtonName = ''
+          if (!this.allowMultipleVotes) {
+            const birthday = new Date()
+            const yearM = birthday.getFullYear() + '-'
+            const monthM = birthday.getMonth() + '-'
+            const dayM = birthday.getDay() + '-'
+            const time = birthday.getHours() + '' + birthday.getMinutes() + '' +
+            birthday.getSeconds() + '' + birthday.getMilliseconds()
+            radioButtonName = 'rb-' + yearM + monthM + dayM + time
+            // Use radio buttons
+            this.pollAnswers.forEach(pollAnswer => {
+              const answer = pollAnswer.answer
+              if (answer !== '') {
+                validAnswers.push(index)
+                this.pollContent += '<div class="form-check">' +
+                '<div class="d-flex align-self-start">' +
+                '<input class="form-check-input" type="radio" name="' + radioButtonName +
+                '" id="rbPollIdx' + index + '">'
+                this.pollContent += '<label class="form-check-label" for="rbPollIdx' + index +
+                  '">' + answer + '</label></div></div>'
+                index++
+              }
+            })
+          } else {
+            // Use checkboxes instead
+            this.pollAnswers.forEach(pollAnswer => {
+              const answer = pollAnswer.answer
+              if (answer !== '') {
+                validAnswers.push(index)
+                this.pollContent += '<div class="form-check">' +
+                '<div class="d-flex align-self-start">' +
+                '<input class="form-check-input" type="checkbox" id="cbPl0' + 'Idx' + index + '">'
+                this.pollContent += '<label class="form-check-label" for="cbPollIdx' + index +
+                  '">' + answer + '</label></div></div>'
+                index++
+              }
+            })
+          }
+          // Form end
+          this.pollContent += '</form>'
           if (validAnswers.length <= 1) {
             alert(this.$t('editor.poll.missingAnswers'))
             this.pollContent = ''

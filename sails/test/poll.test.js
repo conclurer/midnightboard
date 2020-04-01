@@ -17,14 +17,16 @@ const createPollData = {
   title: 'JEST Poll Question?',
   typeOfPost: 'application/poll',
   dueDate: 1609498900000,
-  content: '<div class="container">'
-  + '<div class="row justify-content-center"><div class="align-self-center">'
-  + '<input type="radio" name="rb-2020-3-20-2130401234" id="1"></div>'
-  + '<div class="col-sm-auto"><b>Answer A</b></div></div>'
-  + '<div class="row justify-content-center"><div class="align-self-center">'
-  + '<input type="radio" name="rb-2020-3-20-2130401234" id="2"></div>'
-  + '<div class="col-sm-auto"><b>Answer B</b></div></div>'
-  + '</div>'
+  content: '<form class="d-flex flex-column">'
+  + '<div class="form-check"><div class="d-flex align-self-start">'
+  + '<input class="form-check-input" type="radio" name="rb-2020-3-20-2130401234" id="rbPollIdx0">'
+  + '<label class="form-check-label for="rbPollIdx0>Answer A</label>'
+  + '</div></div>'
+  + '<div class="form-check"><div class="d-flex align-self-start">'
+  + '<input class="form-check-input" type="radio" name="rb-2020-3-20-2130401234" id="rbPollIdx1">'
+  + '<label class="form-check-label for="rbPollIdx0>Answer B</label>'
+  + '</div></div>'
+  + '</form>'
 };
 // No " in JSON string allowed
 createPollData.content = createPollData.content.replace(/"/g, /'/).replace(/\//g, '');

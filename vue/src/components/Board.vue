@@ -201,13 +201,6 @@
                   >
                     {{$t('board.poll.showResult')}}
                   </b-button>
-                  <b-button
-                    variant="danger"
-                    class="resetRadioButtons"
-                    @click="resetRadioButtons"
-                  >
-                    {{$t('board.poll.resetRadioButtons')}}
-                  </b-button>
                 </b-button-group>
               </div>
               <div v-if="pollShowResults[pollResultMap[note.id]]">
@@ -226,6 +219,34 @@
                     </div>
                   </ul>
                 </div>
+              </div>
+            </b-card-text>
+          </b-card>
+
+          <!-- Display surveys -->
+          <b-card
+            v-bind:id="note.id"
+            v-if="note.typeOfPost === 'application/survey'"
+            class="note"
+            bg-variant="dark"
+            text-variant="white"
+            :title="note.title"
+          >
+            <hr />
+            <b-card-text>
+              <div v-if="!surveySubmitted[note.id]">
+                <div v-html="note.content" />
+                <br>
+                <b-button
+                    variant="primary"
+                    class="submitButton"
+                    @click="submitSurvey"
+                  >
+                    {{$t('board.survey.submit')}}
+                </b-button>
+              </div>
+              <div v-else-if="surveySubmitted[note.id]">
+                <h4>{{$t('board.survey.thankYou')}}</h4>
               </div>
             </b-card-text>
           </b-card>
@@ -435,13 +456,6 @@
                   >
                     {{$t('board.poll.showResult')}}
                   </b-button>
-                  <b-button
-                    variant="danger"
-                    class="resetRadioButtons"
-                    @click="resetRadioButtons"
-                  >
-                    {{$t('board.poll.resetRadioButtons')}}
-                  </b-button>
                 </b-button-group>
               </div>
               <div v-if="pollShowResults[pollResultMap[note.id]]">
@@ -460,6 +474,34 @@
                     </div>
                   </ul>
                 </div>
+              </div>
+            </b-card-text>
+          </b-card>
+
+          <!-- Display surveys -->
+          <b-card
+            v-bind:id="note.id"
+            v-if="note.typeOfPost === 'application/survey'"
+            class="note"
+            bg-variant="dark"
+            text-variant="white"
+            :title="note.title"
+          >
+            <hr />
+            <b-card-text>
+              <div v-if="!surveySubmitted[note.id] || true">
+                <div v-html="note.content" />
+                <br>
+                <b-button
+                    variant="primary"
+                    class="submitButton"
+                    @click="submitSurvey"
+                  >
+                    {{$t('board.survey.submit')}}
+                </b-button>
+              </div>
+              <div v-else-if="surveySubmitted[note.id] || false">
+                <h4>{{$t('board.survey.thankYou')}}</h4>
               </div>
             </b-card-text>
           </b-card>
@@ -503,8 +545,12 @@ export default {
       pollAVVPMap: [], // links to pollAnswers/pollVotes/pollVotesPercent
       pollAnswers: [],
       pollVotes: [],
-      pollVotesPercent: []
+      pollVotesPercent: [],
+      surveySubmitted: []
     }
+  },
+  created () {
+    // Check for voted polls and submitted surveys
   },
   methods: {
     addNote: async function () {
@@ -537,7 +583,8 @@ export default {
           })
           // Extract poll data from html
           for (const child of element.target.parentElement.parentElement.firstChild.firstChild.children) {
-            const voteNumber = votes[child.firstChild.firstChild.id]
+            const answerId = child.firstChild.firstChild.id.split('Idx')[1] // rbPollIdx0 -> 0
+            const voteNumber = votes[answerId]
             var votePercent = 0
             if (votesSum > 0) {
               votePercent = (voteNumber / votesSum) * 100
@@ -591,7 +638,8 @@ export default {
       const answerIds = []
       for (const child of element.target.parentElement.parentElement.firstChild.firstChild.children) {
         if (child.firstChild.firstChild.checked === true) {
-          answerIds.push(child.firstChild.firstChild.id)
+          const answerId = child.firstChild.firstChild.id.split('Idx')[1] // rbPollIdx0 -> 0
+          answerIds.push(answerId)
         }
       }
       if (answerIds.length <= 0) {
@@ -622,13 +670,12 @@ export default {
       const postId = element.target.parentElement.parentElement.parentElement.parentElement.parentElement.id
       this.initPoll(postId, element)
     },
-    resetRadioButtons: function (element) {
-      // Reset radio buttons to inital state
-      for (const child of element.target.parentElement.parentElement.firstChild.firstChild.children) {
-        if (child.firstChild.firstChild.type === 'radio') {
-          child.firstChild.firstChild.checked = false
-        }
-      }
+    submitSurvey: async function (element) {
+      // Submit survey and set survey in submitted state
+      const postId = element.target.parentElement.parentElement.parentElement.parentElement.id
+      this.surveySubmitted[postId] = true
+      this.refreshBoard = !this.refreshBoard
+      // TODO: Send PUT request
     }
   },
   props: ['notes', 'editorActive']

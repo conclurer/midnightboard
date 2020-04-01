@@ -13,8 +13,11 @@
         "poll":{
             "vote":"Vote",
             "invalidVote":"You have to choose an answer!",
-            "showResult":"Show result",
-            "resetRadioButtons":"Reset options"
+            "showResult":"Show result"
+        },
+        "survey":{
+            "submit":"Submit",
+            "thankYou":"Thanks for your participation!"
         }
     },
     "editor":{
