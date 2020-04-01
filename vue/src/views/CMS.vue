@@ -100,7 +100,7 @@ export default {
     if (!window.localStorage.getItem('mnb_atok')) { window.location = '/login' }
   },
   methods: {
-    changeContent (choice) {
+    changeContent: function (choice) {
       switch (choice) {
         case 'user list':
         case 'new user':

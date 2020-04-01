@@ -84,14 +84,14 @@ export default {
     }
   },
   methods: {
-    cToEN (e) {
+    cToEN: function (e) {
       e.preventDefault()
       if (this.selLanguage === 'en') { return }
       window.localStorage.setItem('mnb_lang', 'en-GB')
       this.selLanguage = 'en'
       i18n.locale = 'en-GB'
     },
-    cToDE (e) {
+    cToDE: function (e) {
       e.preventDefault()
       if (this.selLanguage === 'de') { return }
       window.localStorage.setItem('mnb_lang', 'de-DE')
@@ -99,7 +99,7 @@ export default {
       i18n.locale = 'de-DE'
     },
     // Used to load an editor to the sidebar
-    selectEditor (selection) {
+    selectEditor: function (selection) {
       switch (selection) {
         case 'text':
           this.$emit('select-editor', 0)
@@ -147,7 +147,7 @@ export default {
 
   #flag {
     font-size: 25px;
-    color: #FFF
+    color: #fff
   }
 
   /* Alternative highlight styles:

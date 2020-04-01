@@ -10,6 +10,7 @@
     />
     <Board
       @add-note="addNote"
+      @close="close"
       :notes="notes"
       :editorActive="editorActive"
       :editorId="editorId"
@@ -43,7 +44,7 @@ export default {
     this.fetchPosts()
   },
   methods: {
-    refreshToken () {
+    refreshToken: async function () {
       axios
         .post('http://localhost:1337/api/users/refresh', {
           token: window.localStorage.getItem('mnb_rtok')
@@ -63,7 +64,7 @@ export default {
           }
         })
     },
-    fetchPosts () {
+    fetchPosts: async function () {
       axios
         .get('http://localhost:1337/api/posts/all/' + this.boardId, {
           headers: {
@@ -83,16 +84,18 @@ export default {
           }
         })
     },
-    addNote () {
+    addNote: async function () {
       this.refreshToken()
       this.fetchPosts()
 
       this.editorActive = false
     },
-    selectEditor (selection) {
+    selectEditor: function (selection) {
       this.editorActive = true
       this.editorId = selection
-      console.log(selection)
+    },
+    close: function () {
+      this.editorActive = false
     }
   }
 }

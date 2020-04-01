@@ -59,7 +59,7 @@ export default {
     }
   },
   methods: {
-    submit () {
+    submit: function () {
       this.inval = false
       axios
         .post('http://localhost:1337/api/users/login', {

@@ -1,7 +1,5 @@
 <template>
   <div class="pollEditor">
-    <br>
-    <h2>{{$t('editor.poll.heading')}}</h2>
     <b-form-input
       class="pollTitle"
       v-bind:value="pollTitle"
@@ -86,13 +84,13 @@ export default {
     }
   },
   methods: {
-    addAnswer () {
+    addAnswer: function () {
       this.pollAnswers.push({ answer: '' })
     },
-    removeAnswer (index) {
+    removeAnswer: function (index) {
       this.pollAnswers.splice(index, 1)
     },
-    createPoll () {
+    createPoll: function () {
       if (this.pollTitle === '') {
         alert(this.$t('editor.poll.missingQuestion'))
       } else {

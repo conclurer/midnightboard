@@ -58,7 +58,7 @@ export default {
     this.loadUserData()
   },
   methods: {
-    refreshToken () {
+    refreshToken: async function () {
       axios
         .post('http://localhost:1337/api/users/refresh', {
           token: window.localStorage.getItem('mnb_rtok')
@@ -75,7 +75,7 @@ export default {
           }
         })
     },
-    deleteUser (id) {
+    deleteUser: async function (id) {
       this.refreshToken()
       axios
         .delete('http://localhost:1337/api/users/' + id, {
@@ -100,7 +100,7 @@ export default {
           }
         })
     },
-    loadUserData () {
+    loadUserData: async function () {
       this.refreshToken()
       axios
         .get('http://localhost:1337/api/users/all?skipAvatar=true', {

@@ -1,5 +1,10 @@
 <template>
   <div class="editorSidebar">
+    <EditorHeader
+      @close="close"
+      :editorTitle="editorType"
+    />
+    <hr>
     <div v-if="editorId === 0">
       <NoteEditor @create-note="createNote"/>
     </div>
@@ -12,32 +17,21 @@
     <div v-else-if="editorId === 3">
       <PollEditor @create-poll="createPoll"/>
     </div>
-    <hr />
-    <VueCtkDateTimePicker
-      id="DatePicker"
-      class="datePicker"
-      format="DD-MM-YYYY"
-      formatted="ll"
-      onlyDate v-model="date"
-      color="#F9A618"
-      :label="$t('editor.datePicker.dueDate')"
-      :buttonNowTranslation="$t('editor.datePicker.currentDate')"
-      :locale="$t('editor.datePicker.language')"
-    >
-    </VueCtkDateTimePicker>
-    <br><br><br><br><br> <!-- For scrollbar -->
+    <br><br><br> <!-- For scrollbar -->
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import FileUpload from '@/components/FileUpload.vue'
-import ImageUpload from '@/components/ImageUpload.vue'
-import NoteEditor from '@/components/NoteEditor.vue'
-import PollEditor from '@/components/PollEditor.vue'
+import EditorHeader from '@/components/editors/EditorHeader'
+import FileUpload from '@/components/editors/FileUpload.vue'
+import ImageUpload from '@/components/editors/ImageUpload.vue'
+import NoteEditor from '@/components/editors/NoteEditor.vue'
+import PollEditor from '@/components/editors/PollEditor.vue'
 
 export default {
   components: {
+    EditorHeader,
     NoteEditor,
     ImageUpload,
     FileUpload,
@@ -46,8 +40,25 @@ export default {
   props: ['editorId'],
   data () {
     return {
-      date: null,
       boardId: null
+    }
+  },
+  computed: {
+    editorType () {
+      switch (this.editorId) {
+        case 0:
+          return this.$t('editor.note.heading')
+        case 1:
+          return this.$t('editor.image.heading')
+        case 2:
+          return this.$t('editor.file.heading')
+        case 3:
+          return this.$t('editor.poll.heading')
+        case 4:
+          return this.$t('editor.survey.heading')
+        default:
+          return ''
+      }
     }
   },
   methods: {
@@ -184,6 +195,10 @@ export default {
 
       // Notify notice board
       this.$emit('add-note')
+    },
+    // Used to close the editor sidebar
+    close: function () {
+      this.$emit('close')
     }
   }
 }
@@ -194,10 +209,5 @@ export default {
     height: 1px;
     border: none;
     background-color: #aaa;
-  }
-
-  .datePicker {
-    width: 300px;
-    z-index: 10003;
   }
 </style>

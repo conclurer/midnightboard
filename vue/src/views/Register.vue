@@ -95,7 +95,7 @@ export default {
     }
   },
   methods: {
-    validate () {
+    validate: function () {
       var usernameRegex = new RegExp('^[a-zA-Z0-9]{5,30}$')
       var realnameRegex = new RegExp('^[\'\-\. a-zA-ZŠŽšžŸÀ-ÖÙ-öù-ÿ]{2,20}$')
       var passwordRegex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]|.*[\-=._#§@$!%*?&])[A-Za-z0-9\-=._#§@$!%*?&]{8,}$')
@@ -109,7 +109,7 @@ export default {
       if (!realnameRegex.test(this.lname)) { this.err.push(106) }
       if (this.passwd !== this.passwd2) { this.err.push(110) }
     },
-    submit () {
+    submit: async function () {
       this.validate()
       if (this.err.length !== 0) { return }
       axios

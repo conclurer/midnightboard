@@ -150,7 +150,7 @@ export default {
     }
   },
   methods: {
-    onSubmit (event) {
+    onSubmit: async function (event) {
       event.preventDefault()
       if (!this.finalState) { return }
       this.addStatus = 0
@@ -194,7 +194,7 @@ export default {
           }
         })
     },
-    onReset (event) {
+    onReset: async function (event) {
       event.preventDefault()
       this.addStatus = 0
       this.uname = ''

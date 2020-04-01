@@ -1,14 +1,12 @@
 <template>
   <div class="fileUpload">
-    <br>
-    <h2>{{$t('editor.file.heading')}}</h2>
     <b-form-input
       class="fileTitle"
       v-bind:value="fileTitle"
       v-on:input="fileTitle = $event"
       :maxlength="maxFileTitleLength"
     />
-    <br><br>
+    <br>
     <div v-if="pdfSelected">
       <font-awesome-icon icon="file-pdf" size="10x"/>
     </div>
@@ -83,7 +81,7 @@ export default {
     PictureInput
   },
   methods: {
-    onChange (file) {
+    onChange: function (file) {
       this.pdfSelected = false
       this.wordSelected = false
       this.excelSelected = false
@@ -106,7 +104,7 @@ export default {
         this.fileRef = ''
       }
     },
-    onRemove () {
+    onRemove: function () {
       document.getElementsByClassName('preview-container')[0].style.display = 'block'
       this.fileRef = ''
       this.fileTitle = this.$t('editor.file.title')

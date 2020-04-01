@@ -1,6 +1,5 @@
 <template>
   <div class="editor">
-    <br>
     <h2>
       <input
         type="text"
@@ -146,7 +145,7 @@
 </template>
 
 <script>
-import Icon from '@/components/EditorIcon.vue'
+import Icon from '@/components/editors/EditorIcon.vue'
 import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
 import {
   Blockquote,
@@ -212,7 +211,7 @@ export default {
       })
     }
   },
-  beforeDestroy () {
+  beforeDestroy: function () {
     this.contentEditor.destroy()
   }
 }
