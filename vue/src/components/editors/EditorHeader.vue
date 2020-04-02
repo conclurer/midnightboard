@@ -28,9 +28,10 @@
           <VueCtkDateTimePicker
             id="DatePicker"
             class="datePicker"
-            format="DD-MM-YYYY"
+            format="YYYY-MM-DD"
             formatted="ll"
-            onlyDate v-model="date"
+            onlyDate
+            v-model="date"
             color="#F9A618"
             :label="$t('editor.datePicker.dueDate')"
             :buttonNowTranslation="$t('editor.datePicker.currentDate')"
@@ -52,6 +53,11 @@ export default {
   data () {
     return {
       date: null
+    }
+  },
+  watch: {
+    date: function (date) {
+      this.$emit('update-date', date)
     }
   },
   methods: {

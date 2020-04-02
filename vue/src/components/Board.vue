@@ -3,7 +3,7 @@
     <!-- Displays content when editor is not displayed -->
     <div
       class="inner-board"
-      v-if="!this.editorActive"
+      v-if="!editorActive"
       :key="editorActive"
     >
       <div
@@ -236,7 +236,7 @@
     <!-- Displays content when editor is displayed -->
     <div
       class="inner-board"
-      v-if="this.editorActive"
+      v-if="editorActive"
       style="display: grid; grid-template-columns: 1fr 500px;"
     >
       <div
@@ -475,6 +475,7 @@
             <EditorSidebar
               @add-note="addNote"
               @close="close"
+              :boardId="boardId"
               :editorId="editorId"
             />
           </div>
@@ -636,7 +637,7 @@ export default {
       this.$emit('close')
     }
   },
-  props: ['notes', 'editorActive', 'editorId']
+  props: ['notes', 'boardId', 'editorActive', 'editorId']
 }
 </script>
 

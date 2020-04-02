@@ -1,7 +1,10 @@
 <template>
-  <div class="editorSidebar">
+  <div
+    class="editorSidebar"
+  >
     <EditorHeader
       @close="close"
+      @update-date="updateDate"
       :editorTitle="editorType"
     />
     <hr>
@@ -37,12 +40,12 @@ export default {
     FileUpload,
     PollEditor
   },
-  props: ['editorId'],
   data () {
     return {
-      boardId: null
+      dueDate: null
     }
   },
+  props: ['boardId', 'editorId'],
   computed: {
     editorType () {
       switch (this.editorId) {
@@ -195,6 +198,10 @@ export default {
 
       // Notify notice board
       this.$emit('add-note')
+    },
+    // Used to update the date property
+    updateDate: function (date) {
+      this.dueDate = (new Date(date)).getTime()
     },
     // Used to close the editor sidebar
     close: function () {

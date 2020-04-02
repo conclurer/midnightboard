@@ -12,6 +12,7 @@
       @add-note="addNote"
       @close="close"
       :notes="notes"
+      :boardId="boardId"
       :editorActive="editorActive"
       :editorId="editorId"
     />
