@@ -103,7 +103,8 @@
         "userDeleted":"Benutzer erfolgreich gelöscht",
         "addBoard":"Notice Board erstellen:",
         "submit":"Bestätigen",
-        "reset":"Zurücksetzen"
+        "reset":"Zurücksetzen",
+        "clear":"Leeren"
     },
     "cms":{
         "userMgmt":"Benutzerverwaltung",
@@ -111,7 +112,7 @@
         "newUser":"Neuer Benutzer",
         "userRights":"Nutzerrechte",
         "contentMgmt":"Inhaltsverwaltung",
-        "editBoards":"Boards verwalten",
+        "boardList":"Board-Liste",
         "newBoard":"Neues Notice Board",
         "groupMgmt":"Gruppenverwaltung",
         "editGroups":"Gruppen bearbeiten",

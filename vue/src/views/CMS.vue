@@ -17,7 +17,7 @@
         <hr>
         <b-nav vertical pills>
           <b-nav-text class="navHeader">{{$t('cms.contentMgmt')}}</b-nav-text>
-          <b-nav-item :active="selectedPanel === 'noticeBoards'" @click="selectedPanel='noticeBoards'">{{$t('cms.editBoards')}}</b-nav-item>
+          <b-nav-item :active="selectedPanel === 'noticeBoards'" @click="selectedPanel='noticeBoards'">{{$t('cms.boardList')}}</b-nav-item>
           <b-nav-item :active="selectedPanel === 'newBoard'" @click="selectedPanel='newBoard'">{{$t('cms.newBoard')}}</b-nav-item>
         </b-nav>
         <hr>

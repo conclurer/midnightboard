@@ -1,40 +1,94 @@
 <template>
-  <div
-    class="board-list"
-  >
+  <div class="m">
     <div>
-      <div v-if="delStatus===0"></div>
-      <div v-else-if="delStatus===200"><h4 class="bg-success">{{$t('boards.boardDeleted')}}</h4><br></div>
-      <div v-else><h4 class="bg-danger">{{$t('cms.unexpectedError')}}</h4><br></div>
-    </div>
+      <b-container fluid>
+        <b-row>
+          <b-col lg="6">
+            <b-form-group class="mb-0">
+              <b-input-group size="sm">
+                <b-form-input
+                  v-model="filter"
+                  type="search"
+                  id="filterInput"
+                  placeholder="Type to Search"
+                ></b-form-input>
+                <b-input-group-append>
+                  <b-button :disabled="!filter" @click="filter = ''">{{$t('ui.clear')}}</b-button>
+                </b-input-group-append>
+              </b-input-group>
+            </b-form-group>
+          </b-col>
 
-    <table
-      border
-    >
-      <tr>
-        <th>{{$t('boards.id')}}</th>
-        <th>{{$t('boards.boardName')}}</th>
-        <th>{{$t('boards.creatorID')}}</th>
-        <th>{{$t('boards.creatorName')}}</th>
-        <th>{{$t('boards.creationDate')}}</th>
-        <th>{{$t('cms.delete')}}</th>
-      </tr>
-      <tr
-        v-for="board in boards"
-        :key="board.id"
+          <b-col sm="7" md="6">
+            <b-pagination
+              v-model="currentPage"
+              :total-rows="totalRows"
+              :per-page="perPage"
+              align="fill"
+              size="sm"
+            ></b-pagination>
+          </b-col>
+        </b-row>
+        <b-overlay
+          :show="loading"
+          variant="light"
+          opacity="0.6"
+          blur="2px"
+          rounded="sm"
+        >
+          <b-table
+            class="table"
+            dark
+            striped
+            hover
+            small
+            :items="boards"
+            :fields="fields"
+            :per-page="perPage"
+            :current-page="currentPage"
+            :filter="filter"
+            :filterIncludedFields="filterOn"
+            @filtered="onFiltered"
+            @row-dblclicked="onDoubleClicked"
+            sort-by="id"
+            >
+            <template v-slot:cell(delete)="row">
+              <b-button size="sm" @click="deleteBoard(row.item.id)" class="mr-1">X</b-button>
+            </template>
+          </b-table>
+        </b-overlay>
+
+      </b-container>
+    </div>
+    <div id="alert">
+      <br>
+      <b-alert
+        :show="delStatus === 200"
+        variant="success"
+        dismissible
       >
-        <td>{{board.id}}</td>
-        <td>{{board.boardName}}</td>
-        <td>{{board.creatorId}}</td>
-        <td :key="computed" v-html="creatorNames[board.id]"></td>
-        <td>{{board.createdAt}}</td>
-        <td><a @click="deleteBoard(board.id)"><font-awesome-icon icon="times-circle" class="text-danger" /></a></td>
-      </tr>
-    </table>
+        {{$t('boards.boardDeleted')}}
+      </b-alert>
+      <b-alert
+        :show="delStatus === 403"
+        variant="danger"
+        dismissible
+      >
+        {{$t('cms.noSelfDelete')}}
+      </b-alert>
+      <b-alert
+        :show="delStatus === 400"
+        variant="danger"
+        dismissible
+      >
+        {{$t('cms.unexpectedError')}}
+      </b-alert>
+    </div>
   </div>
 </template>
 
 <script>
+// @ is an alias to /src
 import axios from 'axios'
 
 export default {
@@ -44,17 +98,32 @@ export default {
   data () {
     return {
       boards: [],
-      creatorNames: [],
-      computed: false,
-      delStatus: 0
+      delStatus: 0,
+      loading: false,
+      fields: [
+        { key: 'id', label: 'ID', sortable: true },
+        { key: 'createdAt',
+          label: 'Created',
+          sortable: true,
+          formatter: (value, key, item) => { return value ? new Date(value).toDateString() : ' ' }
+        },
+        { key: 'boardName', label: 'boardName', sortable: true },
+        { key: 'delete', label: 'Delete' }
+      ],
+      totalRows: 1,
+      currentPage: 1,
+      perPage: 12,
+      sortBy: '',
+      filter: null,
+      filterOn: ['boardName']
     }
   },
-  created () {
-    this.loadBoards()
+  created  () {
+    this.loadBoardData()
   },
   methods: {
-    refreshToken () {
-      axios
+    refreshToken: async function () {
+      await axios
         .post('http://localhost:1337/api/users/refresh', {
           token: window.localStorage.getItem('mnb_rtok')
         })
@@ -70,10 +139,11 @@ export default {
           }
         })
     },
-    // Method used to delete boards from the database
-    deleteBoard (id) {
+    deleteBoard: async function (id) {
+      this.delStatus = 0
+      this.loading = true
       this.refreshToken()
-      axios
+      await axios
         .delete('http://localhost:1337/api/boards/' + id, {
           headers: {
             'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
@@ -81,83 +151,57 @@ export default {
         })
         .then(response => {
           this.delStatus = 200
-          this.loadBoards()
+          this.loadBoardData()
         })
-        .catch(err => {
-          this.$log.error(err)
-        })
-    },
-    // Method used to load boards from the database
-    loadBoards () {
-      this.refreshToken()
-      axios
-        .get('http://localhost:1337/api/boards/all', {
-          headers: {
-            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
-          }
-        })
-        .then(response => { this.boards = response.data.sort(compare); this.getCreatorNames(response.data.sort(compare)) })
         .catch(err => {
           switch (err.response.status) {
+            case 403:
             case 400:
             case 401:
-            case 404:
             case 500:
             default:
               this.$log.error(err)
           }
         })
-
-      function compare (a, b) {
-        if (a.id < b.id) {
-          return -1
-        } else if (a.id > b.id) {
-          return 1
-        } else { return 0 }
-      }
+      this.loading = false
     },
-    // Method used to get names of board creators
-    async getCreatorNames (members) {
+    loadBoardData: async function () {
+      this.loading = true
       this.refreshToken()
-
-      // Initialize array
-      this.creatorNames = new Array(members[members.length - 1].id + 1)
-
-      // Fill array with names
-      for (var i = 0; i < members.length; i++) {
-        await axios
-          .get('http://localhost:1337/api/users/' + members[i].creatorId + '?skipAvatar=true', {
-            headers: {
-              'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
-            }
-          })
-          .then(response => { this.creatorNames[members[i].id] = (response.data.firstName + ' ' + response.data.lastName) })
-          .catch(err => {
-            switch (err.response.status) {
-              case 404:
-                this.creatorNames[members[i].id] = this.$t('boards.notFound')
-                break
-              case 400:
-              case 500:
-              default:
-                this.$log.error(err)
-            }
-          })
-      }
-
-      this.computed = true
+      await axios
+        .get('http://localhost:1337/api/boards/all', {
+          headers: {
+            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
+          }
+        })
+        .then(response => {
+          this.boards = response.data
+        })
+        .catch(err => {
+          switch (err.response.status) {
+            case 401:
+            case 400:
+            case 500:
+            default:
+              this.$log.error(err)
+          }
+        })
+      this.totalRows = this.boards.length
+      this.loading = false
+    },
+    onFiltered (filteredItems) {
+      this.totalRows = filteredItems.length
+      this.currentPage = 1
+    },
+    onDoubleClicked (item, index, event) {
+      event.preventDefault()
+      alert('Selected #' + item.id + ': ' + item.boardName)
+      // TODO redirect to board page (item.id)
     }
+
   }
 }
 </script>
-
 <style scoped>
-  table {
-    width: 100%;
-  }
 
-  th, td {
-    text-align: center;
-    padding: 0px 20px;
-  }
 </style>
