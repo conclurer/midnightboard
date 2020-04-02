@@ -1,18 +1,13 @@
 <template>
   <!-- CMS stands for Content Management System -->
-  <div
-    class="cms"
-  >
+  <div class="cms">
     <Header
       id="titlebar"
       title="Content Management System"
       :buttonsActive="false"
     />
-    <div
-      class="inner-cms"
-    >
-      <!-- Display CMS menu -->
-      <div class="cmsMenu bg-dark text-white">
+    <div class="cmsNav">
+      <div class="bg-dark text-white">
         <b-nav vertical pills>
           <b-nav-text class="navHeader">{{$t('cms.userMgmt')}}</b-nav-text>
           <b-nav-item :active="selectedPanel === 'userList'" @click="selectedPanel='userList'">{{$t('cms.userList')}}</b-nav-item>
@@ -22,7 +17,8 @@
         <hr>
         <b-nav vertical pills>
           <b-nav-text class="navHeader">{{$t('cms.contentMgmt')}}</b-nav-text>
-          <b-nav-item :active="selectedPanel === 'noticeBoards'" @click="selectedPanel='noticeBoards'">{{$t('cms.editBoards')}}</b-nav-item> <!-- Manage notice boards and default board -->
+          <b-nav-item :active="selectedPanel === 'noticeBoards'" @click="selectedPanel='noticeBoards'">{{$t('cms.editBoards')}}</b-nav-item>
+          <b-nav-item :active="selectedPanel === 'newBoard'" @click="selectedPanel='newBoard'">{{$t('cms.newBoard')}}</b-nav-item>
         </b-nav>
         <hr>
         <b-nav vertical pills>
@@ -46,7 +42,11 @@
         </div>
 
         <div v-if="selectedPanel === 'noticeBoards'">
-          <!-- TODO -->
+          <BoardList />
+        </div>
+
+        <div v-if="selectedPanel === 'newBoard'">
+          <AddBoard />
         </div>
 
         <div v-if="selectedPanel === 'groups'">
@@ -59,19 +59,22 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import Header from '@/components/Header.vue'
 import UserList from '@/components/cms/UserList.vue'
 import AddUser from '@/components/cms/AddUser.vue'
 import PermissionPanel from '@/components/cms/PermissionPanel.vue'
+import BoardList from '@/components/cms/BoardList.vue'
+import AddBoard from '@/components/cms/AddBoard.vue'
 
 export default {
   name: 'CMS',
   components: {
     Header,
     UserList,
+    AddUser,
     PermissionPanel,
-    AddUser
+    BoardList,
+    AddBoard
   },
   data () {
     return {
@@ -80,9 +83,6 @@ export default {
   },
   created () {
     if (!window.localStorage.getItem('mnb_atok')) { window.location = '/login' }
-  },
-  methods: {
-
   }
 }
 </script>
@@ -103,25 +103,17 @@ export default {
     grid-template-rows: 72px 1fr;
   }
 
-  .inner-cms {
+  .cmsNav {
     display: grid;
-    grid-template-columns: 300px 1fr;
+    grid-template-columns: minmax(160px, 16vw) 1fr;
+    min-width: 180px;
     height: 100%;
     width: 100%;
-  }
-
-  .cmsMenu {
-    grid-column: 1 / 2;
-    height: 100%;
-    width: 300px;
-    position: fixed;
-    left: 0px;
     border-top: 1px solid var(--background-board);
   }
 
   .cmsContent {
-    grid-column: 2 / 3;
-    padding: 20px;
+    padding: 2vh;
   }
 
   .navHeader {

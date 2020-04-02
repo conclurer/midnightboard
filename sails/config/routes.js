@@ -73,6 +73,11 @@ module.exports.routes = {
         action: 'get',
         skipAssets: true
     },
+    'GET    /api/boards/all': {
+        controller: 'boards',
+        action: 'get-all',
+        skipAssets: true
+    },
     'POST   /api/boards': {
         controller: 'boards',
         action: 'create',

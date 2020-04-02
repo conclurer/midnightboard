@@ -11,7 +11,7 @@
       required
     >
       <br>
-      <h2 v-html="$t('profile.addUser')"></h2>
+      <h2 v-html="$t('ui.addUser')"></h2>
       <br>
       <div>
         <b-overlay
@@ -29,7 +29,7 @@
               :placeholder="$t('profile.firstName')"
               trim
             ></b-form-input>
-            <b-tooltip target="fname" variant="info" triggers="hover" :show.sync="fnameState">
+            <b-tooltip target="fname" variant="info" triggers="hover">
                {{$t('register.malFirstName')}}
             </b-tooltip>
             <br>
@@ -100,21 +100,21 @@
         variant="success"
         dismissible
       >
-        <h>{{$t('ui.userAdded')}}</h>
+        <h5>{{$t('ui.userAdded')}}</h5>
       </b-alert>
       <b-alert
         :show="addStatus === 409"
         variant="danger"
         dismissible
       >
-        <h>{{$t('register.nameTaken')}}</h>
+        <h5>{{$t('register.nameTaken')}}</h5>
       </b-alert>
       <b-alert
         :show="addStatus === 400"
         variant="danger"
         dismissible
       >
-        <h>{{$t('cms.unexpectedError')}}</h>
+        <h5>{{$t('cms.unexpectedError')}}</h5>
       </b-alert>
     </div>
 
@@ -122,7 +122,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import axios from 'axios'
 
 export default {
@@ -255,14 +254,5 @@ export default {
 
   .radio-button {
     margin-left: 10px;
-  }
-
-  .wrapper {
-    display: inline-block;
-  }
-
-  .user-values {
-    display: block;
-    text-align: left;
   }
 </style>
