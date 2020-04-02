@@ -16,19 +16,20 @@
         class="cmsMenu bg-dark text-white"
       >
         <b-nav vertical>
-          <b-nav-text>{{$t('cms.userMgmt')}}</b-nav-text>
+          <b-nav-text><b>{{$t('cms.userMgmt')}}</b></b-nav-text>
           <b-nav-item active @click="changeContent('user list')">{{$t('cms.userList')}}</b-nav-item>
           <b-nav-item @click="changeContent('new user')">{{$t('cms.newUser')}}</b-nav-item>
           <b-nav-item @click="changeContent('permissions')">{{$t('cms.userRights')}}</b-nav-item>
         </b-nav>
         <hr>
         <b-nav vertical>
-          <b-nav-text>{{$t('cms.contentMgmt')}}</b-nav-text>
+          <b-nav-text><b>{{$t('cms.contentMgmt')}}</b></b-nav-text>
           <b-nav-item @click="changeContent('notice boards')">{{$t('cms.editBoards')}}</b-nav-item> <!-- Manage notice boards and default board -->
+          <b-nav-item @click="changeContent('new board')">{{$t('cms.newBoard')}}</b-nav-item>
         </b-nav>
         <hr>
         <b-nav vertical>
-          <b-nav-text>{{$t('cms.groupMgmt')}}</b-nav-text>
+          <b-nav-text><b>{{$t('cms.groupMgmt')}}</b></b-nav-text>
           <b-nav-item @click="changeContent('groups')">{{$t('cms.editGroups')}}</b-nav-item>
         </b-nav>
       </div>
@@ -44,7 +45,7 @@
           <UserList />
         </div>
 
-        <!-- Show user creation if selected -->
+        <!-- Show user creation panel if selected -->
         <div
           v-if="selected === 'new user'"
         >
@@ -58,14 +59,21 @@
           <PermissionPanel />
         </div>
 
-        <!-- Show permission configuration if selected -->
+        <!-- Show all notice boards if selected -->
         <div
           v-if="selected === 'notice boards'"
         >
-          <!-- TODO -->
+          <BoardList />
         </div>
 
-        <!-- Show permission configuration if selected -->
+        <!-- Show notice board creation panel if selected -->
+        <div
+          v-if="selected === 'new board'"
+        >
+          <AddBoard />
+        </div>
+
+        <!-- Show all groups if selected -->
         <div
           v-if="selected === 'groups'"
         >
@@ -82,14 +90,18 @@ import Header from '@/components/Header.vue'
 import UserList from '@/components/cms/UserList.vue'
 import AddUser from '@/components/cms/AddUser.vue'
 import PermissionPanel from '@/components/cms/PermissionPanel.vue'
+import BoardList from '@/components/cms/BoardList.vue'
+import AddBoard from '@/components/cms/AddBoard.vue'
 
 export default {
   name: 'CMS',
   components: {
     Header,
     UserList,
+    AddUser,
     PermissionPanel,
-    AddUser
+    BoardList,
+    AddBoard
   },
   data () {
     return {
@@ -106,6 +118,7 @@ export default {
         case 'new user':
         case 'permissions':
         case 'notice boards':
+        case 'new board':
         case 'groups':
           this.selected = choice
       }
