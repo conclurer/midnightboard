@@ -52,7 +52,13 @@ export default new Router({
         path: 'cms',
         name: 'CMS',
         component: () => import('../views/CMS.vue')
+      },
+      {
+        path: 'logout',
+        name: 'Logout',
+        component: () => import('../views/Logout.vue')
       }
+
     ]
 
   },

@@ -11,77 +11,85 @@
       required
     >
       <br>
-      <h2 v-html="$t('profile.addUser')"></h2>
+      <h2 v-html="$t('ui.addUser')"></h2>
       <br>
       <div>
-        <b-form @submit="onSubmit" @reset="onReset">
-          <b-form-input
-            id="fname"
-            v-model="fname"
-            :state="fnameState"
-            :placeholder="$t('profile.firstName')"
-            trim
-          ></b-form-input>
-          <b-tooltip target="fname" variant="info" triggers="hover" :show.sync="fnameState">
-             {{$t('register.malFirstName')}}
-          </b-tooltip>
-          <br>
+        <b-overlay
+          :show="loading"
+          variant="light"
+          opacity="0.6"
+          blur="2px"
+          rounded="sm"
+        >
+          <b-form @submit="onSubmit" @reset="onReset">
+            <b-form-input
+              id="fname"
+              v-model="fname"
+              :state="fnameState"
+              :placeholder="$t('profile.firstName')"
+              trim
+            ></b-form-input>
+            <b-tooltip target="fname" variant="info" triggers="hover">
+               {{$t('register.malFirstName')}}
+            </b-tooltip>
+            <br>
 
-          <b-form-input
-            id="lname"
-            v-model="lname"
-            :state="lnameState"
-            :placeholder="$t('profile.lastName')"
-            trim
-          ></b-form-input>
-          <b-tooltip target="lname" variant="info" triggers="hover">
-             {{$t('register.malLastName')}}
-          </b-tooltip>
-          <br>
+            <b-form-input
+              id="lname"
+              v-model="lname"
+              :state="lnameState"
+              :placeholder="$t('profile.lastName')"
+              trim
+            ></b-form-input>
+            <b-tooltip target="lname" variant="info" triggers="hover">
+               {{$t('register.malLastName')}}
+            </b-tooltip>
+            <br>
 
-          <b-form-input
-            id="uname"
-            v-model="uname"
-            :state="unameState"
-            :placeholder="$t('profile.username')"
-            trim
-          ></b-form-input>
-          <b-tooltip target="uname" variant="info" triggers="hover">
-             {{$t('register.malUsername')}}
-          </b-tooltip>
-          <br>
+            <b-form-input
+              id="uname"
+              v-model="uname"
+              :state="unameState"
+              :placeholder="$t('profile.username')"
+              trim
+            ></b-form-input>
+            <b-tooltip target="uname" variant="info" triggers="hover">
+               {{$t('register.malUsername')}}
+            </b-tooltip>
+            <br>
 
-          <b-form-input
-            id="email"
-            v-model="email"
-            :state="emailState"
-            :placeholder="$t('profile.email')"
-            trim
-          ></b-form-input>
-          <b-tooltip target="email" variant="info" triggers="hover">
-             {{$t('register.malEmail')}}
-          </b-tooltip>
-          <br>
+            <b-form-input
+              id="email"
+              v-model="email"
+              :state="emailState"
+              :placeholder="$t('profile.email')"
+              trim
+            ></b-form-input>
+            <b-tooltip target="email" variant="info" triggers="hover">
+               {{$t('register.malEmail')}}
+            </b-tooltip>
+            <br>
 
-          <b-form-input
-            id="passwd"
-            v-model="passwd"
-            :state="passwdState"
-            :placeholder="$t('profile.password')"
-            type="password"
-            trim
-          ></b-form-input>
-          <b-tooltip target="passwd" variant="info" triggers="hover">
-             {{$t('register.malPassword')}}
-          </b-tooltip>
+            <b-form-input
+              id="passwd"
+              v-model="passwd"
+              :state="passwdState"
+              :placeholder="$t('profile.password')"
+              type="password"
+              trim
+            ></b-form-input>
+            <b-tooltip target="passwd" variant="info" triggers="hover">
+               {{$t('register.malPassword')}}
+            </b-tooltip>
 
-          <br>
-          <b-button-group>
-            <b-button type="submit" variant="primary" :disabled="!finalState">{{$t('ui.submit')}}</b-button>
-            <b-button type="reset" variant="danger">{{$t('ui.reset')}}</b-button>
-          </b-button-group>
-          <br>
-        </b-form>
+            <br>
+            <b-button-group>
+              <b-button type="submit" variant="primary" :disabled="!finalState">{{$t('ui.submit')}}</b-button>
+              <b-button type="reset" variant="danger">{{$t('ui.reset')}}</b-button>
+            </b-button-group>
+            <br>
+          </b-form>
+        </b-overlay>
       </div>
     </b-card>
 
@@ -92,21 +100,21 @@
         variant="success"
         dismissible
       >
-        <h>{{$t('ui.userAdded')}}</h>
+        <h5>{{$t('ui.userAdded')}}</h5>
       </b-alert>
       <b-alert
         :show="addStatus === 409"
         variant="danger"
         dismissible
       >
-        <h>{{$t('register.nameTaken')}}</h>
+        <h5>{{$t('register.nameTaken')}}</h5>
       </b-alert>
       <b-alert
         :show="addStatus === 400"
         variant="danger"
         dismissible
       >
-        <h>{{$t('cms.unexpectedError')}}</h>
+        <h5>{{$t('cms.unexpectedError')}}</h5>
       </b-alert>
     </div>
 
@@ -114,7 +122,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import axios from 'axios'
 
 export default {
@@ -142,6 +149,7 @@ export default {
   data () {
     return {
       addStatus: 0,
+      loading: false,
       uname: '',
       email: '',
       passwd: '',
@@ -154,6 +162,7 @@ export default {
       event.preventDefault()
       if (!this.finalState) { return }
       this.addStatus = 0
+      this.loading = true
 
       this.refreshToken()
       axios
@@ -193,6 +202,8 @@ export default {
               this.$log.error(err)
           }
         })
+
+      this.loading = false
     },
     onReset (event) {
       event.preventDefault()
@@ -243,14 +254,5 @@ export default {
 
   .radio-button {
     margin-left: 10px;
-  }
-
-  .wrapper {
-    display: inline-block;
-  }
-
-  .user-values {
-    display: block;
-    text-align: left;
   }
 </style>

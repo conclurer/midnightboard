@@ -12,7 +12,8 @@
         },
         "poll":{
             "vote":"Abstimmen",
-            "invalidVote":"Bitte wähle ein Antwort aus!",
+            "votes":"Abstimmungen | Abstimmung | Abstimmungen",
+            "invalidVote":"Bitte wähle eine Antwort aus!",
             "showResult":"Ergebnis anzeigen",
             "resetRadioButtons":"Auswahl zurücksetzen"
         }
@@ -86,6 +87,7 @@
         }
     },
     "profile":{
+        "name":"Name",
         "firstName":"Vorname",
         "lastName":"Nachname",
         "email":"E-Mail",
@@ -94,7 +96,6 @@
         "role":"Rolle",
         "user":"Benutzer",
         "admin":"Admin",
-        "addUser":"Benutzer hinzufügen:",
         "affiliate":"Aufnehmen",
         "confirmPassword":"Passwort bestätigen",
         "displayname":"Anzeigename"
@@ -110,32 +111,38 @@
         "signUp":"Registrieren",
         "toSignUp":"Ich habe noch keinen Account",
         "adopt":"Übernehmen",
+        "addUser":"Benutzer hinzufügen:",
         "userAdded":"Benutzer erfolgreich hinzugefügt",
         "userDeleted":"Benutzer erfolgreich gelöscht",
+        "addBoard":"Notice Board erstellen:",
         "submit":"Bestätigen",
-        "reset":"Zurücksetzen"
+        "reset":"Zurücksetzen",
+        "clear":"Leeren"
     },
     "cms":{
+        "tables":{
+            "id":"ID",
+            "boardCreatedAt":"Erstellt",
+            "userCreatedAt":"Beigetreten",
+            "lastSeen":"Zuletzt online",
+            "fullName":"Name",
+            "username":"Nutzername",
+            "email":"E-Mail",
+            "search":"Tippen zum suchen",
+            "delete":"Löschen"
+        },
         "userMgmt":"Benutzerverwaltung",
         "userList":"Nutzerliste",
         "newUser":"Neuer Benutzer",
         "userRights":"Nutzerrechte",
         "contentMgmt":"Inhaltsverwaltung",
-        "editBoards":"Boards verwalten",
+        "boardList":"Board-Liste",
+        "newBoard":"Neues Notice Board",
         "groupMgmt":"Gruppenverwaltung",
         "editGroups":"Gruppen bearbeiten",
+        "delete":"Löschen",
         "noSelfDelete":"Admins können sich nicht selbst löschen",
         "unexpectedError":"Etwas ist schiefgelaufen..."
-    },
-    "userList":{
-        "id":"Benutzer-ID",
-        "creationDate":"Erstelldatum",
-        "lastSeen":"Zuletzt online",
-        "firstName":"Vorname",
-        "lastName":"Nachname",
-        "username":"Benutzername",
-        "email":"E-Mail",
-        "delete":"Löschen"
     },
     "rights":{
         "userRights":"Nutzerrechte",
@@ -143,6 +150,17 @@
         "register":"Benutzer können sich selbst registrieren",
         "like":"Benutzer können Inhalte mit \"Gefällt mir\" markieren",
         "comment":"Benutzer können Inhalte kommentieren"
+    },
+    "boards":{
+        "id":"ID des Boards",
+        "boardName":"Name des Boards",
+        "creatorID":"ID des Erstellers",
+        "creatorName":"Name des Erstellers",
+        "creationDate":"Erstelldatum",
+        "boardAdded":"Board erfolgreich erstellt",
+        "boardDeleted":"Board erfolgreich gelöscht",
+        "notFound":"Ersteller nicht gefunden",
+        "malBoardName":"Muss mindestens 2 Zeichen enthalten und darf keine Sonderzeichen enthalten"
     },
     "register":{
         "passwordMissmatch":"Passwörter stimmen nicht überein",
