@@ -12,6 +12,7 @@
         },
         "poll":{
             "vote":"Vote",
+            "votes":"votes | vote | votes",
             "invalidVote":"You have to choose an answer!",
             "showResult":"Show result"
         },
@@ -68,6 +69,10 @@
             "heading":"Create your survey:",
             "title":"Your survery title",
             "templateQuestion":"Question A?",
+            "templatePlaceholderTextField":"e. g. Suggestion A, B, C & 42",
+            "labelPlaceholderTextField":"Optional: Suggestions & Maximal length (5 <-> 50), default: 50",
+            "templatePlaceholderTextArea":"e. g. Suggestion D or E & 5",
+            "labelPlaceholderTextArea":"Suggestions & Maximal rows (~50 Character per row, 1 <-> 15), default: 3 rows",
             "templateAnswer":"Answer A",
             "allowMultipleVotes":"Allow multiple answers",
             "questionWith":"Add question with...",
@@ -97,7 +102,6 @@
         "role":"Role",
         "user":"User",
         "admin":"Admin",
-        "addUser":"Add a new user:",
         "affiliate":"Affiliate",
         "confirmPassword":"Confirm password",
         "displayname":"Display name"
@@ -112,33 +116,39 @@
         "createAccount":"Create a new account:",
         "signUp":"Sign Up",
         "toSignUp":"I don't have an account",
-        "adopt":"Adopt",
+        "adopt":"Apply",
+        "addUser":"Add a new user:",
         "userAdded":"User successfully added",
         "userDeleted":"User successfully deleted",
+        "addBoard":"Create a new notice board:",
         "submit":"Submit",
-        "reset":"Reset"
+        "reset":"Reset",
+        "clear":"Clear"
     },
-    "cms":{
+    "cms": {
+        "tables":{
+            "id":"ID",
+            "boardCreatedAt":"Created",
+            "userCreatedAt":"Joined",
+            "lastSeen":"Last seen",
+            "name":"Name",
+            "username":"Username",
+            "email":"Email",
+            "search":"Type to search",
+            "delete":"Delete"
+        },
         "userMgmt":"User Management",
         "userList":"User List",
         "newUser":"New User",
         "userRights":"User Rights",
         "contentMgmt":"Content Management",
-        "editBoards":"Edit Notice Boards",
+        "boardList":"Board List",
+        "newBoard":"New Board",
         "groupMgmt":"Group Management",
         "editGroups":"Edit Groups",
+        "delete":"Delete",
         "noSelfDelete":"Admins cannot delete themselves",
         "unexpectedError":"Something went wrong..."
-    },
-    "userList":{
-        "id":"User ID",
-        "creationDate":"Creation date",
-        "lastSeen":"Last seen",
-        "firstName":"First name",
-        "lastName":"Last name",
-        "username":"Username",
-        "email":"E-mail",
-        "delete":"Delete"
     },
     "rights":{
         "userRights":"User rights",
@@ -146,6 +156,17 @@
         "register":"Users can register themselves",
         "like":"Users can like/dislike content",
         "comment":"Users can comment content"
+    },
+    "boards":{
+        "id":"Board ID",
+        "boardName":"Board name",
+        "creatorID":"Creator ID",
+        "creatorName":"Creator name",
+        "creationDate":"Creation date",
+        "boardAdded":"Board created successfully",
+        "boardDeleted":"Board deleted successfully",
+        "notFound":"Creator not found",
+        "malBoardName":"Must be at least 2 characters and may not contain special characters"
     },
     "register":{
         "passwordMissmatch":"Passwords do not match",

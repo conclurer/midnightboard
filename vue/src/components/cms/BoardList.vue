@@ -42,7 +42,7 @@
             striped
             hover
             small
-            :items="members"
+            :items="boards"
             :fields="fields"
             :per-page="perPage"
             :current-page="currentPage"
@@ -53,11 +53,7 @@
             sort-by="id"
             >
             <template v-slot:cell(delete)="row">
-              <b-button size="sm" @click="deleteUser(row.item.id)" class="mr-1">X</b-button>
-            </template>
-            <template v-slot:cell(image)="row">
-              <!-- TODO remove random image -->
-              <b-avatar :src="'https://placem.at/people?w=174&&random='+row.item.id"></b-avatar>
+              <b-button size="sm" @click="deleteBoard(row.item.id)" class="mr-1">X</b-button>
             </template>
           </b-table>
         </b-overlay>
@@ -71,56 +67,48 @@
         variant="success"
         dismissible
       >
-        <h>{{$t('ui.userAdded')}}</h>
+        {{$t('boards.boardDeleted')}}
       </b-alert>
       <b-alert
         :show="delStatus === 403"
         variant="danger"
         dismissible
       >
-        <h>{{$t('cms.noSelfDelete')}}</h>
+        {{$t('cms.noSelfDelete')}}
       </b-alert>
       <b-alert
         :show="delStatus === 400"
         variant="danger"
         dismissible
       >
-        <h>{{$t('cms.unexpectedError')}}</h>
+        {{$t('cms.unexpectedError')}}
       </b-alert>
     </div>
   </div>
 </template>
 
 <script>
+// @ is an alias to /src
 import axios from 'axios'
 import { i18n } from '@/main.js'
 
 export default {
-  name: 'UserList',
+  name: 'BoardList',
   components: {
   },
   data () {
     return {
-      members: [],
+      boards: [],
       delStatus: 0,
       loading: false,
       fields: [
-        { key: 'image', label: '' },
         { key: 'id', label: i18n.t('cms.tables.id'), sortable: true },
         { key: 'createdAt',
-          label: i18n.t('cms.tables.userCreatedAt'),
+          label: i18n.t('cms.tables.boardCreatedAt'),
           sortable: true,
           formatter: (value, key, item) => { return value ? new Date(value).toDateString() : ' ' }
         },
-        /*
-        { key: 'lastSeen',
-          label: i18n.t('cms.tables.lastSeen'),
-          formatter: (value,key,item) => { return value ? new Date(value).toDateString() : ' ' }
-        },
-        */
-        { key: 'fullName', label: i18n.t('cms.tables.name'), sortable: true },
-        { key: 'email', label: i18n.t('cms.tables.email'), sortable: true },
-        { key: 'userName', label: i18n.t('cms.tables.username'), sortable: true },
+        { key: 'boardName', label: i18n.t('cms.tables.name'), sortable: true },
         { key: 'delete', label: i18n.t('cms.tables.delete') }
       ],
       totalRows: 1,
@@ -128,12 +116,11 @@ export default {
       perPage: 12,
       sortBy: '',
       filter: null,
-      filterOn: ['fullName', 'userName', 'email']
+      filterOn: ['boardName']
     }
   },
-  created () {
-    this.loadUserData()
-    this.totalRows = this.members.length
+  created  () {
+    this.loadBoardData()
   },
   methods: {
     refreshToken: async function () {
@@ -153,25 +140,23 @@ export default {
           }
         })
     },
-    deleteUser: async function (id) {
+    deleteBoard: async function (id) {
       this.delStatus = 0
       this.loading = true
       this.refreshToken()
       await axios
-        .delete('http://localhost:1337/api/users/' + id, {
+        .delete('http://localhost:1337/api/boards/' + id, {
           headers: {
             'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
           }
         })
         .then(response => {
           this.delStatus = 200
-          this.loadUserData()
+          this.loadBoardData()
         })
         .catch(err => {
           switch (err.response.status) {
             case 403:
-              this.delStatus = err.response.status
-              break
             case 400:
             case 401:
             case 500:
@@ -181,20 +166,17 @@ export default {
         })
       this.loading = false
     },
-    loadUserData: async function () {
+    loadBoardData: async function () {
       this.loading = true
       this.refreshToken()
       await axios
-        .get('http://localhost:1337/api/users/all?skipAvatar=true', {
+        .get('http://localhost:1337/api/boards/all', {
           headers: {
             'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
           }
         })
         .then(response => {
-          this.members = response.data
-          this.members.forEach((val) => {
-            val.fullName = val.lastName + ', ' + val.firstName
-          })
+          this.boards = response.data
         })
         .catch(err => {
           switch (err.response.status) {
@@ -205,6 +187,7 @@ export default {
               this.$log.error(err)
           }
         })
+      this.totalRows = this.boards.length
       this.loading = false
     },
     onFiltered (filteredItems) {
@@ -213,8 +196,8 @@ export default {
     },
     onDoubleClicked (item, index, event) {
       event.preventDefault()
-      alert('Selected #' + item.id + ': ' + item.fullName)
-      // TODO redirect to profile page (item.id)
+      alert('Selected #' + item.id + ': ' + item.boardName)
+      // TODO redirect to board page (item.id)
     }
 
   }

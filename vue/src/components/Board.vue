@@ -210,7 +210,7 @@
                       v-for="index of pollAVVPMap[pollResultMap[note.id]]"
                       :key="index"
                       >
-                      <b>{{ pollVotesPercent[index] }}% ({{ pollVotes[index] }} votes)</b>
+                      <b>{{ pollVotesPercent[index] }}% ({{ pollVotes[index] }} {{$tc('board.poll.votes',pollVotes[index])}})</b>
                       <li class="chart-bar" :style="{width: pollVotesPercent[index] + '%'}">
                         <span class="chart-label">
                           {{ pollAnswers[index] }}

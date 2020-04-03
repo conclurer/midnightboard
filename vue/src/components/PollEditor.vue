@@ -4,8 +4,7 @@
     <h2>{{$t('editor.poll.heading')}}</h2>
     <b-form-input
       class="pollTitle"
-      v-bind:value="pollTitle"
-      v-on:input="pollTitle = $event"
+      v-model="pollTitle"
       :placeholder="$t('editor.poll.title')"
       :maxlength="maxPollTitleLength"
     />
@@ -25,8 +24,7 @@
           </b-col>
           <b-col cols="8">
             <b-form-input
-              v-bind:value="pollAnswers[index].answer"
-              v-on:input="pollAnswers[index].answer = $event"
+              v-model="pollAnswers[index].answer"
               :placeholder="$t('editor.poll.templateAnswer')"
               :maxlength="maxPollAnswerLength"
             >
