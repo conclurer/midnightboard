@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="home"
-  >
+  <div class="home">
     <Header
       id="titlebar"
       title="Quality Assurance"
@@ -98,13 +96,9 @@ export default {
 
 <style scoped>
   .home {
-    position: relative;
-    display: grid;
-    grid-template-rows: 70px 1fr;
+    padding: 54px 0 0 0;
+    height: 100vh;
+    background-color: var(--background-board);
   }
 
-  .smooth-vuebar {
-    max-height: 100vh;
-    max-width: 100vw;
-  }
 </style>

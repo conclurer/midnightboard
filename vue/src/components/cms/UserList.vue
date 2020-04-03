@@ -58,7 +58,7 @@
             </template>
             <template v-slot:cell(image)="row">
               <!-- TODO remove random image -->
-              <b-avatar :src="'https://placem.at/people?w=174&&random='+row.item.id"></b-avatar>
+              <b-avatar :src="'https://placem.at/people?w=174&random='+row.item.id"></b-avatar>
             </template>
           </b-table>
         </b-overlay>
@@ -212,7 +212,7 @@ export default {
       this.totalRows = filteredItems.length
       this.currentPage = 1
     },
-    onDoubleClicked (item, index, event){
+    onDoubleClicked (item, index, event) {
       // TODO redirect to profile page (item.id)
     }
 

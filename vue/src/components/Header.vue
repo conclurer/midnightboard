@@ -1,55 +1,45 @@
 <template>
-  <header
-    class="header"
+  <b-navbar
+    variant="dark"
+    type="dark"
+    toggleable="sm"
+    fixed="top"
   >
-    <!-- Bootstrap-Vue navbar -->
-    <b-navbar variant="dark" type="white" fixed="top">
-      <b-navbar-brand href="#">
-        <img src="../../../configuration/logo.png" height="40px" alt="Logo">
-      </b-navbar-brand>
-      <b-nav-text>
-        |
-      </b-nav-text>
-      <b-nav-text>
-        {{ title }}
-      </b-nav-text>
+    <b-navbar-brand href="#">
+      <img src="../../../configuration/logo.png" alt="Logo" class="navImg">
+    </b-navbar-brand>
+    <b-nav-text id="navTitle">
+      {{ title }}
+    </b-nav-text>
+    <b-navbar-toggle target="navbar-toggle-collapse" >
+      <template>
+        <font-awesome-icon icon="caret-down" />
+      </template>
+    </b-navbar-toggle>
+    <b-collapse id="navbar-toggle-collapse" is-nav >
       <b-navbar-nav class="ml-auto">
-        <div>
-          <b-nav-item v-if="addActive">
-            <span
-              class="unselectable"
-              unselectable="on"
-            ><a @click="plusClicked"><font-awesome-icon icon="plus" /> {{$t('ui.add')}}</a></span>
-          </b-nav-item>
-          <b-nav-item v-if="profileActive">
-            <span
-              class="unselectable"
-              unselectable="on"
-            ><font-awesome-icon icon="user-circle" /> {{$t('ui.profile')}}</span>
-          </b-nav-item>
-
-          <b-nav-item-dropdown
-            id="flag"
-            class="unselectable"
-            unselectable="on"
+        <b-nav-item v-if="addActive" class="navItem">
+          <a @click="plusClicked"><font-awesome-icon icon="plus" /> {{$t('ui.add')}}</a>
+        </b-nav-item>
+        <b-nav-item v-if="profileActive" class="navItem">
+          <font-awesome-icon icon="user-circle" /> {{$t('ui.profile')}}
+        </b-nav-item>
+        <b-nav-item-dropdown
+            class="navItem"
             right
           >
-
             <template v-if="selLanguage === 'en'" v-slot:button-content>
               &#127468;&#127463;
             </template>
             <template v-else-if="selLanguage === 'de'" v-slot:button-content>
               &#127465;&#127466;
             </template>
-
             <b-dropdown-item @click="cToEN">&#127468;&#127463;</b-dropdown-item>
             <b-dropdown-item @click="cToDE">&#127465;&#127466;</b-dropdown-item>
           </b-nav-item-dropdown>
-
-        </div>
       </b-navbar-nav>
-    </b-navbar>
-  </header>
+    </b-collapse>
+  </b-navbar>
 </template>
 
 <script>
@@ -75,7 +65,6 @@ export default {
   methods: {
     plusClicked (e) {
       e.preventDefault()
-      // Send up to parent
       this.$emit('plus-clicked')
     },
     cToEN (e) {
@@ -97,38 +86,20 @@ export default {
 </script>
 
 <style scoped>
-  li {
-    display: inline-block;
-    margin: 0 10px;
+
+  .navImg {
+    max-height: 3vh;
+    min-height: 30px;
   }
 
-  .dropdown-menu {
-    min-width: 3rem;
+  #navTitle {
+    padding: 0 0.5vw 0 3vw;
+    color: white;
+    font-size: calc(12pt + 0.8vh);
   }
 
-  .header {
-    width: 100%;
-    max-height: 72px;
-    color: #fff;
-    font-size: 20pt;
+  .navItem {
+    font-size: calc(12pt + 0.8vh);
   }
 
-  .unselectable {
-    -moz-user-select: none;
-    -webkit-user-select: none;
-  }
-
-  #flag {
-    font-size: 25px;
-    color: #FFF
-  }
-
-  /* Alternative highlight styles:
-   padding: 5px;
-   border: 2px solid var(--accent);
-   border-style: none none solid none;
-
-   text-shadow: 1px 1px #aaa;
-
-  */
 </style>

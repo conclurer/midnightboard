@@ -639,8 +639,6 @@ export default {
   .board {
     position: sticky;
     width: 100%;
-    min-height: 100vh;
-    background: var(--background-board);
     display: grid;
     grid-auto-rows: min-content;
   }

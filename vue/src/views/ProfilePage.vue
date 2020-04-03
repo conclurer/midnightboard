@@ -1,18 +1,21 @@
 <template>
-  <div class = "m">
-    <div class="p">
-      <Header
-        id="titlebar"
-        title="Login"
-        :profileActive="true"
+  <div class="main">
+    <Header
+      id="titlebar"
+      title="12345678901234567890"
+      :profileActive="true"
+    />
+
+    <b-card
+      bg-variant="dark"
+      class="userCard"
+    >
+      <Profile
+        id="profile"
+        userId="2"
+        editable="true"
       />
-      <b-card>
-        <Profile
-          id="profile"
-          userId="2"
-        />
-      </b-card>
-    </div>
+    </b-card>
   </div>
 </template>
 
@@ -39,13 +42,21 @@ export default {
 </script>
 
 <style scoped>
-  .m {
+  .main {
+    padding: 54px 0 0 0;
+    height: 100vh;
     background: var(--background-board);
   }
-  .p {
-    position: relative;
-    display: grid;
-    grid-template-rows: 70px 1fr;
+  #p {
     background: var(--background-board);
+  }
+
+  .userCard {
+    min-width: 400px;
+    max-width: 40vw;
+    margin: 20px auto auto auto;
+    height: auto;
+
+    border: dotted 2px red;
   }
 </style>

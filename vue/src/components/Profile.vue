@@ -2,26 +2,15 @@
   <div class="m">
     <b-container fluid class="profile-container">
       <b-row>
-        <b-col sm="2" class="c-Avatar">
-          <b-avatar src="https://placekitten.com/300/300" size="18vh" class="m-2"></b-avatar>
-        </b-col>
-        <b-col sm="10" align-self="start">
-          <b-row align-v="center" class="r-RName">
-            {{userData.firstName + ' ' + userData.lastName}}
-          </b-row>
-          <b-row class="r-UName">
-            {{userData.userName}}
-          </b-row>
-        </b-col>
+        <b-avatar :src="'https://placem.at/people?w=512&random='+userId" size="12rem"></b-avatar>
       </b-row>
       <b-row>
-        <b-col class="b">
-          B-L_
-        </b-col>
-        <b-col class="b">
-          B-R_
-        </b-col>
+        <h3>John Doe</h3>
       </b-row>
+      <b-row>
+        <h5>JohnDoe1337</h5>
+      </b-row>
+
     </b-container>
   </div>
 </template>
@@ -31,7 +20,7 @@ import axios from 'axios'
 
 export default {
   name: 'ProfileComp',
-  props: ['userId'],
+  props: ['userId', 'editable'],
   data () {
     return {
       userData: { }
@@ -97,22 +86,4 @@ export default {
 
   }
 
-  .r-RName{
-    font-size: 4vh;
-    padding-left: 4vh;
-    padding-top: 4.5vh;
-    font-family: "Roboto";
-    font-weight: bold;
-  }
-
-  .r-UName{
-    font-size: 2vh;
-    padding-left: 6vh;
-    font-family: "Roboto";
-    font-weight: bold;
-  }
-  
-  .m .b .c-Avatar .r-RName .r-UName {
-    border: 1px dotted red
-  }
 </style>
