@@ -106,7 +106,18 @@
         "reset":"Reset",
         "clear":"Clear"
     },
-    "cms":{
+    "cms": {
+        "tables":{
+            "id":"ID",
+            "boardCreatedAt":"Created",
+            "userCreatedAt":"Joined",
+            "lastSeen":"Last seen",
+            "name":"Name",
+            "username":"Username",
+            "email":"Email",
+            "search":"Type to search",
+            "delete":"Delete"
+        },
         "userMgmt":"User Management",
         "userList":"User List",
         "newUser":"New User",
@@ -119,15 +130,6 @@
         "delete":"Delete",
         "noSelfDelete":"Admins cannot delete themselves",
         "unexpectedError":"Something went wrong..."
-    },
-    "userList":{
-        "id":"User ID",
-        "creationDate":"Creation date",
-        "lastSeen":"Last seen",
-        "firstName":"First name",
-        "lastName":"Last name",
-        "username":"Username",
-        "email":"E-mail"
     },
     "rights":{
         "userRights":"User rights",

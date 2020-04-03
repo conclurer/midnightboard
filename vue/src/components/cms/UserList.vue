@@ -10,7 +10,7 @@
                   v-model="filter"
                   type="search"
                   id="filterInput"
-                  placeholder="Type to Search"
+                  :placeholder="$t('cms.tables.search')"
                 ></b-form-input>
                 <b-input-group-append>
                   <b-button :disabled="!filter" @click="filter = ''">{{$t('ui.clear')}}</b-button>
@@ -92,8 +92,8 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import axios from 'axios'
+import { i18n } from '@/main.js'
 
 export default {
   name: 'UserList',
@@ -106,22 +106,22 @@ export default {
       loading: false,
       fields: [
         { key: 'image', label: '' },
-        { key: 'id', label: 'ID', sortable: true },
+        { key: 'id', label: i18n.t('cms.tables.id'), sortable: true },
         { key: 'createdAt',
-          label: 'Created',
+          label: i18n.t('cms.tables.userCreatedAt'),
           sortable: true,
           formatter: (value, key, item) => { return value ? new Date(value).toDateString() : ' ' }
         },
         /*
         { key: 'lastSeen',
-          label: 'Last Seen',
+          label: i18n.t('cms.tables.lastSeen'),
           formatter: (value,key,item) => { return value ? new Date(value).toDateString() : ' ' }
         },
         */
-        { key: 'fullName', label: 'Name', sortable: true },
-        { key: 'email', label: 'Email', sortable: true },
-        { key: 'userName', label: 'Username', sortable: true },
-        { key: 'delete', label: 'Delete' }
+        { key: 'fullName', label: i18n.t('cms.tables.name'), sortable: true },
+        { key: 'email', label: i18n.t('cms.tables.email'), sortable: true },
+        { key: 'userName', label: i18n.t('cms.tables.username'), sortable: true },
+        { key: 'delete', label: i18n.t('cms.tables.delete') }
       ],
       totalRows: 1,
       currentPage: 1,

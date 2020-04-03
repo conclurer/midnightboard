@@ -75,6 +75,7 @@
         }
     },
     "profile":{
+        "name":"Name",
         "firstName":"Vorname",
         "lastName":"Nachname",
         "email":"E-Mail",
@@ -107,6 +108,17 @@
         "clear":"Leeren"
     },
     "cms":{
+        "tables":{
+            "id":"ID",
+            "boardCreatedAt":"Erstellt",
+            "userCreatedAt":"Beigetreten",
+            "lastSeen":"Zuletzt online",
+            "fullName":"Name",
+            "username":"Nutzername",
+            "email":"E-Mail",
+            "search":"Tippen zum suchen",
+            "delete":"Löschen"
+        },
         "userMgmt":"Benutzerverwaltung",
         "userList":"Nutzerliste",
         "newUser":"Neuer Benutzer",
@@ -119,15 +131,6 @@
         "delete":"Löschen",
         "noSelfDelete":"Admins können sich nicht selbst löschen",
         "unexpectedError":"Etwas ist schiefgelaufen..."
-    },
-    "userList":{
-        "id":"Benutzer-ID",
-        "creationDate":"Erstelldatum",
-        "lastSeen":"Zuletzt online",
-        "firstName":"Vorname",
-        "lastName":"Nachname",
-        "username":"Benutzername",
-        "email":"E-Mail"
     },
     "rights":{
         "userRights":"Nutzerrechte",

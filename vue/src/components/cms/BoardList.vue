@@ -10,7 +10,7 @@
                   v-model="filter"
                   type="search"
                   id="filterInput"
-                  placeholder="Type to Search"
+                  :placeholder="$t('cms.tables.search')"
                 ></b-form-input>
                 <b-input-group-append>
                   <b-button :disabled="!filter" @click="filter = ''">{{$t('ui.clear')}}</b-button>
@@ -90,6 +90,7 @@
 <script>
 // @ is an alias to /src
 import axios from 'axios'
+import { i18n } from '@/main.js'
 
 export default {
   name: 'BoardList',
@@ -101,14 +102,14 @@ export default {
       delStatus: 0,
       loading: false,
       fields: [
-        { key: 'id', label: 'ID', sortable: true },
+        { key: 'id', label: i18n.t('cms.tables.id'), sortable: true },
         { key: 'createdAt',
-          label: 'Created',
+          label: i18n.t('cms.tables.boardCreatedAt'),
           sortable: true,
           formatter: (value, key, item) => { return value ? new Date(value).toDateString() : ' ' }
         },
-        { key: 'boardName', label: 'boardName', sortable: true },
-        { key: 'delete', label: 'Delete' }
+        { key: 'boardName', label: i18n.t('cms.tables.name'), sortable: true },
+        { key: 'delete', label: i18n.t('cms.tables.delete') }
       ],
       totalRows: 1,
       currentPage: 1,
