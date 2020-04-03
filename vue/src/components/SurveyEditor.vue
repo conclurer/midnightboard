@@ -4,8 +4,7 @@
     <h2>{{$t('editor.survey.heading')}}</h2>
     <b-form-input
       class="surveyTitle"
-      v-bind:input="surveyTitle"
-      v-on:input="surveyTitle = $event"
+      v-model="surveyTitle"
       :placeholder="$t('editor.survey.title')"
       :maxlength="maxSurveyTitleLength"
     />
@@ -27,8 +26,7 @@
           </b-col>
           <b-col cols="10">
           <b-form-input
-            v-bind:input="surveyQuestions[index]"
-            v-on:input="surveyQuestions[index] = $event"
+            v-model="surveyQuestions[index]"
             :placeholder="$t('editor.survey.templateQuestion')"
             :maxlength="maxSurveyInputFieldQuestionLength"
           />
@@ -38,22 +36,23 @@
         <!-- Regular input field questions -->
         <div v-if="surveyQuestionType[index] === 'IFQ'">
           <b-form-input
-            v-bind:value="surveyQuestionElement[index]"
-            v-on:input="surveyQuestionElement[index] = $event"
-            :placeholder="$t('editor.survey.templateAnswer')"
+            v-model="surveyQuestionElement[index]"
+            :placeholder="$t('editor.survey.templatePlaceholderTextField')"
             :maxlength="maxSurveyInputFieldAnswerLength"
           />
+          <label>{{$t('editor.survey.labelPlaceholderTextField')}}</label>
         </div>
-        <!-- Regular input field questions -->
+        <!-- Text area questions -->
         <div v-else-if="surveyQuestionType[index] === 'TAQ'">
           <b-form-textarea
             id="textarea-default"
-            v-bind:input="surveyQuestionElement[index]"
-            v-on:input="surveyQuestionElement[index] = $event"
-            :placeholder="$t('editor.survey.templateAnswer')"
+            v-model="surveyQuestionElement[index]"
+            :placeholder="$t('editor.survey.templatePlaceholderTextArea')"
             :maxlength="maxSurveyTextAreaAnswerLength"
-          >
-          </b-form-textarea>
+            :rows="maxSurveyTextAreaRows"
+            no-resize
+          />
+          <label>{{$t('editor.survey.labelPlaceholderTextArea')}}</label>
         </div>
         <!-- Single/Multiple-Choice-Questions -->
         <div v-else-if="surveyQuestionType[index] === 'MCQ'">
@@ -70,12 +69,11 @@
                 </b-col>
                 <b-col cols="8">
                   <b-form-input
-                    v-bind:input="surveyQuestionElement[index][answerIndex]"
-                    v-on:input="surveyQuestionElement[index][answerIndex] = $event"
+                    v-model="surveyQuestionElement[index][answerIndex]"
                     :placeholder="$t('editor.survey.templateAnswer')"
                     :maxlength="maxSurveyChoiceAnswerLength"
-                  >
-                  </b-form-input>
+                    :key="refreshAnswer"
+                  />
                 </b-col>
                 <b-col>
                   <b-button
@@ -162,12 +160,14 @@ export default {
       allowMultipleVotes: [null, null, false],
       // Max length of different inputs
       maxSurveyTitleLength: 50,
-      maxSurveyInputFieldQuestionLength: 40,
-      maxSurveyInputFieldAnswerLength: 35,
-      maxSurveyTextAreaAnswerLength: 200,
+      maxSurveyInputFieldQuestionLength: 60,
+      maxSurveyInputFieldAnswerLength: 50,
+      maxSurveyTextAreaAnswerLength: 150,
+      maxSurveyTextAreaRows: 3,
       maxSurveyChoiceAnswerLength: 30,
       // Survey as HTML
-      surveyContent: ''
+      surveyContent: '',
+      refreshAnswer: false
     }
   },
   methods: {
@@ -222,6 +222,34 @@ export default {
           questions.push(question)
           const questionType = this.surveyQuestionType[index]
           const questionElement = this.surveyQuestionElement[index]
+          // Evaluate user input for placeholder and max length
+          var placeholder = ''
+          var answerMaxLength = 0
+          var answerMaxRows = 0
+          if (questionType !== 'MCQ' && questionElement.includes('&')) {
+            placeholder = questionElement.split('&')[0]
+            if (!isNaN(questionElement.split('&')[1])) {
+              if (questionType === 'TAQ') {
+                answerMaxRows = parseInt(questionElement.split('&')[1], 10)
+                if (answerMaxRows <= 0 || answerMaxRows > 15) {
+                  answerMaxRows = this.maxSurveyTextAreaRows
+                }
+                answerMaxLength = answerMaxRows * 50
+              } else {
+                answerMaxLength = parseInt(questionElement.split('&')[1], 10)
+                if (answerMaxLength <= 4 || answerMaxLength > 50) {
+                  answerMaxLength = this.maxSurveyInputFieldAnswerLength
+                }
+              }
+            }
+          } else {
+            if (questionType === 'IFQ') {
+              answerMaxLength = this.maxSurveyInputFieldAnswerLength
+            } else if (questionType === 'TAQ') {
+              answerMaxRows = this.maxSurveyTextAreaRows
+              answerMaxLength = this.maxSurveyTextAreaAnswerLength
+            }
+          }
           const allowMultipleVote = this.allowMultipleVotes[index]
           if (questionType === 'IFQ') {
             if (question === '') {
@@ -230,7 +258,7 @@ export default {
             } else {
               this.surveyContent += '<div class="form-group"><label for="inputText' + index + '">' +
                 question + '</label><input type="text" class="form-control is-valid" id="inputText' + index +
-                '" placeholder="' + questionElement + '" required></div>'
+                '" placeholder="' + placeholder + '" maxlength="' + answerMaxLength + '" required></div>'
             }
           } else if (questionType === 'TAQ') {
             if (question === '') {
@@ -239,7 +267,8 @@ export default {
             } else {
               this.surveyContent += '<div class="form-group"><label for="inputTextArea' + index + '">' +
                 question + '</label><textarea class="form-control is-valid" id="inputTextArea' + index +
-                '" rows="3" placeholder="' + questionElement + '" required></textarea></div>'
+                '" placeholder="' + placeholder + '" maxlength="' + answerMaxLength +
+                '" rows="' + answerMaxRows + '" required></textarea></div>'
             }
           } else if (questionType === 'MCQ') {
             if (question === '') {
