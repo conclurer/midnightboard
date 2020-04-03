@@ -1,46 +1,99 @@
 <template>
-  <div
-    class="user-list"
-  >
+  <div class="m">
     <div>
-      <div v-if="delStatus===0"></div>
-      <div v-else-if="delStatus===200"><h4 class="bg-success">{{$t('ui.userDeleted')}}</h4><br></div>
-      <div v-else-if="delStatus===403"><h4 class="bg-danger">{{$t('cms.noSelfDelete')}}</h4><br></div>
-      <div v-else><h4 class="bg-danger">{{$t('cms.unexpectedError')}}</h4><br></div>
-    </div>
+      <b-container fluid>
+        <b-row>
+          <b-col lg="6">
+            <b-form-group class="mb-0">
+              <b-input-group size="sm">
+                <b-form-input
+                  v-model="filter"
+                  type="search"
+                  id="filterInput"
+                  :placeholder="$t('cms.tables.search')"
+                ></b-form-input>
+                <b-input-group-append>
+                  <b-button :disabled="!filter" @click="filter = ''">{{$t('ui.clear')}}</b-button>
+                </b-input-group-append>
+              </b-input-group>
+            </b-form-group>
+          </b-col>
 
-    <table
-      border
-    >
-      <tr>
-        <th>{{$t('userList.id')}}</th>
-        <th>{{$t('userList.firstName')}}</th>
-        <th>{{$t('userList.lastName')}}</th>
-        <th>{{$t('userList.username')}}</th>
-        <th>{{$t('userList.email')}}</th>
-        <th>{{$t('userList.creationDate')}}</th>
-        <th>{{$t('userList.lastSeen')}}</th>
-        <th>{{$t('cms.delete')}}</th>
-      </tr>
-      <tr
-        v-for="member in members"
-        :key="member.id"
+          <b-col sm="7" md="6">
+            <b-pagination
+              v-model="currentPage"
+              :total-rows="totalRows"
+              :per-page="perPage"
+              align="fill"
+              size="sm"
+            ></b-pagination>
+          </b-col>
+        </b-row>
+        <b-overlay
+          :show="loading"
+          variant="light"
+          opacity="0.6"
+          blur="2px"
+          rounded="sm"
+        >
+          <b-table
+            class="table"
+            dark
+            striped
+            hover
+            small
+            :items="members"
+            :fields="fields"
+            :per-page="perPage"
+            :current-page="currentPage"
+            :filter="filter"
+            :filterIncludedFields="filterOn"
+            @filtered="onFiltered"
+            @row-dblclicked="onDoubleClicked"
+            sort-by="id"
+            >
+            <template v-slot:cell(delete)="row">
+              <b-button size="sm" @click="deleteUser(row.item.id)" class="mr-1">X</b-button>
+            </template>
+            <template v-slot:cell(image)="row">
+              <!-- TODO remove random image -->
+              <b-avatar :src="'https://placem.at/people?w=174&&random='+row.item.id"></b-avatar>
+            </template>
+          </b-table>
+        </b-overlay>
+
+      </b-container>
+    </div>
+    <div id="alert">
+      <br>
+      <b-alert
+        :show="delStatus === 200"
+        variant="success"
+        dismissible
       >
-        <td>{{member.id}}</td>
-        <td>{{member.firstName}}</td>
-        <td>{{member.lastName}}</td>
-        <td>{{member.userName}}</td>
-        <td>{{member.email}}</td>
-        <td>{{member.createdAt}}</td>
-        <td>{{member.lastSeen}}</td>
-        <td><a @click="deleteUser(member.id)"><font-awesome-icon icon="times-circle" class="text-danger" /></a></td>
-      </tr>
-    </table>
+        <h>{{$t('ui.userAdded')}}</h>
+      </b-alert>
+      <b-alert
+        :show="delStatus === 403"
+        variant="danger"
+        dismissible
+      >
+        <h>{{$t('cms.noSelfDelete')}}</h>
+      </b-alert>
+      <b-alert
+        :show="delStatus === 400"
+        variant="danger"
+        dismissible
+      >
+        <h>{{$t('cms.unexpectedError')}}</h>
+      </b-alert>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import { i18n } from '@/main.js'
 
 export default {
   name: 'UserList',
@@ -49,15 +102,42 @@ export default {
   data () {
     return {
       members: [],
-      delStatus: 0
+      delStatus: 0,
+      loading: false,
+      fields: [
+        { key: 'image', label: '' },
+        { key: 'id', label: i18n.t('cms.tables.id'), sortable: true },
+        { key: 'createdAt',
+          label: i18n.t('cms.tables.userCreatedAt'),
+          sortable: true,
+          formatter: (value, key, item) => { return value ? new Date(value).toDateString() : ' ' }
+        },
+        /*
+        { key: 'lastSeen',
+          label: i18n.t('cms.tables.lastSeen'),
+          formatter: (value,key,item) => { return value ? new Date(value).toDateString() : ' ' }
+        },
+        */
+        { key: 'fullName', label: i18n.t('cms.tables.name'), sortable: true },
+        { key: 'email', label: i18n.t('cms.tables.email'), sortable: true },
+        { key: 'userName', label: i18n.t('cms.tables.username'), sortable: true },
+        { key: 'delete', label: i18n.t('cms.tables.delete') }
+      ],
+      totalRows: 1,
+      currentPage: 1,
+      perPage: 12,
+      sortBy: '',
+      filter: null,
+      filterOn: ['fullName', 'userName', 'email']
     }
   },
   created () {
     this.loadUserData()
+    this.totalRows = this.members.length
   },
   methods: {
-    refreshToken () {
-      axios
+    refreshToken: async function () {
+      await axios
         .post('http://localhost:1337/api/users/refresh', {
           token: window.localStorage.getItem('mnb_rtok')
         })
@@ -73,9 +153,11 @@ export default {
           }
         })
     },
-    deleteUser (id) {
+    deleteUser: async function (id) {
+      this.delStatus = 0
+      this.loading = true
       this.refreshToken()
-      axios
+      await axios
         .delete('http://localhost:1337/api/users/' + id, {
           headers: {
             'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
@@ -97,16 +179,23 @@ export default {
               this.$log.error(err)
           }
         })
+      this.loading = false
     },
-    loadUserData () {
+    loadUserData: async function () {
+      this.loading = true
       this.refreshToken()
-      axios
+      await axios
         .get('http://localhost:1337/api/users/all?skipAvatar=true', {
           headers: {
             'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
           }
         })
-        .then(response => { this.members = response.data.sort(compare) })
+        .then(response => {
+          this.members = response.data
+          this.members.forEach((val) => {
+            val.fullName = val.lastName + ', ' + val.firstName
+          })
+        })
         .catch(err => {
           switch (err.response.status) {
             case 401:
@@ -116,26 +205,21 @@ export default {
               this.$log.error(err)
           }
         })
-
-      function compare (a, b) {
-        if (a.id < b.id) {
-          return -1
-        } else if (a.id > b.id) {
-          return 1
-        } else { return 0 }
-      }
+      this.loading = false
+    },
+    onFiltered (filteredItems) {
+      this.totalRows = filteredItems.length
+      this.currentPage = 1
+    },
+    onDoubleClicked (item, index, event) {
+      event.preventDefault()
+      alert('Selected #' + item.id + ': ' + item.fullName)
+      // TODO redirect to profile page (item.id)
     }
+
   }
 }
 </script>
-
 <style scoped>
-  table {
-    width: 100%;
-  }
 
-  th, td {
-    text-align: center;
-    padding: 0px 20px;
-  }
 </style>

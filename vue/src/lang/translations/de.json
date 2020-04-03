@@ -12,7 +12,8 @@
         },
         "poll":{
             "vote":"Abstimmen",
-            "invalidVote":"Bitte wähle ein Antwort aus!",
+            "votes":"Abstimmungen | Abstimmung | Abstimmungen",
+            "invalidVote":"Bitte wähle eine Antwort aus!",
             "showResult":"Ergebnis anzeigen",
             "resetRadioButtons":"Auswahl zurücksetzen"
         }
@@ -74,6 +75,7 @@
         }
     },
     "profile":{
+        "name":"Name",
         "firstName":"Vorname",
         "lastName":"Nachname",
         "email":"E-Mail",
@@ -102,30 +104,33 @@
         "userDeleted":"Benutzer erfolgreich gelöscht",
         "addBoard":"Notice Board erstellen:",
         "submit":"Bestätigen",
-        "reset":"Zurücksetzen"
+        "reset":"Zurücksetzen",
+        "clear":"Leeren"
     },
     "cms":{
+        "tables":{
+            "id":"ID",
+            "boardCreatedAt":"Erstellt",
+            "userCreatedAt":"Beigetreten",
+            "lastSeen":"Zuletzt online",
+            "fullName":"Name",
+            "username":"Nutzername",
+            "email":"E-Mail",
+            "search":"Tippen zum suchen",
+            "delete":"Löschen"
+        },
         "userMgmt":"Benutzerverwaltung",
         "userList":"Nutzerliste",
         "newUser":"Neuer Benutzer",
         "userRights":"Nutzerrechte",
         "contentMgmt":"Inhaltsverwaltung",
-        "editBoards":"Boards verwalten",
+        "boardList":"Board-Liste",
         "newBoard":"Neues Notice Board",
         "groupMgmt":"Gruppenverwaltung",
         "editGroups":"Gruppen bearbeiten",
         "delete":"Löschen",
         "noSelfDelete":"Admins können sich nicht selbst löschen",
         "unexpectedError":"Etwas ist schiefgelaufen..."
-    },
-    "userList":{
-        "id":"Benutzer-ID",
-        "creationDate":"Erstelldatum",
-        "lastSeen":"Zuletzt online",
-        "firstName":"Vorname",
-        "lastName":"Nachname",
-        "username":"Benutzername",
-        "email":"E-Mail"
     },
     "rights":{
         "userRights":"Nutzerrechte",
