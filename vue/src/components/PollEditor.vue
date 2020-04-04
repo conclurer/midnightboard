@@ -118,27 +118,24 @@ export default {
           var validAnswers = []
           // Start form
           this.pollContent = '<form class="d-flex flex-column">'
-          // Need unique radio button name for single vote polls
-          var radioButtonName = ''
+          // Prepare unique time string
+          const currently = new Date()
+          const timeString = currently.getFullYear() + '' + currently.getMonth() + '' +
+            currently.getDay() + '' + currently.getHours() + '' +
+            currently.getMinutes() + '' + currently.getSeconds() + '' +
+            currently.getMilliseconds()
           if (!this.allowMultipleVotes) {
-            const birthday = new Date()
-            const yearM = birthday.getFullYear() + '-'
-            const monthM = birthday.getMonth() + '-'
-            const dayM = birthday.getDay() + '-'
-            const time = birthday.getHours() + '' + birthday.getMinutes() + '' +
-            birthday.getSeconds() + '' + birthday.getMilliseconds()
-            radioButtonName = 'rb-' + yearM + monthM + dayM + time
             // Use radio buttons
             this.pollAnswers.forEach(pollAnswer => {
               const answer = pollAnswer.answer
               if (answer !== '') {
                 validAnswers.push(index)
                 this.pollContent += '<div class="form-check">' +
-                '<div class="d-flex align-self-start">' +
-                '<input class="form-check-input" type="radio" name="' + radioButtonName +
-                '" id="rbPollIdx' + index + '">'
-                this.pollContent += '<label class="form-check-label" for="rbPollIdx' + index +
-                  '">' + answer + '</label></div></div>'
+                  '<div class="d-flex align-self-start">' +
+                  '<input class="form-check-input" type="radio" name="rb-' +
+                  timeString + '" id="rb-' + timeString + '-aidx' + index + '">'
+                this.pollContent += '<label class="form-check-label" for="rb-' + timeString +
+                  '-aidx' + index + '">' + answer + '</label></div></div>'
                 index++
               }
             })
@@ -149,10 +146,11 @@ export default {
               if (answer !== '') {
                 validAnswers.push(index)
                 this.pollContent += '<div class="form-check">' +
-                '<div class="d-flex align-self-start">' +
-                '<input class="form-check-input" type="checkbox" id="cbPl0' + 'Idx' + index + '">'
-                this.pollContent += '<label class="form-check-label" for="cbPollIdx' + index +
-                  '">' + answer + '</label></div></div>'
+                  '<div class="d-flex align-self-start">' +
+                  '<input class="form-check-input" type="checkbox" ' +
+                  'id="cb-' + timeString + 'aidx' + index + '">'
+                this.pollContent += '<label class="form-check-label" for=cb-' + timeString +
+                  'aidx' + index + '">' + answer + '</label></div></div>'
                 index++
               }
             })

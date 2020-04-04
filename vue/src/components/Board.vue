@@ -583,7 +583,7 @@ export default {
           })
           // Extract poll data from html
           for (const child of element.target.parentElement.parentElement.firstChild.firstChild.children) {
-            const answerId = child.firstChild.firstChild.id.split('Idx')[1] // rbPollIdx0 -> 0
+            const answerId = child.firstChild.firstChild.id.split('aidx')[1] // rb-202036175036182-aidx0 -> 0
             const voteNumber = votes[answerId]
             var votePercent = 0
             if (votesSum > 0) {
@@ -635,10 +635,10 @@ export default {
     votePoll: async function (element) {
       const postId = element.target.parentElement.parentElement.parentElement.parentElement.parentElement.id
       // Axios PUT to update votes for the answer
-      const answerIds = []
+      var answerIds = []
       for (const child of element.target.parentElement.parentElement.firstChild.firstChild.children) {
         if (child.firstChild.firstChild.checked === true) {
-          const answerId = child.firstChild.firstChild.id.split('Idx')[1] // rbPollIdx0 -> 0
+          const answerId = child.firstChild.firstChild.id.split('aidx')[1] // rb-202036175036182-aidx0 -> 0
           answerIds.push(answerId)
         }
       }
@@ -671,11 +671,63 @@ export default {
       this.initPoll(postId, element)
     },
     submitSurvey: async function (element) {
-      // Submit survey and set survey in submitted state
       const postId = element.target.parentElement.parentElement.parentElement.parentElement.id
-      this.surveySubmitted[postId] = true
-      this.refreshBoard = !this.refreshBoard
-      // TODO: Send PUT request
+      // Axios PUT to submit survey
+      var questionIds = []
+      var questionId
+      var answers = []
+      var currentAnswers = []
+      for (const child of element.target.parentElement.parentElement.firstChild.firstChild.children[0]) {
+        if (child.type === 'text' || child.type === 'textarea') {
+          questionIds.push(child.id.split('qidx')[1])
+          answers.push(child.value)
+        } else {
+          questionId = child.id.split('qidx')[1].split('-aidx')[0]
+          if (child.type === 'radio' && child.checked) {
+            questionIds.push(questionId)
+            answers.push(child.labels[0].textContent)
+          } else if (child.type === 'checkbox' && child.checked) {
+            // Check for multiple answers
+            if (questionIds.includes(questionId)) {
+              const idx = questionIds.indexOf(questionId)
+              if (Array.isArray(answers[idx])) {
+                currentAnswers = answers[idx]
+              } else {
+                currentAnswers = Array.of(answers[idx])
+              }
+              currentAnswers.push(child.labels[0].textContent)
+              answers[idx] = currentAnswers
+            } else {
+              questionIds.push(questionId)
+              answers.push(child.labels[0].textContent)
+            }
+          }
+        }
+      }
+      // questionIds.forEach((id, idx) => this.$log.debug('QuestionId: ' + id + ' | Answer: ' + answers[idx]))
+      if (questionIds.length > answers.length) { // Need to check it before
+        alert(this.$t('board.survey.invalidSubmit'))
+      } else {
+        const jsonBody = JSON.stringify({
+          postId: postId,
+          questionIds: questionIds,
+          answers: answers
+        })
+        // Send PUT request
+        await axios
+          .put('http://localhost:1337/api/surveys', jsonBody, {
+            headers: {
+              'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
+              'Content-Type': 'application/json'
+            }
+          }
+          )
+          .then(res => {})
+          .catch(err => this.$log.error(err))
+        // Set survey in submitted state
+        this.surveySubmitted[postId] = true
+        this.refreshBoard = !this.refreshBoard
+      }
     }
   },
   props: ['notes', 'editorActive']

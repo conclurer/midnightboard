@@ -18,6 +18,7 @@
         },
         "survey":{
             "submit":"Submit",
+            "invalidSubmit":"Please fill out all required fields!",
             "thankYou":"Thanks for your participation!"
         }
     },
@@ -59,7 +60,7 @@
         "poll":{
             "heading":"Create your poll:",
             "title":"Your question?",
-            "templateAnswer":"Answer A",
+            "templateAnswer":"Your answer",
             "allowMultipleVotes":"Allow multiple answers",
             "post":"Post poll",
             "missingTitle":"You have to enter a question!",
@@ -68,12 +69,12 @@
         "survey":{
             "heading":"Create your survey:",
             "title":"Your survery title",
-            "templateQuestion":"Question A?",
+            "templateQuestion":"Your question?",
             "templatePlaceholderTextField":"e. g. Suggestion A, B, C & 42",
             "labelPlaceholderTextField":"Optional: Suggestions & Maximal length (5 <-> 50), default: 50",
             "templatePlaceholderTextArea":"e. g. Suggestion D or E & 5",
             "labelPlaceholderTextArea":"Suggestions & Maximal rows (~50 Character per row, 1 <-> 15), default: 3 rows",
-            "templateAnswer":"Answer A",
+            "templateAnswer":"Your answer",
             "allowMultipleVotes":"Allow multiple answers",
             "questionWith":"Add question with...",
             "addInputFieldQuestion":"regular input field",

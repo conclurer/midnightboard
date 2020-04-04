@@ -18,6 +18,7 @@
         },
         "survey":{
             "submit":"Absenden",
+            "invalidSubmit":"Bitte fülle alle benötigten Felder aus!",
             "thankYou":"Danke für deine Teilnahme!"
         }
     },
@@ -59,7 +60,7 @@
         "poll":{
             "heading":"Poll erstellen:",
             "title":"Deine Frage?",
-            "templateAnswer":"Antwort A",
+            "templateAnswer":"Deine Antwort",
             "allowMultipleVotes":"Mehrfachauswahl erlauben",
             "post":"Poll posten",
             "missingTitle":"Du musst eine Frage eingeben!",
@@ -68,12 +69,12 @@
         "survey":{
             "heading":"Umfrage erstellen:",
             "title":"Dein Umfragentitel",
-            "templateQuestion":"Frage A?",
+            "templateQuestion":"Deine Frage?",
             "templatePlaceholderTextField":"z. B. Vorschlag A, B, C & 42",
             "labelPlaceholderTextField":"Optional: Antwortvorschläge & Maximale Länge (5 <-> 50), Standardwert: 50",
             "templatePlaceholderTextArea":"z. B. Vorschlag D oder E & 5",
             "labelPlaceholderTextArea":"Optional: Antwortvorschläge & Maximale Reihen (~50 Zeichen pro Reihe, 1 <-> 15), Standardwert: 3 Reihen",
-            "templateAnswer":"Antwort A",
+            "templateAnswer":"Deine Antwort",
             "allowMultipleVotes":"Mehrfachauswahl erlauben",
             "questionWith":"(Weitere) Frage mit...",
             "addInputFieldQuestion":"normalem Eingabefeld hinzufügen",

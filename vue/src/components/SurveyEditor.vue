@@ -206,6 +206,7 @@ export default {
     },
     createSurvey () {
       var invalidInput = false
+      var containsMCQ = false
       if (this.surveyTitle === '') {
         alert(this.$t('editor.survey.missingTitle'))
         invalidInput = true
@@ -220,6 +221,11 @@ export default {
           questions.push(question)
           const questionType = this.surveyQuestionType[index]
           const questionElement = this.surveyQuestionElement[index]
+          // Prepare unique time string
+          const currently = new Date()
+          const timeString = currently.getFullYear() + '' + currently.getMonth() + '' +
+            currently.getDay() + '' + currently.getHours() + '' + currently.getMinutes() + '' +
+            currently.getSeconds() + '' + currently.getMilliseconds()
           // Evaluate user input for placeholder and max length
           var placeholder = ''
           var answerMaxLength = 0
@@ -255,9 +261,9 @@ export default {
               invalidInput = true
             } else {
               this.surveyContent += '<div class="form-group"><div class="d-flex align-self-start">' +
-                '<label for="inputText' + index + '">' + question + '</label></div>' +
-                '<input type="text" class="form-control" id="inputText' + index +
-                '" placeholder="' + placeholder + '" maxlength="' + answerMaxLength + '" required></div>'
+                '<label for="inputText-' + timeString + '-qidx' + index + '">' + question + '</label></div>' +
+                '<input type="text" class="form-control" id="inputText-' + timeString + '-qidx' + index + '" ' +
+                'placeholder="' + placeholder + '" maxlength="' + answerMaxLength + '" required></div>'
             }
           } else if (questionType === 'TAQ') {
             if (question === '') {
@@ -265,13 +271,14 @@ export default {
               invalidInput = true
             } else {
               this.surveyContent += '<div class="form-group"><div class="d-flex align-self-start">' +
-                '<label for="inputTextArea' + index + '">' + question + '</label></div>' +
-                '<textarea class="form-control" id="inputTextArea' + index +
-                '" placeholder="' + placeholder + '" maxlength="' + answerMaxLength +
-                '" rows="' + answerMaxRows + '"style="resize:none;" required>' +
+                '<label for="inputTextArea-' + timeString + '-qidx' + index + '">' + question + '</label></div>' +
+                '<textarea class="form-control" id="inputTextArea-' + timeString + '-qidx' + index + '" ' +
+                'placeholder="' + placeholder + '" maxlength="' + answerMaxLength + '" ' +
+                'rows="' + answerMaxRows + '"style="resize:none;" required>' +
                 '</textarea></div>'
             }
           } else if (questionType === 'MCQ') {
+            containsMCQ = true
             if (question === '') {
               alert(this.$t('editor.survey.missingMCQQuestion'))
               invalidInput = true
@@ -285,25 +292,17 @@ export default {
                 this.surveyContent += '<div class="form-group">' +
                   '<div class="d-flex align-self-start"><p>' + question + '</p></div>'
                 // Need unique radio button name for single vote surveys
-                var radioButtonName = ''
                 if (!allowMultipleVote) {
-                  const birthday = new Date()
-                  const yearM = birthday.getFullYear() + '-'
-                  const monthM = birthday.getMonth() + '-'
-                  const dayM = birthday.getDay() + '-'
-                  const time = birthday.getHours() + '' + birthday.getMinutes() + '' +
-                  birthday.getSeconds() + '' + birthday.getMilliseconds()
-                  radioButtonName = 'rb-' + yearM + monthM + dayM + time
                   // Use radio buttons
                   questionElement.forEach(answer => {
                     if (answer !== '') {
                       mcqAnswers.push([index, answer])
                       this.surveyContent += '<div class="form-check">' +
                         '<div class="d-flex align-self-start">' +
-                        '<input class="form-check-input" type="radio" name="' + radioButtonName +
-                        'id="rbSvy' + index + 'Idx' + answerIndex + '">'
-                      this.surveyContent += '<label class="form-check-label" for="rbSvy' + index +
-                        'Idx' + answerIndex + '">' + answer + '</label></div></div>'
+                        '<input class="form-check-input" type="radio" name="rb-' + timeString + '-qidx' +
+                        index + '" id="rb-' + timeString + '-qidx' + index + '-aidx' + answerIndex + '">'
+                      this.surveyContent += '<label class="form-check-label" for="rb-' + timeString +
+                        '-qidx' + index + '-aidx' + answerIndex + '">' + answer + '</label></div></div>'
                       answerIndex++
                     }
                   })
@@ -314,9 +313,10 @@ export default {
                       mcqAnswers.push([index, answer])
                       this.surveyContent += '<div class="form-check">' +
                         '<div class="d-flex align-self-start">' +
-                        '<input class="form-check-input" type="checkbox" id="cbSvy' + index + 'Idx' + answerIndex + '">'
-                      this.surveyContent += '<label class="form-check-label" for="cbSvy' + index +
-                        'Idx' + answerIndex + '">' + answer + '</label></div></div>'
+                        '<input class="form-check-input" type="checkbox" id="cb-' + timeString + '-qidx' +
+                        index + '-aidx' + answerIndex + '">'
+                      this.surveyContent += '<label class="form-check-label" for="cb-' + timeString + '-qidx' +
+                        index + '-aidx' + answerIndex + '">' + answer + '</label></div></div>'
                       answerIndex++
                     }
                   })
@@ -328,7 +328,7 @@ export default {
         })
         // Form end
         this.surveyContent += '</form>'
-        if (!invalidInput && mcqAnswers.length <= 1) {
+        if (!invalidInput && containsMCQ && mcqAnswers.length <= 1) {
           alert(this.$t('editor.survey.emptyMCQAnswers'))
         } else if (!invalidInput) {
           this.$emit('create-survey', this.surveyTitle, this.surveyContent, questionIndices, questions, mcqAnswers)

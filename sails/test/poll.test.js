@@ -19,12 +19,12 @@ const createPollData = {
   dueDate: 1609498900000,
   content: '<form class="d-flex flex-column">'
   + '<div class="form-check"><div class="d-flex align-self-start">'
-  + '<input class="form-check-input" type="radio" name="rb-2020-3-20-2130401234" id="rbPollIdx0">'
-  + '<label class="form-check-label for="rbPollIdx0>Answer A</label>'
+  + '<input class="form-check-input" type="radio" name="rb-20203202130401234" id="rb-20203202130401234-aidx0">'
+  + '<label class="form-check-label for="rb-20203202130401234-aidx0>Answer A</label>'
   + '</div></div>'
   + '<div class="form-check"><div class="d-flex align-self-start">'
-  + '<input class="form-check-input" type="radio" name="rb-2020-3-20-2130401234" id="rbPollIdx1">'
-  + '<label class="form-check-label for="rbPollIdx0>Answer B</label>'
+  + '<input class="form-check-input" type="radio" name="rb-20203202130401234" id="rb-20203202130401234-aidx1">'
+  + '<label class="form-check-label for="rb-20203202130401234-aidx1>Answer B</label>'
   + '</div></div>'
   + '</form>'
 };
