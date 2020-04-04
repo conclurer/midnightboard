@@ -75,11 +75,24 @@
         }
     },
     "profile":{
+        "statusMsg":{
+            "updatingUsername":"Updating username . . .",
+            "updatingEmail":"Updating email . . .",
+            "updatingPassword":"Updating password . . .",
+            "profileUpdated":"Profile updated!",
+            "usernameTaken":"Username already in use!",
+            "emailTaken":"Email already in use!",
+            "passwordTooSimilar":"Passwords too similar!",
+            "incorrectPassword":"Incorrect password!",
+            "unexpectedError":"Something went wrong . . ."
+        },
         "firstName":"First name",
         "lastName":"Last name",
         "email":"E-Mail",
         "username":"Username",
         "password":"Password",
+        "passwordOld":"Old password",
+        "passwordNew":"New password",
         "role":"Role",
         "user":"User",
         "admin":"Admin",
@@ -104,7 +117,11 @@
         "addBoard":"Create a new notice board:",
         "submit":"Submit",
         "reset":"Reset",
-        "clear":"Clear"
+        "clear":"Clear",
+        "apply":"Apply",
+        "cancel":"Cancel",
+        "edit":"Edit",
+        "ok":"OK"
     },
     "cms": {
         "tables":{

@@ -96,9 +96,6 @@ export default {
 
 <style scoped>
   .home {
-    padding: 54px 0 0 0;
-    height: 100vh;
-    background-color: var(--background-board);
+    padding: 42px 0 0 0;
   }
-
 </style>

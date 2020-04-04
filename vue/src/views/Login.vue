@@ -115,17 +115,12 @@ export default {
   }
 
   .login {
-    position: relative;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    background: var(--background-board);
+    padding: 54px;
     height: 100vh;
-    display: grid;
-    grid-template-rows: 70px auto;
   }
 
   .loginBox {
     width: 400px;
-    margin: 20px auto auto auto;
+    margin: 10vh auto auto auto;
   }
 </style>

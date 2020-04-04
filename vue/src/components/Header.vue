@@ -4,6 +4,7 @@
     type="dark"
     toggleable="sm"
     fixed="top"
+    class="m"
   >
     <b-navbar-brand href="#">
       <img src="../../../configuration/logo.png" alt="Logo" class="navImg">
@@ -34,8 +35,8 @@
             <template v-else-if="selLanguage === 'de'" v-slot:button-content>
               &#127465;&#127466;
             </template>
-            <b-dropdown-item @click="cToEN">&#127468;&#127463;</b-dropdown-item>
-            <b-dropdown-item @click="cToDE">&#127465;&#127466;</b-dropdown-item>
+            <b-dropdown-item @click="cToEN" variant="secondary">&#127468;&#127463;</b-dropdown-item>
+            <b-dropdown-item @click="cToDE" variant="secondary">&#127465;&#127466;</b-dropdown-item>
           </b-nav-item-dropdown>
       </b-navbar-nav>
     </b-collapse>
@@ -86,14 +87,17 @@ export default {
 </script>
 
 <style scoped>
-
+  .m {
+    padding: 0;
+    border-bottom: 1px black solid;
+  }
   .navImg {
-    max-height: 3vh;
-    min-height: 30px;
+    padding: 0;
+    height: 35px;
   }
 
   #navTitle {
-    padding: 0 0.5vw 0 3vw;
+    padding: 0 0 0 5vw;
     color: white;
     font-size: calc(12pt + 0.8vh);
   }

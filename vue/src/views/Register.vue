@@ -105,7 +105,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import axios from 'axios'
 import Header from '@/components/Header.vue'
 
@@ -236,18 +235,15 @@ export default {
   }
 
   .register {
-    position: relative;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    background: var(--background-board);
-    height: 100vh;
-    display: grid;
-    grid-template-rows: 70px auto;
+    padding: 54px;
+    min-height: 100vh;
+    max-height: 100%;
   }
 
   .loginBox {
+
     width: 400px;
     height: auto;
-    margin: 20px auto auto auto;
+    margin: 7vh auto auto auto;
   }
 </style>

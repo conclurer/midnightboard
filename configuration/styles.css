@@ -23,3 +23,7 @@ a:active {
 .dropdown-menu {
     min-width: 3rem;
 }
+
+body{
+    background-color: var(--background-board);
+}
