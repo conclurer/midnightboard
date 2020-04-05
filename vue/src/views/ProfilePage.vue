@@ -12,8 +12,8 @@
     >
       <Profile
         id="profile"
-        userId="1"
-        :editable="true"
+        :userId="$route.params.userId"
+        :editable="editable"
       />
     </b-card>
   </div>
@@ -30,6 +30,7 @@ export default {
     Header,
     Profile
   },
+  props: ['editable'],
   data () {
     return {
 

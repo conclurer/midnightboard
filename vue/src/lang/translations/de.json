@@ -113,8 +113,6 @@
         "toSignUp":"Ich habe noch keinen Account",
         "adopt":"Übernehmen",
         "addUser":"Benutzer hinzufügen:",
-        "userAdded":"Benutzer erfolgreich hinzugefügt",
-        "userDeleted":"Benutzer erfolgreich gelöscht",
         "addBoard":"Notice Board erstellen:",
         "submit":"Bestätigen",
         "reset":"Zurücksetzen",
@@ -133,8 +131,7 @@
             "fullName":"Name",
             "username":"Nutzername",
             "email":"E-Mail",
-            "search":"Tippen zum suchen",
-            "delete":"Löschen"
+            "search":"Tippen zum suchen"
         },
         "userMgmt":"Benutzerverwaltung",
         "userList":"Nutzerliste",
@@ -147,7 +144,9 @@
         "editGroups":"Gruppen bearbeiten",
         "delete":"Löschen",
         "noSelfDelete":"Admins können sich nicht selbst löschen",
-        "unexpectedError":"Etwas ist schiefgelaufen..."
+        "unexpectedError":"Etwas ist schiefgelaufen...",
+        "userAdded":"Benutzer erfolgreich hinzugefügt",
+        "userDeleted":"Benutzer erfolgreich gelöscht"
     },
     "rights":{
         "userRights":"Nutzerrechte",

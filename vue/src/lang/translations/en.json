@@ -112,8 +112,6 @@
         "toSignUp":"I don't have an account",
         "adopt":"Apply",
         "addUser":"Add a new user:",
-        "userAdded":"User successfully added",
-        "userDeleted":"User successfully deleted",
         "addBoard":"Create a new notice board:",
         "submit":"Submit",
         "reset":"Reset",
@@ -132,8 +130,7 @@
             "name":"Name",
             "username":"Username",
             "email":"Email",
-            "search":"Type to search",
-            "delete":"Delete"
+            "search":"Type to search"
         },
         "userMgmt":"User Management",
         "userList":"User List",
@@ -146,7 +143,9 @@
         "editGroups":"Edit Groups",
         "delete":"Delete",
         "noSelfDelete":"Admins cannot delete themselves",
-        "unexpectedError":"Something went wrong..."
+        "unexpectedError":"Something went wrong...",
+        "userAdded":"User successfully added",
+        "userDeleted":"User successfully deleted"
     },
     "rights":{
         "userRights":"User rights",
