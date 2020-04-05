@@ -115,21 +115,22 @@ export default {
           alert(this.$t('editor.poll.missingAnswers'))
         } else {
           var index = 0
+          var validAnswersId = []
           var validAnswers = []
-          // Start form
-          this.pollContent = '<form class="d-flex flex-column">'
           // Prepare unique time string
           const currently = new Date()
           const timeString = currently.getFullYear() + '' + currently.getMonth() + '' +
             currently.getDay() + '' + currently.getHours() + '' +
             currently.getMinutes() + '' + currently.getSeconds() + '' +
             currently.getMilliseconds()
+          // Generate HTML
           if (!this.allowMultipleVotes) {
             // Use radio buttons
             this.pollAnswers.forEach(pollAnswer => {
               const answer = pollAnswer.answer
               if (answer !== '') {
-                validAnswers.push(index)
+                validAnswersId.push(index)
+                validAnswers.push(answer)
                 this.pollContent += '<div class="form-check">' +
                   '<div class="d-flex align-self-start">' +
                   '<input class="form-check-input" type="radio" name="rb-' +
@@ -144,7 +145,8 @@ export default {
             this.pollAnswers.forEach(pollAnswer => {
               const answer = pollAnswer.answer
               if (answer !== '') {
-                validAnswers.push(index)
+                validAnswersId.push(index)
+                validAnswers.push(answer)
                 this.pollContent += '<div class="form-check">' +
                   '<div class="d-flex align-self-start">' +
                   '<input class="form-check-input" type="checkbox" ' +
@@ -155,13 +157,12 @@ export default {
               }
             })
           }
-          // Form end
-          this.pollContent += '</form>'
+          // End of HTML generator
           if (validAnswers.length <= 1) {
             alert(this.$t('editor.poll.missingAnswers'))
             this.pollContent = ''
           } else {
-            this.$emit('create-poll', this.pollTitle, this.pollContent, validAnswers)
+            this.$emit('create-poll', this.pollTitle, this.pollContent, validAnswersId, validAnswers)
           }
         }
       }

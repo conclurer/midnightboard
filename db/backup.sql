@@ -125,6 +125,7 @@ CREATE TABLE public.poll (
     id integer NOT NULL,
     post_id integer,
     answer_id integer NOT NULL,
+    answer text NOT NULL,
     vote integer NOT NULL
 );
 

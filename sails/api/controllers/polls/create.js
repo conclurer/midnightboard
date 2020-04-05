@@ -14,6 +14,11 @@ module.exports = {
       description: 'IDs of the poll answers',
       type: 'json',
       columnType: 'array'
+    },
+    answers: {
+      description: 'Name of the poll answers',
+      type: 'json',
+      columnType: 'array'
     }
   },
 
@@ -44,26 +49,26 @@ module.exports = {
     /*if(!this.req.me) {
       return exits.authRequired();
     }*/
-    if(!inputs.postId || !inputs.answerIds) {
+    if(!inputs.postId || !inputs.answerIds || !inputs.answers) {
       return exits.missingParams('Missing parameters');
     }
-    if(inputs.answerIds.length <= 1) {
-      return exits.invalidParams('Missing IDs of some answers');
+    if(inputs.answerIds.length !== inputs.answers.length) {
+      return exits.invalidParams('Missing IDs or answers');
     }
 
     var postExists = await Post.findOne({id: inputs.postId});
     if(!postExists) {
-      return exits.nonExistent();
+      return exits.nonExistent(inputs.answers);
     }
-
-    sails.log.verbose('POLL_CREATE::: Creating new Poll . . .');
+    sails.log.verbose('POLL_CREATE::: Creating new Poll...');
     var createdPoll = [];
     var createData = null;
     // Create all entries in 'poll' table
-    inputs.answerIds.forEach(async answerId => {
+    inputs.answerIds.forEach(async (answerId, index) => {
       createData = {
         postId: inputs.postId,
         answerId: answerId,
+        answer: inputs.answers[index],
         votes: 0
       };
       await Poll.create(createData).fetch()

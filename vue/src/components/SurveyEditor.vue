@@ -214,8 +214,7 @@ export default {
         var questionIndices = []
         var questions = []
         var mcqAnswers = []
-        // Start form
-        this.surveyContent = '<form class="d-flex flex-column">'
+        // Generate HTML
         this.surveyQuestions.forEach((question, index) => {
           questionIndices.push(index)
           questions.push(question)
@@ -326,8 +325,7 @@ export default {
             }
           }
         })
-        // Form end
-        this.surveyContent += '</form>'
+        // End of HTML generator
         if (!invalidInput && containsMCQ && mcqAnswers.length <= 1) {
           alert(this.$t('editor.survey.emptyMCQAnswers'))
         } else if (!invalidInput) {

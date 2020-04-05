@@ -38,11 +38,14 @@ module.exports = {
       return exits.nonExistent();
     } else {
       const votes = [];
+      const answers = [];
       polls.forEach(poll => {
         votes.push(poll.votes);
+        answers.push(poll.answers);
       });
       return exits.success({
-        votes: votes
+        votes: votes,
+        answers: answers
       });
     }
   }

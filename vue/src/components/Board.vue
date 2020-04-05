@@ -183,27 +183,29 @@
           >
             <hr />
             <b-card-text>
-              <div v-if="!pollShowResults[pollResultMap[note.id]]">
-                <div v-html="note.content" />
-                <br>
-                <b-button-group>
-                  <b-button
-                    variant="primary"
-                    class="voteButton"
-                    @click="votePoll"
-                  >
-                    {{$t('board.poll.vote')}}
-                  </b-button>
-                  <b-button
-                    variant="info"
-                    class="showResultButton"
-                    @click="showResult"
-                  >
-                    {{$t('board.poll.showResult')}}
-                  </b-button>
-                </b-button-group>
+              <div v-if="!participatedPosts[note.id]">
+                <b-form class="d-flex flex-column">
+                  <div v-html="note.content" />
+                  <br>
+                  <b-button-group>
+                    <b-button
+                      variant="primary"
+                      class="voteButton"
+                      @click="votePoll"
+                    >
+                      {{$t('board.poll.vote')}}
+                    </b-button>
+                    <b-button
+                      variant="info"
+                      class="showResultButton"
+                      @click="showResult"
+                    >
+                      {{$t('board.poll.showResult')}}
+                    </b-button>
+                  </b-button-group>
+                </b-form>
               </div>
-              <div v-if="pollShowResults[pollResultMap[note.id]]">
+              <div v-else-if="participatedPosts[note.id]">
                 <div class="bar-chart">
                   <ul class="chart-horizontal">
                     <div
@@ -234,18 +236,20 @@
           >
             <hr />
             <b-card-text>
-              <div v-if="!surveySubmitted[note.id]">
-                <div v-html="note.content" />
-                <br>
-                <b-button
-                    variant="primary"
-                    class="submitButton"
-                    @click="submitSurvey"
-                  >
-                    {{$t('board.survey.submit')}}
-                </b-button>
+              <div v-if="!participatedPosts[note.id]">
+                <b-form class="d-flex flex-column">
+                  <div v-html="note.content" />
+                  <br>
+                  <b-button
+                      variant="primary"
+                      class="submitButton"
+                      @click="submitSurvey"
+                    >
+                      {{$t('board.survey.submit')}}
+                  </b-button>
+                </b-form>
               </div>
-              <div v-else-if="surveySubmitted[note.id]">
+              <div v-else-if="participatedPosts[note.id]">
                 <h4>{{$t('board.survey.thankYou')}}</h4>
               </div>
             </b-card-text>
@@ -438,34 +442,36 @@
           >
             <hr />
             <b-card-text>
-              <div v-if="!pollShowResults[pollResultMap[note.id]]">
-                <div v-html="note.content" />
-                <br>
-                <b-button-group>
-                  <b-button
-                    variant="primary"
-                    class="voteButton"
-                    @click="votePoll"
-                  >
-                    {{$t('board.poll.vote')}}
-                  </b-button>
-                  <b-button
-                    variant="info"
-                    class="showResultButton"
-                    @click="showResult"
-                  >
-                    {{$t('board.poll.showResult')}}
-                  </b-button>
-                </b-button-group>
+              <div v-if="!participatedPosts[note.id]">
+                <b-form class="d-flex flex-column">
+                  <div v-html="note.content" />
+                  <br>
+                  <b-button-group>
+                    <b-button
+                      variant="primary"
+                      class="voteButton"
+                      @click="votePoll"
+                    >
+                      {{$t('board.poll.vote')}}
+                    </b-button>
+                    <b-button
+                      variant="info"
+                      class="showResultButton"
+                      @click="showResult"
+                    >
+                      {{$t('board.poll.showResult')}}
+                    </b-button>
+                  </b-button-group>
+                </b-form>
               </div>
-              <div v-if="pollShowResults[pollResultMap[note.id]]">
+              <div v-else-if="participatedPosts[note.id]">
                 <div class="bar-chart">
                   <ul class="chart-horizontal">
                     <div
                       v-for="index of pollAVVPMap[pollResultMap[note.id]]"
                       :key="index"
                       >
-                      <b>{{ pollVotesPercent[index] }}% ({{ pollVotes[index] }} votes)</b>
+                      <b>{{ pollVotesPercent[index] }}% ({{ pollVotes[index] }} {{$tc('board.poll.votes',pollVotes[index])}})</b>
                       <li class="chart-bar" :style="{width: pollVotesPercent[index] + '%'}">
                         <span class="chart-label">
                           {{ pollAnswers[index] }}
@@ -489,18 +495,20 @@
           >
             <hr />
             <b-card-text>
-              <div v-if="!surveySubmitted[note.id] || true">
-                <div v-html="note.content" />
-                <br>
-                <b-button
-                    variant="primary"
-                    class="submitButton"
-                    @click="submitSurvey"
-                  >
-                    {{$t('board.survey.submit')}}
-                </b-button>
+              <div v-if="!participatedPosts[note.id]">
+                <b-form class="d-flex flex-column">
+                  <div v-html="note.content" />
+                  <br>
+                  <b-button
+                      variant="primary"
+                      class="submitButton"
+                      @click="submitSurvey"
+                    >
+                      {{$t('board.survey.submit')}}
+                  </b-button>
+                </b-form>
               </div>
-              <div v-else-if="surveySubmitted[note.id] || false">
+              <div v-else-if="participatedPosts[note.id]">
                 <h4>{{$t('board.survey.thankYou')}}</h4>
               </div>
             </b-card-text>
@@ -540,29 +548,46 @@ export default {
       refreshBoard: false,
       listener: () => {},
       options: {},
-      pollResultMap: [], // links to pollShowResults
-      pollShowResults: [],
+      pollResultMap: [], // links to pollAVVPMap
       pollAVVPMap: [], // links to pollAnswers/pollVotes/pollVotesPercent
       pollAnswers: [],
       pollVotes: [],
       pollVotesPercent: [],
-      surveySubmitted: []
+      participatedPosts: [] // PostIds of posts user has participated
     }
   },
   created () {
     // Check for voted polls and submitted surveys
+    axios
+      .get('http://localhost:1337/api/users/participations', {
+        headers: {
+          'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
+          'Content-Type': 'application/json'
+        }
+      }
+      )
+      .then(response => {
+        response.data.postIds.forEach(postId => {
+          this.participatedPosts[postId] = true
+          // Check if post is poll
+          this.initPoll(postId)
+        })
+        this.refreshBoard = !this.refreshBoard
+      })
+      .catch(err => this.$log.error(err))
   },
   methods: {
     addNote: async function () {
       // Notify notice board
       this.$emit('add-note')
     },
-    initPoll: async function (postId, element) {
+    // TODO:
+    initPoll: async function (postId) {
+      this.$log.debug(postId)
       // Add poll to result map
-      this.pollResultMap[postId] = this.pollShowResults.length
-      this.pollShowResults[this.pollResultMap[postId]] = false
-      // Get current votes
-      // Axios GET
+      this.pollResultMap[postId] = this.pollAVVPMap.length
+      this.participatedPosts[postId] = false
+      // Axios GET for current votes
       await axios
         .get('http://localhost:1337/api/polls/' + postId, {
           headers: {
@@ -573,7 +598,7 @@ export default {
         )
         .then(response => {
           const votes = response.data.votes
-          var answers = []
+          const answers = response.data.answers
           var votesNumber = []
           var votesPercent = []
           var votesSum = 0
@@ -581,17 +606,12 @@ export default {
           votes.forEach(vote => {
             votesSum += vote
           })
-          // Extract poll data from html
-          for (const child of element.target.parentElement.parentElement.firstChild.firstChild.children) {
-            const answerId = child.firstChild.firstChild.id.split('aidx')[1] // rb-202036175036182-aidx0 -> 0
-            const voteNumber = votes[answerId]
+          for (const vote of votes) {
             var votePercent = 0
             if (votesSum > 0) {
-              votePercent = (voteNumber / votesSum) * 100
+              votePercent = (vote / votesSum) * 100
             }
-            // Save data local
-            answers.push(child.innerText)
-            votesNumber.push(voteNumber)
+            votesNumber.push(vote)
             votesPercent.push(votePercent.toFixed(2))
           }
           // Check if map has indices for this poll
@@ -624,19 +644,23 @@ export default {
           this.pollVotesPercent.push('')
           this.pollVotesPercent.pop()
           // Show result for this poll
-          this.pollShowResults[this.pollResultMap[postId]] = true
+          this.participatedPosts[postId] = true
           // Also needed for array change detection
-          this.pollShowResults.push('')
-          this.pollShowResults.pop()
+          this.participatedPosts.push('')
+          this.participatedPosts.pop()
           this.refreshBoard = !this.refreshBoard
         })
-        .catch(err => this.$log.error(err))
+        .catch(err => {
+          if (err.status.code !== 404) {
+            this.$log.error(err)
+          }
+        })
     },
     votePoll: async function (element) {
-      const postId = element.target.parentElement.parentElement.parentElement.parentElement.parentElement.id
+      const postId = element.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id
       // Axios PUT to update votes for the answer
       var answerIds = []
-      for (const child of element.target.parentElement.parentElement.firstChild.firstChild.children) {
+      for (const child of element.target.parentElement.parentElement.parentElement.firstChild.firstChild.children) {
         if (child.firstChild.firstChild.checked === true) {
           const answerId = child.firstChild.firstChild.id.split('aidx')[1] // rb-202036175036182-aidx0 -> 0
           answerIds.push(answerId)
@@ -662,50 +686,53 @@ export default {
             .then(res => {})
             .catch(err => this.$log.error(err))
         }
-        this.initPoll(postId, element)
+        this.initPoll(postId)
       }
     },
     showResult: function (element) {
       // Show current results
-      const postId = element.target.parentElement.parentElement.parentElement.parentElement.parentElement.id
-      this.initPoll(postId, element)
+      const postId = element.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id
+      this.initPoll(postId)
     },
     submitSurvey: async function (element) {
-      const postId = element.target.parentElement.parentElement.parentElement.parentElement.id
+      const postId = element.target.parentElement.parentElement.parentElement.parentElement.parentElement.id
       // Axios PUT to submit survey
       var questionIds = []
       var questionId
       var answers = []
       var currentAnswers = []
-      for (const child of element.target.parentElement.parentElement.firstChild.firstChild.children[0]) {
-        if (child.type === 'text' || child.type === 'textarea') {
-          questionIds.push(child.id.split('qidx')[1])
-          answers.push(child.value)
+      for (const forms of element.target.parentElement.firstChild.children) {
+        if (forms.lastChild.type === 'text' || forms.lastChild.type === 'textarea') {
+          questionIds.push(forms.lastChild.id.split('qidx')[1])
+          answers.push(forms.lastChild.value)
         } else {
-          questionId = child.id.split('qidx')[1].split('-aidx')[0]
-          if (child.type === 'radio' && child.checked) {
-            questionIds.push(questionId)
-            answers.push(child.labels[0].textContent)
-          } else if (child.type === 'checkbox' && child.checked) {
-            // Check for multiple answers
-            if (questionIds.includes(questionId)) {
-              const idx = questionIds.indexOf(questionId)
-              if (Array.isArray(answers[idx])) {
-                currentAnswers = answers[idx]
-              } else {
-                currentAnswers = Array.of(answers[idx])
+          for (const form of forms.children) {
+            if (form.firstChild.children.childElementCount > 0) {
+              questionId = form.firstChild.firstChild.id.split('qidx')[1].split('-aidx')[0]
+              if (form.firstChild.firstChild.type === 'radio' && form.firstChild.firstChild.checked) {
+                questionIds.push(questionId)
+                answers.push(form.firstChild.firstChild.labels[0].textContent)
+              } else if (form.firstChild.firstChild.type === 'checkbox' && form.firstChild.firstChild.checked) {
+                // Check for multiple answers
+                if (questionIds.includes(questionId)) {
+                  const idx = questionIds.indexOf(questionId)
+                  if (Array.isArray(answers[idx])) {
+                    currentAnswers = answers[idx]
+                  } else {
+                    currentAnswers = Array.of(answers[idx])
+                  }
+                  currentAnswers.push(form.firstChild.firstChild.labels[0].textContent)
+                  answers[idx] = currentAnswers
+                } else {
+                  questionIds.push(questionId)
+                  answers.push(form.firstChild.firstChild.labels[0].textContent)
+                }
               }
-              currentAnswers.push(child.labels[0].textContent)
-              answers[idx] = currentAnswers
-            } else {
-              questionIds.push(questionId)
-              answers.push(child.labels[0].textContent)
             }
           }
         }
       }
-      // questionIds.forEach((id, idx) => this.$log.debug('QuestionId: ' + id + ' | Answer: ' + answers[idx]))
-      if (questionIds.length > answers.length) { // Need to check it before
+      if (questionIds.length > answers.length) {
         alert(this.$t('board.survey.invalidSubmit'))
       } else {
         const jsonBody = JSON.stringify({
@@ -725,7 +752,7 @@ export default {
           .then(res => {})
           .catch(err => this.$log.error(err))
         // Set survey in submitted state
-        this.surveySubmitted[postId] = true
+        this.participatedPosts[postId] = true
         this.refreshBoard = !this.refreshBoard
       }
     }

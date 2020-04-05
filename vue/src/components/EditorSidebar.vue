@@ -131,7 +131,7 @@ export default {
       // Notify notice board
       this.$emit('add-note')
     },
-    createPoll: async function (titleContent, jsonContent, answerIndices) {
+    createPoll: async function (titleContent, jsonContent, answerIndices, answerNames) {
       const jsonBodyNote = JSON.stringify({
         title: titleContent,
         typeOfPost: 'application/poll',
@@ -151,7 +151,8 @@ export default {
         .then(async postResponse => {
           const jsonBodyPoll = JSON.stringify({
             postId: postResponse.data.id,
-            answerIds: answerIndices
+            answerIds: answerIndices,
+            answers: answerNames
           })
           await axios
             .post('http://localhost:1337/api/polls', jsonBodyPoll, {
