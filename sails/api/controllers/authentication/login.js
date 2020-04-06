@@ -73,7 +73,7 @@ module.exports = {
         await RefreshToken.create({uid: usr.id, refreshToken: refreshToken}); // Save refresh token to database
 
         return exits.success({
-          accessToken: accessToken, 
+          accessToken: accessToken,
           refreshToken: refreshToken,
           expiresIn: sails.config.jwts.EXPIRATION_TIME,
           uid: usr.id,
