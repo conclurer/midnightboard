@@ -57,8 +57,7 @@
                 <b-button size="sm" @click="deleteUser(row.item.id)" class="mr-1">X</b-button>
               </template>
               <template v-slot:cell(image)="row">
-                <!-- TODO remove random image -->
-                <b-avatar :src="'https://placem.at/people?w=174&&random='+row.item.id"></b-avatar>
+                <b-avatar :text="row.value" variant="info"></b-avatar>
               </template>
 
             </b-table>
@@ -116,7 +115,10 @@ export default {
       delStatus: 0,
       loading: false,
       fields: [
-        { key: 'image', label: '' },
+        { key: 'image',
+          label: '',
+          formatter: (value, key, item) => { return item.firstName.charAt(0) + item.lastName.charAt(0) }
+        },
         { key: 'id', label: i18n.t('cms.tables.id'), sortable: true },
         { key: 'createdAt',
           label: i18n.t('cms.tables.userCreatedAt'),
@@ -129,7 +131,11 @@ export default {
           formatter: (value,key,item) => { return value ? new Date(value).toDateString() : ' ' }
         },
         */
-        { key: 'fullName', label: i18n.t('cms.tables.name'), sortable: true },
+        { key: 'fullName',
+          label: i18n.t('cms.tables.name'),
+          sortable: true,
+          formatter: (value, key, item) => { return item.lastName + ', ' + item.firstName }
+        },
         { key: 'email', label: i18n.t('cms.tables.email'), sortable: true },
         { key: 'userName', label: i18n.t('cms.tables.username'), sortable: true }
         // { key: 'delete', label: i18n.t('cms.delete') }
@@ -209,9 +215,6 @@ export default {
         })
         .then(response => {
           this.members = response.data
-          this.members.forEach((val) => {
-            val.fullName = val.lastName + ', ' + val.firstName
-          })
         })
         .catch(err => {
           switch (err.response.status) {
@@ -247,7 +250,7 @@ export default {
       this.left = left + 'px'
 
       this.selectedId = item.id
-      this.selectedUser = item.fullName
+      this.selectedUser = item.firstName + ' ' + item.lastName
       this.viewContextMenu = true
       this.$nextTick(() => this.$refs.cm.focus())
     },
@@ -291,7 +294,8 @@ export default {
     margin: 0;
     padding: 0;
     position: absolute;
-    width: 160px;
+    min-width: 160px;
+    max-width: 400px;
     z-index: 999999;
   }
   #context-menu li {

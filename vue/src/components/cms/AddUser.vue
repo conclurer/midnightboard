@@ -100,7 +100,7 @@
         variant="success"
         dismissible
       >
-        <h5>{{$t('ui.userAdded')}}</h5>
+        <h5>{{$t('cms.userAdded')}}</h5>
       </b-alert>
       <b-alert
         :show="addStatus === 409"
