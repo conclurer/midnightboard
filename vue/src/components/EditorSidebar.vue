@@ -243,7 +243,7 @@ export default {
       // Notify notice board
       this.$emit('add-note')
     },
-     // Used to update the date property
+    // Used to update the date property
     updateDate: function (date) {
       this.dueDate = (new Date(date)).getTime()
     },

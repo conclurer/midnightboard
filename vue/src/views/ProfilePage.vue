@@ -25,7 +25,7 @@ import Header from '@/components/Header.vue'
 import Profile from '@/components/Profile.vue'
 
 export default {
-  name: 'Profilepage',
+  name: 'ProfilePage',
   components: {
     Header,
     Profile

@@ -25,7 +25,15 @@
 
     <div class="m">
       <div class="avatarPanel">
-        <b-avatar :src="'https://placem.at/people?w=512&random='+userId" variant="info" button @click="avatarClick" size="15vh" class="p-0"></b-avatar>
+        <!-- TODO Use intials here! -->
+        <b-avatar
+          :src="'https://placem.at/people?w=512&random='+userId"
+          variant="info"
+          button
+          @click="avatarClick"
+          size="15vh"
+          class="p-0"
+        />
         <div class="pt-2">
           <p class="aTextFName">{{userData.firstName + ' ' + userData.lastName}}</p>
           <p class="aTextUName" v-if="!editing">{{userData.userName}}</p>

@@ -143,7 +143,7 @@
 
 <script>
 export default {
-  name: 'surveyEditor',
+  name: 'SurveyEditor',
   data () {
     return {
       surveyTitle: '',
@@ -207,6 +207,7 @@ export default {
     createSurvey () {
       var invalidInput = false
       var containsMCQ = false
+      var answerDuplicates = false
       if (this.surveyTitle === '') {
         alert(this.$t('editor.survey.missingTitle'))
         invalidInput = true
@@ -215,6 +216,7 @@ export default {
         var questions = []
         var mcqAnswers = []
         // Generate HTML
+        this.surveyContent = ''
         this.surveyQuestions.forEach((question, index) => {
           questionIndices.push(index)
           questions.push(question)
@@ -295,6 +297,11 @@ export default {
                   // Use radio buttons
                   questionElement.forEach(answer => {
                     if (answer !== '') {
+                      mcqAnswers.forEach(mcqAnswer => {
+                        if (mcqAnswer[0] === index && mcqAnswer[1] === answer) {
+                          answerDuplicates = true
+                        }
+                      })
                       mcqAnswers.push([index, answer])
                       this.surveyContent += '<div class="form-check">' +
                         '<div class="d-flex align-self-start">' +
@@ -309,6 +316,11 @@ export default {
                   // Use checkboxes
                   questionElement.forEach(answer => {
                     if (answer !== '') {
+                      mcqAnswers.forEach(mcqAnswer => {
+                        if (mcqAnswer[0] === index && mcqAnswer[1] === answer) {
+                          answerDuplicates = true
+                        }
+                      })
                       mcqAnswers.push([index, answer])
                       this.surveyContent += '<div class="form-check">' +
                         '<div class="d-flex align-self-start">' +
@@ -328,7 +340,9 @@ export default {
         // End of HTML generator
         if (!invalidInput && containsMCQ && mcqAnswers.length <= 1) {
           alert(this.$t('editor.survey.emptyMCQAnswers'))
-        } else if (!invalidInput) {
+        } else if (answerDuplicates) {
+          alert(this.$t('editor.survey.duplicateMCQAnswers'))
+        } else if (!invalidInput && !answerDuplicates) {
           this.$emit('create-survey', this.surveyTitle, this.surveyContent, questionIndices, questions, mcqAnswers)
         }
       }

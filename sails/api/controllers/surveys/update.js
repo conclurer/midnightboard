@@ -78,9 +78,11 @@ module.exports = {
             if(Array.isArray(answer)) {
               answer.forEach(async answerMCQ => {
                 const surveyMCQAnswer = await Survey.findOne({
-                  postId: postId,
-                  questionId: questionIndex,
-                  answer: answerMCQ
+                  where: {
+                    postId: postId,
+                    questionId: questionIndex,
+                    answer: answerMCQ
+                  }
                 });
                   // Must be an existing MCQ answer
                 if(surveyMCQAnswer) {

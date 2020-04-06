@@ -87,7 +87,8 @@
             "missingTAQQuestion":"You have to enter a question for a large text area!",
             "missingMCQQuestion":"You have to enter a question for a single/multiple choice element!",
             "missingMCQAnswers":"You have to create at least two answers per single/multiple choice question!",
-            "emptyMCQAnswers":"You have to create at least two non-empty answers per single/multiple choice question!"
+            "emptyMCQAnswers":"You have to create at least two non-empty answers per single/multiple choice question!",
+            "duplicateMCQAnswers":"You have to create at least two different answers per single/multiple choice question!"
         },
         "datePicker":{
             "dueDate":"Select a due date",

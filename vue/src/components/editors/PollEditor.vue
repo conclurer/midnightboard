@@ -108,6 +108,7 @@ export default {
             currently.getMinutes() + '' + currently.getSeconds() + '' +
             currently.getMilliseconds()
           // Generate HTML
+          this.pollContent = ''
           if (!this.allowMultipleVotes) {
             // Use radio buttons
             this.pollAnswers.forEach(pollAnswer => {
