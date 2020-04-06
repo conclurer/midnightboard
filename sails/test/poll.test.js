@@ -101,7 +101,8 @@ test('POST::: Create poll post', () => {
 
 const createPollAnswersData = {
   postId: postId,
-  answerIds: ['1', '2']
+  answerIds: ['1', '2'],
+  answers: ['Yes', 'No']
 };
 
 // Create poll answers
@@ -154,7 +155,6 @@ test('POLL::: Vote for poll answer', () => {
       .then((jsonString) => {
         console.log('Update');
         console.log(jsonString);
-        // postId = jsonString.id;
         expect(null).toBeNull();
       })
       .catch((err) => {
@@ -167,8 +167,8 @@ const getPollData = {
   postId: postId
 };
 
-// Get the poll votes
-test('POLL::: Get poll votes', () => {
+// Get the poll answers with votes
+test('POLL::: Get poll answers with votes', () => {
   setTimeout(() => {
     return fetch('http://localhost:1337/api/polls', {
       method: 'GET',

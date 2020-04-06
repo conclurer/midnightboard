@@ -64,7 +64,7 @@ module.exports = {
     var createdPoll = [];
     var createData = null;
     // Create all entries in 'poll' table
-    inputs.answerIds.forEach(async (answerId, index) => {
+    inputs.answerIds.forEach(async function(answerId, index) {
       createData = {
         postId: inputs.postId,
         answerId: answerId,

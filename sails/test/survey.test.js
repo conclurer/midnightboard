@@ -17,19 +17,18 @@ const createSurveyData = {
   title: 'JEST Survey Title',
   typeOfPost: 'application/survey',
   dueDate: 1609498900000,
-  content: '<form class="d-flex flex-column">'
-  + '<div class="form-group"><div class="d-flex align-self-start">'
-  + '<label for="inputText-20203202130401235-qidx0">Question A?</label>'
+  content: '<div class="form-group">'
+  + '<div class="d-flex align-self-start"><label for="inputText-20203202130401235-qidx0">Question A?</label></div>'
   + '<input type="text" class="form-control" id="inputText-20203202130401235-qidx0"'
   + 'placeholder="Placeholder A" maxlength="50" required>'
   + '</div>'
-  + '<div class="form-group"><div class="d-flex align-self-start">'
-  + '<label for="inputText-20203202130401235-qidx1">Question B?</label>'
+  + '<div class="form-group">'
+  + '<div class="d-flex align-self-start"><label for="inputText-20203202130401235-qidx1">Question B?</label></div>'
   + '<textarea class="form-control" id="inputText-20203202130401235-qidx1"'
   + 'placeholder="Placeholder B" maxlength="150" rows="3" style="resize:none;"'
   + 'required></textarea>'
   + '</div>'
-  + '<div class="form-group"><div class="d-flex align-self-start">'
+  + '<div class="form-group">'
   + '<div class="d-flex align-self-start"><p>Question C</p></div>'
   + '<div class="form-check">'
   + '<div class="d-flex align-self-start">'
@@ -44,7 +43,6 @@ const createSurveyData = {
   + '</div>'
   + '</div>'
   + '</div>'
-  + '</form>'
 };
 // No " in JSON string allowed
 createSurveyData.content = createSurveyData.content.replace(/"/g, /'/).replace(/\//g, '');
