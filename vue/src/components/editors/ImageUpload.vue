@@ -1,14 +1,12 @@
 <template>
   <div class="imageUpload">
-    <br>
-    <h2>{{$t('editor.image.heading')}}</h2>
     <b-form-input
       class="imageTitle"
       v-bind:value="imageTitle"
       v-on:input="imageTitle = $event"
       :maxlength="maxImageTitleLength"
     />
-    <br><br>
+    <br>
     <picture-input
       ref="pictureInput"
       @change="onChange"
@@ -43,7 +41,6 @@
     >
       {{$t('editor.image.post')}}
     </button>
-    <br>
   </div>
 </template>
 
@@ -63,7 +60,7 @@ export default {
     PictureInput
   },
   methods: {
-    onChange (image) {
+    onChange: function (image) {
       if (image) {
         this.image = image
         this.imageRef = this.$refs.pictureInput.image
@@ -71,7 +68,7 @@ export default {
         this.imageRef = ''
       }
     },
-    onRemove () {
+    onRemove: function () {
       this.imageRef = ''
       this.imageTitle = this.$t('editor.image.title')
     }

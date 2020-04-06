@@ -1,36 +1,22 @@
 <template>
   <div class="fileUpload">
-    <br>
-    <h2>{{$t('editor.file.heading')}}</h2>
     <b-form-input
       class="fileTitle"
       v-bind:value="fileTitle"
       v-on:input="fileTitle = $event"
       :maxlength="maxFileTitleLength"
     />
-    <br><br>
-    <div
-      v-if="this.pdfSelected"
-      :key="pdfSelected"
-    >
+    <br>
+    <div v-if="pdfSelected">
       <font-awesome-icon icon="file-pdf" size="10x"/>
     </div>
-    <div
-      v-if="this.wordSelected"
-      :key="wordSelected"
-    >
+    <div v-else-if="wordSelected">
       <font-awesome-icon icon="file-word" size="10x"/>
     </div>
-        <div
-      v-if="this.excelSelected"
-      :key="excelSelected"
-    >
+    <div v-else-if="excelSelected">
       <font-awesome-icon icon="file-excel" size="10x"/>
     </div>
-    <div
-      v-if="this.powerpointSelected"
-      :key="powerpointSelected"
-    >
+    <div v-else-if="powerpointSelected">
       <font-awesome-icon icon="file-powerpoint" size="10x"/>
     </div>
     <picture-input
@@ -95,14 +81,14 @@ export default {
     PictureInput
   },
   methods: {
-    onChange (file) {
+    onChange: function (file) {
       this.pdfSelected = false
       this.wordSelected = false
       this.excelSelected = false
       this.powerpointSelected = false
       if (file) {
         // Hide image preview
-        document.getElementsByClassName('preview-container')[1].style.display = 'none'
+        document.getElementsByClassName('preview-container')[0].style.display = 'none'
         const fileType = file.split(';')[0].split(':')[1]
         if (fileType === 'application/pdf') {
           this.pdfSelected = true
@@ -118,8 +104,8 @@ export default {
         this.fileRef = ''
       }
     },
-    onRemove () {
-      document.getElementsByClassName('preview-container')[1].style.display = 'block'
+    onRemove: function () {
+      document.getElementsByClassName('preview-container')[0].style.display = 'block'
       this.fileRef = ''
       this.fileTitle = this.$t('editor.file.title')
       this.pdfSelected = false

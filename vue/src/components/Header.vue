@@ -19,9 +19,21 @@
     </b-navbar-toggle>
     <b-collapse id="navbar-toggle-collapse" is-nav >
       <b-navbar-nav class="ml-auto">
-        <b-nav-item v-if="addActive" class="navItem">
-          <a @click="plusClicked"><font-awesome-icon icon="plus" /> {{$t('ui.add')}}</a>
-        </b-nav-item>
+
+        <b-nav-item-dropdown
+            v-if="addActive"
+            class="navItem"
+        >
+          <template v-slot:button-content>
+            <font-awesome-icon icon="plus" />
+          </template>
+          <b-dropdown-item @click="selectEditor('text')">{{$t('type.text')}}</b-dropdown-item>
+          <b-dropdown-item @click="selectEditor('image')">{{$t('type.image')}}</b-dropdown-item>
+          <b-dropdown-item @click="selectEditor('file')">{{$t('type.file')}}</b-dropdown-item>
+          <b-dropdown-item @click="selectEditor('poll')">{{$t('type.poll')}}</b-dropdown-item>
+          <b-dropdown-item @click="selectEditor('survey')">{{$t('type.survey')}}</b-dropdown-item>
+        </b-nav-item-dropdown>
+
         <b-nav-item v-if="profileActive" class="navItem">
           <font-awesome-icon icon="user-circle" /> {{$t('ui.profile')}}
         </b-nav-item>
@@ -64,23 +76,40 @@ export default {
     }
   },
   methods: {
-    plusClicked (e) {
-      e.preventDefault()
-      this.$emit('plus-clicked')
-    },
-    cToEN (e) {
+    cToEN: function (e) {
       e.preventDefault()
       if (this.selLanguage === 'en') { return }
       window.localStorage.setItem('mnb_lang', 'en-GB')
       this.selLanguage = 'en'
       i18n.locale = 'en-GB'
     },
-    cToDE (e) {
+    cToDE: function (e) {
       e.preventDefault()
       if (this.selLanguage === 'de') { return }
       window.localStorage.setItem('mnb_lang', 'de-DE')
       this.selLanguage = 'de'
       i18n.locale = 'de-DE'
+    },
+    // Used to load an editor to the sidebar
+    selectEditor: function (selection) {
+      switch (selection) {
+        case 'text':
+          this.$emit('select-editor', 0)
+          break
+        case 'image':
+          this.$emit('select-editor', 1)
+          break
+        case 'file':
+          this.$emit('select-editor', 2)
+          break
+        case 'poll':
+          this.$emit('select-editor', 3)
+          break
+        case 'survey':
+          this.$emit('select-editor', 4)
+          break
+        default:
+      }
     }
   }
 }

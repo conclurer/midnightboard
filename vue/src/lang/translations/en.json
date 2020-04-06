@@ -20,12 +20,13 @@
     },
     "editor":{
         "note":{
-            "create":"Create",
+            "heading":"Text editor",
             "title":"Insert title here",
-            "content":"<p>Insert content here</p><ul><li><p>Start a bulleted list</p></li></ul><ol><li><p>Or start a numerical list</p></li></ol>"
+            "content":"<p>Insert content here</p><ul><li><p>Start a bulleted list</p></li></ul><ol><li><p>Or start a numerical list</p></li></ol>",
+            "create":"Create"
         },
         "image":{
-            "heading":"Upload your image:",
+            "heading":"Image upload",
             "title":"Your image title",
             "post":"Post image",
             "upload":"Your device does not support file uploading.",
@@ -40,7 +41,7 @@
             "aspect":"Landscape/Portrait"
         },
         "file":{
-            "heading":"Upload your file:",
+            "heading":"File upload",
             "title":"Your file title",
             "post":"Post file",
             "upload":"Your device does not support file uploading.",
@@ -54,7 +55,7 @@
             "fileType":"Only PDF, DOC(X), XLS(X) and PPT(X) are supported!"
         },
         "poll":{
-            "heading":"Create your poll:",
+            "heading":"Poll editor",
             "title":"Your question?",
             "templateAnswer":"Answer A",
             "allowMultipleVotes":"Allow multiple answers",
@@ -63,7 +64,7 @@
             "missingAnswers":"You have to create at least two answers!"
         },
         "survey":{
-            "heading":"Create your survey:",
+            "heading":"Survey editor",
             "title":"Your survery title",
             "templateAnswer":"Answer A",
             "post":"Post survey"
@@ -121,7 +122,14 @@
         "edit":"Edit",
         "ok":"OK"
     },
-    "cms": {
+    "type":{
+        "text":"Text note",
+        "image":"Image",
+        "file":"File",
+        "poll":"Poll",
+        "survey":"Survey"
+    },
+    "cms":{
         "tables":{
             "id":"ID",
             "boardCreatedAt":"Created",
