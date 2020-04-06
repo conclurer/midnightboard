@@ -5,13 +5,16 @@
     <Header
       id="titlebar"
       title="Quality Assurance"
-      @plus-clicked="plusClicked"
+      @select-editor="selectEditor"
       :buttonsActive=true
     />
     <Board
       @add-note="addNote"
+      @close="close"
       :notes="notes"
+      :boardId="boardId"
       :editorActive="editorActive"
+      :editorId="editorId"
     />
   </div>
 </template>
@@ -32,7 +35,8 @@ export default {
     return {
       notes: [],
       boardId: 1,
-      editorActive: false
+      editorActive: false,
+      editorId: 0
     }
   },
   created () {
@@ -41,7 +45,7 @@ export default {
     this.fetchPosts()
   },
   methods: {
-    refreshToken () {
+    refreshToken: async function () {
       axios
         .post('http://localhost:1337/api/users/refresh', {
           token: window.localStorage.getItem('mnb_rtok')
@@ -61,7 +65,7 @@ export default {
           }
         })
     },
-    fetchPosts () {
+    fetchPosts: async function () {
       axios
         .get('http://localhost:1337/api/posts/all/' + this.boardId, {
           headers: {
@@ -81,15 +85,18 @@ export default {
           }
         })
     },
-    addNote () {
+    addNote: async function () {
       this.refreshToken()
       this.fetchPosts()
 
       this.editorActive = false
     },
-    plusClicked () {
-      // Show/hide editor sidebar
-      this.editorActive = !this.editorActive
+    selectEditor: function (selection) {
+      this.editorActive = true
+      this.editorId = selection
+    },
+    close: function () {
+      this.editorActive = false
     }
   }
 }

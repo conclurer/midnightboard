@@ -15,12 +15,24 @@
       </b-nav-text>
       <b-navbar-nav class="ml-auto">
         <div>
-          <b-nav-item v-if="buttonsActive">
-            <span
-              class="unselectable"
-              unselectable="on"
-            ><a @click="plusClicked"><font-awesome-icon icon="plus" /> {{$t('ui.add')}}</a></span>
-          </b-nav-item>
+          <!-- Note editor drop-down -->
+          <b-nav-item-dropdown
+            v-if="buttonsActive"
+            id="plus"
+            class="unselectable"
+            unselectable="on"
+          >
+            <template v-slot:button-content>
+              <font-awesome-icon icon="plus" />
+            </template>
+            <b-dropdown-item @click="selectEditor('text')">{{$t('type.text')}}</b-dropdown-item>
+            <b-dropdown-item @click="selectEditor('image')">{{$t('type.image')}}</b-dropdown-item>
+            <b-dropdown-item @click="selectEditor('file')">{{$t('type.file')}}</b-dropdown-item>
+            <b-dropdown-item @click="selectEditor('poll')">{{$t('type.poll')}}</b-dropdown-item>
+            <b-dropdown-item @click="selectEditor('survey')">{{$t('type.survey')}}</b-dropdown-item>
+          </b-nav-item-dropdown>
+
+          <!-- Profile page link -->
           <b-nav-item v-if="buttonsActive">
             <span
               class="unselectable"
@@ -28,20 +40,19 @@
             ><font-awesome-icon icon="user-circle" /> {{$t('ui.profile')}}</span>
           </b-nav-item>
 
+          <!-- Language selection drop-down -->
           <b-nav-item-dropdown
             id="flag"
             class="unselectable"
             unselectable="on"
             right
           >
-
             <template v-if="selLanguage === 'en'" v-slot:button-content>
               &#127468;&#127463;
             </template>
             <template v-else-if="selLanguage === 'de'" v-slot:button-content>
               &#127465;&#127466;
             </template>
-
             <b-dropdown-item @click="cToEN">&#127468;&#127463;</b-dropdown-item>
             <b-dropdown-item @click="cToDE">&#127465;&#127466;</b-dropdown-item>
           </b-nav-item-dropdown>
@@ -73,24 +84,40 @@ export default {
     }
   },
   methods: {
-    plusClicked (e) {
-      e.preventDefault()
-      // Send up to parent
-      this.$emit('plus-clicked')
-    },
-    cToEN (e) {
+    cToEN: function (e) {
       e.preventDefault()
       if (this.selLanguage === 'en') { return }
       window.localStorage.setItem('mnb_lang', 'en-GB')
       this.selLanguage = 'en'
       i18n.locale = 'en-GB'
     },
-    cToDE (e) {
+    cToDE: function (e) {
       e.preventDefault()
       if (this.selLanguage === 'de') { return }
       window.localStorage.setItem('mnb_lang', 'de-DE')
       this.selLanguage = 'de'
       i18n.locale = 'de-DE'
+    },
+    // Used to load an editor to the sidebar
+    selectEditor: function (selection) {
+      switch (selection) {
+        case 'text':
+          this.$emit('select-editor', 0)
+          break
+        case 'image':
+          this.$emit('select-editor', 1)
+          break
+        case 'file':
+          this.$emit('select-editor', 2)
+          break
+        case 'poll':
+          this.$emit('select-editor', 3)
+          break
+        case 'survey':
+          this.$emit('select-editor', 4)
+          break
+        default:
+      }
     }
   }
 }
@@ -120,7 +147,7 @@ export default {
 
   #flag {
     font-size: 25px;
-    color: #FFF
+    color: #fff
   }
 
   /* Alternative highlight styles:

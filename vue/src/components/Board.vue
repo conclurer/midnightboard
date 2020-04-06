@@ -3,7 +3,7 @@
     <!-- Displays content when editor is not displayed -->
     <div
       class="inner-board"
-      v-if="!this.editorActive"
+      v-if="!editorActive"
       :key="editorActive"
     >
       <div
@@ -236,7 +236,7 @@
     <!-- Displays content when editor is displayed -->
     <div
       class="inner-board"
-      v-if="this.editorActive"
+      v-if="editorActive"
       style="display: grid; grid-template-columns: 1fr 500px;"
     >
       <div
@@ -474,6 +474,9 @@
           <div v-smoothscrollbar="{ listener, options }">
             <EditorSidebar
               @add-note="addNote"
+              @close="close"
+              :boardId="boardId"
+              :editorId="editorId"
             />
           </div>
         </div>
@@ -507,7 +510,7 @@ export default {
     }
   },
   methods: {
-    addNote: async function () {
+    addNote: function () {
       // Notify notice board
       this.$emit('add-note')
     },
@@ -617,7 +620,7 @@ export default {
         this.initPoll(postId, element)
       }
     },
-    showResult: function (element) {
+    showResult: async function (element) {
       // Show current results
       const postId = element.target.parentElement.parentElement.parentElement.parentElement.parentElement.id
       this.initPoll(postId, element)
@@ -629,9 +632,12 @@ export default {
           child.firstChild.firstChild.checked = false
         }
       }
+    },
+    close: function () {
+      this.$emit('close')
     }
   },
-  props: ['notes', 'editorActive']
+  props: ['notes', 'boardId', 'editorActive', 'editorId']
 }
 </script>
 

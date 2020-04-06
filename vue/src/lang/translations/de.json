@@ -20,12 +20,13 @@
     },
     "editor":{
         "note":{
-            "create":"Erstellen",
+            "heading":"Texteditor",
             "title":"Titel hier einfügen",
-            "content":"<p>Inhalt hier einf&uuml;gen</p><ul><li><p>Beginne eine Liste</p></li></ul><ol><li><p>Oder eine Aufz&auml;hlung</p></li></ol>"
+            "content":"<p>Inhalt hier einf&uuml;gen</p><ul><li><p>Beginne eine Liste</p></li></ul><ol><li><p>Oder eine Aufz&auml;hlung</p></li></ol>",
+            "create":"Erstellen"
         },
         "image":{
-            "heading":"Bild hochladen:",
+            "heading":"Bild hochladen",
             "title":"Titel des Bildes",
             "post":"Bild posten",
             "upload":"Dein Gerät unterstützt kein Hochladen von Bildern.",
@@ -40,7 +41,7 @@
             "aspect":"Landschaft/Porträt"
         },
         "file":{
-            "heading":"Datei hochladen:",
+            "heading":"Datei hochladen",
             "title":"Titel der Datei",
             "post":"Datei posten",
             "upload":"Dein Gerät unterstützt kein Hochladen von Dateien.",
@@ -54,7 +55,7 @@
             "fileType":"Es werden nur PDF, DOC(X), XLS(X) und PPT(X) unterstützt!"
         },
         "poll":{
-            "heading":"Poll erstellen:",
+            "heading":"Abstimmung erstellen",
             "title":"Deine Frage?",
             "templateAnswer":"Antwort A",
             "allowMultipleVotes":"Mehrfachauswahl erlauben",
@@ -63,7 +64,7 @@
             "missingAnswers":"Du musst mindestens zwei Antworten erstellen!"
         },
         "survey":{
-            "heading":"Umfrage erstellen:",
+            "heading":"Umfrage erstellen",
             "title":"Dein Umfragentitel",
             "templateAnswer":"Antwort A",
             "post":"Umfrage posten"
@@ -106,6 +107,13 @@
         "submit":"Bestätigen",
         "reset":"Zurücksetzen",
         "clear":"Leeren"
+    },
+    "type":{
+        "text":"Textnotiz",
+        "image":"Bild",
+        "file":"Datei",
+        "poll":"Abstimmung",
+        "survey":"Umfrage"
     },
     "cms":{
         "tables":{
