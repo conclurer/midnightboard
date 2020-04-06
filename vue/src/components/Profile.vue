@@ -39,7 +39,13 @@
             <b-input-group-text class="editPrepend">{{$t('profile.username')}}</b-input-group-text>
           </b-input-group-prepend>
 
-          <b-form-input :state="unameState" v-model="pUname" :value="pUname" :disabled="!unameToggle" trim></b-form-input>
+          <b-form-input
+            :state="unameState"
+            v-model="pUname"
+            :value="pUname"
+            :disabled="!unameToggle"
+            trim
+          />
 
           <b-input-group-append>
             <b-button :pressed.sync="unameToggle" variant="info" class="editAppend">
@@ -55,7 +61,14 @@
           <b-input-group-text class="editPrepend">{{$t('profile.email')}}</b-input-group-text>
         </b-input-group-prepend>
 
-        <b-form-input :state="emailState" v-model="pMail" :value="pMail" :disabled="!emailToggle" trim></b-form-input>
+        <b-form-input
+          :state="emailState"
+          v-model="pMail"
+          :value="pMail"
+          :disabled="!emailToggle"
+          trim
+          autocomplete="email"
+        />
 
         <b-input-group-append>
           <b-button :pressed.sync="emailToggle" variant="info" class="editAppend">
@@ -72,7 +85,13 @@
                 <b-input-group-prepend>
                   <b-input-group-text class="editPrependPass">{{$t('profile.passwordOld')}}</b-input-group-text>
                 </b-input-group-prepend>
-                <b-input :state="passwdOldState" v-model="pPasswdOld" type="password" :disabled="!passwdToggle" trim></b-input>
+                <b-input
+                  :state="passwdOldState"
+                  v-model="pPasswdOld"
+                  type="password"
+                  :disabled="!passwdToggle" trim
+                  autocomplete="current-password"
+                />
 
                 <b-input-group-append>
                   <b-button :pressed.sync="passwdToggle" variant="info" class="editAppend">
@@ -86,7 +105,14 @@
                 <b-input-group-prepend>
                   <b-input-group-text class="editPrependPass">{{$t('profile.passwordNew')}}</b-input-group-text>
                 </b-input-group-prepend>
-                <b-input :state="passwdState" v-model="pPasswdNew" type="password" :disabled="!passwdToggle" trim></b-input>
+                <b-input
+                  :state="passwdState"
+                  v-model="pPasswdNew"
+                  type="password"
+                  :disabled="!passwdToggle"
+                  trim
+                  autocomplete="new-password"
+                />
 
                 <b-input-group-append>
                   <b-button :pressed.sync="passwdToggle" variant="info" class="editAppend"/>
@@ -179,6 +205,7 @@ export default {
     this.loading = true
     this.refreshToken()
     this.fetchProfile()
+    this.editing = this.editable
     this.loading = false
   },
   methods: {

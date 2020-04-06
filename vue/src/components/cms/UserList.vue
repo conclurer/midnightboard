@@ -61,7 +61,6 @@
                 <b-avatar :src="'https://placem.at/people?w=174&&random='+row.item.id"></b-avatar>
               </template>
 
-
             </b-table>
           </b-overlay>
         </b-container>
@@ -99,7 +98,7 @@
             <li @click="clickDelete">{{$t('cms.delete')}}</li>
           </ul>
       </div>
-  </div> 
+  </div>
 </template>
 
 <script>
@@ -132,7 +131,7 @@ export default {
         */
         { key: 'fullName', label: i18n.t('cms.tables.name'), sortable: true },
         { key: 'email', label: i18n.t('cms.tables.email'), sortable: true },
-        { key: 'userName', label: i18n.t('cms.tables.username'), sortable: true },
+        { key: 'userName', label: i18n.t('cms.tables.username'), sortable: true }
         // { key: 'delete', label: i18n.t('cms.delete') }
       ],
       totalRows: 1,
@@ -231,7 +230,7 @@ export default {
     },
     onDoubleClicked (item, index, event) {
       event.preventDefault()
-      this.$router.push({ 
+      this.$router.push({
         name: 'Profile',
         params: {
           userId: item.id,
@@ -257,7 +256,7 @@ export default {
     },
     clickEdit () {
       this.viewContextMenu = false
-      this.$router.push({ 
+      this.$router.push({
         name: 'Profile',
         params: {
           userId: this.selectedId,
@@ -271,7 +270,7 @@ export default {
     },
     clickProfile () {
       this.viewContextMenu = false
-      this.$router.push({ 
+      this.$router.push({
         name: 'Profile',
         params: {
           userId: this.selectedId,

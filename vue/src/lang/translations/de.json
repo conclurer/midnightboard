@@ -107,6 +107,7 @@
         "profile":"Profil",
         "welcome":"Willkommen zurück!",
         "login":"Anmelden",
+        "logout":"Abmelden",
         "toLogin":"Ich habe bereits einen Account",
         "register":"Registrierung",
         "createAccount":"Erstelle einen neuen Account:",

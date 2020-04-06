@@ -28,6 +28,7 @@
             :state="loginState"
             :placeholder="$t('profile.email')"
             trim
+            autocomplete="email"
           ></b-form-input>
           <br>
           <b-form-input
@@ -37,6 +38,7 @@
             :state="loginState"
             :placeholder="$t('profile.password')"
             trim
+            autocomplete="current-password"
           ></b-form-input>
           <b-tooltip :show.sync="tooltipState" target="passwd" variant="danger" placement="bottom" v-if="loginState === false" triggers="blur">
             {{$t('login.invalidLogin')}}
@@ -88,7 +90,9 @@ export default {
           this.loginState = true
           window.localStorage.setItem('mnb_atok', response.data.accessToken)
           window.localStorage.setItem('mnb_rtok', response.data.refreshToken)
-          window.location = '/'
+          window.localStorage.setItem('mnb_uid', response.data.uid)
+          window.localStorage.setItem('mnb_inits', response.data.initials)
+          this.$router.push({ name: 'Home' })
         })
         .catch(err => {
           switch (err.response.status) {

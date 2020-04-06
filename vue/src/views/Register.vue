@@ -30,6 +30,7 @@
               :state="fnameState"
               :placeholder="$t('profile.firstName')"
               trim
+              autocomplete="given-name"
             ></b-form-input>
             <b-tooltip target="fname" variant="info" triggers="hover" :show.sync="fnameState">
                {{$t('register.malFirstName')}}
@@ -42,6 +43,7 @@
               :state="lnameState"
               :placeholder="$t('profile.lastName')"
               trim
+              autocomplete="family-name"
             ></b-form-input>
             <b-tooltip target="lname" variant="info" triggers="hover">
                {{$t('register.malLastName')}}
@@ -66,6 +68,7 @@
               :state="emailState"
               :placeholder="$t('profile.email')"
               trim
+              autocomplete="email"
             ></b-form-input>
             <b-tooltip target="email" variant="info" triggers="hover">
                {{$t('register.malEmail')}}
@@ -79,6 +82,7 @@
               :placeholder="$t('profile.password')"
               type="password"
               trim
+              autocomplete="new-password"
             ></b-form-input>
             <b-tooltip target="passwd" variant="info" triggers="hover">
                {{$t('register.malPassword')}}
@@ -211,7 +215,9 @@ export default {
         .then(response => {
           window.localStorage.setItem('mnb_atok', response.data.accessToken)
           window.localStorage.setItem('mnb_rtok', response.data.refreshToken)
-          window.location = '/'
+          window.localStorage.setItem('mnb_uid', response.data.uid)
+          window.localStorage.setItem('mnb_inits', response.data.initials)
+          this.$router.push({ name: 'Home' })
         })
         .catch(err => {
           switch (err.response.status) {

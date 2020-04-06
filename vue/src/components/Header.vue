@@ -23,6 +23,22 @@
         <b-nav-item-dropdown
             v-if="addActive"
             class="navItem"
+            right
+            no-caret
+        >
+          <template v-slot:button-content>
+            <b-avatar :text="avatarText" variant="info" button class="p-0"></b-avatar>
+          </template>
+          <b-dropdown-item @click="avatarProfile">{{$t('ui.profile')}}</b-dropdown-item>
+          <b-dropdown-item @click="avatarEdit">{{$t('ui.edit')}}</b-dropdown-item>
+          <b-dropdown-item @click="avatarLogout">{{$t('ui.logout')}}</b-dropdown-item>
+        </b-nav-item-dropdown>
+
+        <b-nav-item-dropdown
+            v-if="addActive"
+            class="navItem"
+            right
+            no-caret
         >
           <template v-slot:button-content>
             <font-awesome-icon icon="plus" />
@@ -34,12 +50,10 @@
           <b-dropdown-item @click="selectEditor('survey')">{{$t('type.survey')}}</b-dropdown-item>
         </b-nav-item-dropdown>
 
-        <b-nav-item v-if="profileActive" class="navItem">
-          <font-awesome-icon icon="user-circle" /> {{$t('ui.profile')}}
-        </b-nav-item>
         <b-nav-item-dropdown
-            class="navItem"
+            class="navItem pr-3"
             right
+            no-caret
           >
             <template v-if="selLanguage === 'en'" v-slot:button-content>
               &#127468;&#127463;
@@ -57,12 +71,14 @@
 
 <script>
 import { i18n } from '@/main.js'
+import axios from 'axios'
 export default {
   name: 'Header',
   props: ['addActive', 'profileActive', 'title'],
   data () {
     return {
-      selLanguage: ''
+      selLanguage: '',
+      avatarText: ''
     }
   },
   created () {
@@ -74,6 +90,7 @@ export default {
       default:
         this.selLanguage = 'en'
     }
+    this.avatarText = window.localStorage.getItem('mnb_inits')
   },
   methods: {
     cToEN: function (e) {
@@ -90,7 +107,6 @@ export default {
       this.selLanguage = 'de'
       i18n.locale = 'de-DE'
     },
-    // Used to load an editor to the sidebar
     selectEditor: function (selection) {
       switch (selection) {
         case 'text':
@@ -110,6 +126,45 @@ export default {
           break
         default:
       }
+    },
+    avatarProfile: function () {
+      this.$router.push({
+        name: 'Profile',
+        params: {
+          userId: window.localStorage.getItem('mnb_uid'),
+          editable: false
+        }
+      })
+    },
+    avatarEdit: function () {
+      this.$router.push({
+        name: 'Profile',
+        params: {
+          userId: window.localStorage.getItem('mnb_uid'),
+          editable: true
+        }
+      })
+    },
+    avatarLogout: function () {
+      axios
+        .delete('http://localhost:1337/api/users/logout', {
+          headers: {
+            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
+          }
+        })
+        .then(response => {
+          window.localStorage.clear()
+          this.$router.push({ name: 'Login' })
+        })
+        .catch(err => {
+          switch (err.response.status) {
+            case 401:
+            case 400:
+            case 500:
+            default:
+              this.$log.error(err)
+          }
+        })
     }
   }
 }
@@ -132,7 +187,7 @@ export default {
   }
 
   .navItem {
-    font-size: calc(12pt + 0.8vh);
+    padding-right: 5px;
+    font-size: calc(12pt + 0.75vw);
   }
-
 </style>

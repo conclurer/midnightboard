@@ -81,7 +81,7 @@ export default {
     }
   },
   created () {
-    if (!window.localStorage.getItem('mnb_atok')) { window.location = '/login' }
+    if (!window.localStorage.getItem('mnb_atok')) { this.$router.push({ name: 'Home' }) }
   }
 }
 </script>
