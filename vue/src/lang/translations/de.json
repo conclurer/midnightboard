@@ -14,7 +14,7 @@
             "vote":"Abstimmen",
             "votes":"Abstimmungen | Abstimmung | Abstimmungen",
             "invalidVote":"Bitte wähle eine Antwort aus!",
-            "showResult":"Ergebnis anzeigen"
+            "showResult":"Ergebnis"
         },
         "survey":{
             "submit":"Absenden",

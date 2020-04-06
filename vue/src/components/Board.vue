@@ -581,13 +581,8 @@ export default {
       // Notify notice board
       this.$emit('add-note')
     },
-    // TODO:
     initPoll: async function (postId) {
-      this.$log.debug(postId)
-      // Add poll to result map
-      this.pollResultMap[postId] = this.pollAVVPMap.length
-      this.participatedPosts[postId] = false
-      // Axios GET for current votes
+      // Axios GET for current votes (if post is not a poll ignore it)
       await axios
         .get('http://localhost:1337/api/polls/' + postId, {
           headers: {
@@ -597,6 +592,9 @@ export default {
         }
         )
         .then(response => {
+          // Add poll to result map
+          this.pollResultMap[postId] = this.pollAVVPMap.length
+          this.participatedPosts[postId] = false
           const votes = response.data.votes
           const answers = response.data.answers
           var votesNumber = []
@@ -636,18 +634,8 @@ export default {
             })
             this.pollAVVPMap[this.pollResultMap[postId]] = indices
           }
-          // Needed for array change detection
-          this.pollAnswers.push('')
-          this.pollAnswers.pop()
-          this.pollVotes.push('')
-          this.pollVotes.pop()
-          this.pollVotesPercent.push('')
-          this.pollVotesPercent.pop()
           // Show result for this poll
           this.participatedPosts[postId] = true
-          // Also needed for array change detection
-          this.participatedPosts.push('')
-          this.participatedPosts.pop()
           this.refreshBoard = !this.refreshBoard
         })
         .catch(err => {
@@ -697,42 +685,65 @@ export default {
     submitSurvey: async function (element) {
       const postId = element.target.parentElement.parentElement.parentElement.parentElement.parentElement.id
       // Axios PUT to submit survey
+      var missingValues = false
       var questionIds = []
       var questionId
       var answers = []
       var currentAnswers = []
       for (const forms of element.target.parentElement.firstChild.children) {
-        if (forms.lastChild.type === 'text' || forms.lastChild.type === 'textarea') {
-          questionIds.push(forms.lastChild.id.split('qidx')[1])
-          answers.push(forms.lastChild.value)
+        const textChild = forms.lastChild
+        if (textChild.type === 'text' || textChild.type === 'textarea') {
+          questionIds.push(textChild.id.split('qidx')[1])
+          if (textChild.value !== '') {
+            answers.push(textChild.value)
+          } else {
+            missingValues = true
+            break
+          }
         } else {
           for (const form of forms.children) {
-            if (form.firstChild.children.childElementCount > 0) {
-              questionId = form.firstChild.firstChild.id.split('qidx')[1].split('-aidx')[0]
-              if (form.firstChild.firstChild.type === 'radio' && form.firstChild.firstChild.checked) {
-                questionIds.push(questionId)
-                answers.push(form.firstChild.firstChild.labels[0].textContent)
-              } else if (form.firstChild.firstChild.type === 'checkbox' && form.firstChild.firstChild.checked) {
+            if (form.firstChild.childElementCount > 0) {
+              const checkChild = form.firstChild.firstChild
+              if (checkChild.type === 'radio' && checkChild.checked) {
+                answers.push(checkChild.labels[0].textContent)
+              } else if (checkChild.type === 'checkbox' && checkChild.checked) {
                 // Check for multiple answers
                 if (questionIds.includes(questionId)) {
                   const idx = questionIds.indexOf(questionId)
                   if (Array.isArray(answers[idx])) {
                     currentAnswers = answers[idx]
-                  } else {
+                  } else if (answers[idx]) {
                     currentAnswers = Array.of(answers[idx])
+                  } else {
+                    currentAnswers = []
                   }
-                  currentAnswers.push(form.firstChild.firstChild.labels[0].textContent)
+                  currentAnswers.push(checkChild.labels[0].textContent)
                   answers[idx] = currentAnswers
                 } else {
                   questionIds.push(questionId)
-                  answers.push(form.firstChild.firstChild.labels[0].textContent)
+                  answers.push(checkChild.labels[0].textContent)
                 }
               }
+            } else {
+              // <p> child
+              const nextChild = form.nextSibling.firstChild.firstChild
+              questionId = nextChild.id.split('qidx')[1].split('-aidx')[0]
+              questionIds.push(questionId)
             }
           }
         }
       }
-      if (questionIds.length > answers.length) {
+      // Need to calculate the corret answer length
+      // MCQs falsify the result of answers.length
+      var answerLength = 0
+      answers.forEach(answer => {
+        if (Array.isArray(answer)) {
+          answerLength++
+        } else {
+          answerLength++
+        }
+      })
+      if (questionIds.length !== answerLength || missingValues) {
         alert(this.$t('board.survey.invalidSubmit'))
       } else {
         const jsonBody = JSON.stringify({

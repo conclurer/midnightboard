@@ -41,7 +41,7 @@ module.exports = {
       const answers = [];
       polls.forEach(poll => {
         votes.push(poll.votes);
-        answers.push(poll.answers);
+        answers.push(poll.answer);
       });
       return exits.success({
         votes: votes,
