@@ -52,7 +52,12 @@ import {
   faFileWord,
   faFileExcel,
   faFilePowerpoint,
-  faMinus
+  faMinus,
+  faCaretDown,
+  faCaretUp,
+  faUnlock,
+  faLockOpen
+
 } from '@fortawesome/free-solid-svg-icons'
 library.add(
   faPlus,
@@ -76,7 +81,11 @@ library.add(
   faFileWord,
   faFileExcel,
   faFilePowerpoint,
-  faMinus
+  faMinus,
+  faCaretDown,
+  faCaretUp,
+  faUnlock,
+  faLockOpen
 )
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

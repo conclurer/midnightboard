@@ -1,12 +1,11 @@
 <template>
-  <div
-    class="home"
-  >
+  <div class="home">
     <Header
       id="titlebar"
       title="Quality Assurance"
       @select-editor="selectEditor"
-      :buttonsActive=true
+      :addActive="true"
+      :profileActive="true"
     />
     <Board
       @add-note="addNote"
@@ -40,7 +39,7 @@ export default {
     }
   },
   created () {
-    if (!window.localStorage.getItem('mnb_atok')) { window.location = '/login' }
+    if (!window.localStorage.getItem('mnb_atok')) { this.$router.push({ name: 'Login' }) }
     this.refreshToken()
     this.fetchPosts()
   },
@@ -56,7 +55,7 @@ export default {
         .catch(err => {
           switch (err.response.status) {
             case 401:
-              window.location = '/login'
+              this.$router.push({ name: 'Login' })
               break
             case 400:
             case 500:
@@ -76,7 +75,7 @@ export default {
         .catch(err => {
           switch (err.response.status) {
             case 401:
-              window.location = '/login'
+              this.$router.push({ name: 'Login' })
               break
             case 500:
             case 400:
@@ -104,13 +103,6 @@ export default {
 
 <style scoped>
   .home {
-    position: relative;
-    display: grid;
-    grid-template-rows: 70px 1fr;
-  }
-
-  .smooth-vuebar {
-    max-height: 100vh;
-    max-width: 100vw;
+    padding: 42px 0 0 0;
   }
 </style>

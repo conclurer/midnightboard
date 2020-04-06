@@ -1,10 +1,9 @@
 <template>
-  <!-- CMS stands for Content Management System -->
   <div class="cms">
     <Header
       id="titlebar"
-      title="Content Management System"
-      :buttonsActive="false"
+      title="CMS"
+      :profileActive="true"
     />
     <div class="cmsNav">
       <div class="bg-dark text-white">
@@ -82,7 +81,7 @@ export default {
     }
   },
   created () {
-    if (!window.localStorage.getItem('mnb_atok')) { window.location = '/login' }
+    if (!window.localStorage.getItem('mnb_atok')) { this.$router.push({ name: 'Home' }) }
   }
 }
 </script>
@@ -91,29 +90,29 @@ export default {
   hr {
     height: 1px;
     border: none;
-    background-color: var(--background-board);
+    background-color: lightgray;
   }
 
   .cms {
     position: sticky;
     width: 100%;
     min-height: 100vh;
-    background: var(--background-board);
+    max-height: 100%;
     display: grid;
     grid-template-rows: 72px 1fr;
   }
 
   .cmsNav {
+    margin: 45px 0 0 0;
     display: grid;
     grid-template-columns: minmax(160px, 16vw) 1fr;
     min-width: 180px;
-    height: 100%;
-    width: 100%;
-    border-top: 1px solid var(--background-board);
+    min-height: calc(100vh - 54px);
+    max-height: 100%;
   }
 
   .cmsContent {
-    padding: 2vh;
+    padding: 5vh 2vh 2vh 2vh;
   }
 
   .navHeader {

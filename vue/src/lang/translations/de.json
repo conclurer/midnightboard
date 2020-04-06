@@ -76,12 +76,25 @@
         }
     },
     "profile":{
+        "statusMsg":{
+            "updatingUsername":"Aktualisiere Nutzername . . .",
+            "updatingEmail":"Aktualisiere E-Mail . . .",
+            "updatingPassword":"Aktualisiere Passwort . . .",
+            "profileUpdated":"Profil aktualisiert!",
+            "usernameTaken":"Nutzername bereits vergeben!",
+            "emailTaken":"E-Mail bereits vergeben!",
+            "passwordTooSimilar":"Passwörter sind zu ähnlich!",
+            "incorrectPassword":"Falsches Passwort!",
+            "unexpectedError":"Etwas ist schiefgelaufen . . ."
+        },
         "name":"Name",
         "firstName":"Vorname",
         "lastName":"Nachname",
         "email":"E-Mail",
         "username":"Nutzername",
         "password":"Passwort",
+        "passwordOld":"Altes Passwort",
+        "passwordNew":"Neues Passwort",
         "role":"Rolle",
         "user":"Benutzer",
         "admin":"Admin",
@@ -94,6 +107,7 @@
         "profile":"Profil",
         "welcome":"Willkommen zurück!",
         "login":"Anmelden",
+        "logout":"Abmelden",
         "toLogin":"Ich habe bereits einen Account",
         "register":"Registrierung",
         "createAccount":"Erstelle einen neuen Account:",
@@ -101,12 +115,14 @@
         "toSignUp":"Ich habe noch keinen Account",
         "adopt":"Übernehmen",
         "addUser":"Benutzer hinzufügen:",
-        "userAdded":"Benutzer erfolgreich hinzugefügt",
-        "userDeleted":"Benutzer erfolgreich gelöscht",
         "addBoard":"Notice Board erstellen:",
         "submit":"Bestätigen",
         "reset":"Zurücksetzen",
-        "clear":"Leeren"
+        "clear":"Leeren",
+        "apply":"Anwenden",
+        "cancel":"Zurück",
+        "edit":"Bearbeiten",
+        "ok":"OK"
     },
     "type":{
         "text":"Textnotiz",
@@ -124,8 +140,7 @@
             "fullName":"Name",
             "username":"Nutzername",
             "email":"E-Mail",
-            "search":"Tippen zum suchen",
-            "delete":"Löschen"
+            "search":"Tippen zum suchen"
         },
         "userMgmt":"Benutzerverwaltung",
         "userList":"Nutzerliste",
@@ -138,7 +153,9 @@
         "editGroups":"Gruppen bearbeiten",
         "delete":"Löschen",
         "noSelfDelete":"Admins können sich nicht selbst löschen",
-        "unexpectedError":"Etwas ist schiefgelaufen..."
+        "unexpectedError":"Etwas ist schiefgelaufen...",
+        "userAdded":"Benutzer erfolgreich hinzugefügt",
+        "userDeleted":"Benutzer erfolgreich gelöscht"
     },
     "rights":{
         "userRights":"Nutzerrechte",

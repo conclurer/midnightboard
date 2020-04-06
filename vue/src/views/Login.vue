@@ -3,7 +3,6 @@
     <Header
       id="titlebar"
       title="Login"
-      :buttonsActive="false"
     />
 
     <b-overlay
@@ -29,6 +28,7 @@
             :state="loginState"
             :placeholder="$t('profile.email')"
             trim
+            autocomplete="email"
           ></b-form-input>
           <br>
           <b-form-input
@@ -38,6 +38,7 @@
             :state="loginState"
             :placeholder="$t('profile.password')"
             trim
+            autocomplete="current-password"
           ></b-form-input>
           <b-tooltip :show.sync="tooltipState" target="passwd" variant="danger" placement="bottom" v-if="loginState === false" triggers="blur">
             {{$t('login.invalidLogin')}}
@@ -89,7 +90,9 @@ export default {
           this.loginState = true
           window.localStorage.setItem('mnb_atok', response.data.accessToken)
           window.localStorage.setItem('mnb_rtok', response.data.refreshToken)
-          window.location = '/'
+          window.localStorage.setItem('mnb_uid', response.data.uid)
+          window.localStorage.setItem('mnb_inits', response.data.initials)
+          this.$router.push({ name: 'Home' })
         })
         .catch(err => {
           switch (err.response.status) {
@@ -116,17 +119,12 @@ export default {
   }
 
   .login {
-    position: relative;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    background: var(--background-board);
+    padding: 54px;
     height: 100vh;
-    display: grid;
-    grid-template-rows: 70px auto;
   }
 
   .loginBox {
     width: 400px;
-    margin: 20px auto auto auto;
+    margin: 10vh auto auto auto;
   }
 </style>

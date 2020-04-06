@@ -99,6 +99,7 @@ export default {
     width: 100%;
     color: #000;
     font-size: 20pt;
+    padding-top: 12px;
   }
 
   .left-column {
