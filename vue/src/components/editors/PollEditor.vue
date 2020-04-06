@@ -1,7 +1,5 @@
 <template>
   <div class="pollEditor">
-    <br>
-    <h2>{{$t('editor.poll.heading')}}</h2>
     <b-form-input
       class="pollTitle"
       v-model="pollTitle"
@@ -59,19 +57,6 @@
       {{$t('editor.poll.allowMultipleVotes')}}
     </b-form-checkbox>
     <hr>
-    <VueCtkDateTimePicker
-      id="DatePicker"
-      class="datePicker"
-      format="DD-MM-YYYY"
-      formatted="ll"
-      onlyDate v-model="date"
-      color="#F9A618"
-      :label="$t('editor.datePicker.dueDate')"
-      :buttonNowTranslation="$t('editor.datePicker.currentDate')"
-      :locale="$t('editor.datePicker.language')"
-    >
-    </VueCtkDateTimePicker>
-    <br>
     <b-button
       variant="secondary"
       class="postButton"
@@ -87,7 +72,6 @@ export default {
   name: 'PollEditor',
   data () {
     return {
-      date: null,
       pollTitle: '',
       pollAnswers: [
         { answer: '' },
@@ -100,13 +84,13 @@ export default {
     }
   },
   methods: {
-    addAnswer () {
+    addAnswer: function () {
       this.pollAnswers.push({ answer: '' })
     },
-    removeAnswer (index) {
+    removeAnswer: function (index) {
       this.pollAnswers.splice(index, 1)
     },
-    createPoll () {
+    createPoll: function () {
       if (this.pollTitle === '') {
         alert(this.$t('editor.poll.missingTitle'))
       } else {
@@ -184,10 +168,5 @@ export default {
 
   .postButton {
     width: auto;
-  }
-
-  .datePicker {
-    width: 300px;
-    z-index: 10003;
   }
 </style>

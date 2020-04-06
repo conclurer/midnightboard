@@ -34,6 +34,7 @@ import {
   faPlus,
   faUser,
   faUserCircle,
+  faTimes,
   faTimesCircle,
   faBold,
   faItalic,
@@ -51,12 +52,18 @@ import {
   faFileWord,
   faFileExcel,
   faFilePowerpoint,
-  faMinus
+  faMinus,
+  faCaretDown,
+  faCaretUp,
+  faUnlock,
+  faLockOpen
+
 } from '@fortawesome/free-solid-svg-icons'
 library.add(
   faPlus,
   faUser,
   faUserCircle,
+  faTimes,
   faTimesCircle,
   faBold,
   faItalic,
@@ -74,7 +81,11 @@ library.add(
   faFileWord,
   faFileExcel,
   faFilePowerpoint,
-  faMinus
+  faMinus,
+  faCaretDown,
+  faCaretUp,
+  faUnlock,
+  faLockOpen
 )
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

@@ -22,7 +22,7 @@ module.exports = {
     },
     mailTaken: {
       description: 'Email address already in use',
-      statusCode: 400
+      statusCode: 409
     },
     invalidParams: {
       description: 'One or more parameters do not match pre-defined regex',
@@ -45,7 +45,12 @@ module.exports = {
       return exits.missingParams();
     }
     if(!emailRegex.test(inputs.email)) {
-      return exits.invalidParams('Invalid email address');
+      return exits.invalidParams({
+        error: {
+          code: 104,
+          message: 'Invalid email address'
+        }
+      });
     }
 
     sails.log.verbose('USER::: Trying to update email for user #' + inputs.userId);

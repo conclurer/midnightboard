@@ -109,7 +109,7 @@ export default {
           formatter: (value, key, item) => { return value ? new Date(value).toDateString() : ' ' }
         },
         { key: 'boardName', label: i18n.t('cms.tables.name'), sortable: true },
-        { key: 'delete', label: i18n.t('cms.tables.delete') }
+        { key: 'delete', label: i18n.t('cms.delete') }
       ],
       totalRows: 1,
       currentPage: 1,

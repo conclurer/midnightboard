@@ -20,6 +20,14 @@ a:active {
     color: var(--accent);
 }
 
+a.dropdown-item {
+    color: #000;
+}
+
 .dropdown-menu {
     min-width: 3rem;
+}
+
+body{
+    background-color: var(--background-board);
 }

@@ -3,7 +3,7 @@
     <!-- Displays content when editor is not displayed -->
     <div
       class="inner-board"
-      v-if="!this.editorActive"
+      v-if="!editorActive"
       :key="editorActive"
     >
       <div
@@ -261,7 +261,7 @@
     <!-- Displays content when editor is displayed -->
     <div
       class="inner-board"
-      v-if="this.editorActive"
+      v-if="editorActive"
       style="display: grid; grid-template-columns: 1fr 500px;"
     >
       <div
@@ -524,6 +524,9 @@
           <div v-smoothscrollbar="{ listener, options }">
             <EditorSidebar
               @add-note="addNote"
+              @close="close"
+              :boardId="boardId"
+              :editorId="editorId"
             />
           </div>
         </div>
@@ -577,7 +580,7 @@ export default {
       .catch(err => this.$log.error(err))
   },
   methods: {
-    addNote: async function () {
+    addNote: function () {
       // Notify notice board
       this.$emit('add-note')
     },
@@ -677,7 +680,7 @@ export default {
         this.initPoll(postId)
       }
     },
-    showResult: function (element) {
+    showResult: async function (element) {
       // Show current results
       const postId = element.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id
       this.initPoll(postId)
@@ -766,9 +769,12 @@ export default {
         this.participatedPosts[postId] = true
         this.refreshBoard = !this.refreshBoard
       }
+    },
+    close: function () {
+      this.$emit('close')
     }
   },
-  props: ['notes', 'editorActive']
+  props: ['notes', 'boardId', 'editorActive', 'editorId']
 }
 </script>
 
@@ -776,8 +782,6 @@ export default {
   .board {
     position: sticky;
     width: 100%;
-    min-height: 100vh;
-    background: var(--background-board);
     display: grid;
     grid-auto-rows: min-content;
   }

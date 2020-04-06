@@ -1,65 +1,84 @@
 <template>
-  <header
-    class="header"
+  <b-navbar
+    variant="dark"
+    type="dark"
+    toggleable="sm"
+    fixed="top"
+    class="m"
   >
-    <!-- Bootstrap-Vue navbar -->
-    <b-navbar variant="dark" type="white" fixed="top">
-      <b-navbar-brand href="#">
-        <img src="../../../configuration/logo.png" height="40px" alt="Logo">
-      </b-navbar-brand>
-      <b-nav-text>
-        |
-      </b-nav-text>
-      <b-nav-text>
-        {{ title }}
-      </b-nav-text>
+    <b-navbar-brand href="#">
+      <img src="../../../configuration/logo.png" alt="Logo" class="navImg">
+    </b-navbar-brand>
+    <b-nav-text id="navTitle">
+      {{ title }}
+    </b-nav-text>
+    <b-navbar-toggle target="navbar-toggle-collapse" >
+      <template>
+        <font-awesome-icon icon="caret-down" />
+      </template>
+    </b-navbar-toggle>
+    <b-collapse id="navbar-toggle-collapse" is-nav >
       <b-navbar-nav class="ml-auto">
-        <div>
-          <b-nav-item v-if="buttonsActive">
-            <span
-              class="unselectable"
-              unselectable="on"
-            ><a @click="plusClicked"><font-awesome-icon icon="plus" /> {{$t('ui.add')}}</a></span>
-          </b-nav-item>
-          <b-nav-item v-if="buttonsActive">
-            <span
-              class="unselectable"
-              unselectable="on"
-            ><font-awesome-icon icon="user-circle" /> {{$t('ui.profile')}}</span>
-          </b-nav-item>
 
-          <b-nav-item-dropdown
-            id="flag"
-            class="unselectable"
-            unselectable="on"
+        <b-nav-item-dropdown
+            v-if="addActive"
+            class="navItem"
             right
-          >
+            no-caret
+        >
+          <template v-slot:button-content>
+            <b-avatar :text="avatarText" variant="info" button class="p-0"></b-avatar>
+          </template>
+          <b-dropdown-item @click="avatarProfile">{{$t('ui.profile')}}</b-dropdown-item>
+          <b-dropdown-item @click="avatarEdit">{{$t('ui.edit')}}</b-dropdown-item>
+          <b-dropdown-item @click="avatarLogout">{{$t('ui.logout')}}</b-dropdown-item>
+        </b-nav-item-dropdown>
 
+        <b-nav-item-dropdown
+            v-if="addActive"
+            class="navItem"
+            right
+            no-caret
+        >
+          <template v-slot:button-content>
+            <font-awesome-icon icon="plus" />
+          </template>
+          <b-dropdown-item @click="selectEditor('text')">{{$t('type.text')}}</b-dropdown-item>
+          <b-dropdown-item @click="selectEditor('image')">{{$t('type.image')}}</b-dropdown-item>
+          <b-dropdown-item @click="selectEditor('file')">{{$t('type.file')}}</b-dropdown-item>
+          <b-dropdown-item @click="selectEditor('poll')">{{$t('type.poll')}}</b-dropdown-item>
+          <b-dropdown-item @click="selectEditor('survey')">{{$t('type.survey')}}</b-dropdown-item>
+        </b-nav-item-dropdown>
+
+        <b-nav-item-dropdown
+            class="navItem pr-3"
+            right
+            no-caret
+          >
             <template v-if="selLanguage === 'en'" v-slot:button-content>
               &#127468;&#127463;
             </template>
             <template v-else-if="selLanguage === 'de'" v-slot:button-content>
               &#127465;&#127466;
             </template>
-
-            <b-dropdown-item @click="cToEN">&#127468;&#127463;</b-dropdown-item>
-            <b-dropdown-item @click="cToDE">&#127465;&#127466;</b-dropdown-item>
+            <b-dropdown-item @click="cToEN" variant="secondary">&#127468;&#127463;</b-dropdown-item>
+            <b-dropdown-item @click="cToDE" variant="secondary">&#127465;&#127466;</b-dropdown-item>
           </b-nav-item-dropdown>
-
-        </div>
       </b-navbar-nav>
-    </b-navbar>
-  </header>
+    </b-collapse>
+  </b-navbar>
 </template>
 
 <script>
 import { i18n } from '@/main.js'
+import axios from 'axios'
 export default {
   name: 'Header',
-  props: ['buttonsActive', 'title'],
+  props: ['addActive', 'profileActive', 'title'],
   data () {
     return {
-      selLanguage: ''
+      selLanguage: '',
+      avatarText: ''
     }
   },
   created () {
@@ -71,64 +90,104 @@ export default {
       default:
         this.selLanguage = 'en'
     }
+    this.avatarText = window.localStorage.getItem('mnb_inits')
   },
   methods: {
-    plusClicked (e) {
-      e.preventDefault()
-      // Send up to parent
-      this.$emit('plus-clicked')
-    },
-    cToEN (e) {
+    cToEN: function (e) {
       e.preventDefault()
       if (this.selLanguage === 'en') { return }
       window.localStorage.setItem('mnb_lang', 'en-GB')
       this.selLanguage = 'en'
       i18n.locale = 'en-GB'
     },
-    cToDE (e) {
+    cToDE: function (e) {
       e.preventDefault()
       if (this.selLanguage === 'de') { return }
       window.localStorage.setItem('mnb_lang', 'de-DE')
       this.selLanguage = 'de'
       i18n.locale = 'de-DE'
+    },
+    selectEditor: function (selection) {
+      switch (selection) {
+        case 'text':
+          this.$emit('select-editor', 0)
+          break
+        case 'image':
+          this.$emit('select-editor', 1)
+          break
+        case 'file':
+          this.$emit('select-editor', 2)
+          break
+        case 'poll':
+          this.$emit('select-editor', 3)
+          break
+        case 'survey':
+          this.$emit('select-editor', 4)
+          break
+        default:
+      }
+    },
+    avatarProfile: function () {
+      this.$router.push({
+        name: 'Profile',
+        params: {
+          userId: window.localStorage.getItem('mnb_uid'),
+          editable: false
+        }
+      })
+    },
+    avatarEdit: function () {
+      this.$router.push({
+        name: 'Profile',
+        params: {
+          userId: window.localStorage.getItem('mnb_uid'),
+          editable: true
+        }
+      })
+    },
+    avatarLogout: function () {
+      axios
+        .delete('http://localhost:1337/api/users/logout', {
+          headers: {
+            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
+          }
+        })
+        .then(response => {
+          window.localStorage.clear()
+          this.$router.push({ name: 'Login' })
+        })
+        .catch(err => {
+          switch (err.response.status) {
+            case 401:
+            case 400:
+            case 500:
+            default:
+              this.$log.error(err)
+          }
+        })
     }
   }
 }
 </script>
 
 <style scoped>
-  li {
-    display: inline-block;
-    margin: 0 10px;
+  .m {
+    padding: 0;
+    border-bottom: 1px black solid;
+  }
+  .navImg {
+    padding: 0;
+    height: 35px;
   }
 
-  .dropdown-menu {
-    min-width: 3rem;
+  #navTitle {
+    padding: 0 0 0 5vw;
+    color: white;
+    font-size: calc(12pt + 0.8vh);
   }
 
-  .header {
-    width: 100%;
-    max-height: 72px;
-    color: #fff;
-    font-size: 20pt;
+  .navItem {
+    padding-right: 5px;
+    font-size: calc(12pt + 0.75vw);
   }
-
-  .unselectable {
-    -moz-user-select: none;
-    -webkit-user-select: none;
-  }
-
-  #flag {
-    font-size: 25px;
-    color: #FFF
-  }
-
-  /* Alternative highlight styles:
-   padding: 5px;
-   border: 2px solid var(--accent);
-   border-style: none none solid none;
-
-   text-shadow: 1px 1px #aaa;
-
-  */
 </style>

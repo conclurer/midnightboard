@@ -1,17 +1,19 @@
 <template>
-  <div
-    class="home"
-  >
+  <div class="home">
     <Header
       id="titlebar"
       title="Quality Assurance"
-      @plus-clicked="plusClicked"
-      :buttonsActive=true
+      @select-editor="selectEditor"
+      :addActive="true"
+      :profileActive="true"
     />
     <Board
       @add-note="addNote"
+      @close="close"
       :notes="notes"
+      :boardId="boardId"
       :editorActive="editorActive"
+      :editorId="editorId"
     />
   </div>
 </template>
@@ -32,16 +34,17 @@ export default {
     return {
       notes: [],
       boardId: 1,
-      editorActive: false
+      editorActive: false,
+      editorId: 0
     }
   },
   created () {
-    if (!window.localStorage.getItem('mnb_atok')) { window.location = '/login' }
+    if (!window.localStorage.getItem('mnb_atok')) { this.$router.push({ name: 'Login' }) }
     this.refreshToken()
     this.fetchPosts()
   },
   methods: {
-    refreshToken () {
+    refreshToken: async function () {
       axios
         .post('http://localhost:1337/api/users/refresh', {
           token: window.localStorage.getItem('mnb_rtok')
@@ -52,7 +55,7 @@ export default {
         .catch(err => {
           switch (err.response.status) {
             case 401:
-              window.location = '/login'
+              this.$router.push({ name: 'Login' })
               break
             case 400:
             case 500:
@@ -61,7 +64,7 @@ export default {
           }
         })
     },
-    fetchPosts () {
+    fetchPosts: async function () {
       axios
         .get('http://localhost:1337/api/posts/all/' + this.boardId, {
           headers: {
@@ -72,7 +75,7 @@ export default {
         .catch(err => {
           switch (err.response.status) {
             case 401:
-              window.location = '/login'
+              this.$router.push({ name: 'Login' })
               break
             case 500:
             case 400:
@@ -81,15 +84,18 @@ export default {
           }
         })
     },
-    addNote () {
+    addNote: async function () {
       this.refreshToken()
       this.fetchPosts()
 
       this.editorActive = false
     },
-    plusClicked () {
-      // Show/hide editor sidebar
-      this.editorActive = !this.editorActive
+    selectEditor: function (selection) {
+      this.editorActive = true
+      this.editorId = selection
+    },
+    close: function () {
+      this.editorActive = false
     }
   }
 }
@@ -97,13 +103,6 @@ export default {
 
 <style scoped>
   .home {
-    position: relative;
-    display: grid;
-    grid-template-rows: 70px 1fr;
-  }
-
-  .smooth-vuebar {
-    max-height: 100vh;
-    max-width: 100vw;
+    padding: 42px 0 0 0;
   }
 </style>

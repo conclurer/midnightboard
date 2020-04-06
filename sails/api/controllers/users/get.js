@@ -37,7 +37,7 @@ module.exports = {
     sails.log.verbose('USER_GET::: Searching user #' + inputs.userId);
     var usr = await Member.findOne({id: inputs.userId});
     if(!usr) {
-      return exits.missingParams();
+      return exits.nonExistent();
     }
     if(!this.req.me['privReq']) {
       if(sails.config.custom.ALLOW_HIDE_LAST_NAME && usr['hideLastName'] === true) {
