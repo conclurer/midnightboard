@@ -199,7 +199,6 @@ export default {
       alert('Selected #' + item.id + ': ' + item.boardName)
       // TODO redirect to board page (item.id)
     }
-
   }
 }
 </script>

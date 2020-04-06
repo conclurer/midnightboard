@@ -15,6 +15,7 @@
       :boardId="boardId"
       :editorActive="editorActive"
       :editorId="editorId"
+      :boardSidebar="boardSidebar"
     />
   </div>
 </template>
@@ -36,7 +37,8 @@ export default {
       notes: [],
       boardId: 1,
       editorActive: false,
-      editorId: 0
+      editorId: 0,
+      boardSidebar: false
     }
   },
   created () {
@@ -89,13 +91,16 @@ export default {
       this.refreshToken()
       this.fetchPosts()
 
+      this.boardSidebar = false
       this.editorActive = false
     },
     selectEditor: function (selection) {
+      this.boardSidebar = false
       this.editorActive = true
       this.editorId = selection
     },
     close: function () {
+      this.boardSidebar = false
       this.editorActive = false
     }
   }
