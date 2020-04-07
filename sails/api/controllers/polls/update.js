@@ -9,9 +9,10 @@ module.exports = {
       description: 'ID of matching post',
       type: 'number'
     },
-    answerId: {
-      description: 'ID of matching answer',
-      type: 'number'
+    answerIds: {
+      description: 'IDs of matching answers',
+      type: 'json',
+      columnType: 'array'
     }
   },
 
@@ -39,16 +40,16 @@ module.exports = {
   },
 
   fn: async function(inputs, exits) {
-    if(!inputs.postId || !inputs.answerId && inputs.answerId !== 0) {
+    if(!inputs.postId || !inputs.answerIds || inputs.answerIds.length <= 0) {
       return exits.missingParams();
     }
     const postId = inputs.postId;
-    const answerId = inputs.answerId;
+    const answerIds = inputs.answerIds;
     sails.log.verbose('POLL_UPDATE::: Updating poll with postId ' + postId
-      + ' and answerId ' + answerId);
+      + ' and answerIds ' + answerIds);
     const poll = await Poll.findOne({
       postId: postId,
-      answerId: answerId
+      answerId: answerIds[0]
     });
     if(poll) {
       // Check if participant has already voted
@@ -61,17 +62,20 @@ module.exports = {
           postId: postId,
           memberId: this.req.me['id']
         }).fetch();
-        const updatedPoll = await Poll.updateOne({
-          postId: postId,
-          answerId: answerId
-        }).set({
-          votes: poll.votes + 1
-        });
-        if(savedAsParticipant && updatedPoll) {
-          return exits.success(updatedPoll);
+        var updatedPolls = [];
+        for(const answerId of answerIds) {
+          updatedPolls.push(await Poll.updateOne({
+            postId: postId,
+            answerId: answerId
+          }).set({
+            votes: poll.votes + 1
+          }));
+        }
+        if(savedAsParticipant && updatedPolls && updatedPolls.length === answerIds.length) {
+          return exits.success(updatedPolls);
         } else {
           return exits.serverError('POLL_UPDATE::: Failed to update poll with postId ' + postId
-            + ' and answerId ' + answerId + '!');
+            + ' and answerIds ' + answerIds + '!');
         }
       } else {
         return exits.forbidden();

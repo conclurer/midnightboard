@@ -642,7 +642,7 @@ export default {
           this.refreshBoard = !this.refreshBoard
         })
         .catch(err => {
-          if (err.status.code !== 404) {
+          if (err.response.status !== 404) {
             this.$log.error(err)
           }
         })
@@ -651,33 +651,30 @@ export default {
       const postId = element.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id
       // Axios PUT to update votes for the answer
       var answerIds = []
-      for (const child of element.target.parentElement.parentElement.parentElement.firstChild.firstChild.children) {
-        if (child.firstChild.firstChild.checked === true) {
-          const answerId = child.firstChild.firstChild.id.split('aidx')[1] // rb-202036175036182-aidx0 -> 0
+      for (const forms of element.target.parentElement.parentElement.firstChild.children) {
+        const inputForm = forms.firstChild.firstChild
+        if (inputForm.checked === true) {
+          const answerId = inputForm.id.split('aidx')[1] // rb-202036175036182-aidx0 -> 0
           answerIds.push(answerId)
         }
       }
       if (answerIds.length <= 0) {
         alert(this.$t('board.poll.invalidVote'))
       } else {
-        for (const answerId of answerIds) {
-          const jsonBody = JSON.stringify({
-            postId: postId,
-            answerId: answerId
-          })
-
-          await axios
-            .put('http://localhost:1337/api/polls', jsonBody, {
-              headers: {
-                'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
-                'Content-Type': 'application/json'
-              }
+        const jsonBody = JSON.stringify({
+          postId: postId,
+          answerIds: answerIds
+        })
+        await axios
+          .put('http://localhost:1337/api/polls', jsonBody, {
+            headers: {
+              'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
+              'Content-Type': 'application/json'
             }
-            )
-            .then(res => {})
-            .catch(err => this.$log.error(err))
-        }
-        this.initPoll(postId)
+          }
+          )
+          .then(res => this.initPoll(postId))
+          .catch(err => this.$log.error(err))
       }
     },
     showResult: async function (element) {

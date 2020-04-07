@@ -134,7 +134,7 @@ test('POLL::: Create poll answers', () => {
 
 const updatePollData = {
   postId: postId,
-  answerId: 1
+  answerIds: [1]
 };
 
 // Vote for a poll answer
@@ -149,7 +149,7 @@ test('POLL::: Vote for poll answer', () => {
       body: JSON.stringify(updatePollData)
     })
       .then((response) => {
-        expect(response.status).toBe(201);
+        expect(response.status).toBe(200);
         return response.json();
       })
       .then((jsonString) => {

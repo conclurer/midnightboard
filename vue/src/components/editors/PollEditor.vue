@@ -101,6 +101,7 @@ export default {
           var index = 0
           var validAnswersId = []
           var validAnswers = []
+          var answerDuplicates = false
           // Prepare unique time string
           const currently = new Date()
           const timeString = currently.getFullYear() + '' + currently.getMonth() + '' +
@@ -114,6 +115,9 @@ export default {
             this.pollAnswers.forEach(pollAnswer => {
               const answer = pollAnswer.answer
               if (answer !== '') {
+                if (validAnswers.includes(answer)) {
+                  answerDuplicates = true
+                }
                 validAnswersId.push(index)
                 validAnswers.push(answer)
                 this.pollContent += '<div class="form-check">' +
@@ -130,6 +134,9 @@ export default {
             this.pollAnswers.forEach(pollAnswer => {
               const answer = pollAnswer.answer
               if (answer !== '') {
+                if (validAnswers.includes(answer)) {
+                  answerDuplicates = true
+                }
                 validAnswersId.push(index)
                 validAnswers.push(answer)
                 this.pollContent += '<div class="form-check">' +
@@ -146,6 +153,8 @@ export default {
           if (validAnswers.length <= 1) {
             alert(this.$t('editor.poll.missingAnswers'))
             this.pollContent = ''
+          } else if (answerDuplicates) {
+            alert(this.$t('editor.poll.duplicateAnswers'))
           } else {
             this.$emit('create-poll', this.pollTitle, this.pollContent, validAnswersId, validAnswers)
           }

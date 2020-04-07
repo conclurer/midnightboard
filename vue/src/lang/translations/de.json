@@ -65,7 +65,8 @@
             "allowMultipleVotes":"Mehrfachauswahl erlauben",
             "post":"Poll posten",
             "missingTitle":"Du musst eine Frage eingeben!",
-            "missingAnswers":"Du musst mindestens zwei Antworten erstellen!"
+            "missingAnswers":"Du musst mindestens zwei Antworten erstellen!",
+            "duplicateAnswers":"Die Antworten müssen unterschiedlich sein!"
         },
         "survey":{
             "heading":"Umfrage erstellen",
@@ -88,7 +89,7 @@
             "missingMCQQuestion":"Du musst noch eine Frage für eine Auswahlmöglichkeit eingeben!",
             "missingMCQAnswers":"Du musst mindestens zwei Antworten pro Frage mit Auswahlmöglichkeit erstellen!",
             "emptyMCQAnswers":"Du musst mindestens zwei nicht leere Antworten pro Frage mit Auswahlmöglichkeit erstellen!",
-            "duplicateMCQAnswers":"Du musst mindestens zwei verschiedene Antworten pro Frage mit Auswahlmöglichkeit erstellen!"
+            "duplicateMCQAnswers":"Du musst verschiedene Antworten pro Frage mit Auswahlmöglichkeit erstellen!"
         },
         "datePicker":{
             "dueDate":"Wähle ein Enddatum",
