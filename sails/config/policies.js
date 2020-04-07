@@ -26,6 +26,8 @@ module.exports.policies = {
     'users/update-password': 'is-self',
 
     'polls/*': 'is-logged-in',
+
+    'surveys/*': 'is-logged-in',
     
     'authentication/*': true
 };

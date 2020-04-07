@@ -19,7 +19,6 @@
     </b-navbar-toggle>
     <b-collapse id="navbar-toggle-collapse" is-nav >
       <b-navbar-nav class="ml-auto">
-
         <b-nav-item-dropdown
             v-if="addActive"
             class="navItem"
@@ -27,7 +26,12 @@
             no-caret
         >
           <template v-slot:button-content>
-            <b-avatar :text="avatarText" variant="info" button class="p-0"></b-avatar>
+            <b-avatar
+              variant="info"
+              class="p-0"
+              button
+              :text="avatarText"
+            />
           </template>
           <b-dropdown-item @click="avatarProfile">{{$t('ui.profile')}}</b-dropdown-item>
           <b-dropdown-item @click="avatarEdit">{{$t('ui.edit')}}</b-dropdown-item>

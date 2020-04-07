@@ -61,7 +61,7 @@ module.exports = {
       return exits.invalidParams({
         error: {
           code: 103,
-          message: 'Password must be atleast 8 characters long,'
+          message: 'Password must be at least 8 characters long,'
           + ' and must contain one uppercase letter, one lowercase letter, and 1 number or special character'
         }
       });

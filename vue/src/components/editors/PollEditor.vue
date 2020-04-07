@@ -2,8 +2,8 @@
   <div class="pollEditor">
     <b-form-input
       class="pollTitle"
-      v-bind:value="pollTitle"
-      v-on:input="pollTitle = $event"
+      v-model="pollTitle"
+      :placeholder="$t('editor.poll.title')"
       :maxlength="maxPollTitleLength"
     />
     <br>
@@ -22,8 +22,8 @@
           </b-col>
           <b-col cols="8">
             <b-form-input
-              v-bind:value="pollAnswers[index].answer"
-              v-on:input="pollAnswers[index].answer = $event"
+              v-model="pollAnswers[index].answer"
+              :placeholder="$t('editor.poll.templateAnswer')"
               :maxlength="maxPollAnswerLength"
             >
             </b-form-input>
@@ -72,9 +72,9 @@ export default {
   name: 'PollEditor',
   data () {
     return {
-      pollTitle: this.$t('editor.poll.title'),
+      pollTitle: '',
       pollAnswers: [
-        { answer: this.$t('editor.poll.templateAnswer') },
+        { answer: '' },
         { answer: '' }
       ],
       allowMultipleVotes: false,
@@ -92,42 +92,71 @@ export default {
     },
     createPoll: function () {
       if (this.pollTitle === '') {
-        alert(this.$t('editor.poll.missingQuestion'))
+        alert(this.$t('editor.poll.missingTitle'))
       } else {
-        var index = 0
-        var validAnswers = []
-        // Need unique radio button name for single vote polls
-        var radioButtonName = ''
-        if (!this.allowMultipleVotes) {
-          const birthday = new Date()
-          const yearM = birthday.getFullYear() + '-'
-          const monthM = birthday.getMonth() + '-'
-          const dayM = birthday.getDay() + '-'
-          const time = birthday.getHours() + '' + birthday.getMinutes() + '' +
-          birthday.getSeconds() + '' + birthday.getMilliseconds()
-          radioButtonName = 'rb-' + yearM + monthM + dayM + time
-        }
         // 2 or more answers = valid poll
         if (this.pollAnswers.length <= 1) {
           alert(this.$t('editor.poll.missingAnswers'))
         } else {
-          this.pollContent = '<div class="container">'
-          this.pollAnswers.forEach(pollAnswer => {
-            const answer = pollAnswer.answer
-            if (answer !== '') {
-              validAnswers.push(index)
-              this.pollContent += '<div class="row justify-content-flex-start"><div class="align-self-center">' +
-              '<input type="radio" name="' + radioButtonName + '" id="' + index +
-              '"></div><div class="col-sm-auto"><b>' + answer + '</b></div></div>'
-              index++
-            }
-          })
-          this.pollContent += '</div>'
+          var index = 0
+          var validAnswersId = []
+          var validAnswers = []
+          var answerDuplicates = false
+          // Prepare unique time string
+          const currently = new Date()
+          const timeString = currently.getFullYear() + '' + currently.getMonth() + '' +
+            currently.getDay() + '' + currently.getHours() + '' +
+            currently.getMinutes() + '' + currently.getSeconds() + '' +
+            currently.getMilliseconds()
+          // Generate HTML
+          this.pollContent = ''
+          if (!this.allowMultipleVotes) {
+            // Use radio buttons
+            this.pollAnswers.forEach(pollAnswer => {
+              const answer = pollAnswer.answer
+              if (answer !== '') {
+                if (validAnswers.includes(answer)) {
+                  answerDuplicates = true
+                }
+                validAnswersId.push(index)
+                validAnswers.push(answer)
+                this.pollContent += '<div class="form-check">' +
+                  '<div class="d-flex align-self-start">' +
+                  '<input class="form-check-input" type="radio" name="rb-' +
+                  timeString + '" id="rb-' + timeString + '-aidx' + index + '">'
+                this.pollContent += '<label class="form-check-label" for="rb-' + timeString +
+                  '-aidx' + index + '">' + answer + '</label></div></div>'
+                index++
+              }
+            })
+          } else {
+            // Use checkboxes instead
+            this.pollAnswers.forEach(pollAnswer => {
+              const answer = pollAnswer.answer
+              if (answer !== '') {
+                if (validAnswers.includes(answer)) {
+                  answerDuplicates = true
+                }
+                validAnswersId.push(index)
+                validAnswers.push(answer)
+                this.pollContent += '<div class="form-check">' +
+                  '<div class="d-flex align-self-start">' +
+                  '<input class="form-check-input" type="checkbox" ' +
+                  'id="cb-' + timeString + 'aidx' + index + '">'
+                this.pollContent += '<label class="form-check-label" for=cb-' + timeString +
+                  'aidx' + index + '">' + answer + '</label></div></div>'
+                index++
+              }
+            })
+          }
+          // End of HTML generator
           if (validAnswers.length <= 1) {
             alert(this.$t('editor.poll.missingAnswers'))
             this.pollContent = ''
+          } else if (answerDuplicates) {
+            alert(this.$t('editor.poll.duplicateAnswers'))
           } else {
-            this.$emit('create-poll', this.pollTitle, this.pollContent, validAnswers)
+            this.$emit('create-poll', this.pollTitle, this.pollContent, validAnswersId, validAnswers)
           }
         }
       }

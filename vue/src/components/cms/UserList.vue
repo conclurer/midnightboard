@@ -57,8 +57,8 @@
                 <b-button size="sm" @click="deleteUser(row.item.id)" class="mr-1">X</b-button>
               </template>
               <template v-slot:cell(image)="row">
-                <!-- TODO remove random image -->
-                <b-avatar :src="'https://placem.at/people?w=174&&random='+row.item.id"></b-avatar>
+                <!-- TODO Use intials here! -->
+                <b-avatar :src="'https://placem.at/people?w=174&&random='+row.item.id" />
               </template>
 
             </b-table>

@@ -58,7 +58,7 @@ module.exports = {
     },
     unauthorized: {
       description: 'Unauthorized request',
-      statusCode: 403
+      statusCode: 401
     }
   },
 

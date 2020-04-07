@@ -125,6 +125,7 @@ CREATE TABLE public.poll (
     id integer NOT NULL,
     post_id integer,
     answer_id integer NOT NULL,
+    answer text NOT NULL,
     vote integer NOT NULL
 );
 
@@ -151,6 +152,41 @@ ALTER TABLE public.poll_id_seq OWNER TO dev;
 --
 
 ALTER SEQUENCE public.poll_id_seq OWNED BY public.poll.id;
+
+
+--
+-- Name: poll_survey_participant; Type: TABLE; Schema: public; Owner: dev
+--
+
+CREATE TABLE public.poll_survey_participant (
+    id integer NOT NULL,
+    post_id integer NOT NULL,
+    member_id integer NOT NULL
+);
+
+
+ALTER TABLE public.poll_survey_participant OWNER TO dev;
+
+--
+-- Name: poll_survey_participant_id_seq; Type: SEQUENCE; Schema: public; Owner: dev
+--
+
+CREATE SEQUENCE public.poll_survey_participant_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.poll_survey_participant_id_seq OWNER TO dev;
+
+--
+-- Name: poll_survey_participant_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dev
+--
+
+ALTER SEQUENCE public.poll_survey_participant_id_seq OWNED BY public.poll_survey_participant.id;
 
 
 --
@@ -237,6 +273,7 @@ CREATE TABLE public.survey (
     id integer NOT NULL,
     post_id integer,
     question_id integer NOT NULL,
+    question text,
     answer text,
     vote integer
 );
@@ -396,6 +433,13 @@ ALTER TABLE ONLY public.poll ALTER COLUMN id SET DEFAULT nextval('public.poll_id
 
 
 --
+-- Name: poll_survey_participant id; Type: DEFAULT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public.poll_survey_participant ALTER COLUMN id SET DEFAULT nextval('public.poll_survey_participant_id_seq'::regclass);
+
+
+--
 -- Name: post id; Type: DEFAULT; Schema: public; Owner: dev
 --
 
@@ -471,6 +515,14 @@ COPY public.poll (id, post_id, answer_id, vote) FROM stdin;
 
 
 --
+-- Data for Name: poll_survey_participant; Type: TABLE DATA; Schema: public; Owner: dev
+--
+
+COPY public.poll_survey_participant (id, post_id, member_id) FROM stdin;
+\.
+
+
+--
 -- Data for Name: post; Type: TABLE DATA; Schema: public; Owner: dev
 --
 
@@ -517,7 +569,7 @@ COPY public.post_location (id, board_id, post_id) FROM stdin;
 -- Data for Name: survey; Type: TABLE DATA; Schema: public; Owner: dev
 --
 
-COPY public.survey (id, post_id, question_id, answer, vote) FROM stdin;
+COPY public.survey (id, post_id, question_id, question, answer, vote) FROM stdin;
 \.
 
 
@@ -573,6 +625,13 @@ SELECT pg_catalog.setval('public.member_id_seq1', 6, true);
 --
 
 SELECT pg_catalog.setval('public.poll_id_seq', 1, false);
+
+
+--
+-- Name: poll_survey_participant_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dev
+--
+
+SELECT pg_catalog.setval('public.poll_survey_participant_id_seq', 1, false);
 
 
 --
@@ -666,6 +725,14 @@ ALTER TABLE ONLY public.poll
 
 
 --
+-- Name: poll_survey_participant poll_survey_participant_pkey; Type: CONSTRAINT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public.poll_survey_participant
+    ADD CONSTRAINT poll_survey_participant_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: post_location post_location_pkey; Type: CONSTRAINT; Schema: public; Owner: dev
 --
 
@@ -735,6 +802,22 @@ ALTER TABLE ONLY public.board
 
 ALTER TABLE ONLY public.poll
     ADD CONSTRAINT poll_post_id_fkey FOREIGN KEY (post_id) REFERENCES public.post(id) ON DELETE CASCADE;
+
+
+--
+-- Name: poll_survey_participant poll_survey_participant_member_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public.poll_survey_participant
+    ADD CONSTRAINT poll_survey_participant_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.member(id) ON DELETE CASCADE;
+
+
+--
+-- Name: poll_survey_participant poll_survey_participant_post_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public.poll_survey_participant
+    ADD CONSTRAINT poll_survey_participant_post_id_fkey FOREIGN KEY (post_id) REFERENCES public.post(id) ON DELETE CASCADE;
 
 
 --

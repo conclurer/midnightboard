@@ -14,8 +14,12 @@
             "vote":"Vote",
             "votes":"votes | vote | votes",
             "invalidVote":"You have to choose an answer!",
-            "showResult":"Show result",
-            "resetRadioButtons":"Reset options"
+            "showResult":"Show result"
+        },
+        "survey":{
+            "submit":"Submit",
+            "invalidSubmit":"Please fill out all required fields!",
+            "thankYou":"Thanks for your participation!"
         }
     },
     "editor":{
@@ -57,17 +61,35 @@
         "poll":{
             "heading":"Poll editor",
             "title":"Your question?",
-            "templateAnswer":"Answer A",
+            "templateAnswer":"Your answer",
             "allowMultipleVotes":"Allow multiple answers",
             "post":"Post poll",
-            "missingQuestion":"You have to enter a question!",
-            "missingAnswers":"You have to create at least two answers!"
+            "missingTitle":"You have to enter a question!",
+            "missingAnswers":"You have to create at least two answers!",
+            "duplicateAnswers":"You have to create different answers!"
         },
         "survey":{
             "heading":"Survey editor",
             "title":"Your survery title",
-            "templateAnswer":"Answer A",
-            "post":"Post survey"
+            "templateQuestion":"Your question?",
+            "templatePlaceholderTextField":"e. g. Suggestion A, B, C & 42",
+            "labelPlaceholderTextField":"Optional: Suggestions & Maximal length (5 <-> 50), default: 50",
+            "templatePlaceholderTextArea":"e. g. Suggestion D or E & 5",
+            "labelPlaceholderTextArea":"Suggestions & Maximal rows (~50 Character per row, 1 <-> 15), default: 3 rows",
+            "templateAnswer":"Your answer",
+            "allowMultipleVotes":"Allow multiple answers",
+            "questionWith":"Add question with...",
+            "addInputFieldQuestion":"regular input field",
+            "addTextAreaQuestion":"large text area",
+            "addMultipleChoiceQuestion":"single/multiple choice(s)",
+            "post":"Post survey",
+            "missingTitle":"You have to enter a survey title!",
+            "missingIFQQuestion":"You have to enter a question for a regular input field!",
+            "missingTAQQuestion":"You have to enter a question for a large text area!",
+            "missingMCQQuestion":"You have to enter a question for a single/multiple choice element!",
+            "missingMCQAnswers":"You have to create at least two answers per single/multiple choice question!",
+            "emptyMCQAnswers":"You have to create at least two non-empty answers per single/multiple choice question!",
+            "duplicateMCQAnswers":"You have to create different answers for single/multiple choice question!"
         },
         "datePicker":{
             "dueDate":"Select a due date",

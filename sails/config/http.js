@@ -53,7 +53,7 @@ module.exports.http = {
       var skipper = require('skipper');
       var middlewareFn = skipper({ 
         strict: true,
-        limit:'10MB'
+        limit:'14MB'
       });
       return middlewareFn;
     })()
