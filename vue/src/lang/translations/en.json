@@ -89,6 +89,7 @@
         "displayname":"Display name"
     },
     "ui":{
+        "boards":"All boards",
         "add":"Add",
         "profile":"Profile",
         "welcome":"Welcome back!",

@@ -4,8 +4,24 @@
   >
     <!-- Bootstrap-Vue navbar -->
     <b-navbar variant="dark" type="white" fixed="top">
-      <b-navbar-brand href="#">
-        <img src="../../../configuration/logo.png" height="40px" alt="Logo">
+      <b-navbar-brand>
+        <b-dropdown toggle-class="text-decoration-none" no-caret>
+          <template v-slot:button-content>
+            <img src="../../../configuration/logo.png" height="40px" alt="Logo">
+          </template>
+          <b-dropdown-text>
+            {{$t('ui.boards')}}:
+          </b-dropdown-text>
+          <b-dropdown-divider></b-dropdown-divider>
+          <div class="board"
+            v-for="board in boards"
+            :key="board.id"
+          >
+          <b-dropdown-item>
+            {{ board.boardName }}
+          </b-dropdown-item>
+          </div>
+        </b-dropdown>
       </b-navbar-brand>
       <b-nav-text>
         |
@@ -64,12 +80,15 @@
 </template>
 
 <script>
+import axios from 'axios'
 import { i18n } from '@/main.js'
+
 export default {
   name: 'Header',
   props: ['buttonsActive', 'title'],
   data () {
     return {
+      boards: [],
       selLanguage: ''
     }
   },
@@ -82,8 +101,57 @@ export default {
       default:
         this.selLanguage = 'en'
     }
+
+    this.loadBoardData()
   },
   methods: {
+    refreshToken: async function () {
+      await axios
+        .post('http://localhost:1337/api/users/refresh', {
+          token: window.localStorage.getItem('mnb_rtok')
+        })
+        .then(response => {
+          window.localStorage.setItem('mnb_atok', response.data.accessToken)
+        })
+        .catch(err => {
+          this.$log.error(err.response.config.token)
+          switch (err.response.status) {
+            case 500:
+              this.$log.error(err)
+              break
+            default:
+              this.$log.error(err)
+          }
+        })
+    },
+    loadBoardData: async function () {
+      this.loading = true
+      this.refreshToken()
+      await axios
+        .get('http://localhost:1337/api/boards/all', {
+          headers: {
+            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
+          }
+        })
+        .then(response => {
+          this.boards = response.data
+        })
+        .catch(err => {
+          switch (err.response.status) {
+            case 401:
+            case 400:
+            case 500:
+            default:
+              this.$log.error(err)
+          }
+        })
+      this.totalRows = this.boards.length
+      this.loading = false
+    },
+    // Used to close the editor sidebar
+    close: function () {
+      this.$emit('close')
+    },
     cToEN: function (e) {
       e.preventDefault()
       if (this.selLanguage === 'en') { return }

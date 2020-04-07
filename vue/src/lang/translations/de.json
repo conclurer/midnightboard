@@ -90,6 +90,7 @@
         "displayname":"Anzeigename"
     },
     "ui":{
+        "boards":"Alle Boards",
         "add":"Neu",
         "profile":"Profil",
         "welcome":"Willkommen zurück!",

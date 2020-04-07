@@ -20,11 +20,7 @@
     <div v-else-if="editorId === 3">
       <PollEditor @create-poll="createPoll"/>
     </div>
-<<<<<<< HEAD
     <br><br><br><br> <!-- For scrollbar -->
-=======
-    <br><br><br> <!-- For scrollbar -->
->>>>>>> origin/development
   </div>
 </template>
 
