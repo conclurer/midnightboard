@@ -41,22 +41,22 @@ module.exports.routes = {
         action: 'get',
         skipAssets: true
     },
-    'DELETE   /api/users/:userId': {
+    'DELETE    /api/users/:userId': {
         controller: 'users',
         action: 'delete',
         skipAssets: true
     },
-    'PUT   /api/users/:userId': {
+    'PUT    /api/users/:userId': {
         controller: 'users',
         action: 'update',
         skipAssets: true
     },
-    'PUT   /api/users/:userId/updatepassword': {
+    'PUT    /api/users/:userId/updatepassword': {
         controller: 'users',
         action: 'update-password',
         skipAssets: true
     },
-    'PUT   /api/users/:userId/updateemail': {
+    'PUT    /api/users/:userId/updateemail': {
         controller: 'users',
         action: 'update-email',
         skipAssets: true
@@ -64,6 +64,11 @@ module.exports.routes = {
     'GET    /api/users/all': {
         controller: 'users',
         action: 'get-all',
+        skipAssets: true
+    },
+    'GET    /api/users/participations': {
+        controller: 'users',
+        action: 'get-participations',
         skipAssets: true
     },
 
@@ -134,6 +139,23 @@ module.exports.routes = {
     },
     'PUT   /api/posts/:postId': {
         controller: 'posts',
+        action: 'update',
+        skipAssets: true
+    },
+
+    //SURVEYS
+    'GET    /api/surveys/:postId': {
+        controller: 'surveys',
+        action: 'get',
+        skipAssets: true
+    },
+    'POST   /api/surveys': {
+        controller: 'surveys',
+        action: 'create',
+        skipAssets: true
+    },
+    'PUT   /api/surveys': {
+        controller: 'surveys',
         action: 'update',
         skipAssets: true
     },

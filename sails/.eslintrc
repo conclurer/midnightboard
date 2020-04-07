@@ -52,7 +52,9 @@
     "TeamMembership": true,
     "User": true,
     "RefreshToken": true,
-    "Poll": true
+    "Poll": true,
+    "Survey": true,
+    "PollSurveyParticipant": true
     
     // …and any others.
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

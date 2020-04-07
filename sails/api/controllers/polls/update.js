@@ -9,9 +9,10 @@ module.exports = {
       description: 'ID of matching post',
       type: 'number'
     },
-    answerId: {
-      description: 'ID of matching answer',
-      type: 'number'
+    answerIds: {
+      description: 'IDs of matching answers',
+      type: 'json',
+      columnType: 'array'
     }
   },
 
@@ -24,30 +25,61 @@ module.exports = {
       description: 'Missing parameters',
       statusCode: 400
     },
+    forbidden: {
+      description: 'This user have already voted!',
+      statusCode: 403
+    },
     nonExistent: {
       description: 'Poll does not exist in database',
       statusCode: 404
+    },
+    serverError: {
+      description: 'Unexpected server error',
+      statusCode: 500
     }
   },
 
   fn: async function(inputs, exits) {
-    if(!inputs.postId || !inputs.answerId && inputs.answerId !== 0) {
+    if(!inputs.postId || !inputs.answerIds || inputs.answerIds.length <= 0) {
       return exits.missingParams();
     }
-    sails.log.debug('POLL_GET::: Updating poll with postId ' + inputs.postId
-      + ' and answerId ' + inputs.answerId);
+    const postId = inputs.postId;
+    const answerIds = inputs.answerIds;
+    sails.log.verbose('POLL_UPDATE::: Updating poll with postId ' + postId
+      + ' and answerIds ' + answerIds);
     const poll = await Poll.findOne({
-      postId: inputs.postId,
-      answerId: inputs.answerId
+      postId: postId,
+      answerId: answerIds[0]
     });
     if(poll) {
-      const updatedPoll = await Poll.updateOne({
-        postId: inputs.postId,
-        answerId: inputs.answerId
-      }).set({
-        votes: poll.votes + 1
+      // Check if participant has already voted
+      const existingParticipant = await PollSurveyParticipant.findOne({
+        postId: postId,
+        memberId: this.req.me['id']
       });
-      return exits.success(updatedPoll);
+      if(!existingParticipant) {
+        const savedAsParticipant = await PollSurveyParticipant.create({
+          postId: postId,
+          memberId: this.req.me['id']
+        }).fetch();
+        var updatedPolls = [];
+        for(const answerId of answerIds) {
+          updatedPolls.push(await Poll.updateOne({
+            postId: postId,
+            answerId: answerId
+          }).set({
+            votes: poll.votes + 1
+          }));
+        }
+        if(savedAsParticipant && updatedPolls && updatedPolls.length === answerIds.length) {
+          return exits.success(updatedPolls);
+        } else {
+          return exits.serverError('POLL_UPDATE::: Failed to update poll with postId ' + postId
+            + ' and answerIds ' + answerIds + '!');
+        }
+      } else {
+        return exits.forbidden();
+      }
     } else {
       return exits.nonExistent();
     }
