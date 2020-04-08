@@ -2,19 +2,28 @@
   <div class="home">
     <Header
       id="titlebar"
-      title="Quality Assurance"
+      :title="boardTitle"
       @select-editor="selectEditor"
+      @board-changed="reload"
       :addActive="true"
       :profileActive="true"
     />
-    <Board
-      @add-note="addNote"
-      @close="close"
-      :notes="notes"
-      :boardId="boardId"
-      :editorActive="editorActive"
-      :editorId="editorId"
-    />
+    <b-overlay
+      :show="loading"
+      variant="light"
+      opacity="0.6"
+      blur="2px"
+      rounded="sm"
+    >
+      <Board
+        @add-note="addNote"
+        @close="close"
+        :notes="notes"
+        :boardId="boardId"
+        :editorActive="editorActive"
+        :editorId="editorId"
+      />
+    </b-overlay>
   </div>
 </template>
 
@@ -33,15 +42,16 @@ export default {
   data () {
     return {
       notes: [],
-      boardId: 1,
       editorActive: false,
-      editorId: 0
+      editorId: 0,
+      boardId: 1,
+      boardTitle: '',
+      loading: false
     }
   },
   created () {
     if (!window.localStorage.getItem('mnb_atok')) { this.$router.push({ name: 'Login' }) }
-    this.refreshToken()
-    this.fetchPosts()
+    this.reload()
   },
   methods: {
     refreshToken: async function () {
@@ -77,6 +87,32 @@ export default {
             case 401:
               this.$router.push({ name: 'Login' })
               break
+            case 404:
+              this.$router.push({ name: '404' })
+              break
+            case 500:
+            case 400:
+            default:
+              this.$log.error(err)
+          }
+        })
+    },
+    fetchBoard: async function () {
+      axios
+        .get('http://localhost:1337/api/boards/' + this.boardId, {
+          headers: {
+            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
+          }
+        })
+        .then(response => { this.boardTitle = response.data.boardName })
+        .catch(err => {
+          switch (err.response.status) {
+            case 401:
+              this.$router.push({ name: 'Login' })
+              break
+            case 404:
+              this.$router.push({ name: '404' })
+              break
             case 500:
             case 400:
             default:
@@ -87,7 +123,6 @@ export default {
     addNote: async function () {
       this.refreshToken()
       this.fetchPosts()
-
       this.editorActive = false
     },
     selectEditor: function (selection) {
@@ -96,13 +131,19 @@ export default {
     },
     close: function () {
       this.editorActive = false
+    },
+    reload: function () {
+      this.loading = true
+      this.boardId = this.$route.params.boardId
+      this.refreshToken()
+      this.fetchBoard()
+      this.fetchPosts()
+      this.loading = false
     }
   }
 }
 </script>
 
 <style scoped>
-  .home {
 
-  }
 </style>

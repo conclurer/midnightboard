@@ -10,7 +10,14 @@
         >
           <br><br>
           <hr>
-          <b-nav-item class="navItem" v-for="item in boardList" :key="item.id">{{item.boardName}}</b-nav-item>
+          <b-nav vertical pills>
+            <b-nav-item
+              :active="item.id === $route.params.boardId"
+              class="navItem"
+              v-for="item in boardList" @click="navClick(item.id)"
+              :key="item.id">{{item.boardName}}
+            </b-nav-item>
+          </b-nav>
         </b-overlay>
     </div>
   </div>
@@ -23,7 +30,7 @@ export default {
   data () {
     return {
       listener: () => {},
-      options: { alwaysShowTracks:true },
+      options: { alwaysShowTracks: true },
       boardList: {},
       loading: false
     }
@@ -32,9 +39,6 @@ export default {
     this.loading = true
     this.fetchBoards()
     this.loading = false
-  },
-  computed: {
-
   },
   methods: {
     fetchBoards: async function () {
@@ -56,7 +60,18 @@ export default {
               this.$log.error(err)
           }
         })
+    },
+    navClick: function (id) {
+      if (this.$route.params.boardId === id) { return }
+      this.$router.push({
+        name: 'Board',
+        params: {
+          boardId: id
+        }
+      })
+      this.$emit('board-changed')
     }
+
   }
 }
 </script>

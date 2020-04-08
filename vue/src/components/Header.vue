@@ -73,7 +73,10 @@
       </b-collapse>
     </b-navbar>
     <keep-alive>
-      <BoardSidebar v-if="boardSidebarToggle"/>
+      <BoardSidebar
+        v-if="boardSidebarToggle"
+        @board-changed="boardChanged"
+      />
     </keep-alive>
   </div>
 </template>
@@ -179,8 +182,12 @@ export default {
         })
     },
     logoClick: function () {
-      if(!window.localStorage.getItem('mnb_rtok')) return
+      if (!window.localStorage.getItem('mnb_rtok')) return
       this.boardSidebarToggle = !this.boardSidebarToggle
+    },
+    boardChanged: function () {
+      this.boardSidebarToggle = false
+      this.$emit('board-changed')
     }
   }
 }
