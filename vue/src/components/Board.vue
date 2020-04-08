@@ -33,14 +33,6 @@
       v-else-if="boardSidebar"
       style="display: grid; grid-template-columns: 500px 1fr;"
     >
-      <!-- Display left bar -->
-      <div
-        class="left-bar"
-      >
-        <div>
-          <BoardSidebar />
-        </div>
-      </div>
 
       <PostPanel
         style="grid-column: 2 / 3;"
@@ -64,14 +56,12 @@
 
 <script>
 import PostPanel from '@/components/PostPanel.vue'
-import BoardSidebar from '@/components/BoardSidebar.vue'
 import EditorSidebar from '@/components/EditorSidebar.vue'
 
 export default {
   name: 'Board',
   components: {
     PostPanel,
-    BoardSidebar,
     EditorSidebar
   },
   data () {
@@ -114,15 +104,6 @@ export default {
 
   a {
     color: var(--link);
-  }
-
-  .left-bar {
-    grid-column: 1 / 2;
-    width: 500px;
-    height: 100%;
-    position: fixed;
-    left: 0px;
-    background: #fff;
   }
 
   .right-bar {

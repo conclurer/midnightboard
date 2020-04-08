@@ -1,13 +1,9 @@
 <template>
-  <div
-    class="boardSidebar"
-    v-smoothscrollbar="{ listener, options }"
-  >
-    <br>
-    {{$t('ui.boards')}}
-    <hr>
-    <!-- TODO: Display all board names -->
-    <br><br><br><br> <!-- For scrollbar -->
+  <div class="boardSidebar">
+    <div class="menu" v-smoothscrollbar="{ listener, options }">
+      <b-nav-item v-for="item in boardList" :key="item.id">{{item.boardName}}</b-nav-item>
+
+    </div>
   </div>
 </template>
 
@@ -15,43 +11,21 @@
 import axios from 'axios'
 
 export default {
-  name: 'BoardSidebar',
-  components: {
-  },
   data () {
     return {
-      listener: () => {},
-      options: {},
-      boards: []
+        listener: () => {},
+        options: {},
+        boardList: {}
     }
   },
-  props: [],
-  created  () {
-    this.loadBoardData()
+  created () {
+    this.fetchBoards()
+  },
+  computed: {
+    
   },
   methods: {
-    refreshToken: async function () {
-      await axios
-        .post('http://localhost:1337/api/users/refresh', {
-          token: window.localStorage.getItem('mnb_rtok')
-        })
-        .then(response => {
-          window.localStorage.setItem('mnb_atok', response.data.accessToken)
-        })
-        .catch(err => {
-          this.$log.error(err.response.config.token)
-          switch (err.response.status) {
-            case 500:
-              this.$log.error(err)
-              break
-            default:
-              this.$log.error(err)
-          }
-        })
-    },
-    loadBoardData: async function () {
-      this.loading = true
-      this.refreshToken()
+    fetchBoards: async function () {
       await axios
         .get('http://localhost:1337/api/boards/all', {
           headers: {
@@ -59,7 +33,7 @@ export default {
           }
         })
         .then(response => {
-          this.boards = response.data
+          this.boardList = response.data
         })
         .catch(err => {
           switch (err.response.status) {
@@ -70,21 +44,20 @@ export default {
               this.$log.error(err)
           }
         })
-      this.totalRows = this.boards.length
-      this.loading = false
     },
-    // Used to close the editor sidebar
-    close: function () {
-      this.$emit('close')
-    }
   }
 }
 </script>
 
 <style scoped>
-  hr {
-    height: 1px;
-    border: none;
-    background-color: #aaa;
-  }
+    .menu {
+        position: fixed;
+        z-index: 1000;
+        list-style: none;
+        min-width: 200px;
+        max-width: 100%;
+        min-height: 100vh;
+        background-color: rgba(24,24,24,.9);
+        padding-top: 2vh;
+    }
 </style>
