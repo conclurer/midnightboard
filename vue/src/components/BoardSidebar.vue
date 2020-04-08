@@ -10,14 +10,23 @@
         >
           <br><br>
           <hr>
-          <b-nav vertical pills>
-            <b-nav-item
-              :active="item.id === $route.params.boardId"
-              class="navItem"
-              v-for="item in boardList" @click="navClick(item.id)"
-              :key="item.id">{{item.boardName}}
-            </b-nav-item>
-          </b-nav>
+          <b-overlay
+              v-for="item in boardList" 
+              :key="item.id" 
+              class="navItemOverlay"
+              v-bind:id="'nav-' + item.id"
+              opacity="0.3"
+              blur="1px"
+              rounded="sm"
+              spinner-type="none"
+              variant="info"
+              :show="isActive(item.id)"
+          >
+            <b-card @click="navClick(item.id)" class="navItem">
+              {{item.boardName}}
+            </b-card>
+          </b-overlay>
+          <br>
         </b-overlay>
     </div>
   </div>
@@ -32,7 +41,8 @@ export default {
       listener: () => {},
       options: { alwaysShowTracks: true },
       boardList: {},
-      loading: false
+      loading: false,
+      highlightColor: 'aqua'
     }
   },
   created () {
@@ -69,28 +79,42 @@ export default {
           boardId: id
         }
       })
-      this.$emit('board-changed')
+        .then(() => this.$emit('board-changed'))
+    },
+    isActive: function (id) {
+      return this.$route.params.boardId === id ? true : false
     }
-
   }
 }
 </script>
 
 <style scoped>
     .menu {
-        position: fixed;
-        z-index: 1000;
-        list-style: none;
-        min-width: 350px;
-        max-width: 100%;
-        min-height: 100vh;
-        background-color: rgba(24,24,24,.9);
-        top: 0;
-        left: 0;
+      position: fixed;
+      z-index: 1000;
+      list-style: none;
+      min-width: 350px;
+      max-width: 100%;
+      min-height: 100vh;
+      background: rgba(24,24,24,.9);
+      top: 0;
+      left: 0;
     }
     .navItem {
+      cursor: pointer;
       font-weight: bold;
       font-size: 1.2rem;
+      text-align: left;
+      height: 100%;
+      background:rgba(64, 64, 64, 0.6);
+      color: white;
+    }
+    .navItem:hover {
+      background:rgba(88, 88, 88, 0.6);
+    }
+    .navItemOverlay {
+      cursor: pointer;
+      margin: 0.75rem 2rem 0 2rem;
     }
 
     hr {
