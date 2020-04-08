@@ -243,8 +243,8 @@ export default {
     },
     onRightClicked (item, index, event) {
       event.preventDefault()
-      var top = event.pageY
-      var left = event.pageX
+      var top = event.y - 30
+      var left = event.x
 
       this.top = top + 'px'
       this.left = left + 'px'

@@ -1,290 +1,214 @@
 {
-  "about": {
-    "message": "This is an About page"
+  "about":{
+      "message":"This is an About page"
   },
-  "board": {
-    "download": {
-      "image": "Click here to download the image",
-      "pdf": "Click here to download the PDF file",
-      "word": "Click here to download the Word document",
-      "excel": "Click here to download the Excel spreadsheet",
-      "powerpoint": "Click here to download the PowerPoint presentation"
-    },
-    "board":{
-        "download":{
-            "image":"Click here to download the image",
-            "pdf":"Click here to download the PDF file",
-            "word":"Click here to download the Word document",
-            "excel":"Click here to download the Excel spreadsheet",
-            "powerpoint":"Click here to download the PowerPoint presentation"
-        },
-        "poll":{
-            "vote":"Vote",
-            "votes":"votes | vote | votes",
-            "invalidVote":"You have to choose an answer!",
-            "showResult":"Show result"
-        },
-        "survey":{
-            "submit":"Submit",
-            "invalidSubmit":"Please fill out all required fields!",
-            "thankYou":"Thanks for your participation!"
-        }
-    },
-    "editor":{
-        "note":{
-            "heading":"Text editor",
-            "title":"Insert title here",
-            "content":"<p>Insert content here</p><ul><li><p>Start a bulleted list</p></li></ul><ol><li><p>Or start a numerical list</p></li></ol>",
-            "create":"Create"
-        },
-        "image":{
-            "heading":"Image upload",
-            "title":"Your image title",
-            "post":"Post image",
-            "upload":"Your device does not support file uploading.",
-            "drag":"Drag an image or click here to select a image",
-            "tap":"Tap here to select a image from your gallery",
-            "change":"Change image",
-            "remove":"Remove image",
-            "select":"Select a image",
-            "selected":"Image successfully selected!",
-            "fileSize":"The file size exceeds the limit",
-            "fileType":"Only JPEG and PNG are supported!",
-            "aspect":"Landscape/Portrait"
-        },
-        "file":{
-            "heading":"File upload",
-            "title":"Your file title",
-            "post":"Post file",
-            "upload":"Your device does not support file uploading.",
-            "drag":"Drag an file or click here to select a file",
-            "tap":"Tap here to select a file from your device",
-            "change":"Change file",
-            "remove":"Remove file",
-            "select":"Select a file",
-            "selected":"File successfully selected!",
-            "fileSize":"The file size exceeds the limit",
-            "fileType":"Only PDF, DOC(X), XLS(X) and PPT(X) are supported!"
-        },
-        "poll":{
-            "heading":"Poll editor",
-            "title":"Your question?",
-            "templateAnswer":"Your answer",
-            "allowMultipleVotes":"Allow multiple answers",
-            "post":"Post poll",
-            "missingTitle":"You have to enter a question!",
-            "missingAnswers":"You have to create at least two answers!",
-            "duplicateAnswers":"You have to create different answers!"
-        },
-        "survey":{
-            "heading":"Survey editor",
-            "title":"Your survery title",
-            "templateQuestion":"Your question?",
-            "templatePlaceholderTextField":"e. g. Suggestion A, B, C & 42",
-            "labelPlaceholderTextField":"Optional: Suggestions & Maximal length (5 <-> 50), default: 50",
-            "templatePlaceholderTextArea":"e. g. Suggestion D or E & 5",
-            "labelPlaceholderTextArea":"Suggestions & Maximal rows (~50 Character per row, 1 <-> 15), default: 3 rows",
-            "templateAnswer":"Your answer",
-            "allowMultipleVotes":"Allow multiple answers",
-            "questionWith":"Add question with...",
-            "addInputFieldQuestion":"regular input field",
-            "addTextAreaQuestion":"large text area",
-            "addMultipleChoiceQuestion":"single/multiple choice(s)",
-            "post":"Post survey",
-            "missingTitle":"You have to enter a survey title!",
-            "missingIFQQuestion":"You have to enter a question for a regular input field!",
-            "missingTAQQuestion":"You have to enter a question for a large text area!",
-            "missingMCQQuestion":"You have to enter a question for a single/multiple choice element!",
-            "missingMCQAnswers":"You have to create at least two answers per single/multiple choice question!",
-            "emptyMCQAnswers":"You have to create at least two non-empty answers per single/multiple choice question!",
-            "duplicateMCQAnswers":"You have to create different answers for single/multiple choice question!"
-        },
-        "datePicker":{
-            "dueDate":"Select a due date",
-            "currentDate":"Today",
-            "language":"en"
-        }
-    },
-    "profile":{
-        "statusMsg":{
-            "updatingUsername":"Updating username . . .",
-            "updatingEmail":"Updating email . . .",
-            "updatingPassword":"Updating password . . .",
-            "profileUpdated":"Profile updated!",
-            "usernameTaken":"Username already in use!",
-            "emailTaken":"Email already in use!",
-            "passwordTooSimilar":"Passwords too similar!",
-            "incorrectPassword":"Incorrect password!",
-            "unexpectedError":"Something went wrong . . ."
-        },
-        "firstName":"First name",
-        "lastName":"Last name",
-        "email":"E-Mail",
-        "username":"Username",
-        "password":"Password",
-        "passwordOld":"Old password",
-        "passwordNew":"New password",
-        "role":"Role",
-        "user":"User",
-        "admin":"Admin",
-        "affiliate":"Affiliate",
-        "confirmPassword":"Confirm password",
-        "displayname":"Display name"
-    },
-    "ui":{
-        "add":"Add",
-        "profile":"Profile",
-        "welcome":"Welcome back!",
-        "login":"Login",
-        "logout":"Logout",
-        "toLogin":"I already have an account",
-        "register":"Sign Up",
-        "createAccount":"Create a new account:",
-        "signUp":"Sign Up",
-        "toSignUp":"I don't have an account",
-        "adopt":"Apply",
-        "addUser":"Add a new user:",
-        "addBoard":"Create a new notice board:",
-        "submit":"Submit",
-        "reset":"Reset",
-        "clear":"Clear",
-        "apply":"Apply",
-        "cancel":"Cancel",
-        "edit":"Edit",
-        "ok":"OK"
-    },
-    "survey": {
-      "heading": "Survey editor",
-      "title": "Your survery title",
-      "templateAnswer": "Answer A",
-      "post": "Post survey"
-    },
-    "cms":{
-        "tables":{
-            "id":"ID",
-            "boardCreatedAt":"Created",
-            "userCreatedAt":"Joined",
-            "lastSeen":"Last seen",
-            "name":"Name",
-            "username":"Username",
-            "email":"Email",
-            "search":"Type to search"
-        },
-        "userMgmt":"User Management",
-        "userList":"User List",
-        "newUser":"New User",
-        "userRights":"User Rights",
-        "contentMgmt":"Content Management",
-        "boardList":"Board List",
-        "newBoard":"New Board",
-        "groupMgmt":"Group Management",
-        "editGroups":"Edit Groups",
-        "delete":"Delete",
-        "noSelfDelete":"Admins cannot delete themselves",
-        "unexpectedError":"Something went wrong...",
-        "userAdded":"User successfully added",
-        "userDeleted":"User successfully deleted"
-    },
-    "firstName": "First name",
-    "lastName": "Last name",
-    "email": "E-Mail",
-    "username": "Username",
-    "password": "Password",
-    "passwordOld": "Old password",
-    "passwordNew": "New password",
-    "role": "Role",
-    "user": "User",
-    "admin": "Admin",
-    "affiliate": "Affiliate",
-    "confirmPassword": "Confirm password",
-    "displayname": "Display name"
+  "board":{
+      "download":{
+          "image":"Click here to download the image",
+          "pdf":"Click here to download the PDF file",
+          "word":"Click here to download the Word document",
+          "excel":"Click here to download the Excel spreadsheet",
+          "powerpoint":"Click here to download the PowerPoint presentation"
+      },
+      "poll":{
+          "vote":"Vote",
+          "votes":"votes | vote | votes",
+          "invalidVote":"You have to choose an answer!",
+          "showResult":"Show result"
+      },
+      "survey":{
+          "submit":"Submit",
+          "invalidSubmit":"Please fill out all required fields!",
+          "thankYou":"Thanks for your participation!"
+      }
   },
-  "ui": {
-    "add": "Add",
-    "profile": "Profile",
-    "welcome": "Welcome back!",
-    "login": "Login",
-    "logout": "Logout",
-    "toLogin": "I already have an account",
-    "register": "Sign Up",
-    "createAccount": "Create a new account:",
-    "signUp": "Sign Up",
-    "toSignUp": "I don't have an account",
-    "adopt": "Apply",
-    "addUser": "Add a new user:",
-    "addBoard": "Create a new notice board:",
-    "submit": "Submit",
-    "reset": "Reset",
-    "clear": "Clear",
-    "apply": "Apply",
-    "cancel": "Cancel",
-    "edit": "Edit",
-    "ok": "OK"
+  "editor":{
+      "note":{
+          "heading":"Text editor",
+          "title":"Insert title here",
+          "content":"<p>Insert content here</p><ul><li><p>Start a bulleted list</p></li></ul><ol><li><p>Or start a numerical list</p></li></ol>",
+          "create":"Create"
+      },
+      "image":{
+          "heading":"Image upload",
+          "title":"Your image title",
+          "post":"Post image",
+          "upload":"Your device does not support file uploading.",
+          "drag":"Drag an image or click here to select a image",
+          "tap":"Tap here to select a image from your gallery",
+          "change":"Change image",
+          "remove":"Remove image",
+          "select":"Select a image",
+          "selected":"Image successfully selected!",
+          "fileSize":"The file size exceeds the limit",
+          "fileType":"Only JPEG and PNG are supported!",
+          "aspect":"Landscape/Portrait"
+      },
+      "file":{
+          "heading":"File upload",
+          "title":"Your file title",
+          "post":"Post file",
+          "upload":"Your device does not support file uploading.",
+          "drag":"Drag an file or click here to select a file",
+          "tap":"Tap here to select a file from your device",
+          "change":"Change file",
+          "remove":"Remove file",
+          "select":"Select a file",
+          "selected":"File successfully selected!",
+          "fileSize":"The file size exceeds the limit",
+          "fileType":"Only PDF, DOC(X), XLS(X) and PPT(X) are supported!"
+      },
+      "poll":{
+          "heading":"Poll editor",
+          "title":"Your question?",
+          "templateAnswer":"Your answer",
+          "allowMultipleVotes":"Allow multiple answers",
+          "post":"Post poll",
+          "missingTitle":"You have to enter a question!",
+          "missingAnswers":"You have to create at least two answers!",
+          "duplicateAnswers":"You have to create different answers!"
+      },
+      "survey":{
+          "heading":"Survey editor",
+          "title":"Your survery title",
+          "templateQuestion":"Your question?",
+          "templatePlaceholderTextField":"e. g. Suggestion A, B, C & 42",
+          "labelPlaceholderTextField":"Optional: Suggestions & Maximal length (5 <-> 50), default: 50",
+          "templatePlaceholderTextArea":"e. g. Suggestion D or E & 5",
+          "labelPlaceholderTextArea":"Suggestions & Maximal rows (~50 Character per row, 1 <-> 15), default: 3 rows",
+          "templateAnswer":"Your answer",
+          "allowMultipleVotes":"Allow multiple answers",
+          "questionWith":"Add question with...",
+          "addInputFieldQuestion":"regular input field",
+          "addTextAreaQuestion":"large text area",
+          "addMultipleChoiceQuestion":"single/multiple choice(s)",
+          "post":"Post survey",
+          "missingTitle":"You have to enter a survey title!",
+          "missingIFQQuestion":"You have to enter a question for a regular input field!",
+          "missingTAQQuestion":"You have to enter a question for a large text area!",
+          "missingMCQQuestion":"You have to enter a question for a single/multiple choice element!",
+          "missingMCQAnswers":"You have to create at least two answers per single/multiple choice question!",
+          "emptyMCQAnswers":"You have to create at least two non-empty answers per single/multiple choice question!",
+          "duplicateMCQAnswers":"You have to create different answers for single/multiple choice question!"
+      },
+      "datePicker":{
+          "dueDate":"Select a due date",
+          "currentDate":"Today",
+          "language":"en"
+      }
   },
-  "type": {
-    "text": "Text note",
-    "image": "Image",
-    "file": "File",
-    "poll": "Poll",
-    "survey": "Survey"
+  "profile":{
+      "statusMsg":{
+          "updatingUsername":"Updating username . . .",
+          "updatingEmail":"Updating email . . .",
+          "updatingPassword":"Updating password . . .",
+          "profileUpdated":"Profile updated!",
+          "usernameTaken":"Username already in use!",
+          "emailTaken":"Email already in use!",
+          "passwordTooSimilar":"Passwords too similar!",
+          "incorrectPassword":"Incorrect password!",
+          "unexpectedError":"Something went wrong . . ."
+      },
+      "firstName":"First name",
+      "lastName":"Last name",
+      "email":"E-Mail",
+      "username":"Username",
+      "password":"Password",
+      "passwordOld":"Old password",
+      "passwordNew":"New password",
+      "role":"Role",
+      "user":"User",
+      "admin":"Admin",
+      "affiliate":"Affiliate",
+      "confirmPassword":"Confirm password",
+      "displayname":"Display name"
   },
-  "cms": {
-    "tables": {
-      "id": "ID",
-      "boardCreatedAt": "Created",
-      "userCreatedAt": "Joined",
-      "lastSeen": "Last seen",
-      "name": "Name",
-      "username": "Username",
-      "email": "Email",
-      "search": "Type to search"
-    },
-    "userMgmt": "User Management",
-    "userList": "User List",
-    "newUser": "New User",
-    "userRights": "User Rights",
-    "contentMgmt": "Content Management",
-    "boardList": "Board List",
-    "newBoard": "New Board",
-    "groupMgmt": "Group Management",
-    "editGroups": "Edit Groups",
-    "delete": "Delete",
-    "noSelfDelete": "Admins cannot delete themselves",
-    "unexpectedError": "Something went wrong...",
-    "userAdded": "User successfully added",
-    "userDeleted": "User successfully deleted"
+  "ui":{
+      "add":"Add",
+      "profile":"Profile",
+      "welcome":"Welcome back!",
+      "login":"Login",
+      "logout":"Logout",
+      "toLogin":"I already have an account",
+      "register":"Sign Up",
+      "createAccount":"Create a new account:",
+      "signUp":"Sign Up",
+      "toSignUp":"I don't have an account",
+      "adopt":"Apply",
+      "addUser":"Add a new user:",
+      "addBoard":"Create a new notice board:",
+      "submit":"Submit",
+      "reset":"Reset",
+      "clear":"Clear",
+      "apply":"Apply",
+      "cancel":"Cancel",
+      "edit":"Edit",
+      "ok":"OK"
   },
-  "rights": {
-    "userRights": "User rights",
-    "createBoards": "Users can create new boards",
-    "register": "Users can register themselves",
-    "like": "Users can like/dislike content",
-    "comment": "Users can comment content"
+  "type":{
+      "text":"Text note",
+      "image":"Image",
+      "file":"File",
+      "poll":"Poll",
+      "survey":"Survey"
   },
-  "boards": {
-    "id": "Board ID",
-    "boardName": "Board name",
-    "creatorID": "Creator ID",
-    "creatorName": "Creator name",
-    "creationDate": "Creation date",
-    "boardAdded": "Board created successfully",
-    "boardDeleted": "Board deleted successfully",
-    "notFound": "Creator not found",
-    "malBoardName": "Must be at least 2 characters and may not contain special characters"
+  "cms":{
+      "tables":{
+          "id":"ID",
+          "boardCreatedAt":"Created",
+          "userCreatedAt":"Joined",
+          "lastSeen":"Last seen",
+          "name":"Name",
+          "username":"Username",
+          "email":"Email",
+          "search":"Type to search"
+      },
+      "userMgmt":"User Management",
+      "userList":"User List",
+      "newUser":"New User",
+      "userRights":"User Rights",
+      "contentMgmt":"Content Management",
+      "boardList":"Board List",
+      "newBoard":"New Board",
+      "groupMgmt":"Group Management",
+      "editGroups":"Edit Groups",
+      "delete":"Delete",
+      "noSelfDelete":"Admins cannot delete themselves",
+      "unexpectedError":"Something went wrong...",
+      "userAdded":"User successfully added",
+      "userDeleted":"User successfully deleted"
   },
-  "register": {
-    "passwordMissmatch": "Passwords do not match",
-    "nameTaken": "Username or email already taken",
-    "malEmail": "Must be a valid email address",
-    "malFirstName": "Must be at least 2 characters and may not contain special characters",
-    "malLastName": "Must be at least 2 characters and may not contain special characters",
-    "malUsername": "Must be at least 5 characters and may not contain special characters",
-    "malPassword": "Must be at least 8 characters long, and must contain 1 special character or number, 1 uppercase letter and 1 lowercase letter",
-    "missingForms": "Please fill in all fields"
+  "rights":{
+      "userRights":"User rights",
+      "createBoards":"Users can create new boards",
+      "register":"Users can register themselves",
+      "like":"Users can like/dislike content",
+      "comment":"Users can comment content"
   },
-  "login": {
-    "invalidLogin": "Email and password do not match",
-    "emailOrName": "Email or username"
+  "boards":{
+      "id":"Board ID",
+      "boardName":"Board name",
+      "creatorID":"Creator ID",
+      "creatorName":"Creator name",
+      "creationDate":"Creation date",
+      "boardAdded":"Board created successfully",
+      "boardDeleted":"Board deleted successfully",
+      "notFound":"Creator not found",
+      "malBoardName":"Must be at least 2 characters and may not contain special characters"
+  },
+  "register":{
+      "passwordMissmatch":"Passwords do not match",
+      "nameTaken":"Username or email already taken",
+      "malEmail":"Must be a valid email address",
+      "malFirstName":"Must be at least 2 characters and may not contain special characters",
+      "malLastName":"Must be at least 2 characters and may not contain special characters",
+      "malUsername":"Must be at least 5 characters and may not contain special characters",
+      "malPassword":"Must be at least 8 characters long, and must contain 1 special character or number, 1 uppercase letter and 1 lowercase letter",
+      "missingForms":"Please fill in all fields"
+  },
+  "login":{
+      "invalidLogin":"Email and password do not match",
+      "emailOrName": "Email or username"
   },
   "HelloWorld": "Hello World!"
 }
