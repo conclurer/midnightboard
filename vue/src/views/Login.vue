@@ -1,36 +1,22 @@
 <template>
   <div class="login">
-    <Header
-      id="titlebar"
-      title="Login"
-    />
+    <Header id="titlebar" title="Login" />
 
-    <b-overlay
-          :show="loading"
-          variant="light"
-          opacity="0.6"
-          blur="2px"
-          rounded="sm"
-    >
-      <b-card
-        class="loginBox"
-        align="center"
-        bg-variant="dark"
-        text-variant="white"
-      >
-        <br>
+    <b-overlay :show="loading" variant="light" opacity="0.6" blur="2px" rounded="sm">
+      <b-card class="loginBox" align="center" bg-variant="dark" text-variant="white">
+        <br />
         <h2>{{$t('ui.welcome')}}</h2>
-        <br>
+        <br />
         <b-form @submit="onSubmit">
           <b-form-input
             id="email"
             v-model="email"
             :state="loginState"
-            :placeholder="$t('profile.email')"
+            :placeholder="$t('login.emailOrName')"
             trim
             autocomplete="email"
           ></b-form-input>
-          <br>
+          <br />
           <b-form-input
             type="password"
             id="passwd"
@@ -40,18 +26,21 @@
             trim
             autocomplete="current-password"
           ></b-form-input>
-          <b-tooltip :show.sync="tooltipState" target="passwd" variant="danger" placement="bottom" v-if="loginState === false" triggers="blur">
-            {{$t('login.invalidLogin')}}
-          </b-tooltip>
+          <b-tooltip
+            :show.sync="tooltipState"
+            target="passwd"
+            variant="danger"
+            placement="bottom"
+            v-if="loginState === false"
+            triggers="blur"
+          >{{$t('login.invalidLogin')}}</b-tooltip>
 
-          <br>
+          <br />
           <b-button type="submit" variant="primary">{{$t('ui.submit')}}</b-button>
         </b-form>
 
-          <br>
-          <router-link to="/register">
-            {{$t('ui.toSignUp')}}
-          </router-link>
+        <br />
+        <router-link to="/register">{{$t('ui.toSignUp')}}</router-link>
       </b-card>
     </b-overlay>
   </div>
@@ -73,7 +62,8 @@ export default {
       passwd: '',
       loginState: null,
       tooltipState: false,
-      loading: false
+      loading: false,
+      loginData: {}
     }
   },
   methods: {
@@ -81,11 +71,13 @@ export default {
       event.preventDefault()
       this.loginState = null
       this.loading = true
+      this.loginData.password = this.passwd;
+      /.*\@.*\..*/.test(this.email)
+        ? (this.loginData.email = this.email)
+        : (this.loginData.userName = this.email)
+
       axios
-        .post('http://localhost:1337/api/users/login', {
-          email: this.email,
-          password: this.passwd
-        })
+        .post('http://localhost:1337/api/users/login', this.loginData)
         .then(response => {
           this.loginState = true
           window.localStorage.setItem('mnb_atok', response.data.accessToken)
@@ -106,7 +98,7 @@ export default {
               this.$log.error(err)
           }
         })
-
+      this.loginData = {}
       this.loading = false
     }
   }
@@ -114,17 +106,17 @@ export default {
 </script>
 
 <style scoped>
-  a {
-    color: var(--link);
-  }
+a {
+  color: var(--link);
+}
 
-  .login {
-    padding: 54px;
-    height: 100vh;
-  }
+.login {
+  padding: 54px;
+  height: 100vh;
+}
 
-  .loginBox {
-    width: 400px;
-    margin: 10vh auto auto auto;
-  }
+.loginBox {
+  width: 400px;
+  margin: 10vh auto auto auto;
+}
 </style>

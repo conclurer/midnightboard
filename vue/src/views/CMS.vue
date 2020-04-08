@@ -96,18 +96,16 @@ export default {
   .cms {
     position: sticky;
     width: 100%;
-    min-height: 100vh;
     max-height: 100%;
     display: grid;
     grid-template-rows: 72px 1fr;
   }
 
   .cmsNav {
-    margin: 45px 0 0 0;
     display: grid;
     grid-template-columns: minmax(160px, 16vw) 1fr;
     min-width: 180px;
-    min-height: calc(100vh - 54px);
+    min-height: calc(98vh - 28px);
     max-height: 100%;
   }
 

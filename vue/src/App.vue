@@ -13,6 +13,7 @@
   body {
     overflow-x: hidden;
     overflow-y: scroll;
+    padding-top: calc(28px + 2vh);
   }
 
   a {

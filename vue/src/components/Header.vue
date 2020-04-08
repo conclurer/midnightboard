@@ -19,6 +19,7 @@
     </b-navbar-toggle>
     <b-collapse id="navbar-toggle-collapse" is-nav >
       <b-navbar-nav class="ml-auto">
+
         <b-nav-item-dropdown
             v-if="addActive"
             class="navItem"
@@ -26,12 +27,7 @@
             no-caret
         >
           <template v-slot:button-content>
-            <b-avatar
-              variant="info"
-              class="p-0"
-              button
-              :text="avatarText"
-            />
+            <b-avatar :text="avatarText" variant="info" button class="navAvatar"></b-avatar>
           </template>
           <b-dropdown-item @click="avatarProfile">{{$t('ui.profile')}}</b-dropdown-item>
           <b-dropdown-item @click="avatarEdit">{{$t('ui.edit')}}</b-dropdown-item>
@@ -180,7 +176,7 @@ export default {
     border-bottom: 1px black solid;
   }
   .navImg {
-    padding: 0;
+    padding-left: 1vw;
     height: 35px;
   }
 
@@ -191,7 +187,14 @@ export default {
   }
 
   .navItem {
+    margin-top: -5px;
     padding-right: 5px;
     font-size: calc(12pt + 0.75vw);
+  }
+
+  .navAvatar {
+    padding: 0px;
+    margin: 0px;
+    font-size: 0.9rem;
   }
 </style>

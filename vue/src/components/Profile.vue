@@ -25,15 +25,7 @@
 
     <div class="m">
       <div class="avatarPanel">
-        <!-- TODO Use intials here! -->
-        <b-avatar
-          :src="'https://placem.at/people?w=512&random='+userId"
-          variant="info"
-          button
-          @click="avatarClick"
-          size="15vh"
-          class="p-0"
-        />
+        <b-avatar :text="avatarText" variant="info" button @click="avatarClick" size="15vh" class="p-0"></b-avatar>
         <div class="pt-2">
           <p class="aTextFName">{{userData.firstName + ' ' + userData.lastName}}</p>
           <p class="aTextUName" v-if="!editing">{{userData.userName}}</p>
@@ -206,14 +198,16 @@ export default {
       pUname: '',
       emailToggle: false,
       unameToggle: false,
-      passwdToggle: false
+      passwdToggle: false,
+      avatarText: ''
     }
   },
-  created () {
+  created: async function () {
     this.loading = true
-    this.refreshToken()
-    this.fetchProfile()
+    await this.refreshToken()
+    await this.fetchProfile()
     this.editing = this.editable
+    this.avatarText = this.userData.firstName.charAt(0) + this.userData.lastName.charAt(0)
     this.loading = false
   },
   methods: {
@@ -355,8 +349,8 @@ export default {
       this.loading = false
       this.loadingState = null
     },
-    refreshToken () {
-      axios
+    refreshToken: async function () {
+      await axios
         .post('http://localhost:1337/api/users/refresh', {
           token: window.localStorage.getItem('mnb_rtok')
         })
@@ -373,11 +367,11 @@ export default {
           }
         })
     },
-    fetchProfile () {
+    fetchProfile: async function () {
       var fetchLink = 'http://localhost:1337/api/users/'
       if (!this.userId) { fetchLink += 'me' } else { fetchLink += this.userId }
 
-      axios
+      await axios
         .get(fetchLink, {
           headers: {
             'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
