@@ -191,7 +191,7 @@ export default {
     border-bottom: 1px black solid;
   }
   .navImg {
-    padding: 0;
+    padding-left: 1vw;
     height: 35px;
   }
 
@@ -202,7 +202,14 @@ export default {
   }
 
   .navItem {
+    margin-top: -5px;
     padding-right: 5px;
     font-size: calc(12pt + 0.75vw);
+  }
+
+  .navAvatar {
+    padding: 0px;
+    margin: 0px;
+    font-size: 0.9rem;
   }
 </style>

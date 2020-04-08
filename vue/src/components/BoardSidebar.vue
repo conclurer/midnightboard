@@ -1,8 +1,16 @@
 <template>
   <div class="boardSidebar">
     <div class="menu" v-smoothscrollbar="{ listener, options }">
+        <b-overlay
+            :show="loading"
+            variant="light"
+            opacity="0.6"
+            blur="2px"
+            rounded="sm"
+          >
       <b-nav-item v-for="item in boardList" :key="item.id">{{item.boardName}}</b-nav-item>
-
+      <br><br><br>
+        </b-overlay>
     </div>
   </div>
 </template>
@@ -13,16 +21,19 @@ import axios from 'axios'
 export default {
   data () {
     return {
-        listener: () => {},
-        options: {},
-        boardList: {}
+      listener: () => {},
+      options: {},
+      boardList: {},
+      loading: false
     }
   },
   created () {
+    this.loading = true
     this.fetchBoards()
+    this.loading = false
   },
   computed: {
-    
+
   },
   methods: {
     fetchBoards: async function () {
@@ -44,7 +55,7 @@ export default {
               this.$log.error(err)
           }
         })
-    },
+    }
   }
 }
 </script>
@@ -54,7 +65,7 @@ export default {
         position: fixed;
         z-index: 1000;
         list-style: none;
-        min-width: 200px;
+        min-width: 350px;
         max-width: 100%;
         min-height: 100vh;
         background-color: rgba(24,24,24,.9);
