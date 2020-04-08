@@ -73,7 +73,7 @@
       </b-collapse>
     </b-navbar>
     <keep-alive>
-      <BoardSidebar v-if="boardSidebarToggle" />
+      <BoardSidebar v-if="boardSidebarToggle"/>
     </keep-alive>
   </div>
 </template>
@@ -179,6 +179,7 @@ export default {
         })
     },
     logoClick: function () {
+      if(!window.localStorage.getItem('mnb_rtok')) return
       this.boardSidebarToggle = !this.boardSidebarToggle
     }
   }
@@ -189,6 +190,7 @@ export default {
   .m {
     padding: 0;
     border-bottom: 1px black solid;
+    position: fixed;
   }
   .navImg {
     padding-left: 1vw;
@@ -212,4 +214,5 @@ export default {
     margin: 0px;
     font-size: 0.9rem;
   }
+
 </style>

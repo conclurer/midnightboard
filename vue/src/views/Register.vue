@@ -240,11 +240,6 @@ export default {
     color: var(--link);
   }
 
-  .register {
-    padding: 54px;
-    min-height: 100vh;
-    max-height: 100%;
-  }
 
   .loginBox {
 

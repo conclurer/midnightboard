@@ -7,9 +7,10 @@
             opacity="0.6"
             blur="2px"
             rounded="sm"
-          >
-      <b-nav-item v-for="item in boardList" :key="item.id">{{item.boardName}}</b-nav-item>
-      <br><br><br>
+        >
+          <br><br>
+          <hr>
+          <b-nav-item class="navItem" v-for="item in boardList" :key="item.id">{{item.boardName}}</b-nav-item>
         </b-overlay>
     </div>
   </div>
@@ -22,7 +23,7 @@ export default {
   data () {
     return {
       listener: () => {},
-      options: {},
+      options: { alwaysShowTracks:true },
       boardList: {},
       loading: false
     }
@@ -69,6 +70,15 @@ export default {
         max-width: 100%;
         min-height: 100vh;
         background-color: rgba(24,24,24,.9);
-        padding-top: 2vh;
+        top: 0;
+        left: 0;
+    }
+    .navItem {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    hr {
+      border-top: 2px lightgray solid;
     }
 </style>

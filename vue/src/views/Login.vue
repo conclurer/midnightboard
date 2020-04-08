@@ -110,11 +110,6 @@ a {
   color: var(--link);
 }
 
-.login {
-  padding: 54px;
-  height: 100vh;
-}
-
 .loginBox {
   width: 400px;
   margin: 10vh auto auto auto;
