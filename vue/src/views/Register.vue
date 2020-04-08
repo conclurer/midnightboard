@@ -3,7 +3,6 @@
     <Header
       id="titlebar"
       :title="$t('ui.register')"
-      :buttonsActive="false"
     />
 
     <b-card
@@ -31,6 +30,7 @@
               :state="fnameState"
               :placeholder="$t('profile.firstName')"
               trim
+              autocomplete="given-name"
             ></b-form-input>
             <b-tooltip target="fname" variant="info" triggers="hover" :show.sync="fnameState">
                {{$t('register.malFirstName')}}
@@ -43,6 +43,7 @@
               :state="lnameState"
               :placeholder="$t('profile.lastName')"
               trim
+              autocomplete="family-name"
             ></b-form-input>
             <b-tooltip target="lname" variant="info" triggers="hover">
                {{$t('register.malLastName')}}
@@ -67,6 +68,7 @@
               :state="emailState"
               :placeholder="$t('profile.email')"
               trim
+              autocomplete="email"
             ></b-form-input>
             <b-tooltip target="email" variant="info" triggers="hover">
                {{$t('register.malEmail')}}
@@ -80,6 +82,7 @@
               :placeholder="$t('profile.password')"
               type="password"
               trim
+              autocomplete="new-password"
             ></b-form-input>
             <b-tooltip target="passwd" variant="info" triggers="hover">
                {{$t('register.malPassword')}}
@@ -106,7 +109,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import axios from 'axios'
 import Header from '@/components/Header.vue'
 
@@ -213,7 +215,9 @@ export default {
         .then(response => {
           window.localStorage.setItem('mnb_atok', response.data.accessToken)
           window.localStorage.setItem('mnb_rtok', response.data.refreshToken)
-          window.location = '/'
+          window.localStorage.setItem('mnb_uid', response.data.uid)
+          window.localStorage.setItem('mnb_inits', response.data.initials)
+          this.$router.push({ name: 'Home' })
         })
         .catch(err => {
           switch (err.response.status) {
@@ -237,18 +241,15 @@ export default {
   }
 
   .register {
-    position: relative;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    background: var(--background-board);
-    height: 100vh;
-    display: grid;
-    grid-template-rows: 70px auto;
+    padding: 54px;
+    min-height: 100vh;
+    max-height: 100%;
   }
 
   .loginBox {
+
     width: 400px;
     height: auto;
-    margin: 20px auto auto auto;
+    margin: 7vh auto auto auto;
   }
 </style>

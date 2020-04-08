@@ -10,26 +10,42 @@ const adminLogin = {
 };
 
 const boardData = {
-  boardName: 'JEST Poll Board'
+  boardName: 'JEST Survey Board'
 };
 
-const createPollData = {
-  title: 'JEST Poll Question?',
-  typeOfPost: 'application/poll',
+const createSurveyData = {
+  title: 'JEST Survey Title',
+  typeOfPost: 'application/survey',
   dueDate: 1609498900000,
-  content: '<form class="d-flex flex-column">'
-  + '<div class="form-check"><div class="d-flex align-self-start">'
-  + '<input class="form-check-input" type="radio" name="rb-20203202130401234" id="rb-20203202130401234-aidx0">'
-  + '<label class="form-check-label for="rb-20203202130401234-aidx0>Answer A</label>'
-  + '</div></div>'
-  + '<div class="form-check"><div class="d-flex align-self-start">'
-  + '<input class="form-check-input" type="radio" name="rb-20203202130401234" id="rb-20203202130401234-aidx1">'
-  + '<label class="form-check-label for="rb-20203202130401234-aidx1>Answer B</label>'
-  + '</div></div>'
-  + '</form>'
+  content: '<div class="form-group">'
+  + '<div class="d-flex align-self-start"><label for="inputText-20203202130401235-qidx0">Question A?</label></div>'
+  + '<input type="text" class="form-control" id="inputText-20203202130401235-qidx0"'
+  + 'placeholder="Placeholder A" maxlength="50" required>'
+  + '</div>'
+  + '<div class="form-group">'
+  + '<div class="d-flex align-self-start"><label for="inputText-20203202130401235-qidx1">Question B?</label></div>'
+  + '<textarea class="form-control" id="inputText-20203202130401235-qidx1"'
+  + 'placeholder="Placeholder B" maxlength="150" rows="3" style="resize:none;"'
+  + 'required></textarea>'
+  + '</div>'
+  + '<div class="form-group">'
+  + '<div class="d-flex align-self-start"><p>Question C</p></div>'
+  + '<div class="form-check">'
+  + '<div class="d-flex align-self-start">'
+  + '<input class="form-check-input" type="checkbox" id="cb-20203202130401235-qidx2-aidx0">'
+  + '<label class="form-check-label" for="cb-20203202130401235-qidx2-aidx0">Answer A</label>'
+  + '</div>'
+  + '</div>'
+  + '<div class="form-check">'
+  + '<div class="d-flex align-self-start">'
+  + '<input class="form-check-input" type="checkbox" id="cb-20203202130401235-qidx2-aidx1">'
+  + '<label class="form-check-label" for="cb-20203202130401235-qidx2-aidx1">Answer B</label>'
+  + '</div>'
+  + '</div>'
+  + '</div>'
 };
 // No " in JSON string allowed
-createPollData.content = createPollData.content.replace(/"/g, /'/).replace(/\//g, '');
+createSurveyData.content = createSurveyData.content.replace(/"/g, /'/).replace(/\//g, '');
 //#endregion
 
 //#region Test setup
@@ -73,24 +89,24 @@ beforeAll(() => {
     });
 });
 
-//#region Create poll post
-test('POST::: Create poll post', () => {
+//#region Create survey post
+test('POST::: Create survey post', () => {
   return fetch('http://localhost:1337/api/boards/' + boardId, {
     method: 'POST',
     headers: {
       Authorization: 'Bearer ' + adminLogin.token,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(createPollData)
+    body: JSON.stringify(createSurveyData)
   })
     .then((response) => {
       expect(response.status).toBe(201);
       return response.json();
     })
     .then((jsonString) => {
-      expect(jsonString.title).toBe(createPollData.title);
-      expect(jsonString.typeOfPost).toBe(createPollData.typeOfPost);
-      expect(jsonString.content).toBe(createPollData.content);
+      expect(jsonString.title).toBe(createSurveyData.title);
+      expect(jsonString.typeOfPost).toBe(createSurveyData.typeOfPost);
+      expect(jsonString.content).toBe(createSurveyData.content);
       expect(jsonString.id).not.toBeUndefined();
       postId = jsonString.id;
     })
@@ -99,22 +115,23 @@ test('POST::: Create poll post', () => {
     });
 });
 
-const createPollAnswersData = {
+const createSurveyEntriesData = {
   postId: postId,
-  answerIds: ['1', '2'],
-  answers: ['Yes', 'No']
+  questionIds: [0, 1, 2],
+  questions: ['Question A?', 'Question B?', 'Question C?'],
+  answers: [[2, 'Answer A'], [2, 'Answer B']]
 };
 
-// Create poll answers
-test('POLL::: Create poll answers', () => {
+// Create survey entries
+test('SURVEY::: Create survey entries', () => {
   setTimeout(() => {
-    return fetch('http://localhost:1337/api/polls', {
+    return fetch('http://localhost:1337/api/surveys', {
       method: 'POST',
       headers: {
         Authorization: 'Bearer ' + adminLogin.token,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(createPollAnswersData)
+      body: JSON.stringify(createSurveyEntriesData)
     })
       .then((response) => {
         expect(response.status).toBe(201);
@@ -132,29 +149,31 @@ test('POLL::: Create poll answers', () => {
   }, 1000);
 });
 
-const updatePollData = {
+const updateSurveyData = {
   postId: postId,
-  answerIds: [1]
+  questionIds: [0, 1, 2],
+  answers: ['Answer 0', 'Answer 1', 'Answer B']
 };
 
-// Vote for a poll answer
-test('POLL::: Vote for poll answer', () => {
+// Submit a survey
+test('SURVEY::: Submit a survey', () => {
   setTimeout(() => {
-    return fetch('http://localhost:1337/api/polls', {
+    return fetch('http://localhost:1337/api/surveys', {
       method: 'PUT',
       headers: {
         Authorization: 'Bearer ' + adminLogin.token,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(updatePollData)
+      body: JSON.stringify(updateSurveyData)
     })
       .then((response) => {
-        expect(response.status).toBe(200);
+        expect(response.status).toBe(201);
         return response.json();
       })
       .then((jsonString) => {
         console.log('Update');
         console.log(jsonString);
+        // postId = jsonString.id;
         expect(null).toBeNull();
       })
       .catch((err) => {
@@ -163,20 +182,20 @@ test('POLL::: Vote for poll answer', () => {
   }, 1000);
 });
 
-const getPollData = {
+const getSurveyData = {
   postId: postId
 };
 
-// Get the poll answers with votes
-test('POLL::: Get poll answers with votes', () => {
+// Get the survey entries
+test('SURVEY::: Get survey entries', () => {
   setTimeout(() => {
-    return fetch('http://localhost:1337/api/polls', {
+    return fetch('http://localhost:1337/api/surveys', {
       method: 'GET',
       headers: {
         Authorization: 'Bearer ' + adminLogin.token,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(getPollData)
+      body: JSON.stringify(getSurveyData)
     })
       .then((response) => {
         expect(response.status).toBe(200);

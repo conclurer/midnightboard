@@ -54,9 +54,10 @@ export default new Router({
         component: () => import('../views/CMS.vue')
       },
       {
-        path: 'logout',
-        name: 'Logout',
-        component: () => import('../views/Logout.vue')
+        path: 'profile/:userId',
+        name: 'Profile',
+        props: true,
+        component: () => import('../views/ProfilePage.vue')
       }
 
     ]

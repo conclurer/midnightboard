@@ -1,6 +1,7 @@
 <template>
   <div
     class="editorSidebar"
+    v-smoothscrollbar="{ listener, options }"
   >
     <EditorHeader
       @close="close"
@@ -20,6 +21,9 @@
     <div v-else-if="editorId === 3">
       <PollEditor @create-poll="createPoll"/>
     </div>
+    <div v-else-if="editorId === 4">
+      <SurveyEditor @create-survey="createSurvey"/>
+    </div>
     <br><br><br><br> <!-- For scrollbar -->
   </div>
 </template>
@@ -31,6 +35,7 @@ import FileUpload from '@/components/editors/FileUpload.vue'
 import ImageUpload from '@/components/editors/ImageUpload.vue'
 import NoteEditor from '@/components/editors/NoteEditor.vue'
 import PollEditor from '@/components/editors/PollEditor.vue'
+import SurveyEditor from '@/components/editors/SurveyEditor.vue'
 
 export default {
   name: 'BoardSidebar',
@@ -39,10 +44,13 @@ export default {
     NoteEditor,
     ImageUpload,
     FileUpload,
-    PollEditor
+    PollEditor,
+    SurveyEditor
   },
   data () {
     return {
+      listener: () => {},
+      options: {},
       dueDate: null
     }
   },
@@ -194,7 +202,7 @@ export default {
       // Notify notice board
       this.$emit('add-note')
     },
-    createPoll: async function (titleContent, jsonContent, answerIndexes) {
+    createPoll: async function (titleContent, jsonContent, answerIndices, answerNames) {
       var jsonBodyNote
       if (this.dueDate == null) {
         jsonBodyNote = JSON.stringify({
@@ -224,7 +232,8 @@ export default {
         .then(async postResponse => {
           const jsonBodyPoll = JSON.stringify({
             postId: postResponse.data.id,
-            answerIds: answerIndexes
+            answerIds: answerIndices,
+            answers: answerNames
           })
           await axios
             .post('http://localhost:1337/api/polls', jsonBodyPoll, {
@@ -235,6 +244,46 @@ export default {
             }
             )
             .then(pollResponse => {})
+            .catch(err => this.$log.error(err))
+        })
+        .catch(err => this.$log.error(err))
+
+      // Notify notice board
+      this.$emit('add-note')
+    },
+    createSurvey: async function (titleContent, jsonContent, questionIndices, questions, mcqAnswers) {
+      const jsonBodyNote = JSON.stringify({
+        title: titleContent,
+        typeOfPost: 'application/survey',
+        content: jsonContent
+      })
+
+      // Post request to api
+      this.refreshToken()
+      await axios
+        .post('http://localhost:1337/api/boards/' + this.boardId, jsonBodyNote, {
+          headers: {
+            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
+            'Content-Type': 'application/json'
+          }
+        }
+        )
+        .then(async postResponse => {
+          const jsonBodySurvey = JSON.stringify({
+            postId: postResponse.data.id,
+            questionIds: questionIndices,
+            questions: questions,
+            answers: mcqAnswers
+          })
+          await axios
+            .post('http://localhost:1337/api/surveys', jsonBodySurvey, {
+              headers: {
+                'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
+                'Content-Type': 'application/json'
+              }
+            }
+            )
+            .then(surveyResponse => {})
             .catch(err => this.$log.error(err))
         })
         .catch(err => this.$log.error(err))

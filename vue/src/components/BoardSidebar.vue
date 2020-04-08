@@ -1,16 +1,13 @@
 <template>
   <div
     class="boardSidebar"
+    v-smoothscrollbar="{ listener, options }"
   >
+    <br>
+    {{$t('ui.boards')}}
     <hr>
-    <table>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-    </table>
-    <br><br><br> <!-- For scrollbar -->
+    <!-- TODO: Display all board names -->
+    <br><br><br><br> <!-- For scrollbar -->
   </div>
 </template>
 
@@ -23,6 +20,8 @@ export default {
   },
   data () {
     return {
+      listener: () => {},
+      options: {},
       boards: []
     }
   },

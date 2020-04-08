@@ -1,0 +1,26 @@
+POST http://localhost:1337/api/surveys HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJpZCI6MSwicm9sZSI6MCwiaWF0IjoxNTg1NjgxNjM4LCJleHAiOjE2MTcyMTc2Mzh9.tzsHSMYkECM_0Pnl2FKlCFgNw8Emz7zl5GKZc54fLYU
+content-type: application/json
+
+{
+	"postId": 11,
+  "questionIds": [0, 1, 2],
+  "questions": ["Ja?","Nein?","Ja oder Nein?"],
+  "answers": [[2, "Vielleicht"], [2, "Möglicherweiße"]]
+}
+###
+GET http://localhost:1337/api/surveys/11 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJpZCI6MSwicm9sZSI6MCwiaWF0IjoxNTg1NjgxNjM4LCJleHAiOjE2MTcyMTc2Mzh9.tzsHSMYkECM_0Pnl2FKlCFgNw8Emz7zl5GKZc54fLYU
+content-type: application/json
+
+###
+PUT http://localhost:1337/api/surveys HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJpZCI6MSwicm9sZSI6MCwiaWF0IjoxNTg1NjgxNjM4LCJleHAiOjE2MTcyMTc2Mzh9.tzsHSMYkECM_0Pnl2FKlCFgNw8Emz7zl5GKZc54fLYU
+content-type: application/json
+
+{
+	"postId": 11,
+	"questionIds": [0, 1],
+	"answers": ["Ja", "Nein"]
+}
+###

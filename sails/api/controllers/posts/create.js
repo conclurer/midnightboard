@@ -211,7 +211,6 @@ module.exports = {
     await PostLocation.create({
       boardId: inputs.boardId,
       postId: createdPost.id
-
     });
 
     if(inputs.skipReturn && inputs.skipReturn === true) {

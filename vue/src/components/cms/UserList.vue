@@ -1,93 +1,103 @@
 <template>
   <div class="m">
-    <div>
-      <b-container fluid>
-        <b-row>
-          <b-col lg="6">
-            <b-form-group class="mb-0">
-              <b-input-group size="sm">
-                <b-form-input
-                  v-model="filter"
-                  type="search"
-                  id="filterInput"
-                  :placeholder="$t('cms.tables.search')"
-                ></b-form-input>
-                <b-input-group-append>
-                  <b-button :disabled="!filter" @click="filter = ''">{{$t('ui.clear')}}</b-button>
-                </b-input-group-append>
-              </b-input-group>
-            </b-form-group>
-          </b-col>
+      <div id="userTable">
+        <b-container fluid>
+          <b-row>
+            <b-col lg="6">
+              <b-form-group class="mb-0">
+                <b-input-group size="sm">
+                  <b-form-input
+                    v-model="filter"
+                    type="search"
+                    id="filterInput"
+                    :placeholder="$t('cms.tables.search')"
+                  ></b-form-input>
+                  <b-input-group-append>
+                    <b-button :disabled="!filter" @click="filter = ''">{{$t('ui.clear')}}</b-button>
+                  </b-input-group-append>
+                </b-input-group>
+              </b-form-group>
+            </b-col>
 
-          <b-col sm="7" md="6">
-            <b-pagination
-              v-model="currentPage"
-              :total-rows="totalRows"
+            <b-col sm="7" md="6">
+              <b-pagination
+                v-model="currentPage"
+                :total-rows="totalRows"
+                :per-page="perPage"
+                align="fill"
+                size="sm"
+              ></b-pagination>
+            </b-col>
+          </b-row>
+          <b-overlay
+            :show="loading"
+            variant="light"
+            opacity="0.6"
+            blur="2px"
+            rounded="sm"
+          >
+            <b-table
+              class="table"
+              dark
+              striped
+              hover
+              small
+              :items="members"
+              :fields="fields"
               :per-page="perPage"
-              align="fill"
-              size="sm"
-            ></b-pagination>
-          </b-col>
-        </b-row>
-        <b-overlay
-          :show="loading"
-          variant="light"
-          opacity="0.6"
-          blur="2px"
-          rounded="sm"
-        >
-          <b-table
-            class="table"
-            dark
-            striped
-            hover
-            small
-            :items="members"
-            :fields="fields"
-            :per-page="perPage"
-            :current-page="currentPage"
-            :filter="filter"
-            :filterIncludedFields="filterOn"
-            @filtered="onFiltered"
-            @row-dblclicked="onDoubleClicked"
-            sort-by="id"
-            >
-            <template v-slot:cell(delete)="row">
-              <b-button size="sm" @click="deleteUser(row.item.id)" class="mr-1">X</b-button>
-            </template>
-            <template v-slot:cell(image)="row">
-              <!-- TODO remove random image -->
-              <b-avatar :src="'https://placem.at/people?w=174&&random='+row.item.id"></b-avatar>
-            </template>
-          </b-table>
-        </b-overlay>
+              :current-page="currentPage"
+              :filter="filter"
+              :filterIncludedFields="filterOn"
+              @filtered="onFiltered"
+              @row-dblclicked="onDoubleClicked"
+              @row-contextmenu="onRightClicked"
+              sort-by="id"
+              >
+              <template v-slot:cell(delete)="row">
+                <b-button size="sm" @click="deleteUser(row.item.id)" class="mr-1">X</b-button>
+              </template>
+              <template v-slot:cell(image)="row">
+                <!-- TODO Use intials here! -->
+                <b-avatar :src="'https://placem.at/people?w=174&&random='+row.item.id" />
+              </template>
 
-      </b-container>
-    </div>
-    <div id="alert">
-      <br>
-      <b-alert
-        :show="delStatus === 200"
-        variant="success"
-        dismissible
-      >
-        <h>{{$t('ui.userAdded')}}</h>
-      </b-alert>
-      <b-alert
-        :show="delStatus === 403"
-        variant="danger"
-        dismissible
-      >
-        <h>{{$t('cms.noSelfDelete')}}</h>
-      </b-alert>
-      <b-alert
-        :show="delStatus === 400"
-        variant="danger"
-        dismissible
-      >
-        <h>{{$t('cms.unexpectedError')}}</h>
-      </b-alert>
-    </div>
+            </b-table>
+          </b-overlay>
+        </b-container>
+      </div>
+      <div id="alertBox">
+        <br>
+        <b-alert
+          :show="delStatus === 200"
+          variant="success"
+          dismissible
+        >
+          <h>{{$t('cms.userDeleted')}}</h>
+        </b-alert>
+        <b-alert
+          :show="delStatus === 403"
+          variant="danger"
+          dismissible
+        >
+          <h>{{$t('cms.noSelfDelete')}}</h>
+        </b-alert>
+        <b-alert
+          :show="delStatus === 400"
+          variant="danger"
+          dismissible
+        >
+          <h>{{$t('cms.unexpectedError')}}</h>
+        </b-alert>
+      </div>
+
+      <div id="cm-div">
+          <ul v-on:blur="clickOutside()" ref="cm" id="context-menu" tabindex="-1" v-if="viewContextMenu" v-bind:style="{ top:top, left:left }">
+            <p>{{selectedUser}}</p>
+            <li @click="clickProfile">{{$t('ui.profile')}}</li>
+            <li @click="clickEdit">{{$t('ui.edit')}}</li>
+            <li @click="clickDelete">{{$t('cms.delete')}}</li>
+          </ul>
+      </div>
   </div>
 </template>
 
@@ -98,6 +108,7 @@ import { i18n } from '@/main.js'
 export default {
   name: 'UserList',
   components: {
+
   },
   data () {
     return {
@@ -120,15 +131,21 @@ export default {
         */
         { key: 'fullName', label: i18n.t('cms.tables.name'), sortable: true },
         { key: 'email', label: i18n.t('cms.tables.email'), sortable: true },
-        { key: 'userName', label: i18n.t('cms.tables.username'), sortable: true },
-        { key: 'delete', label: i18n.t('cms.tables.delete') }
+        { key: 'userName', label: i18n.t('cms.tables.username'), sortable: true }
+        // { key: 'delete', label: i18n.t('cms.delete') }
       ],
       totalRows: 1,
       currentPage: 1,
       perPage: 12,
       sortBy: '',
       filter: null,
-      filterOn: ['fullName', 'userName', 'email']
+      filterOn: ['fullName', 'userName', 'email'],
+
+      viewContextMenu: false,
+      top: '0px',
+      left: '0px',
+      selectedId: null,
+      selectedUser: null
     }
   },
   created () {
@@ -213,13 +230,83 @@ export default {
     },
     onDoubleClicked (item, index, event) {
       event.preventDefault()
-      alert('Selected #' + item.id + ': ' + item.fullName)
-      // TODO redirect to profile page (item.id)
-    }
+      this.$router.push({
+        name: 'Profile',
+        params: {
+          userId: item.id,
+          editable: false
+        }
+      })
+    },
+    onRightClicked (item, index, event) {
+      event.preventDefault()
+      var top = event.pageY
+      var left = event.pageX
 
+      this.top = top + 'px'
+      this.left = left + 'px'
+
+      this.selectedId = item.id
+      this.selectedUser = item.fullName
+      this.viewContextMenu = true
+      this.$nextTick(() => this.$refs.cm.focus())
+    },
+    clickOutside () {
+      this.viewContextMenu = false
+    },
+    clickEdit () {
+      this.viewContextMenu = false
+      this.$router.push({
+        name: 'Profile',
+        params: {
+          userId: this.selectedId,
+          editable: true
+        }
+      })
+    },
+    clickDelete () {
+      this.viewContextMenu = false
+      this.deleteUser(this.selectedId)
+    },
+    clickProfile () {
+      this.viewContextMenu = false
+      this.$router.push({
+        name: 'Profile',
+        params: {
+          userId: this.selectedId,
+          editable: false
+        }
+      })
+    }
   }
 }
 </script>
 <style scoped>
-
+  #context-menu {
+    background: #FAFAFA;
+    border: 1px solid #BDBDBD;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+    display: block;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    width: 160px;
+    z-index: 999999;
+  }
+  #context-menu li {
+    border-bottom: 1px solid #E0E0E0;
+    margin: 0;
+    padding: 5px 35px;
+  }
+  #context-menu li:last-child {
+      border-bottom: none;
+  }
+  #context-menu li:hover {
+      background: #1E88E5;
+      color: #FAFAFA;
+  }
+  p {
+    color: darkgray;
+  }
 </style>

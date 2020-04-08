@@ -14,8 +14,12 @@
             "vote":"Abstimmen",
             "votes":"Abstimmungen | Abstimmung | Abstimmungen",
             "invalidVote":"Bitte wähle eine Antwort aus!",
-            "showResult":"Ergebnis anzeigen",
-            "resetRadioButtons":"Auswahl zurücksetzen"
+            "showResult":"Ergebnis"
+        },
+        "survey":{
+            "submit":"Absenden",
+            "invalidSubmit":"Bitte fülle alle benötigten Felder aus!",
+            "thankYou":"Danke für deine Teilnahme!"
         }
     },
     "editor":{
@@ -57,17 +61,35 @@
         "poll":{
             "heading":"Abstimmung erstellen",
             "title":"Deine Frage?",
-            "templateAnswer":"Antwort A",
+            "templateAnswer":"Deine Antwort",
             "allowMultipleVotes":"Mehrfachauswahl erlauben",
             "post":"Poll posten",
-            "missingQuestion":"Du musst eine Frage eingeben!",
-            "missingAnswers":"Du musst mindestens zwei Antworten erstellen!"
+            "missingTitle":"Du musst eine Frage eingeben!",
+            "missingAnswers":"Du musst mindestens zwei Antworten erstellen!",
+            "duplicateAnswers":"Die Antworten müssen unterschiedlich sein!"
         },
         "survey":{
             "heading":"Umfrage erstellen",
             "title":"Dein Umfragentitel",
-            "templateAnswer":"Antwort A",
-            "post":"Umfrage posten"
+            "templateQuestion":"Deine Frage?",
+            "templatePlaceholderTextField":"z. B. Vorschlag A, B, C & 42",
+            "labelPlaceholderTextField":"Optional: Antwortvorschläge & Maximale Länge (5 <-> 50), Standardwert: 50",
+            "templatePlaceholderTextArea":"z. B. Vorschlag D oder E & 5",
+            "labelPlaceholderTextArea":"Optional: Antwortvorschläge & Maximale Reihen (~50 Zeichen pro Reihe, 1 <-> 15), Standardwert: 3 Reihen",
+            "templateAnswer":"Deine Antwort",
+            "allowMultipleVotes":"Mehrfachauswahl erlauben",
+            "questionWith":"(Weitere) Frage mit...",
+            "addInputFieldQuestion":"normalem Eingabefeld hinzufügen",
+            "addTextAreaQuestion":"großem Eingabefeld hinzufügen",
+            "addMultipleChoiceQuestion":"Auswahlmöglichkeiten hinzufügen",
+            "post":"Umfrage posten",
+            "missingTitle":"Du musst einen Umfragentitel eingeben!",
+            "missingIFQQuestion":"Du musst noch eine Frage für ein normales Eingabefeld eingeben!",
+            "missingTAQQuestion":"Du musst noch eine Frage für ein großes Eingabefeld eingeben!",
+            "missingMCQQuestion":"Du musst noch eine Frage für eine Auswahlmöglichkeit eingeben!",
+            "missingMCQAnswers":"Du musst mindestens zwei Antworten pro Frage mit Auswahlmöglichkeit erstellen!",
+            "emptyMCQAnswers":"Du musst mindestens zwei nicht leere Antworten pro Frage mit Auswahlmöglichkeit erstellen!",
+            "duplicateMCQAnswers":"Du musst verschiedene Antworten pro Frage mit Auswahlmöglichkeit erstellen!"
         },
         "datePicker":{
             "dueDate":"Wähle ein Enddatum",
@@ -76,12 +98,25 @@
         }
     },
     "profile":{
+        "statusMsg":{
+            "updatingUsername":"Aktualisiere Nutzername . . .",
+            "updatingEmail":"Aktualisiere E-Mail . . .",
+            "updatingPassword":"Aktualisiere Passwort . . .",
+            "profileUpdated":"Profil aktualisiert!",
+            "usernameTaken":"Nutzername bereits vergeben!",
+            "emailTaken":"E-Mail bereits vergeben!",
+            "passwordTooSimilar":"Passwörter sind zu ähnlich!",
+            "incorrectPassword":"Falsches Passwort!",
+            "unexpectedError":"Etwas ist schiefgelaufen . . ."
+        },
         "name":"Name",
         "firstName":"Vorname",
         "lastName":"Nachname",
         "email":"E-Mail",
         "username":"Nutzername",
         "password":"Passwort",
+        "passwordOld":"Altes Passwort",
+        "passwordNew":"Neues Passwort",
         "role":"Rolle",
         "user":"Benutzer",
         "admin":"Admin",
@@ -95,6 +130,7 @@
         "profile":"Profil",
         "welcome":"Willkommen zurück!",
         "login":"Anmelden",
+        "logout":"Abmelden",
         "toLogin":"Ich habe bereits einen Account",
         "register":"Registrierung",
         "createAccount":"Erstelle einen neuen Account:",
@@ -102,12 +138,14 @@
         "toSignUp":"Ich habe noch keinen Account",
         "adopt":"Übernehmen",
         "addUser":"Benutzer hinzufügen:",
-        "userAdded":"Benutzer erfolgreich hinzugefügt",
-        "userDeleted":"Benutzer erfolgreich gelöscht",
         "addBoard":"Notice Board erstellen:",
         "submit":"Bestätigen",
         "reset":"Zurücksetzen",
-        "clear":"Leeren"
+        "clear":"Leeren",
+        "apply":"Anwenden",
+        "cancel":"Zurück",
+        "edit":"Bearbeiten",
+        "ok":"OK"
     },
     "type":{
         "text":"Textnotiz",
@@ -125,8 +163,7 @@
             "fullName":"Name",
             "username":"Nutzername",
             "email":"E-Mail",
-            "search":"Tippen zum suchen",
-            "delete":"Löschen"
+            "search":"Tippen zum suchen"
         },
         "userMgmt":"Benutzerverwaltung",
         "userList":"Nutzerliste",
@@ -139,7 +176,9 @@
         "editGroups":"Gruppen bearbeiten",
         "delete":"Löschen",
         "noSelfDelete":"Admins können sich nicht selbst löschen",
-        "unexpectedError":"Etwas ist schiefgelaufen..."
+        "unexpectedError":"Etwas ist schiefgelaufen...",
+        "userAdded":"Benutzer erfolgreich hinzugefügt",
+        "userDeleted":"Benutzer erfolgreich gelöscht"
     },
     "rights":{
         "userRights":"Nutzerrechte",

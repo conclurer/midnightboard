@@ -44,17 +44,13 @@ module.exports = {
       responseType: '',
       statusCode: 200
     },
-    missingParams: {
-      description: 'Missing parameters',
-      statusCode: 400
-    },
     invalidParams: {
       description: 'Invalid parameters',
       statusCode: 400
     },
     nameTaken: {
       description: 'Username already in use',
-      statusCode: 400
+      statusCode: 409
     },
     nonExistent: {
       description: 'User does not exist',
@@ -62,7 +58,7 @@ module.exports = {
     },
     unauthorized: {
       description: 'Unauthorized request',
-      statusCode: 403
+      statusCode: 401
     }
   },
 
@@ -78,28 +74,48 @@ module.exports = {
       if(['en', 'de'].includes(inputs.languagePreference)) {
         valuesToChange.languagePreference = inputs.languagePreference;
       } else {
-        return exits.invalidParams('Invalid languagePreference');
+        return exits.invalidParams({
+          error: {
+            code: 109,
+            message: 'Invalid language preference'
+          }
+        });
       }
     }
     if(inputs.firstName) {
       if(realnameRegex.test(inputs.firstName)) {
         valuesToChange.firstName = inputs.firstName;
       } else {
-        return exits.invalidParams('Invalid first name');
+        return exits.invalidParams({
+          error: {
+            code: 107,
+            message: 'First name is too short/long or contains illegal characters'
+          }
+        });
       }
     }
     if(inputs.lastName) {
       if(realnameRegex.test(inputs.lastName)) {
         valuesToChange.lastName = inputs.lastName;
       } else {
-        return exits.invalidParams('Invalid last name');
+        return exits.invalidParams({
+          error: {
+            code: 106,
+            message: 'Last name is too short/long or contains illegal characters'
+          }
+        });
       }
     }
     if(inputs.userName) {
       if(usernameRegex.test(inputs.userName)) {
         valuesToChange.userName = inputs.userName;
       } else {
-        return exits.invalidParams('Invalid username');
+        return exits.invalidParams({
+          error: {
+            code: 105,
+            message: 'Username is too short/long or contains illegal characters'
+          }
+        });
       }
     }
     if(inputs.avatar) {
