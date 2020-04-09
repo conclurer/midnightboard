@@ -6,7 +6,6 @@
       @select-editor="selectEditor"
       @board-changed="reload"
       :addActive="headerButtonsActive"
-      :profileActive="headerButtonsActive"
     />
     <b-overlay
       :show="loading"

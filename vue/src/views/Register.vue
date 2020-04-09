@@ -2,7 +2,7 @@
   <div class="register">
     <Header
       id="titlebar"
-      :title="$t('ui.register')"
+      :title="$t('register.title')"
     />
 
     <b-card

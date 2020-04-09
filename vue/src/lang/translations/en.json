@@ -219,7 +219,8 @@
   },
   "login":{
       "invalidLogin":"Email and password do not match",
-      "emailOrName": "Email or username"
+      "emailOrName": "Email or username",
+      "title":"Login"
   },
   "HelloWorld": "Hello World!"
 }

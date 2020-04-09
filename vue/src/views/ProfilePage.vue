@@ -3,7 +3,6 @@
     <Header
       id="titlebar"
       title="Profile"
-      :profileActive="true"
       @profile-changed="$refs.profile.reload()"
       @profile-changed-to-edit="forceChangeToEdit"
       @profile-changed-to-view="forceChangeToView"

@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <Header id="titlebar" title="Login" />
+    <Header id="titlebar" :title="$t('login.title')" />
 
     <b-overlay :show="loading" variant="light" opacity="0.6" blur="2px" rounded="sm">
       <b-card class="loginBox" align="center" bg-variant="dark" text-variant="white">

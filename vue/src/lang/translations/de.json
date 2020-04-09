@@ -136,7 +136,7 @@
       "login":"Anmelden",
       "logout":"Abmelden",
       "toLogin":"Ich habe bereits einen Account",
-      "register":"Registrierung",
+      "register":"Registrieren",
       "createAccount":"Erstelle einen neuen Account:",
       "signUp":"Registrieren",
       "toSignUp":"Ich habe noch keinen Account",
@@ -216,11 +216,13 @@
       "malLastName":"Muss mindestens 2 Zeichen enthalten und darf keine Sonderzeichen enthalten",
       "malUsername":"Muss mindestens 5 Zeichen enthalten und darf keine Sonderzeichen enthalten",
       "malPassword":"Muss mindestens 8 Stellen lang sein und 1 Groß-, 1 Kleinbuchstabe und 1 Sonderzeichen oder Zahl enthalten",
-      "missingForms":"Bitte fülle alle Felder aus"
+      "missingForms":"Bitte fülle alle Felder aus",
+      "title":"Registrierung"
   },
   "login":{
       "invalidLogin":"Email und Passwort stimmen nicht überein",
-      "emailOrName": "Email oder Nutzername"
+      "emailOrName": "Email oder Nutzername",
+      "title":"Anmeldung"
   },
   "HelloWorld": "Hallo Welt!"
 }
