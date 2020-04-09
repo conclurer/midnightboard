@@ -217,7 +217,11 @@ export default {
           window.localStorage.setItem('mnb_rtok', response.data.refreshToken)
           window.localStorage.setItem('mnb_uid', response.data.uid)
           window.localStorage.setItem('mnb_inits', response.data.initials)
-          this.$router.push({ name: 'Home' })
+          // TODO Temporary route. Change back to  this.$router.push({ name: 'Home' })  when Default Board is done
+          this.$router.push({
+            name: 'Board',
+            params: { boardId: 1 }
+          })
         })
         .catch(err => {
           switch (err.response.status) {
@@ -230,7 +234,6 @@ export default {
           }
         })
     }
-
   }
 }
 </script>
@@ -240,14 +243,7 @@ export default {
     color: var(--link);
   }
 
-  .register {
-    padding: 54px;
-    min-height: 100vh;
-    max-height: 100%;
-  }
-
   .loginBox {
-
     width: 400px;
     height: auto;
     margin: 7vh auto auto auto;

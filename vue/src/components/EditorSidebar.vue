@@ -1,5 +1,8 @@
 <template>
-  <div class="editorSidebar">
+  <div
+    class="editorSidebar"
+    v-smoothscrollbar="{ listener, options }"
+  >
     <EditorHeader
       @close="close"
       @update-date="updateDate"
@@ -21,7 +24,7 @@
     <div v-else-if="editorId === 4">
       <SurveyEditor @create-survey="createSurvey"/>
     </div>
-    <br><br><br> <!-- For scrollbar -->
+    <br><br><br><br> <!-- For scrollbar -->
   </div>
 </template>
 
@@ -35,6 +38,7 @@ import PollEditor from '@/components/editors/PollEditor.vue'
 import SurveyEditor from '@/components/editors/SurveyEditor.vue'
 
 export default {
+  name: 'BoardSidebar',
   components: {
     EditorHeader,
     NoteEditor,
@@ -45,6 +49,8 @@ export default {
   },
   data () {
     return {
+      listener: () => {},
+      options: {},
       dueDate: null
     }
   },
@@ -88,11 +94,21 @@ export default {
         })
     },
     createNote: async function (titleContent, jsonContent) {
-      const jsonBody = JSON.stringify({
-        title: titleContent,
-        typeOfPost: 'application/note',
-        content: jsonContent
-      })
+      var jsonBody
+      if (this.dueDate == null) {
+        jsonBody = JSON.stringify({
+          title: titleContent,
+          typeOfPost: 'application/note',
+          content: jsonContent
+        })
+      } else {
+        jsonBody = JSON.stringify({
+          title: titleContent,
+          typeOfPost: 'application/note',
+          dueDate: this.dueDate,
+          content: jsonContent
+        })
+      }
 
       // Post request to api
       this.refreshToken()
@@ -115,11 +131,22 @@ export default {
       const datapart = dataURISplit[0] // E.g. data:image/png;base64
       const base64Data = dataURISplit[1] // BORw0KGgoAAAANSUhEUgAAB...
       const dataType = datapart.split(':')[1].split(';')[0] // Extract MIME type -> image/png
-      const jsonBody = JSON.stringify({
-        title: titleContent,
-        typeOfPost: dataType,
-        content: base64Data
-      })
+
+      var jsonBody
+      if (this.dueDate == null) {
+        jsonBody = JSON.stringify({
+          title: titleContent,
+          typeOfPost: dataType,
+          content: base64Data
+        })
+      } else {
+        jsonBody = JSON.stringify({
+          title: titleContent,
+          typeOfPost: dataType,
+          dueDate: this.dueDate,
+          content: base64Data
+        })
+      }
 
       // Post request to api
       this.refreshToken()
@@ -142,11 +169,22 @@ export default {
       const datapart = dataURISplit[0] // e.g. data:application/pdf;base64
       const base64Data = dataURISplit[1] // ZGgoAAAANSUhEUgAASs54B...
       const dataType = datapart.split(':')[1].split(';')[0] // Extract MIME type -> application/pdf
-      const jsonBody = JSON.stringify({
-        title: titleContent,
-        typeOfPost: dataType,
-        content: base64Data
-      })
+
+      var jsonBody
+      if (this.dueDate == null) {
+        jsonBody = JSON.stringify({
+          title: titleContent,
+          typeOfPost: dataType,
+          content: base64Data
+        })
+      } else {
+        jsonBody = JSON.stringify({
+          title: titleContent,
+          typeOfPost: dataType,
+          dueDate: this.dueDate,
+          content: base64Data
+        })
+      }
 
       // Post request to api
       this.refreshToken()
@@ -165,11 +203,21 @@ export default {
       this.$emit('add-note')
     },
     createPoll: async function (titleContent, jsonContent, answerIndices, answerNames) {
-      const jsonBodyNote = JSON.stringify({
-        title: titleContent,
-        typeOfPost: 'application/poll',
-        content: jsonContent
-      })
+      var jsonBodyNote
+      if (this.dueDate == null) {
+        jsonBodyNote = JSON.stringify({
+          title: titleContent,
+          typeOfPost: 'application/poll',
+          content: jsonContent
+        })
+      } else {
+        jsonBodyNote = JSON.stringify({
+          title: titleContent,
+          typeOfPost: 'application/poll',
+          dueDate: this.dueDate,
+          content: jsonContent
+        })
+      }
 
       // Post request to api
       this.refreshToken()

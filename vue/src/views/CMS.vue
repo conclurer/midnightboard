@@ -93,14 +93,6 @@ export default {
     background-color: lightgray;
   }
 
-  .cms {
-    position: sticky;
-    width: 100%;
-    max-height: 100%;
-    display: grid;
-    grid-template-rows: 72px 1fr;
-  }
-
   .cmsNav {
     display: grid;
     grid-template-columns: minmax(160px, 16vw) 1fr;

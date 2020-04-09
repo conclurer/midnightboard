@@ -39,6 +39,11 @@ export default new Router({
         component: () => import('../views/NoticeBoard.vue')
       },
       {
+        path: 'boards/:boardId',
+        name: 'Board',
+        component: () => import('../views/NoticeBoard.vue')
+      },
+      {
         path: 'login',
         name: 'Login',
         component: () => import('../views/Login.vue')
@@ -66,6 +71,7 @@ export default new Router({
   // Redirect to 404 page if trying to visit invalid path
   {
     path: '*',
+    name: '404',
     component: () => import('../views/404.vue')
   }
   ]
