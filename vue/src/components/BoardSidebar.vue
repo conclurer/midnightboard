@@ -8,11 +8,30 @@
             blur="2px"
             rounded="sm"
         >
-          <br><br>
+          <br><br><br>
+          <p>{{$t('ui.boardSidebar.default')}}</p>
           <hr>
           <b-overlay
-              v-for="item in boardList" 
-              :key="item.id" 
+              key="boardDefault.id"
+              class="navItemOverlay"
+              v-bind:id="'nav-' + boardDefault.id"
+              opacity="0.3"
+              blur="1px"
+              rounded="sm"
+              spinner-type="none"
+              variant="info"
+              :show="isActive(undefined)"
+          >
+            <b-card @click="navClickDefault" class="navItem">
+              {{boardDefault.boardName}}
+            </b-card>
+          </b-overlay>
+
+          <p>{{$t('ui.boardSidebar.public')}}</p>
+          <hr>
+          <b-overlay
+              v-for="item in boardListPublic"
+              :key="item.id"
               class="navItemOverlay"
               v-bind:id="'nav-' + item.id"
               opacity="0.3"
@@ -26,7 +45,28 @@
               {{item.boardName}}
             </b-card>
           </b-overlay>
+
+          <p>{{$t('ui.boardSidebar.private')}}</p>
+          <hr>
+          <b-overlay
+              v-for="item in boardList"
+              :key="item.id"
+              class="navItemOverlay"
+              v-bind:id="'nav-' + item.id"
+              opacity="0.3"
+              blur="1px"
+              rounded="sm"
+              spinner-type="none"
+              variant="info"
+              :show="isActive(item.id)"
+          >
+            <b-card @click="navClick(item.id)" class="navItem">
+              {{item.boardName}}
+            </b-card>
+          </b-overlay>
+
           <br>
+
         </b-overlay>
     </div>
   </div>
@@ -40,9 +80,10 @@ export default {
     return {
       listener: () => {},
       options: { alwaysShowTracks: true },
-      boardList: {},
-      loading: false,
-      highlightColor: 'aqua'
+      boardList: [],
+      boardListPublic: [],
+      boardDefault: {},
+      loading: false
     }
   },
   created () {
@@ -59,7 +100,9 @@ export default {
           }
         })
         .then(response => {
-          this.boardList = response.data
+          this.boardList = response.data.boards
+          this.boardListPublic = response.data.public
+          this.boardDefault = response.data.default
         })
         .catch(err => {
           switch (err.response.status) {
@@ -81,8 +124,17 @@ export default {
       })
         .then(() => this.$emit('board-changed'))
     },
+    navClickDefault: function () {
+      if (this.$route.path === '/') { return }
+      this.boardId = this.boardDefault.id
+      this.$router.push({
+        name: 'Home'
+      })
+        .then(() => this.$emit('board-changed'))
+    },
     isActive: function (id) {
-      return this.$route.params.boardId === id ? true : false
+      if (typeof id === 'undefined' && this.$route.path !== '/') return null
+      return this.$route.params.boardId === id
     }
   }
 }
@@ -114,10 +166,20 @@ export default {
     }
     .navItemOverlay {
       cursor: pointer;
-      margin: 0.75rem 2rem 0 2rem;
+      margin:  0 2rem 0.75rem 2rem;
     }
 
     hr {
-      border-top: 2px lightgray solid;
+      border-top: 1px gray solid;
+      margin: 0 0 8px 0;
+    }
+    p {
+      padding-top: 1rem;
+      padding-left: 1rem;
+      margin: 0 0 -6px 0;
+      color: gray;
+      text-align: left;
+      font-weight: bold;
+      font-size: 1.25rem;
     }
 </style>

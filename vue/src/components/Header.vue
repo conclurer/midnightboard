@@ -21,7 +21,7 @@
       <b-collapse id="navbar-toggle-collapse" is-nav >
         <b-navbar-nav class="ml-auto">
           <b-nav-item-dropdown
-              v-if="addActive"
+              v-if="profileActive"
               class="navItem"
               right
               no-caret
@@ -143,6 +143,10 @@ export default {
       }
     },
     avatarProfile: function () {
+      if (this.$route.params.userId === window.localStorage.getItem('mnb_uid')) {
+        this.$emit('profile-changed-to-view')
+        return
+      }
       this.$router.push({
         name: 'Profile',
         params: {
@@ -150,8 +154,13 @@ export default {
           editable: false
         }
       })
+        .then(() => this.$emit('profile-changed'))
     },
     avatarEdit: function () {
+      if (this.$route.params.userId === window.localStorage.getItem('mnb_uid')) {
+        this.$emit('profile-changed-to-edit')
+        return
+      }
       this.$router.push({
         name: 'Profile',
         params: {
@@ -159,6 +168,7 @@ export default {
           editable: true
         }
       })
+        .then(() => this.$emit('profile-changed'))
     },
     avatarLogout: function () {
       axios
@@ -182,7 +192,6 @@ export default {
         })
     },
     logoClick: function () {
-      if (!window.localStorage.getItem('mnb_rtok')) return
       this.boardSidebarToggle = !this.boardSidebarToggle
     },
     boardChanged: function () {

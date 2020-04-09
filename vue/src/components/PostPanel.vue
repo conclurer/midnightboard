@@ -275,6 +275,7 @@ export default {
   props: ['notes', 'updateKey'],
   created () {
     // Check for voted polls and submitted surveys
+    if (!window.localStorage.getItem('mnb_rtok')) { return }
     axios
       .get('http://localhost:1337/api/users/participations', {
         headers: {

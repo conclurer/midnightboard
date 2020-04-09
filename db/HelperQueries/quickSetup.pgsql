@@ -62,7 +62,8 @@ CREATE TABLE public.board (
     created_at bigint NOT NULL,
     updated_at bigint NOT NULL,
     creator_id integer REFERENCES member (id) ON DELETE SET NULL,
-    board_name VARCHAR(50) NOT NULL UNIQUE
+    board_name VARCHAR(50) NOT NULL UNIQUE,
+    board_type integer DEFAULT 1 NOT NULL
 );
 
 CREATE TABLE public.post_location (

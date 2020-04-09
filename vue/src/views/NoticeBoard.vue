@@ -5,8 +5,8 @@
       :title="boardTitle"
       @select-editor="selectEditor"
       @board-changed="reload"
-      :addActive="true"
-      :profileActive="true"
+      :addActive="headerButtonsActive"
+      :profileActive="headerButtonsActive"
     />
     <b-overlay
       :show="loading"
@@ -46,11 +46,12 @@ export default {
       editorId: 0,
       boardId: 1,
       boardTitle: '',
-      loading: false
+      loading: false,
+      headerButtonsActive: false
     }
   },
   created () {
-    if (!window.localStorage.getItem('mnb_atok')) { this.$router.push({ name: 'Login' }) }
+    if (window.localStorage.getItem('mnb_rtok')) { this.headerButtonsActive = true }
     this.reload()
   },
   methods: {
@@ -104,7 +105,10 @@ export default {
             'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
           }
         })
-        .then(response => { this.boardTitle = response.data.boardName })
+        .then(response => {
+          this.boardTitle = response.data.boardName
+          this.boardId = response.data.id
+        })
         .catch(err => {
           switch (err.response.status) {
             case 401:
@@ -134,8 +138,8 @@ export default {
     },
     reload: function () {
       this.loading = true
-      this.boardId = this.$route.params.boardId
-      this.refreshToken()
+      this.boardId = this.$route.params.boardId ? this.$route.params.boardId : 0
+      if (window.localStorage.getItem('mnb_rtok')) { this.refreshToken() }
       this.fetchBoard()
       this.fetchPosts()
       this.loading = false
