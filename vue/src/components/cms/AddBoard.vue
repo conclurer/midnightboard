@@ -27,6 +27,19 @@
           </b-tooltip>
           <br>
 
+          <b-form-group>
+            <font-awesome-icon icon="question-circle" id="tooltipIcon"/>
+            <b-form-radio-group buttons button-variant="outline-info" v-model="selected" class="radioGroup">
+              <b-form-radio v-model="selected" value="1">Private</b-form-radio>
+              <b-form-radio v-model="selected" value="2">Public</b-form-radio>
+              <b-form-radio v-model="selected" value="0">Default</b-form-radio>
+            </b-form-radio-group>
+          </b-form-group>
+          <b-tooltip target="tooltipIcon" variant="info" triggers="hover" placement="topright" html="true">
+             {{$t('boards.accessInfo')}}
+          </b-tooltip>
+          <br>
+
           <br>
           <b-button-group>
             <b-button type="submit" variant="primary" :disabled="!bnameState">{{$t('ui.submit')}}</b-button>
@@ -70,7 +83,8 @@ export default {
   data () {
     return {
       addStatus: 0,
-      bname: ''
+      bname: '',
+      selected: 1
     }
   },
   methods: {
@@ -83,7 +97,8 @@ export default {
       axios
         .post('http://localhost:1337/api/boards',
           {
-            'boardName': this.bname
+            'boardName': this.bname,
+            'boardType': this.selected
           },
           {
             headers: {
@@ -98,6 +113,9 @@ export default {
         .catch(err => {
           this.addStatus = err.response.status
           switch (err.response.status) {
+            case 409:
+              this.addStatus = 409
+              break
             case 400:
             case 401:
             case 500:
@@ -141,12 +159,18 @@ export default {
   }
 
   .creationBox {
-    width: 22vw;
-    min-width: 300px;
+    width: 450px;
     margin: 0px auto;
   }
 
-  .radio-button {
-    margin-left: 10px;
+  #tooltipIcon {
+    cursor: help;
+    font-size: 20pt;
+    margin-left: -36px;
+    margin-bottom: -6px;
   }
+  .radioGroup {
+    padding-left: 16px;
+  }
+
 </style>

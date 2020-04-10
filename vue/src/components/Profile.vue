@@ -132,7 +132,7 @@
           <p class="viewTextLabel">{{$t('profile.email')}}</p>
           <p class="viewText">{{this.userData.email}}</p>
         </div>
-        <b-button v-if="editable" @click="editClick" variant="primary" >{{$t('ui.edit')}}</b-button>
+        <!--<b-button v-if="editable" @click="editClick" variant="primary" >{{$t('ui.edit')}}</b-button>-->
       </div>
     </div>
 
@@ -203,12 +203,7 @@ export default {
     }
   },
   created: async function () {
-    this.loading = true
-    await this.refreshToken()
-    await this.fetchProfile()
-    this.editing = this.editable
-    this.avatarText = this.userData.firstName.charAt(0) + this.userData.lastName.charAt(0)
-    this.loading = false
+    this.reload()
   },
   methods: {
     onSubmit: async function (event) {
@@ -391,6 +386,14 @@ export default {
               this.$log.error(err)
           }
         })
+    },
+    reload: async function () {
+      this.loading = true
+      await this.refreshToken()
+      await this.fetchProfile()
+      this.editing = this.editable
+      this.avatarText = this.userData.firstName.charAt(0) + this.userData.lastName.charAt(0)
+      this.loading = false
     }
   }
 }

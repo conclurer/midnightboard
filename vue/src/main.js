@@ -56,7 +56,8 @@ import {
   faCaretDown,
   faCaretUp,
   faUnlock,
-  faLockOpen
+  faLockOpen,
+  faQuestionCircle
 
 } from '@fortawesome/free-solid-svg-icons'
 library.add(
@@ -85,7 +86,8 @@ library.add(
   faCaretDown,
   faCaretUp,
   faUnlock,
-  faLockOpen
+  faLockOpen,
+  faQuestionCircle
 )
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

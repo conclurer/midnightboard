@@ -12,10 +12,10 @@ INSERT INTO member (created_at,updated_at,user_name,first_name,last_name,email,p
     (1577833200000, 1577833200000, 'user5', 'Heidi', 'Mustermann', 'heidi.mustermann@ma.il','$2b$10$f5E5wmCfNVE2blW0L1ucNOu5.7F3FbdR.n6p30m.07TzwY/u2kTce');
 
 /* Create demo boards */
-INSERT INTO board (created_at,updated_at,creator_id,board_name)
-    VALUES (1577833200000, 1577833200000, 1, 'Board1'),
-    (1577833200000, 1577833200000, 1, 'Board2'),
-    (1577833200000, 1577833200000, 1, 'Board3');
+INSERT INTO board (created_at,updated_at,creator_id,board_name,board_type)
+    VALUES (1577833200000, 1577833200000, 1, 'Default Board',0),
+    (1577833200000, 1577833200000, 1, 'Private Board',1),
+    (1577833200000, 1577833200000, 1, 'Public Board',2);
 
 /* Create demo teams */
 INSERT INTO team (created_at,updated_at,team_leader_id,team_name)
