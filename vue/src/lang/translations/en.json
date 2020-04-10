@@ -127,7 +127,9 @@
     "boardSidebar": {
         "public":"Public boards",
         "private":"Private boards",
-        "default":"Default board"
+        "default":"Default board",
+        "loginToViewA":"Login",
+        "loginToViewB":" to view private boards"
       },
       "add":"Add",
       "profile":"Profile",

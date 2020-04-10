@@ -9,7 +9,7 @@
             rounded="sm"
         >
           <br><br><br>
-          <p>{{$t('ui.boardSidebar.default')}}</p>
+          <p class="panelHeading">{{$t('ui.boardSidebar.default')}}</p>
           <hr>
           <b-overlay
               key="boardDefault.id"
@@ -27,7 +27,7 @@
             </b-card>
           </b-overlay>
 
-          <p>{{$t('ui.boardSidebar.public')}}</p>
+          <p class="panelHeading">{{$t('ui.boardSidebar.public')}}</p>
           <hr>
           <b-overlay
               v-for="item in boardListPublic"
@@ -46,8 +46,9 @@
             </b-card>
           </b-overlay>
 
-          <p>{{$t('ui.boardSidebar.private')}}</p>
+          <p class="panelHeading">{{$t('ui.boardSidebar.private')}}</p>
           <hr>
+          <p class="panelFooting" v-if="!isLoggedIn()" @click="navClickLogin()"><a class="panelLink">{{$t('ui.boardSidebar.loginToViewA')}}</a>{{$t('ui.boardSidebar.loginToViewB')}}</p>
           <b-overlay
               v-for="item in boardList"
               :key="item.id"
@@ -132,6 +133,15 @@ export default {
       })
         .then(() => this.$emit('board-changed'))
     },
+    navClickLogin: function () {
+      if (this.$route.path === '/login') { return }
+      this.$router.push({
+        name: 'Login'
+      })
+    },
+    isLoggedIn: function () {
+      return !!window.localStorage.getItem('mnb_rtok')
+    },
     isActive: function (id) {
       if (typeof id === 'undefined' && this.$route.path !== '/') return null
       return this.$route.params.boardId === id
@@ -166,14 +176,14 @@ export default {
     }
     .navItemOverlay {
       cursor: pointer;
-      margin:  0 2rem 0.75rem 2rem;
+      margin:  1rem 2rem 0.25rem 2rem;
     }
 
     hr {
       border-top: 1px gray solid;
-      margin: 0 0 8px 0;
+      margin: 0 0 6px 0;
     }
-    p {
+    .panelHeading {
       padding-top: 1rem;
       padding-left: 1rem;
       margin: 0 0 -6px 0;
@@ -182,4 +192,15 @@ export default {
       font-weight: bold;
       font-size: 1.25rem;
     }
+    .panelFooting {
+      color: gray;
+      text-align: center;
+      font-size: 1rem;
+    }
+    .panelLink {
+      font-weight: bold;
+      color: dodgerblue;
+    }
+    .panelLink:hover {color: deepskyblue;}
+    .panelLink:visited {color: dodgerblue;}
 </style>

@@ -13,6 +13,7 @@
       opacity="0.6"
       blur="2px"
       rounded="sm"
+      class="loadingOverlay"
     >
       <Board
         @add-note="addNote"
@@ -50,7 +51,6 @@ export default {
     }
   },
   created () {
-    if (window.localStorage.getItem('mnb_rtok')) { this.headerButtonsActive = true }
     this.reload()
   },
   methods: {
@@ -135,12 +135,14 @@ export default {
     close: function () {
       this.editorActive = false
     },
-    reload: function () {
+    reload: async function () {
       this.loading = true
+      this.notes=[]
+      if (window.localStorage.getItem('mnb_rtok')) { this.headerButtonsActive = true } else { this.headerButtonsActive = false }
       this.boardId = this.$route.params.boardId ? this.$route.params.boardId : 0
       if (window.localStorage.getItem('mnb_rtok')) { this.refreshToken() }
-      this.fetchBoard()
-      this.fetchPosts()
+      await this.fetchBoard()
+      await this.fetchPosts()
       this.loading = false
     }
   }
@@ -148,5 +150,10 @@ export default {
 </script>
 
 <style scoped>
-
+  .loadingOverlay {
+    top:0;
+    left:0;
+    min-height: 95vh;
+    width: 100vw;
+  }
 </style>

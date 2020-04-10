@@ -126,9 +126,11 @@
   },
   "ui":{
       "boardSidebar": {
-        "public":"Offene Boards",
+        "public":"Öffentliche Boards",
         "private":"Private Boards",
-        "default":"Haupt-Board"
+        "default":"Haupt-Board",
+        "loginToViewA":"Einloggen",
+        "loginToViewB":" um private Boards zu sehen"
       },
       "add":"Neu",
       "profile":"Profil",
@@ -170,7 +172,7 @@
           "search":"Tippen zum suchen",
           "access":"Zugang",
           "default":"Haupt",
-          "public":"Offen",
+          "public":"Öffentlich",
           "private":"Privat"
       },
       "userMgmt":"Benutzerverwaltung",
