@@ -8,7 +8,7 @@
   >
     <div
       v-for="note in notes.slice().reverse()"
-      :key="note.index"
+      :key="note.id"
       v-masonry-tile
       class="item"
       :updateKey="refreshBoard"
@@ -25,6 +25,12 @@
         <b-card-text>
           <div v-html="note.content" />
         </b-card-text>
+        <template v-slot:footer>
+          <NoteFooter
+            @delete-post="idToDelete = note.id; $bvModal.show('modal-delete-post')"
+            :dueDate="note.dueDate"
+          />
+        </template>
       </b-card>
 
       <!-- Display images of type JPEG -->
@@ -41,6 +47,12 @@
         >
         </b-card-img>
         <a v-bind:href="'data:image/jpeg;base64,' + note.content" :download="note.title + '.jpeg'">{{$t('board.download.image')}}</a>
+        <template v-slot:footer>
+          <NoteFooter
+            @delete-post="idToDelete = note.id; $bvModal.show('modal-delete-post')"
+            :dueDate="note.dueDate"
+          />
+        </template>
       </b-card>
 
       <!-- Display images of type PNG -->
@@ -57,6 +69,12 @@
         >
         </b-card-img>
         <a v-bind:href="'data:image/png;base64,' + note.content" :download="note.title + '.png'">{{$t('board.download.image')}}</a>
+        <template v-slot:footer>
+          <NoteFooter
+            @delete-post="idToDelete = note.id; $bvModal.show('modal-delete-post')"
+            :dueDate="note.dueDate"
+          />
+        </template>
       </b-card>
 
       <!-- Display PDF as preview and link -->
@@ -67,13 +85,18 @@
         text-variant="white"
         style="min-height: 745px;"
         :title="note.title"
-        :key="editorActive"
       >
         <hr />
         <b-card-text>
           <pdf :src="'data:application/pdf;base64,' + note.content" style="height: 585;"></pdf>
           <a v-bind:href="'data:application/pdf;base64,' + note.content" :download="note.title + '.pdf'">{{$t('board.download.pdf')}}</a>
         </b-card-text>
+        <template v-slot:footer>
+          <NoteFooter
+            @delete-post="idToDelete = note.id; $bvModal.show('modal-delete-post')"
+            :dueDate="note.dueDate"
+          />
+        </template>
       </b-card>
 
       <!-- Display Word 97-2003 document as link -->
@@ -89,6 +112,12 @@
           <font-awesome-icon icon="file-word" size="10x"/><br><br>
           <a v-bind:href="'data:application/msword;base64,' + note.content" :download="note.title + '.doc'">{{$t('board.download.word')}}</a>
         </b-card-text>
+        <template v-slot:footer>
+          <NoteFooter
+            @delete-post="idToDelete = note.id; $bvModal.show('modal-delete-post')"
+            :dueDate="note.dueDate"
+          />
+        </template>
       </b-card>
 
       <!-- Display Word document as link -->
@@ -104,6 +133,12 @@
           <font-awesome-icon icon="file-word" size="10x"/><br><br>
           <a v-bind:href="'data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,' + note.content" :download="note.title + '.docx'">{{$t('board.download.word')}}</a>
         </b-card-text>
+        <template v-slot:footer>
+          <NoteFooter
+            @delete-post="idToDelete = note.id; $bvModal.show('modal-delete-post')"
+            :dueDate="note.dueDate"
+          />
+        </template>
       </b-card>
 
       <!-- Display Excel 97-2003 spreadsheet as link -->
@@ -119,6 +154,12 @@
           <font-awesome-icon icon="file-excel" size="10x"/><br><br>
           <a v-bind:href="'data:application/vnd.ms-excel;base64,' + note.content" :download="note.title + '.xls'">{{$t('board.download.excel')}}</a>
         </b-card-text>
+        <template v-slot:footer>
+          <NoteFooter
+            @delete-post="idToDelete = note.id; $bvModal.show('modal-delete-post')"
+            :dueDate="note.dueDate"
+          />
+        </template>
       </b-card>
 
       <!-- Display Excel spreadsheet as link -->
@@ -134,6 +175,12 @@
           <font-awesome-icon icon="file-excel" size="10x"/><br><br>
           <a v-bind:href="'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,' + note.content" :download="note.title + '.xlsx'">{{$t('board.download.excel')}}</a>
         </b-card-text>
+        <template v-slot:footer>
+          <NoteFooter
+            @delete-post="idToDelete = note.id; $bvModal.show('modal-delete-post')"
+            :dueDate="note.dueDate"
+          />
+        </template>
       </b-card>
 
       <!-- Display PowerPoint 97-2003 presentation as link -->
@@ -149,6 +196,12 @@
           <font-awesome-icon icon="file-powerpoint" size="10x"/><br><br>
           <a v-bind:href="'data:application/vnd.ms-powerpoint;base64,' + note.content" :download="note.title + '.ppt'">{{$t('board.download.powerpoint')}}</a>
         </b-card-text>
+        <template v-slot:footer>
+          <NoteFooter
+            @delete-post="idToDelete = note.id; $bvModal.show('modal-delete-post')"
+            :dueDate="note.dueDate"
+          />
+        </template>
       </b-card>
 
       <!-- Display PowerPoint presentation as link -->
@@ -164,6 +217,12 @@
           <font-awesome-icon icon="file-powerpoint" size="10x"/><br><br>
           <a v-bind:href="'data:application/vnd.openxmlformats-officedocument.presentationml.presentation;base64,' + note.content" :download="note.title + '.pptx'">{{$t('board.download.powerpoint')}}</a>
         </b-card-text>
+        <template v-slot:footer>
+          <NoteFooter
+            @delete-post="idToDelete = note.id; $bvModal.show('modal-delete-post')"
+            :dueDate="note.dueDate"
+          />
+        </template>
       </b-card>
 
       <!-- Display polls -->
@@ -217,6 +276,12 @@
             </div>
           </div>
         </b-card-text>
+        <template v-slot:footer>
+          <NoteFooter
+            @delete-post="idToDelete = note.id; $bvModal.show('modal-delete-post')"
+            :dueDate="note.dueDate"
+          />
+        </template>
       </b-card>
 
       <!-- Display surveys -->
@@ -247,19 +312,50 @@
             <h4>{{$t('board.survey.thankYou')}}</h4>
           </div>
         </b-card-text>
+        <template v-slot:footer>
+          <NoteFooter
+            @delete-post="idToDelete = note.id; $bvModal.show('modal-delete-post')"
+            :dueDate="note.dueDate"
+          />
+        </template>
       </b-card>
     </div>
+
+    <!-- Displayed when a user wants to delete a post -->
+    <b-modal
+      id="modal-delete-post"
+      ref="modal"
+      :title="$t('ui.deletePost1')"
+      :ok-title="$t('ui.ok')"
+      :cancel-title="$t('ui.cancel')"
+      @ok="deletePost"
+    >
+      {{ $t('ui.deletePost2') }}
+    </b-modal>
+
+    <!-- Displayed when user can't delete a post because of missing permissions -->
+    <b-modal
+      id="modal-missing-permissions"
+      ref="modal"
+      :title="$t('ui.error')"
+      :ok-title="$t('ui.ok')"
+      ok-only
+    >
+      {{ $t('ui.permissions') }}
+    </b-modal>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import pdf from 'vue-pdf'
+import NoteFooter from '@/components/NoteFooter.vue'
 
 export default {
   name: 'Board',
   components: {
-    pdf
+    pdf,
+    NoteFooter
   },
   data () {
     return {
@@ -269,7 +365,8 @@ export default {
       pollAnswers: [],
       pollVotes: [],
       pollVotesPercent: [],
-      participatedPosts: [] // PostIds of posts user has participated
+      participatedPosts: [], // PostIds of posts user has participated
+      idToDelete: null
     }
   },
   props: ['notes', 'updateKey'],
@@ -294,6 +391,23 @@ export default {
       .catch(err => this.$log.error(err))
   },
   methods: {
+    refreshToken: async function () {
+      await axios
+        .post('http://localhost:1337/api/users/refresh', {
+          token: window.localStorage.getItem('mnb_rtok')
+        })
+        .then(response => {
+          window.localStorage.setItem('mnb_atok', response.data.accessToken)
+        })
+        .catch(err => {
+          this.$log.error(err.response.config.token)
+          switch (err.response.status) {
+            case 500:
+            default:
+              this.$log.error(err)
+          }
+        })
+    },
     initPoll: async function (postId) {
       // Axios GET for current votes (if post is not a poll ignore it)
       await axios
@@ -476,6 +590,31 @@ export default {
         this.participatedPosts[postId] = true
         this.refreshBoard = !this.refreshBoard
       }
+    },
+    deletePost: async function () {
+      this.refreshToken()
+
+      var id = this.idToDelete
+      await axios
+        .delete('http://localhost:1337/api/posts/' + id, {
+          headers: {
+            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
+          }
+        })
+        .then(response => { this.$emit('reload-board') })
+        .catch(err => {
+          switch (err.response.status) {
+            case 401:
+              // Missing permissions
+              this.$bvModal.show('modal-missing-permissions')
+              break
+            case 400:
+            case 404:
+            case 500:
+            default:
+              this.$log.error(err)
+          }
+        })
     }
   }
 }
@@ -519,7 +658,6 @@ export default {
   .chart-bar {
     height: 30px;
     margin-bottom: 10px;
-
     background: linear-gradient(to left, #4cb8c4, #3cd3ad);
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;

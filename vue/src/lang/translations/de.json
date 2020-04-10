@@ -144,7 +144,11 @@
       "apply":"Anwenden",
       "cancel":"Zurück",
       "edit":"Bearbeiten",
-      "ok":"OK"
+      "ok":"OK",
+      "deletePost1":"Löschen",
+      "deletePost2":"Bist du dir sicher, dass du diese Notiz löschen möchtest?",
+      "error":"Fehler!",
+      "permissions":"Dir fehlen die Rechte um Notizen löschen zu können."
   },
   "type":{
       "text":"Textnotiz",

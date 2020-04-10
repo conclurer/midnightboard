@@ -16,10 +16,6 @@
     padding-top: calc(28px + 2vh);
   }
 
-  a {
-    cursor: pointer;
-  }
-
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;

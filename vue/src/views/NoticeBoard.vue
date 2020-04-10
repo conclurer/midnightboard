@@ -17,6 +17,7 @@
     >
       <Board
         @add-note="addNote"
+        @reload-board="reload"
         @close="close"
         :notes="notes"
         :boardId="boardId"

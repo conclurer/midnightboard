@@ -6,6 +6,7 @@
 
 a {
     color: #fff;
+    cursor: pointer;
 }
 
 a:visited {
