@@ -60,11 +60,11 @@ module.exports = {
     } else {
       brd = await Board.findOne({id: inputs.boardId});
     }
-    if(brd.boardType === 1 && !this.req.me) {
-      return exits.unauthorized('Authorization required');
-    }
     if(!brd) {
       return exits.nonExistent('Board not found');
+    }
+    if(brd.boardType === 1 && !this.req.me) {
+      return exits.unauthorized('Authorization required');
     }
 
     sails.log.verbose('POSTS_ALL::: Fetching Posts from board #' + inputs.boardId);

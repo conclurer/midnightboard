@@ -54,7 +54,7 @@ export default {
     this.reload()
   },
   methods: {
-    refreshToken: async function () {
+    refreshToken: function () {
       axios
         .post('http://localhost:1337/api/users/refresh', {
           token: window.localStorage.getItem('mnb_rtok')
@@ -88,7 +88,7 @@ export default {
               this.$router.push({ name: 'Login' })
               break
             case 404:
-              this.$router.push({ name: '404' })
+              this.$router.push({ name: 'NotFound' })
               break
             case 500:
             case 400:
@@ -98,7 +98,7 @@ export default {
         })
     },
     fetchBoard: async function () {
-      axios
+      return await axios
         .get('http://localhost:1337/api/boards/' + this.boardId, {
           headers: {
             'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
@@ -107,19 +107,21 @@ export default {
         .then(response => {
           this.boardTitle = response.data.boardName
           this.boardId = response.data.id
+          return true
         })
         .catch(err => {
           switch (err.response.status) {
             case 401:
               this.$router.push({ name: 'Login' })
-              break
+              return false
             case 404:
-              this.$router.push({ name: '404' })
-              break
+              this.$router.push({ name: 'NotFound' })
+              return false
             case 500:
             case 400:
             default:
               this.$log.error(err)
+              return false
           }
         })
     },
@@ -137,12 +139,11 @@ export default {
     },
     reload: async function () {
       this.loading = true
-      this.notes=[]
+      this.notes = []
       if (window.localStorage.getItem('mnb_rtok')) { this.headerButtonsActive = true } else { this.headerButtonsActive = false }
       this.boardId = this.$route.params.boardId ? this.$route.params.boardId : 0
       if (window.localStorage.getItem('mnb_rtok')) { this.refreshToken() }
-      await this.fetchBoard()
-      await this.fetchPosts()
+      if (await this.fetchBoard()) { await this.fetchPosts() }
       this.loading = false
     }
   }

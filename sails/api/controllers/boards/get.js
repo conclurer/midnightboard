@@ -43,13 +43,14 @@ module.exports = {
     } else {
       brd = await Board.findOne({id: inputs.boardId});
     }
+    if(!brd) {
+      return exits.nonExistent();
+    }
 
     if(!this.req.me && brd.boardType == 1) {
       return exits.unauthorized();
     }
-    if(!brd) {
-      return exits.nonExistent();
-    }
+
     delete brd['updatedAt'];
     return exits.success(brd);
   }
