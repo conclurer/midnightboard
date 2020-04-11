@@ -33,7 +33,7 @@
               autocomplete="given-name"
             ></b-form-input>
             <b-tooltip target="fname" variant="info" triggers="hover">
-               {{$t('register.malFirstName')}}
+              {{$t('register.malFirstName')}}
             </b-tooltip>
             <br>
 
@@ -46,7 +46,7 @@
               autocomplete="family-name"
             ></b-form-input>
             <b-tooltip target="lname" variant="info" triggers="hover">
-               {{$t('register.malLastName')}}
+              {{$t('register.malLastName')}}
             </b-tooltip>
             <br>
 
@@ -58,7 +58,7 @@
               trim
             ></b-form-input>
             <b-tooltip target="uname" variant="info" triggers="hover">
-               {{$t('register.malUsername')}}
+              {{$t('register.malUsername')}}
             </b-tooltip>
             <br>
 
@@ -71,7 +71,7 @@
               autocomplete="email"
             ></b-form-input>
             <b-tooltip target="email" variant="info" triggers="hover">
-               {{$t('register.malEmail')}}
+              {{$t('register.malEmail')}}
             </b-tooltip>
             <br>
 
@@ -85,7 +85,7 @@
               autocomplete="new-password"
             ></b-form-input>
             <b-tooltip target="passwd" variant="info" triggers="hover">
-               {{$t('register.malPassword')}}
+              {{$t('register.malPassword')}}
             </b-tooltip>
 
             <br>

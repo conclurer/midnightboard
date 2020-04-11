@@ -110,7 +110,7 @@
             <li @click="clickProfile">{{$t('ui.profile')}}</li>
             <li @click="clickEdit">{{$t('ui.edit')}}</li>
             <li @click="clickDelete">{{$t('cms.delete')}}</li>
-            
+
             <li @click="clickMote" v-if="selectedRole === 0">{{$t('cms.demoteAdmin')}}</li>
             <li @click="clickMote" v-else>{{$t('cms.promoteAdmin')}}</li>
           </ul>
