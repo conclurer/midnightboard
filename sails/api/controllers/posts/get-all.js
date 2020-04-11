@@ -33,6 +33,10 @@ module.exports = {
       description: 'Missing parameters',
       statusCode: 400
     },
+    unauthorized: {
+      description: 'Authorization required',
+      statusCode: 401
+    },
     nonExistent: {
       description: 'Board does not exist',
       statusCode: 404
@@ -40,7 +44,7 @@ module.exports = {
   },
 
   fn: async function(inputs, exits) {
-    if(!inputs.boardId) {
+    if(inputs.boardId < 0) {
       return exits.missingParams();
     }
     if(!inputs.offset) {
@@ -50,20 +54,29 @@ module.exports = {
       inputs.limit = 64;
     }
 
-    var boardExists = await Board.findOne({id: inputs.boardId});
-    if(!boardExists) {
-      return exits.nonExistent();
+    var brd;
+    if(inputs.boardId === 0) {
+      brd = await Board.findOne({boardType: 0});
+    } else {
+      brd = await Board.findOne({id: inputs.boardId});
+    }
+    if(!brd) {
+      return exits.nonExistent('Board not found');
+    }
+    if(brd.boardType === 1 && !this.req.me) {
+      return exits.unauthorized('Authorization required');
     }
 
     sails.log.verbose('POSTS_ALL::: Fetching Posts from board #' + inputs.boardId);
 
+    var fetchedId = brd.id;
     var overdue = Date.now();
     if(inputs.overdueDays && !isNaN(inputs.overdueDays) && inputs.overdueDays >= 0) {
       overdue = Date.now() - (inputs.overdueDays * (24 * 60 * 60 * 1000));
     }
 
     var idList = await PostLocation.find({
-      where: {boardId: inputs.boardId},
+      where: {boardId: fetchedId},
       select: ['postId']
     }).skip(inputs.offset)
       .limit(inputs.limit);

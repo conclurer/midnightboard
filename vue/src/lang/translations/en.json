@@ -124,6 +124,13 @@
       "displayname":"Display name"
   },
   "ui":{
+    "boardSidebar": {
+        "public":"Public boards",
+        "private":"Private boards",
+        "default":"Default board",
+        "loginToViewA":"Login",
+        "loginToViewB":" to view private boards"
+      },
       "add":"Add",
       "profile":"Profile",
       "welcome":"Welcome back!",
@@ -165,7 +172,11 @@
           "name":"Name",
           "username":"Username",
           "email":"Email",
-          "search":"Type to search"
+          "search":"Type to search",
+          "access":"Access",
+          "default":"Default",
+          "public":"Public",
+          "private":"Private"
       },
       "userMgmt":"User Management",
       "userList":"User List",
@@ -180,7 +191,8 @@
       "noSelfDelete":"Admins cannot delete themselves",
       "unexpectedError":"Something went wrong...",
       "userAdded":"User successfully added",
-      "userDeleted":"User successfully deleted"
+      "userDeleted":"User successfully deleted",
+      "cannotDeleteDefaltBoard":"Default board cannot be deleted"
   },
   "rights":{
       "userRights":"User rights",
@@ -198,7 +210,8 @@
       "boardAdded":"Board created successfully",
       "boardDeleted":"Board deleted successfully",
       "notFound":"Creator not found",
-      "malBoardName":"Must be at least 2 characters and may not contain special characters"
+      "malBoardName":"Must be at least 2 characters and may not contain special characters",
+      "accessInfo":"Type cannot be changed after creation! Only one Default board can be present. When creating a new one, the previous becomes public."
   },
   "register":{
       "passwordMissmatch":"Passwords do not match",
@@ -212,7 +225,8 @@
   },
   "login":{
       "invalidLogin":"Email and password do not match",
-      "emailOrName": "Email or username"
+      "emailOrName": "Email or username",
+      "title":"Login"
   },
   "HelloWorld": "Hello World!"
 }

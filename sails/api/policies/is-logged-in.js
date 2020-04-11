@@ -13,6 +13,9 @@ module.exports = async function(req, res, proceed) {
   // 'req.me' gets defined in api/hooks/custom/index.js, before any request gets processed.
   // When a valid auth token was provided, 'req.me' contains the data provided within the sent JWT
   if(req.me) {
+    if(req.me['role'] === 0) {
+      req.me['privReq'] = true;
+    }
     return proceed();
   }
   return res.status(401).send();

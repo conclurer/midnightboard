@@ -22,7 +22,6 @@ module.exports = {
       return exits.missingParams();
     }
     const userId = this.req.me['id'];
-    sails.log.verbose('User id: ' + userId);
     sails.log.verbose('USER_GET::: Searching participated posts for ID ' + userId + '...');
     var participants = await PollSurveyParticipant.find({
       memberId: userId

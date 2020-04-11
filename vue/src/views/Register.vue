@@ -2,7 +2,7 @@
   <div class="register">
     <Header
       id="titlebar"
-      :title="$t('ui.register')"
+      :title="$t('register.title')"
     />
 
     <b-card
@@ -153,7 +153,6 @@ export default {
       if (!this.finalState) { return }
       this.loading = true
 
-      this.refreshToken()
       axios
         .post('http://localhost:1337/api/users/register',
           {
@@ -190,22 +189,6 @@ export default {
       this.fname = ''
       this.lname = ''
     },
-    refreshToken () {
-      axios
-        .post('http://localhost:1337/api/users/refresh', {
-          token: window.localStorage.getItem('mnb_rtok')
-        })
-        .then(response => {
-          window.localStorage.setItem('mnb_atok', response.data.accessToken)
-        })
-        .catch(err => {
-          switch (err.response.status) {
-            case 500:
-            default:
-              this.$log.error(err)
-          }
-        })
-    },
     direktLogin () {
       axios
         .post('http://localhost:1337/api/users/login', {
@@ -217,11 +200,7 @@ export default {
           window.localStorage.setItem('mnb_rtok', response.data.refreshToken)
           window.localStorage.setItem('mnb_uid', response.data.uid)
           window.localStorage.setItem('mnb_inits', response.data.initials)
-          // TODO Temporary route. Change back to  this.$router.push({ name: 'Home' })  when Default Board is done
-          this.$router.push({
-            name: 'Board',
-            params: { boardId: 1 }
-          })
+          this.$router.push({ name: 'Home' })
         })
         .catch(err => {
           switch (err.response.status) {

@@ -125,13 +125,20 @@
       "displayname":"Anzeigename"
   },
   "ui":{
+      "boardSidebar": {
+        "public":"Öffentliche Boards",
+        "private":"Private Boards",
+        "default":"Haupt-Board",
+        "loginToViewA":"Einloggen",
+        "loginToViewB":" um private Boards zu sehen"
+      },
       "add":"Neu",
       "profile":"Profil",
       "welcome":"Willkommen zurück!",
       "login":"Anmelden",
       "logout":"Abmelden",
       "toLogin":"Ich habe bereits einen Account",
-      "register":"Registrierung",
+      "register":"Registrieren",
       "createAccount":"Erstelle einen neuen Account:",
       "signUp":"Registrieren",
       "toSignUp":"Ich habe noch keinen Account",
@@ -166,7 +173,11 @@
           "fullName":"Name",
           "username":"Nutzername",
           "email":"E-Mail",
-          "search":"Tippen zum suchen"
+          "search":"Tippen zum suchen",
+          "access":"Zugang",
+          "default":"Haupt",
+          "public":"Öffentlich",
+          "private":"Privat"
       },
       "userMgmt":"Benutzerverwaltung",
       "userList":"Nutzerliste",
@@ -181,7 +192,8 @@
       "noSelfDelete":"Admins können sich nicht selbst löschen",
       "unexpectedError":"Etwas ist schiefgelaufen...",
       "userAdded":"Benutzer erfolgreich hinzugefügt",
-      "userDeleted":"Benutzer erfolgreich gelöscht"
+      "userDeleted":"Benutzer erfolgreich gelöscht",
+      "cannotDeleteDefaltBoard":"Haupt-Board kann nicht gelöscht werden"
   },
   "rights":{
       "userRights":"Nutzerrechte",
@@ -199,7 +211,8 @@
       "boardAdded":"Board erfolgreich erstellt",
       "boardDeleted":"Board erfolgreich gelöscht",
       "notFound":"Ersteller nicht gefunden",
-      "malBoardName":"Muss mindestens 2 Zeichen enthalten und darf keine Sonderzeichen enthalten"
+      "malBoardName":"Muss mindestens 2 Zeichen enthalten und darf keine Sonderzeichen enthalten",
+      "accessInfo":"Kann nach Erstellen nicht geändert werden! Nur ein Haupt-Board kann gleichzeitig aktiv sein. Wird ein neues erstellt, wird das vorherige öffentlich."
   },
   "register":{
       "passwordMissmatch":"Passwörter stimmen nicht überein",
@@ -209,11 +222,13 @@
       "malLastName":"Muss mindestens 2 Zeichen enthalten und darf keine Sonderzeichen enthalten",
       "malUsername":"Muss mindestens 5 Zeichen enthalten und darf keine Sonderzeichen enthalten",
       "malPassword":"Muss mindestens 8 Stellen lang sein und 1 Groß-, 1 Kleinbuchstabe und 1 Sonderzeichen oder Zahl enthalten",
-      "missingForms":"Bitte fülle alle Felder aus"
+      "missingForms":"Bitte fülle alle Felder aus",
+      "title":"Registrierung"
   },
   "login":{
       "invalidLogin":"Email und Passwort stimmen nicht überein",
-      "emailOrName": "Email oder Nutzername"
+      "emailOrName": "Email oder Nutzername",
+      "title":"Anmeldung"
   },
   "HelloWorld": "Hallo Welt!"
 }

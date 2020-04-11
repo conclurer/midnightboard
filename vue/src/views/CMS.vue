@@ -3,7 +3,6 @@
     <Header
       id="titlebar"
       title="CMS"
-      :profileActive="true"
     />
     <div class="cmsNav">
       <div class="bg-dark text-white">

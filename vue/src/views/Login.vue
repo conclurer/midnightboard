@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <Header id="titlebar" title="Login" />
+    <Header id="titlebar" :title="$t('login.title')" />
 
     <b-overlay :show="loading" variant="light" opacity="0.6" blur="2px" rounded="sm">
       <b-card class="loginBox" align="center" bg-variant="dark" text-variant="white">
@@ -84,11 +84,7 @@ export default {
           window.localStorage.setItem('mnb_rtok', response.data.refreshToken)
           window.localStorage.setItem('mnb_uid', response.data.uid)
           window.localStorage.setItem('mnb_inits', response.data.initials)
-          // TODO Temporary route. Change back to  this.$router.push({ name: 'Home' })  when Default Board is done
-          this.$router.push({
-            name: 'Board',
-            params: { boardId: 1 }
-          })
+          this.$router.push({ name: 'Home' })
         })
         .catch(err => {
           switch (err.response.status) {

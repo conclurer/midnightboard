@@ -3,7 +3,9 @@
     <Header
       id="titlebar"
       title="Profile"
-      :profileActive="true"
+      @profile-changed="$refs.profile.reload()"
+      @profile-changed-to-edit="forceChangeToEdit"
+      @profile-changed-to-view="forceChangeToView"
     />
 
     <b-card
@@ -13,7 +15,8 @@
       <Profile
         id="profile"
         :userId="$route.params.userId"
-        :editable="editable"
+        :editable="editing"
+        ref="profile"
       />
     </b-card>
   </div>
@@ -33,11 +36,23 @@ export default {
   props: ['editable'],
   data () {
     return {
-
+      editing: false
     }
   },
+  created () {
+    this.editing = this.editable
+  },
   methods: {
-
+    forceChangeToEdit: function () {
+      if (this.editing) { return }
+      this.editing = true
+      this.$refs.profile.reload()
+    },
+    forceChangeToView: function () {
+      if (!this.editing) { return }
+      this.editing = false
+      this.$refs.profile.reload()
+    }
   }
 }
 </script>

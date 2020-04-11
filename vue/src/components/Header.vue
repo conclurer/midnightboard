@@ -21,7 +21,6 @@
       <b-collapse id="navbar-toggle-collapse" is-nav >
         <b-navbar-nav class="ml-auto">
           <b-nav-item-dropdown
-              v-if="addActive"
               class="navItem"
               right
               no-caret
@@ -34,9 +33,12 @@
                 :text="avatarText"
               />
             </template>
-            <b-dropdown-item @click="avatarProfile">{{$t('ui.profile')}}</b-dropdown-item>
-            <b-dropdown-item @click="avatarEdit">{{$t('ui.edit')}}</b-dropdown-item>
-            <b-dropdown-item @click="avatarLogout">{{$t('ui.logout')}}</b-dropdown-item>
+            <b-dropdown-item v-if="isLoggedIn()" @click="avatarProfile">{{$t('ui.profile')}}</b-dropdown-item>
+            <b-dropdown-item v-if="isLoggedIn()" @click="avatarEdit">{{$t('ui.edit')}}</b-dropdown-item>
+            <b-dropdown-item v-if="isLoggedIn()" @click="avatarLogout">{{$t('ui.logout')}}</b-dropdown-item>
+
+            <b-dropdown-item v-if="!isLoggedIn()" @click="avatarLogin">{{$t('ui.login')}}</b-dropdown-item>
+            <b-dropdown-item v-if="!isLoggedIn()" @click="avatarRegister">{{$t('ui.register')}}</b-dropdown-item>
           </b-nav-item-dropdown>
 
           <b-nav-item-dropdown
@@ -87,7 +89,7 @@ import axios from 'axios'
 import BoardSidebar from '@/components/BoardSidebar.vue'
 export default {
   name: 'Header',
-  props: ['addActive', 'profileActive', 'title'],
+  props: ['addActive', 'title'],
   components: { BoardSidebar },
   data () {
     return {
@@ -143,6 +145,10 @@ export default {
       }
     },
     avatarProfile: function () {
+      if (this.$route.params.userId === window.localStorage.getItem('mnb_uid')) {
+        this.$emit('profile-changed-to-view')
+        return
+      }
       this.$router.push({
         name: 'Profile',
         params: {
@@ -150,8 +156,13 @@ export default {
           editable: false
         }
       })
+        .then(() => this.$emit('profile-changed'))
     },
     avatarEdit: function () {
+      if (this.$route.params.userId === window.localStorage.getItem('mnb_uid')) {
+        this.$emit('profile-changed-to-edit')
+        return
+      }
       this.$router.push({
         name: 'Profile',
         params: {
@@ -159,6 +170,7 @@ export default {
           editable: true
         }
       })
+        .then(() => this.$emit('profile-changed'))
     },
     avatarLogout: function () {
       axios
@@ -181,13 +193,27 @@ export default {
           }
         })
     },
+    avatarLogin: function () {
+      if (this.$route.path === '/login') { return }
+      this.$router.push({
+        name: 'Login'
+      })
+    },
+    avatarRegister: function () {
+      if (this.$route.path === '/register') { return }
+      this.$router.push({
+        name: 'Register'
+      })
+    },
     logoClick: function () {
-      if (!window.localStorage.getItem('mnb_rtok')) return
       this.boardSidebarToggle = !this.boardSidebarToggle
     },
     boardChanged: function () {
       this.boardSidebarToggle = false
       this.$emit('board-changed')
+    },
+    isLoggedIn: function () {
+      return !!window.localStorage.getItem('mnb_rtok')
     }
   }
 }

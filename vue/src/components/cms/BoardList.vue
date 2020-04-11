@@ -51,7 +51,9 @@
             @filtered="onFiltered"
             @row-dblclicked="onDoubleClicked"
             sort-by="id"
-            >
+            sort-icon-left
+            sort-null-last
+          >
             <template v-slot:cell(delete)="row">
               <b-button size="sm" @click="deleteBoard(row.item.id)" class="mr-1">X</b-button>
             </template>
@@ -70,18 +72,18 @@
         {{$t('boards.boardDeleted')}}
       </b-alert>
       <b-alert
-        :show="delStatus === 403"
-        variant="danger"
-        dismissible
-      >
-        {{$t('cms.noSelfDelete')}}
-      </b-alert>
-      <b-alert
         :show="delStatus === 400"
         variant="danger"
         dismissible
       >
         {{$t('cms.unexpectedError')}}
+      </b-alert>
+      <b-alert
+        :show="delStatus === 409"
+        variant="danger"
+        dismissible
+      >
+        <h5>{{$t('cms.cannotDeleteDefaltBoard')}}</h5>
       </b-alert>
     </div>
   </div>
@@ -109,6 +111,24 @@ export default {
           formatter: (value, key, item) => { return value ? new Date(value).toDateString() : ' ' }
         },
         { key: 'boardName', label: i18n.t('cms.tables.name'), sortable: true },
+        { key: 'boardType',
+          label: i18n.t('cms.tables.access'),
+          sortable: true,
+          sortByFormatted: true,
+          filterByFormatted: true,
+          formatter: (value, key, item) => {
+            switch (value) {
+              case 0:
+                return i18n.t('cms.tables.default')
+              case 2:
+                return i18n.t('cms.tables.public')
+              case 1:
+                return null
+              default:
+                return '--undef'
+            }
+          }
+        },
         { key: 'delete', label: i18n.t('cms.delete') }
       ],
       totalRows: 1,
@@ -116,7 +136,7 @@ export default {
       perPage: 12,
       sortBy: '',
       filter: null,
-      filterOn: ['boardName']
+      filterOn: ['boardName', 'boardType']
     }
   },
   created  () {
@@ -156,11 +176,14 @@ export default {
         })
         .catch(err => {
           switch (err.response.status) {
-            case 403:
+            case 409:
+              this.delStatus = 409
+              break
             case 400:
             case 401:
             case 500:
             default:
+              this.delStatus = 400
               this.$log.error(err)
           }
         })
@@ -176,7 +199,10 @@ export default {
           }
         })
         .then(response => {
-          this.boards = response.data
+          this.boards = []
+          this.boards.push(response.data.default)
+          this.boards = this.boards.concat(response.data.public)
+          this.boards = this.boards.concat(response.data.boards)
         })
         .catch(err => {
           switch (err.response.status) {
@@ -196,8 +222,12 @@ export default {
     },
     onDoubleClicked (item, index, event) {
       event.preventDefault()
-      alert('Selected #' + item.id + ': ' + item.boardName)
-      // TODO redirect to board page (item.id)
+      this.$router.push({
+        name: 'Board',
+        params: {
+          boardId: item.id
+        }
+      })
     }
   }
 }

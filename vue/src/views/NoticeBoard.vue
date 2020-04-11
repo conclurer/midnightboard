@@ -5,8 +5,7 @@
       :title="boardTitle"
       @select-editor="selectEditor"
       @board-changed="reload"
-      :addActive="true"
-      :profileActive="true"
+      :addActive="headerButtonsActive"
     />
     <b-overlay
       :show="loading"
@@ -14,6 +13,7 @@
       opacity="0.6"
       blur="2px"
       rounded="sm"
+      class="loadingOverlay"
     >
       <Board
         @add-note="addNote"
@@ -47,15 +47,15 @@ export default {
       editorId: 0,
       boardId: 1,
       boardTitle: '',
-      loading: false
+      loading: false,
+      headerButtonsActive: false
     }
   },
   created () {
-    if (!window.localStorage.getItem('mnb_atok')) { this.$router.push({ name: 'Login' }) }
     this.reload()
   },
   methods: {
-    refreshToken: async function () {
+    refreshToken: function () {
       axios
         .post('http://localhost:1337/api/users/refresh', {
           token: window.localStorage.getItem('mnb_rtok')
@@ -89,7 +89,7 @@ export default {
               this.$router.push({ name: 'Login' })
               break
             case 404:
-              this.$router.push({ name: '404' })
+              this.$router.push({ name: 'NotFound' })
               break
             case 500:
             case 400:
@@ -99,25 +99,30 @@ export default {
         })
     },
     fetchBoard: async function () {
-      axios
+      return await axios
         .get('http://localhost:1337/api/boards/' + this.boardId, {
           headers: {
             'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
           }
         })
-        .then(response => { this.boardTitle = response.data.boardName })
+        .then(response => {
+          this.boardTitle = response.data.boardName
+          this.boardId = response.data.id
+          return true
+        })
         .catch(err => {
           switch (err.response.status) {
             case 401:
               this.$router.push({ name: 'Login' })
-              break
+              return false
             case 404:
-              this.$router.push({ name: '404' })
-              break
+              this.$router.push({ name: 'NotFound' })
+              return false
             case 500:
             case 400:
             default:
               this.$log.error(err)
+              return false
           }
         })
     },
@@ -133,12 +138,13 @@ export default {
     close: function () {
       this.editorActive = false
     },
-    reload: function () {
+    reload: async function () {
       this.loading = true
-      this.boardId = this.$route.params.boardId
-      this.refreshToken()
-      this.fetchBoard()
-      this.fetchPosts()
+      this.notes = []
+      if (window.localStorage.getItem('mnb_rtok')) { this.headerButtonsActive = true } else { this.headerButtonsActive = false }
+      this.boardId = this.$route.params.boardId ? this.$route.params.boardId : 0
+      if (window.localStorage.getItem('mnb_rtok')) { this.refreshToken() }
+      if (await this.fetchBoard()) { await this.fetchPosts() }
       this.loading = false
     }
   }
@@ -146,5 +152,10 @@ export default {
 </script>
 
 <style scoped>
-
+  .loadingOverlay {
+    top:0;
+    left:0;
+    min-height: 95vh;
+    width: 100vw;
+  }
 </style>

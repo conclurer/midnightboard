@@ -8,8 +8,47 @@
             blur="2px"
             rounded="sm"
         >
-          <br><br>
+          <br><br><br>
+          <p class="panelHeading">{{$t('ui.boardSidebar.default')}}</p>
           <hr>
+          <b-overlay
+              key="boardDefault.id"
+              class="navItemOverlay"
+              v-bind:id="'nav-' + boardDefault.id"
+              opacity="0.3"
+              blur="1px"
+              rounded="sm"
+              spinner-type="none"
+              variant="info"
+              :show="isActive(undefined)"
+          >
+            <b-card @click="navClickDefault" class="navItem">
+              {{boardDefault.boardName}}
+            </b-card>
+          </b-overlay>
+
+          <p class="panelHeading">{{$t('ui.boardSidebar.public')}}</p>
+          <hr>
+          <b-overlay
+              v-for="item in boardListPublic"
+              :key="item.id"
+              class="navItemOverlay"
+              v-bind:id="'nav-' + item.id"
+              opacity="0.3"
+              blur="1px"
+              rounded="sm"
+              spinner-type="none"
+              variant="info"
+              :show="isActive(item.id)"
+          >
+            <b-card @click="navClick(item.id)" class="navItem">
+              {{item.boardName}}
+            </b-card>
+          </b-overlay>
+
+          <p class="panelHeading">{{$t('ui.boardSidebar.private')}}</p>
+          <hr>
+          <p class="panelFooting" v-if="!isLoggedIn()" @click="navClickLogin()"><a class="panelLink">{{$t('ui.boardSidebar.loginToViewA')}}</a>{{$t('ui.boardSidebar.loginToViewB')}}</p>
           <b-overlay
               v-for="item in boardList"
               :key="item.id"
@@ -26,7 +65,9 @@
               {{item.boardName}}
             </b-card>
           </b-overlay>
+
           <br>
+
         </b-overlay>
     </div>
   </div>
@@ -40,9 +81,10 @@ export default {
     return {
       listener: () => {},
       options: { alwaysShowTracks: true },
-      boardList: {},
-      loading: false,
-      highlightColor: 'aqua'
+      boardList: [],
+      boardListPublic: [],
+      boardDefault: {},
+      loading: false
     }
   },
   created () {
@@ -59,7 +101,9 @@ export default {
           }
         })
         .then(response => {
-          this.boardList = response.data
+          this.boardList = response.data.boards
+          this.boardListPublic = response.data.public
+          this.boardDefault = response.data.default
         })
         .catch(err => {
           switch (err.response.status) {
@@ -81,7 +125,25 @@ export default {
       })
         .then(() => this.$emit('board-changed'))
     },
+    navClickDefault: function () {
+      if (this.$route.path === '/') { return }
+      this.boardId = this.boardDefault.id
+      this.$router.push({
+        name: 'Home'
+      })
+        .then(() => this.$emit('board-changed'))
+    },
+    navClickLogin: function () {
+      if (this.$route.path === '/login') { return }
+      this.$router.push({
+        name: 'Login'
+      })
+    },
+    isLoggedIn: function () {
+      return !!window.localStorage.getItem('mnb_rtok')
+    },
     isActive: function (id) {
+      if (typeof id === 'undefined' && this.$route.path !== '/') return null
       return this.$route.params.boardId === id
     }
   }
@@ -114,10 +176,31 @@ export default {
     }
     .navItemOverlay {
       cursor: pointer;
-      margin: 0.75rem 2rem 0 2rem;
+      margin:  1rem 2rem 0.25rem 2rem;
     }
 
     hr {
-      border-top: 2px lightgray solid;
+      border-top: 1px gray solid;
+      margin: 0 0 6px 0;
     }
+    .panelHeading {
+      padding-top: 1rem;
+      padding-left: 1rem;
+      margin: 0 0 -6px 0;
+      color: gray;
+      text-align: left;
+      font-weight: bold;
+      font-size: 1.25rem;
+    }
+    .panelFooting {
+      color: gray;
+      text-align: center;
+      font-size: 1rem;
+    }
+    .panelLink {
+      font-weight: bold;
+      color: dodgerblue;
+    }
+    .panelLink:hover {color: deepskyblue;}
+    .panelLink:visited {color: dodgerblue;}
 </style>

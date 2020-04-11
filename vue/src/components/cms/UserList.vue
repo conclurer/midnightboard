@@ -52,7 +52,8 @@
               @row-dblclicked="onDoubleClicked"
               @row-contextmenu="onRightClicked"
               sort-by="id"
-              >
+              sort-icon-left
+            >
               <template v-slot:cell(delete)="row">
                 <b-button size="sm" @click="deleteUser(row.item.id)" class="mr-1">X</b-button>
               </template>
@@ -134,6 +135,8 @@ export default {
         { key: 'fullName',
           label: i18n.t('cms.tables.name'),
           sortable: true,
+          sortByFormatted: true,
+          filterByFormatted: true,
           formatter: (value, key, item) => { return item.lastName + ', ' + item.firstName }
         },
         { key: 'email', label: i18n.t('cms.tables.email'), sortable: true },
