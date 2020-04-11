@@ -366,9 +366,7 @@ export default {
       this.initPoll(postId)
     },
     submitSurvey: async function (element) {
-      console.log(element.target)
       const postId = element.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id
-      console.log(postId)
       // Axios PUT to submit survey
       var missingValues = false
       var questionIds = []

@@ -11,8 +11,8 @@
           <br><br>
           <hr>
           <b-overlay
-              v-for="item in boardList" 
-              :key="item.id" 
+              v-for="item in boardList"
+              :key="item.id"
               class="navItemOverlay"
               v-bind:id="'nav-' + item.id"
               opacity="0.3"
@@ -82,7 +82,7 @@ export default {
         .then(() => this.$emit('board-changed'))
     },
     isActive: function (id) {
-      return this.$route.params.boardId === id ? true : false
+      return this.$route.params.boardId === id
     }
   }
 }

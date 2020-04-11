@@ -52,10 +52,6 @@ export default {
     PostPanel,
     EditorSidebar
   },
-  data () {
-    return {
-    }
-  },
   methods: {
     addNote: function () {
       // Notify notice board
