@@ -32,7 +32,7 @@
               trim
               autocomplete="given-name"
             ></b-form-input>
-            <b-tooltip target="fname" variant="info" triggers="hover" :show.sync="fnameState">
+            <b-tooltip target="fname" variant="info" triggers="hover">
                {{$t('register.malFirstName')}}
             </b-tooltip>
             <br>

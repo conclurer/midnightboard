@@ -77,6 +77,7 @@ module.exports = {
           refreshToken: refreshToken,
           expiresIn: sails.config.jwts.EXPIRATION_TIME,
           uid: usr.id,
+          rid: usr.role,
           initials: usr.firstName.charAt(0).toUpperCase() + usr.lastName.charAt(0).toUpperCase()
         });
       } else {

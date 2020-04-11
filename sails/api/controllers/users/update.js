@@ -52,6 +52,10 @@ module.exports = {
       description: 'Username already in use',
       statusCode: 409
     },
+    noSelfDemote: {
+      description: 'Cannot promote/demote self',
+      statusCode: 409
+    },
     nonExistent: {
       description: 'User does not exist',
       statusCode: 404
@@ -120,12 +124,15 @@ module.exports = {
     }
     if(inputs.avatar) {
       // TODO Validate avatar
-      valuesToChange.avatar = inputs.avatar;
+      // valuesToChange.avatar = inputs.avatar;
     }
 
     if([0, 1].includes(inputs.role)) {
       if(!this.req.me['role'] === 0) {
         return exits.unauthorized();
+      }
+      if(inputs.userId === this.req.me['id']) {
+        return exits.noSelfDemote('Cannot promote/demote self');
       }
       valuesToChange.role = inputs.role;
     } else if(inputs.role) {
