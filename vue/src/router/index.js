@@ -36,6 +36,7 @@ export default new Router({
       {
         path: '',
         name: 'Home',
+        redirect: '/boards/1',
         component: () => import('../views/NoticeBoard.vue')
       },
       {
