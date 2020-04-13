@@ -171,9 +171,13 @@
         </div>
 
         <!-- Display note footer -->
-        <template v-slot:footer>
+        <template
+          v-if="isLoggedIn || note.dueDate !== null"
+          v-slot:footer
+        >
           <NoteFooter
             @delete-post="idToDelete = note.id; $bvModal.show('modal-delete-post')"
+            :creatorId="note.creatorId"
             :dueDate="note.dueDate"
           />
         </template>
@@ -229,6 +233,12 @@ export default {
     }
   },
   props: ['notes', 'updateKey'],
+  computed: {
+    // Return whether the user is logged in
+    isLoggedIn: function () {
+      return window.localStorage.getItem('mnb_rid')
+    }
+  },
   created () {
     // Check for voted polls and submitted surveys
     if (!window.localStorage.getItem('mnb_rtok')) { return }
