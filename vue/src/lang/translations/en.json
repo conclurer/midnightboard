@@ -150,7 +150,12 @@
         "apply":"Apply",
         "cancel":"Cancel",
         "edit":"Edit",
-        "ok":"OK"
+        "ok":"OK",
+        "deletePost1":"Delete",
+        "deletePost2":"Are you sure you want to delete this post?",
+        "error":"Error!",
+        "permissions":"You don't have the permissions to delete posts.",
+        "due":"Due: "
     },
     "type":{
         "text":"Text note",

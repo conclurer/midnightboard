@@ -8,258 +8,217 @@
   >
     <div
       v-for="note in notes.slice().reverse()"
-      :key="note.index"
+      :key="note.id"
       v-masonry-tile
       class="item"
       :updateKey="refreshBoard"
     >
-      <!-- Display common text notes -->
       <b-card
-        v-if="note.typeOfPost === 'application/note'"
         class="note"
         bg-variant="dark"
         text-variant="white"
         :title="note.title"
+        :id="note.id"
       >
         <hr />
-        <b-card-text>
-          <div v-html="note.content" />
-        </b-card-text>
-      </b-card>
 
-      <!-- Display images of type JPEG -->
-      <b-card
-        v-if="note.typeOfPost === 'image/jpeg'"
-        class="note"
-        bg-variant="dark"
-        text-variant="white"
-        :title="note.title"
-      >
-        <hr />
-        <b-card-img
-          v-bind:src="'data:image/jpeg;base64,' + note.content"
-        >
-        </b-card-img>
-        <a v-bind:href="'data:image/jpeg;base64,' + note.content" :download="note.title + '.jpeg'">{{$t('board.download.image')}}</a>
-      </b-card>
+        <!-- Display common text -->
+        <div v-if="note.typeOfPost === 'application/note'">
+          <b-card-text>
+            <div v-html="note.content" />
+          </b-card-text>
+        </div>
 
-      <!-- Display images of type PNG -->
-      <b-card
-        v-if="note.typeOfPost === 'image/png'"
-        class="note"
-        bg-variant="dark"
-        text-variant="white"
-        :title="note.title"
-      >
-        <hr />
-        <b-card-img
-          v-bind:src="'data:image/png;base64,' + note.content"
-        >
-        </b-card-img>
-        <a v-bind:href="'data:image/png;base64,' + note.content" :download="note.title + '.png'">{{$t('board.download.image')}}</a>
-      </b-card>
+        <!-- Display images of type JPEG -->
+        <div v-else-if="note.typeOfPost === 'image/jpeg'">
+          <b-card-img
+            v-bind:src="'data:image/jpeg;base64,' + note.content"
+          >
+          </b-card-img>
+          <a v-bind:href="'data:image/jpeg;base64,' + note.content" :download="note.title + '.jpeg'">{{$t('board.download.image')}}</a>
+        </div>
 
-      <!-- Display PDF as preview and link -->
-      <b-card
-        v-if="note.typeOfPost === 'application/pdf'"
-        class="note"
-        bg-variant="dark"
-        text-variant="white"
-        style="min-height: 745px;"
-        :title="note.title"
-        :key="editorActive"
-      >
-        <hr />
-        <b-card-text>
-          <pdf :src="'data:application/pdf;base64,' + note.content" style="height: 585;"></pdf>
-          <a v-bind:href="'data:application/pdf;base64,' + note.content" :download="note.title + '.pdf'">{{$t('board.download.pdf')}}</a>
-        </b-card-text>
-      </b-card>
+        <!-- Display images of type PNG -->
+        <div v-else-if="note.typeOfPost === 'image/png'">
+          <b-card-img
+            v-bind:src="'data:image/png;base64,' + note.content"
+          >
+          </b-card-img>
+          <a v-bind:href="'data:image/png;base64,' + note.content" :download="note.title + '.png'">{{$t('board.download.image')}}</a>
+        </div>
 
-      <!-- Display Word 97-2003 document as link -->
-      <b-card
-        v-if="note.typeOfPost === 'application/msword'"
-        class="note"
-        bg-variant="dark"
-        text-variant="white"
-        :title="note.title"
-      >
-        <hr />
-        <b-card-text>
-          <font-awesome-icon icon="file-word" size="10x"/><br><br>
-          <a v-bind:href="'data:application/msword;base64,' + note.content" :download="note.title + '.doc'">{{$t('board.download.word')}}</a>
-        </b-card-text>
-      </b-card>
+        <!-- Display PDF as preview and link -->
+        <div v-else-if="note.typeOfPost === 'application/pdf'" style="min-height: 640px;">
+          <b-card-text>
+            <pdf :src="'data:application/pdf;base64,' + note.content" style="height: 585;"></pdf>
+            <a v-bind:href="'data:application/pdf;base64,' + note.content" :download="note.title + '.pdf'">{{$t('board.download.pdf')}}</a>
+          </b-card-text>
+        </div>
 
-      <!-- Display Word document as link -->
-      <b-card
-        v-if="note.typeOfPost === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'"
-        class="note"
-        bg-variant="dark"
-        text-variant="white"
-        :title="note.title"
-      >
-        <hr />
-        <b-card-text>
-          <font-awesome-icon icon="file-word" size="10x"/><br><br>
-          <a v-bind:href="'data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,' + note.content" :download="note.title + '.docx'">{{$t('board.download.word')}}</a>
-        </b-card-text>
-      </b-card>
+        <!-- Display Word 97-2003 document as link -->
+        <div v-else-if="note.typeOfPost === 'application/msword'">
+          <b-card-text>
+            <font-awesome-icon icon="file-word" size="10x"/><br><br>
+            <a v-bind:href="'data:application/msword;base64,' + note.content" :download="note.title + '.doc'">{{$t('board.download.word')}}</a>
+          </b-card-text>
+        </div>
 
-      <!-- Display Excel 97-2003 spreadsheet as link -->
-      <b-card
-        v-if="note.typeOfPost === 'application/vnd.ms-excel'"
-        class="note"
-        bg-variant="dark"
-        text-variant="white"
-        :title="note.title"
-      >
-        <hr />
-        <b-card-text>
-          <font-awesome-icon icon="file-excel" size="10x"/><br><br>
-          <a v-bind:href="'data:application/vnd.ms-excel;base64,' + note.content" :download="note.title + '.xls'">{{$t('board.download.excel')}}</a>
-        </b-card-text>
-      </b-card>
+        <!-- Display Word document as link -->
+        <div v-else-if="note.typeOfPost === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'">
+          <b-card-text>
+            <font-awesome-icon icon="file-word" size="10x"/><br><br>
+            <a v-bind:href="'data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,' + note.content" :download="note.title + '.docx'">{{$t('board.download.word')}}</a>
+          </b-card-text>
+        </div>
 
-      <!-- Display Excel spreadsheet as link -->
-      <b-card
-        v-if="note.typeOfPost === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'"
-        class="note"
-        bg-variant="dark"
-        text-variant="white"
-        :title="note.title"
-      >
-        <hr />
-        <b-card-text>
-          <font-awesome-icon icon="file-excel" size="10x"/><br><br>
-          <a v-bind:href="'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,' + note.content" :download="note.title + '.xlsx'">{{$t('board.download.excel')}}</a>
-        </b-card-text>
-      </b-card>
+        <!-- Display Excel 97-2003 spreadsheet as link -->
+        <div v-else-if="note.typeOfPost === 'application/vnd.ms-excel'">
+          <b-card-text>
+            <font-awesome-icon icon="file-excel" size="10x"/><br><br>
+            <a v-bind:href="'data:application/vnd.ms-excel;base64,' + note.content" :download="note.title + '.xls'">{{$t('board.download.excel')}}</a>
+          </b-card-text>
+        </div>
 
-      <!-- Display PowerPoint 97-2003 presentation as link -->
-      <b-card
-        v-if="note.typeOfPost === 'application/vnd.ms-powerpoint'"
-        class="note"
-        bg-variant="dark"
-        text-variant="white"
-        :title="note.title"
-      >
-        <hr />
-        <b-card-text>
-          <font-awesome-icon icon="file-powerpoint" size="10x"/><br><br>
-          <a v-bind:href="'data:application/vnd.ms-powerpoint;base64,' + note.content" :download="note.title + '.ppt'">{{$t('board.download.powerpoint')}}</a>
-        </b-card-text>
-      </b-card>
+        <!-- Display Excel spreadsheet as link -->
+        <div v-else-if="note.typeOfPost === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'">
+          <b-card-text>
+            <font-awesome-icon icon="file-excel" size="10x"/><br><br>
+            <a v-bind:href="'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,' + note.content" :download="note.title + '.xlsx'">{{$t('board.download.excel')}}</a>
+          </b-card-text>
+        </div>
 
-      <!-- Display PowerPoint presentation as link -->
-      <b-card
-        v-if="note.typeOfPost === 'application/vnd.openxmlformats-officedocument.presentationml.presentation'"
-        class="note"
-        bg-variant="dark"
-        text-variant="white"
-        :title="note.title"
-      >
-        <hr />
-        <b-card-text>
-          <font-awesome-icon icon="file-powerpoint" size="10x"/><br><br>
-          <a v-bind:href="'data:application/vnd.openxmlformats-officedocument.presentationml.presentation;base64,' + note.content" :download="note.title + '.pptx'">{{$t('board.download.powerpoint')}}</a>
-        </b-card-text>
-      </b-card>
+        <!-- Display PowerPoint 97-2003 presentation as link -->
+        <div v-else-if="note.typeOfPost === 'application/vnd.ms-powerpoint'">
+          <b-card-text>
+            <font-awesome-icon icon="file-powerpoint" size="10x"/><br><br>
+            <a v-bind:href="'data:application/vnd.ms-powerpoint;base64,' + note.content" :download="note.title + '.ppt'">{{$t('board.download.powerpoint')}}</a>
+          </b-card-text>
+        </div>
 
-      <!-- Display polls -->
-      <b-card
-        v-bind:id="note.id"
-        v-if="note.typeOfPost === 'application/poll'"
-        class="note"
-        bg-variant="dark"
-        text-variant="white"
-        :title="note.title"
-      >
-        <hr />
-        <b-card-text>
-          <div v-if="!participatedPosts[note.id]">
-            <b-form class="d-flex flex-column">
-              <div v-html="note.content" />
-              <br>
-              <b-button-group>
+        <!-- Display PowerPoint presentation as link -->
+        <div v-else-if="note.typeOfPost === 'application/vnd.openxmlformats-officedocument.presentationml.presentation'">
+          <b-card-text>
+            <font-awesome-icon icon="file-powerpoint" size="10x"/><br><br>
+            <a v-bind:href="'data:application/vnd.openxmlformats-officedocument.presentationml.presentation;base64,' + note.content" :download="note.title + '.pptx'">{{$t('board.download.powerpoint')}}</a>
+          </b-card-text>
+        </div>
+
+        <!-- Display polls -->
+        <div v-else-if="note.typeOfPost === 'application/poll'">
+          <b-card-text>
+            <div v-if="!participatedPosts[note.id]">
+              <b-form class="d-flex flex-column">
+                <div v-html="note.content" />
+                <br>
+                <b-button-group>
+                  <b-button
+                    variant="primary"
+                    class="voteButton"
+                    @click="votePoll"
+                  >
+                    {{$t('board.poll.vote')}}
+                  </b-button>
+                  <b-button
+                    variant="info"
+                    class="showResultButton"
+                    @click="showResult"
+                  >
+                    {{$t('board.poll.showResult')}}
+                  </b-button>
+                </b-button-group>
+              </b-form>
+            </div>
+            <div v-else-if="participatedPosts[note.id]">
+              <div class="bar-chart">
+                <ul class="chart-horizontal">
+                  <div
+                    v-for="index of pollAVVPMap[pollResultMap[note.id]]"
+                    :key="index"
+                  >
+                    <b>{{ pollVotesPercent[index] }}% ({{ pollVotes[index] }} {{$tc('board.poll.votes',pollVotes[index])}})</b>
+                    <li class="chart-bar" :style="{width: pollVotesPercent[index] + '%'}">
+                      <span class="chart-label">
+                        {{ pollAnswers[index] }}
+                      </span>
+                    </li>
+                  </div>
+                </ul>
+              </div>
+            </div>
+          </b-card-text>
+        </div>
+
+        <!-- Display surveys -->
+        <div v-else-if="note.typeOfPost === 'application/survey'">
+          <b-card-text>
+            <div v-if="!participatedPosts[note.id]">
+              <b-form class="d-flex flex-column">
+                <div v-html="note.content" />
+                <br>
                 <b-button
                   variant="primary"
-                  class="voteButton"
-                  @click="votePoll"
-                >
-                  {{$t('board.poll.vote')}}
-                </b-button>
-                <b-button
-                  variant="info"
-                  class="showResultButton"
-                  @click="showResult"
-                >
-                  {{$t('board.poll.showResult')}}
-                </b-button>
-              </b-button-group>
-            </b-form>
-          </div>
-          <div v-else-if="participatedPosts[note.id]">
-            <div class="bar-chart">
-              <ul class="chart-horizontal">
-                <div
-                  v-for="index of pollAVVPMap[pollResultMap[note.id]]"
-                  :key="index"
-                >
-                  <b>{{ pollVotesPercent[index] }}% ({{ pollVotes[index] }} {{$tc('board.poll.votes',pollVotes[index])}})</b>
-                  <li class="chart-bar" :style="{width: pollVotesPercent[index] + '%'}">
-                    <span class="chart-label">
-                      {{ pollAnswers[index] }}
-                    </span>
-                  </li>
-                </div>
-              </ul>
-            </div>
-          </div>
-        </b-card-text>
-      </b-card>
-
-      <!-- Display surveys -->
-      <b-card
-        v-bind:id="note.id"
-        v-if="note.typeOfPost === 'application/survey'"
-        class="note"
-        bg-variant="dark"
-        text-variant="white"
-        :title="note.title"
-      >
-        <hr />
-        <b-card-text>
-          <div v-if="!participatedPosts[note.id]">
-            <b-form class="d-flex flex-column">
-              <div v-html="note.content" />
-              <br>
-              <b-button
-                variant="primary"
-                class="submitButton"
+                  class="submitButton"
                   @click="submitSurvey"
                 >
                   {{$t('board.survey.submit')}}
                 </b-button>
               </b-form>
             </div>
-          <div v-else-if="participatedPosts[note.id]">
-            <h4>{{$t('board.survey.thankYou')}}</h4>
-          </div>
-        </b-card-text>
+            <div v-else-if="participatedPosts[note.id]">
+              <h4>{{$t('board.survey.thankYou')}}</h4>
+            </div>
+          </b-card-text>
+        </div>
+
+        <!-- Display note footer -->
+        <template
+          v-if="isLoggedIn || note.dueDate !== null"
+          v-slot:footer
+        >
+          <NoteFooter
+            @delete-post="idToDelete = note.id; $bvModal.show('modal-delete-post')"
+            :creatorId="note.creatorId"
+            :dueDate="note.dueDate"
+          />
+        </template>
       </b-card>
     </div>
+
+    <!-- Displayed when a user wants to delete a post -->
+    <b-modal
+      id="modal-delete-post"
+      ref="modal"
+      :title="$t('ui.deletePost1')"
+      :ok-title="$t('ui.ok')"
+      :cancel-title="$t('ui.cancel')"
+      @ok="deletePost"
+    >
+      {{ $t('ui.deletePost2') }}
+    </b-modal>
+
+    <!-- Displayed when user can't delete a post because of missing permissions -->
+    <b-modal
+      id="modal-missing-permissions"
+      ref="modal"
+      :title="$t('ui.error')"
+      :ok-title="$t('ui.ok')"
+      ok-only
+    >
+      {{ $t('ui.permissions') }}
+    </b-modal>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import pdf from 'vue-pdf'
+import NoteFooter from '@/components/NoteFooter.vue'
 
 export default {
   name: 'Board',
   components: {
-    pdf
+    pdf,
+    NoteFooter
   },
   data () {
     return {
@@ -269,10 +228,17 @@ export default {
       pollAnswers: [],
       pollVotes: [],
       pollVotesPercent: [],
-      participatedPosts: [] // PostIds of posts user has participated
+      participatedPosts: [], // PostIds of posts user has participated
+      idToDelete: null
     }
   },
   props: ['notes', 'updateKey'],
+  computed: {
+    // Return whether the user is logged in
+    isLoggedIn: function () {
+      return window.localStorage.getItem('mnb_rid')
+    }
+  },
   created () {
     // Check for voted polls and submitted surveys
     if (!window.localStorage.getItem('mnb_rtok')) { return }
@@ -295,6 +261,23 @@ export default {
       .catch(err => this.$log.error(err))
   },
   methods: {
+    refreshToken: async function () {
+      await axios
+        .post('http://localhost:1337/api/users/refresh', {
+          token: window.localStorage.getItem('mnb_rtok')
+        })
+        .then(response => {
+          window.localStorage.setItem('mnb_atok', response.data.accessToken)
+        })
+        .catch(err => {
+          this.$log.error(err.response.config.token)
+          switch (err.response.status) {
+            case 500:
+            default:
+              this.$log.error(err)
+          }
+        })
+    },
     initPoll: async function (postId) {
       // Axios GET for current votes (if post is not a poll ignore it)
       await axios
@@ -359,7 +342,7 @@ export default {
         })
     },
     votePoll: async function (element) {
-      const postId = element.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id
+      const postId = element.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id
       // Axios PUT to update votes for the answer
       var answerIds = []
       for (const forms of element.target.parentElement.parentElement.firstChild.children) {
@@ -390,11 +373,11 @@ export default {
     },
     showResult: async function (element) {
       // Show current results
-      const postId = element.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id
+      const postId = element.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id
       this.initPoll(postId)
     },
     submitSurvey: async function (element) {
-      const postId = element.target.parentElement.parentElement.parentElement.parentElement.parentElement.id
+      const postId = element.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id
       // Axios PUT to submit survey
       var missingValues = false
       var questionIds = []
@@ -477,6 +460,31 @@ export default {
         this.participatedPosts[postId] = true
         this.refreshBoard = !this.refreshBoard
       }
+    },
+    deletePost: async function () {
+      this.refreshToken()
+
+      var id = this.idToDelete
+      await axios
+        .delete('http://localhost:1337/api/posts/' + id, {
+          headers: {
+            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
+          }
+        })
+        .then(response => { this.$emit('reload-board') })
+        .catch(err => {
+          switch (err.response.status) {
+            case 401:
+              // Missing permissions
+              this.$bvModal.show('modal-missing-permissions')
+              break
+            case 400:
+            case 404:
+            case 500:
+            default:
+              this.$log.error(err)
+          }
+        })
     }
   }
 }
@@ -520,7 +528,6 @@ export default {
   .chart-bar {
     height: 30px;
     margin-bottom: 10px;
-
     background: linear-gradient(to left, #4cb8c4, #3cd3ad);
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;

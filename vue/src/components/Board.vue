@@ -7,6 +7,7 @@
       style="display: grid; grid-template-columns: 1fr 500px;"
     >
       <PostPanel
+        @reload-board="reloadBoard"
         style="grid-column: 1 / 2;"
         :notes="notes"
         :upateKey="editorActive"
@@ -27,26 +28,13 @@
       </div>
     </div>
 
-    <!-- Displays content when board sidebar is displayed -->
-    <div
-      class="inner-board"
-      v-else-if="boardSidebar"
-      style="display: grid; grid-template-columns: 500px 1fr;"
-    >
-
-      <PostPanel
-        style="grid-column: 2 / 3;"
-        :notes="notes"
-        :upateKey="boardSidebar"
-      />
-    </div>
-
-    <!-- Displays content when no sidebar is displayed -->
+    <!-- Displays content when editor is not displayed -->
     <div
       class="inner-board"
       v-else
     >
       <PostPanel
+        @reload-board="reloadBoard"
         :notes="notes"
         :upateKey="editorActive"
       />
@@ -64,21 +52,21 @@ export default {
     PostPanel,
     EditorSidebar
   },
-  data () {
-    return {
-    }
-  },
   methods: {
     addNote: function () {
       // Notify notice board
       this.$emit('add-note')
+    },
+    // Used to reload the board when a note gets deleted
+    reloadBoard: function () {
+      this.$emit('reload-board')
     },
     // Used to close the sidebars
     close: function () {
       this.$emit('close')
     }
   },
-  props: ['boardSidebar', 'notes', 'boardId', 'editorActive', 'editorId']
+  props: ['notes', 'boardId', 'editorActive', 'editorId']
 }
 </script>
 
