@@ -39,6 +39,9 @@
 
             <b-dropdown-item v-if="!isLoggedIn()" @click="avatarLogin">{{$t('ui.login')}}</b-dropdown-item>
             <b-dropdown-item v-if="!isLoggedIn()" @click="avatarRegister">{{$t('ui.register')}}</b-dropdown-item>
+
+            <b-dropdown-divider v-if="isLoggedInAsAdmin()"/>
+            <b-dropdown-item v-if="isLoggedInAsAdmin()" @click="avatarCMS">{{$t('cms.title')}}</b-dropdown-item>
           </b-nav-item-dropdown>
 
           <b-nav-item-dropdown
@@ -205,6 +208,12 @@ export default {
         name: 'Register'
       })
     },
+    avatarCMS: function () {
+      if (this.$route.path === '/cms') { return }
+      this.$router.push({
+        name: 'CMS'
+      })
+    },
     logoClick: function () {
       this.boardSidebarToggle = !this.boardSidebarToggle
     },
@@ -214,6 +223,9 @@ export default {
     },
     isLoggedIn: function () {
       return !!window.localStorage.getItem('mnb_rtok')
+    },
+    isLoggedInAsAdmin: function () {
+      return window.localStorage.getItem('mnb_rid') === '0'
     }
   }
 }

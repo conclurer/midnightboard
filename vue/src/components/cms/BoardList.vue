@@ -83,7 +83,7 @@
         variant="danger"
         dismissible
       >
-        <h5>{{$t('cms.cannotDeleteDefaltBoard')}}</h5>
+        {{$t('cms.cannotDeleteDefaultBoard')}}
       </b-alert>
     </div>
   </div>

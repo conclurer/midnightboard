@@ -1,234 +1,244 @@
 {
-  "about":{
-      "message":"Das ist eine About Seite"
-  },
-  "board":{
-      "download":{
-          "image":"Hier klicken um das Bild herunterzuladen",
-          "pdf":"Hier klicken um die PDF-Datei herunterzuladen",
-          "word":"Hier klicken um das Word-Dokument herunterzuladen",
-          "excel":"Hier klicken um die Excel-Tabelle herunterzuladen",
-          "powerpoint":"Hier klicken um die PowerPoint-Präsentation herunterzuladen"
-      },
-      "poll":{
-          "vote":"Abstimmen",
-          "votes":"Abstimmungen | Abstimmung | Abstimmungen",
-          "invalidVote":"Bitte wähle eine Antwort aus!",
-          "showResult":"Ergebnis"
-      },
-      "survey":{
-          "submit":"Absenden",
-          "invalidSubmit":"Bitte fülle alle benötigten Felder aus!",
-          "thankYou":"Danke für deine Teilnahme!"
-      }
-  },
-  "editor":{
-      "note":{
-          "heading":"Texteditor",
-          "title":"Titel hier einfügen",
-          "content":"<p>Inhalt hier einf&uuml;gen</p><ul><li><p>Beginne eine Liste</p></li></ul><ol><li><p>Oder eine Aufz&auml;hlung</p></li></ol>",
-          "create":"Erstellen"
-      },
-      "image":{
-          "heading":"Bild hochladen",
-          "title":"Titel des Bildes",
-          "post":"Bild posten",
-          "upload":"Dein Gerät unterstützt kein Hochladen von Bildern.",
-          "drag":"Ziehe hierher ein Bild oder klicke darauf, um eins auszuwählen",
-          "tap":"Tippe hier, um ein Bild aus deiner Galerie auszuwählen",
-          "change":"Bild ändern",
-          "remove":"Bild entfernen",
-          "select":"Bild auswählen",
-          "selected":"Bild erfolgreich ausgewählt!",
-          "fileSize":"Die Dateigröße überschreitet das Limit!",
-          "fileType":"Nur JPEG und PNG werden unterstützt!",
-          "aspect":"Landschaft/Porträt"
-      },
-      "file":{
-          "heading":"Datei hochladen",
-          "title":"Titel der Datei",
-          "post":"Datei posten",
-          "upload":"Dein Gerät unterstützt kein Hochladen von Dateien.",
-          "drag":"Ziehe hierher eine Datei oder klicke darauf, um eine auszuwählen",
-          "tap":"Tippe hier, um eine Datei von deinem Gerät auszuwählen",
-          "change":"Datei ändern",
-          "remove":"Datei entfernen",
-          "select":"Datei auswählen",
-          "selected":"Datei erfolgreich ausgewählt!",
-          "fileSize":"Die Dateigröße überschreitet das Limit!",
-          "fileType":"Es werden nur PDF, DOC(X), XLS(X) und PPT(X) unterstützt!"
-      },
-      "poll":{
-          "heading":"Abstimmung erstellen",
-          "title":"Deine Frage?",
-          "templateAnswer":"Deine Antwort",
-          "allowMultipleVotes":"Mehrfachauswahl erlauben",
-          "post":"Poll posten",
-          "missingTitle":"Du musst eine Frage eingeben!",
-          "missingAnswers":"Du musst mindestens zwei Antworten erstellen!",
-          "duplicateAnswers":"Die Antworten müssen unterschiedlich sein!"
-      },
-      "survey":{
-          "heading":"Umfrage erstellen",
-          "title":"Dein Umfragentitel",
-          "templateQuestion":"Deine Frage?",
-          "templatePlaceholderTextField":"z. B. Vorschlag A, B, C & 42",
-          "labelPlaceholderTextField":"Optional: Antwortvorschläge & Maximale Länge (5 <-> 50), Standardwert: 50",
-          "templatePlaceholderTextArea":"z. B. Vorschlag D oder E & 5",
-          "labelPlaceholderTextArea":"Optional: Antwortvorschläge & Maximale Reihen (~50 Zeichen pro Reihe, 1 <-> 15), Standardwert: 3 Reihen",
-          "templateAnswer":"Deine Antwort",
-          "allowMultipleVotes":"Mehrfachauswahl erlauben",
-          "questionWith":"(Weitere) Frage mit...",
-          "addInputFieldQuestion":"normalem Eingabefeld hinzufügen",
-          "addTextAreaQuestion":"großem Eingabefeld hinzufügen",
-          "addMultipleChoiceQuestion":"Auswahlmöglichkeiten hinzufügen",
-          "post":"Umfrage posten",
-          "missingTitle":"Du musst einen Umfragentitel eingeben!",
-          "missingIFQQuestion":"Du musst noch eine Frage für ein normales Eingabefeld eingeben!",
-          "missingTAQQuestion":"Du musst noch eine Frage für ein großes Eingabefeld eingeben!",
-          "missingMCQQuestion":"Du musst noch eine Frage für eine Auswahlmöglichkeit eingeben!",
-          "missingMCQAnswers":"Du musst mindestens zwei Antworten pro Frage mit Auswahlmöglichkeit erstellen!",
-          "emptyMCQAnswers":"Du musst mindestens zwei nicht leere Antworten pro Frage mit Auswahlmöglichkeit erstellen!",
-          "duplicateMCQAnswers":"Du musst verschiedene Antworten pro Frage mit Auswahlmöglichkeit erstellen!"
-      },
-      "datePicker":{
-          "dueDate":"Wähle ein Enddatum",
-          "currentDate":"Heute",
-          "language":"de"
-      }
-  },
-  "profile":{
-      "statusMsg":{
-          "updatingUsername":"Aktualisiere Nutzername . . .",
-          "updatingEmail":"Aktualisiere E-Mail . . .",
-          "updatingPassword":"Aktualisiere Passwort . . .",
-          "profileUpdated":"Profil aktualisiert!",
-          "usernameTaken":"Nutzername bereits vergeben!",
-          "emailTaken":"E-Mail bereits vergeben!",
-          "passwordTooSimilar":"Passwörter sind zu ähnlich!",
-          "incorrectPassword":"Falsches Passwort!",
-          "unexpectedError":"Etwas ist schiefgelaufen . . ."
-      },
-      "name":"Name",
-      "firstName":"Vorname",
-      "lastName":"Nachname",
-      "email":"E-Mail",
-      "username":"Nutzername",
-      "password":"Passwort",
-      "passwordOld":"Altes Passwort",
-      "passwordNew":"Neues Passwort",
-      "role":"Rolle",
-      "user":"Benutzer",
-      "admin":"Admin",
-      "affiliate":"Aufnehmen",
-      "confirmPassword":"Passwort bestätigen",
-      "displayname":"Anzeigename"
-  },
-  "ui":{
-      "boardSidebar": {
-        "public":"Öffentliche Boards",
-        "private":"Private Boards",
-        "default":"Haupt-Board",
-        "loginToViewA":"Einloggen",
-        "loginToViewB":" um private Boards zu sehen"
-      },
-      "add":"Neu",
-      "profile":"Profil",
-      "welcome":"Willkommen zurück!",
-      "login":"Anmelden",
-      "logout":"Abmelden",
-      "toLogin":"Ich habe bereits einen Account",
-      "register":"Registrieren",
-      "createAccount":"Erstelle einen neuen Account:",
-      "signUp":"Registrieren",
-      "toSignUp":"Ich habe noch keinen Account",
-      "adopt":"Übernehmen",
-      "addUser":"Benutzer hinzufügen:",
-      "addBoard":"Notice Board erstellen:",
-      "submit":"Bestätigen",
-      "reset":"Zurücksetzen",
-      "clear":"Leeren",
-      "apply":"Anwenden",
-      "cancel":"Zurück",
-      "edit":"Bearbeiten",
-      "ok":"OK",
-      "deletePost1":"Löschen",
-      "deletePost2":"Bist du dir sicher, dass du diese Notiz löschen möchtest?",
-      "error":"Fehler!",
-      "permissions":"Dir fehlen die Rechte um Notizen löschen zu können."
-  },
-  "type":{
-      "text":"Textnotiz",
-      "image":"Bild",
-      "file":"Datei",
-      "poll":"Abstimmung",
-      "survey":"Umfrage"
-  },
-  "cms":{
-      "tables":{
-          "id":"ID",
-          "boardCreatedAt":"Erstellt",
-          "userCreatedAt":"Beigetreten",
-          "lastSeen":"Zuletzt online",
-          "fullName":"Name",
-          "username":"Nutzername",
-          "email":"E-Mail",
-          "search":"Tippen zum suchen",
-          "access":"Zugang",
-          "default":"Haupt",
-          "public":"Öffentlich",
-          "private":"Privat"
-      },
-      "userMgmt":"Benutzerverwaltung",
-      "userList":"Nutzerliste",
-      "newUser":"Neuer Benutzer",
-      "userRights":"Nutzerrechte",
-      "contentMgmt":"Inhaltsverwaltung",
-      "boardList":"Board-Liste",
-      "newBoard":"Neues Notice Board",
-      "groupMgmt":"Gruppenverwaltung",
-      "editGroups":"Gruppen bearbeiten",
-      "delete":"Löschen",
-      "noSelfDelete":"Admins können sich nicht selbst löschen",
-      "unexpectedError":"Etwas ist schiefgelaufen...",
-      "userAdded":"Benutzer erfolgreich hinzugefügt",
-      "userDeleted":"Benutzer erfolgreich gelöscht",
-      "cannotDeleteDefaltBoard":"Haupt-Board kann nicht gelöscht werden"
-  },
-  "rights":{
-      "userRights":"Nutzerrechte",
-      "createBoards":"Benutzer können neue Boards erstellen",
-      "register":"Benutzer können sich selbst registrieren",
-      "like":"Benutzer können Inhalte mit \"Gefällt mir\" markieren",
-      "comment":"Benutzer können Inhalte kommentieren"
-  },
-  "boards":{
-      "id":"ID des Boards",
-      "boardName":"Name des Boards",
-      "creatorID":"ID des Erstellers",
-      "creatorName":"Name des Erstellers",
-      "creationDate":"Erstelldatum",
-      "boardAdded":"Board erfolgreich erstellt",
-      "boardDeleted":"Board erfolgreich gelöscht",
-      "notFound":"Ersteller nicht gefunden",
-      "malBoardName":"Muss mindestens 2 Zeichen enthalten und darf keine Sonderzeichen enthalten",
-      "accessInfo":"Kann nach Erstellen nicht geändert werden! Nur ein Haupt-Board kann gleichzeitig aktiv sein. Wird ein neues erstellt, wird das vorherige öffentlich."
-  },
-  "register":{
-      "passwordMissmatch":"Passwörter stimmen nicht überein",
-      "nameTaken":"Nutzername oder Email bereits vergeben",
-      "malEmail":"Muss eine valide Email Addresse sein",
-      "malFirstName":"Muss mindestens 2 Zeichen enthalten und darf keine Sonderzeichen enthalten",
-      "malLastName":"Muss mindestens 2 Zeichen enthalten und darf keine Sonderzeichen enthalten",
-      "malUsername":"Muss mindestens 5 Zeichen enthalten und darf keine Sonderzeichen enthalten",
-      "malPassword":"Muss mindestens 8 Stellen lang sein und 1 Groß-, 1 Kleinbuchstabe und 1 Sonderzeichen oder Zahl enthalten",
-      "missingForms":"Bitte fülle alle Felder aus",
-      "title":"Registrierung"
-  },
-  "login":{
-      "invalidLogin":"Email und Passwort stimmen nicht überein",
-      "emailOrName": "Email oder Nutzername",
-      "title":"Anmeldung"
-  },
-  "HelloWorld": "Hallo Welt!"
+    "about":{
+        "message":"Das ist eine About Seite"
+    },
+    "board":{
+        "download":{
+            "image":"Hier klicken um das Bild herunterzuladen",
+            "pdf":"Hier klicken um die PDF-Datei herunterzuladen",
+            "word":"Hier klicken um das Word-Dokument herunterzuladen",
+            "excel":"Hier klicken um die Excel-Tabelle herunterzuladen",
+            "powerpoint":"Hier klicken um die PowerPoint-Präsentation herunterzuladen"
+        },
+        "poll":{
+            "vote":"Abstimmen",
+            "votes":"Abstimmungen | Abstimmung | Abstimmungen",
+            "invalidVote":"Bitte wähle eine Antwort aus!",
+            "showResult":"Ergebnis"
+        },
+        "survey":{
+            "submit":"Absenden",
+            "invalidSubmit":"Bitte fülle alle benötigten Felder aus!",
+            "thankYou":"Danke für deine Teilnahme!"
+        }
+    },
+    "editor":{
+        "note":{
+            "heading":"Texteditor",
+            "title":"Titel hier einfügen",
+            "content":"<p>Inhalt hier einf&uuml;gen</p><ul><li><p>Beginne eine Liste</p></li></ul><ol><li><p>Oder eine Aufz&auml;hlung</p></li></ol>",
+            "create":"Erstellen"
+        },
+        "image":{
+            "heading":"Bild hochladen",
+            "title":"Titel des Bildes",
+            "post":"Bild posten",
+            "upload":"Dein Gerät unterstützt kein Hochladen von Bildern.",
+            "drag":"Ziehe hierher ein Bild oder klicke darauf, um eins auszuwählen",
+            "tap":"Tippe hier, um ein Bild aus deiner Galerie auszuwählen",
+            "change":"Bild ändern",
+            "remove":"Bild entfernen",
+            "select":"Bild auswählen",
+            "selected":"Bild erfolgreich ausgewählt!",
+            "fileSize":"Die Dateigröße überschreitet das Limit!",
+            "fileType":"Nur JPEG und PNG werden unterstützt!",
+            "aspect":"Landschaft/Porträt"
+        },
+        "file":{
+            "heading":"Datei hochladen",
+            "title":"Titel der Datei",
+            "post":"Datei posten",
+            "upload":"Dein Gerät unterstützt kein Hochladen von Dateien.",
+            "drag":"Ziehe hierher eine Datei oder klicke darauf, um eine auszuwählen",
+            "tap":"Tippe hier, um eine Datei von deinem Gerät auszuwählen",
+            "change":"Datei ändern",
+            "remove":"Datei entfernen",
+            "select":"Datei auswählen",
+            "selected":"Datei erfolgreich ausgewählt!",
+            "fileSize":"Die Dateigröße überschreitet das Limit!",
+            "fileType":"Es werden nur PDF, DOC(X), XLS(X) und PPT(X) unterstützt!"
+        },
+        "poll":{
+            "heading":"Abstimmung erstellen",
+            "title":"Deine Frage?",
+            "templateAnswer":"Deine Antwort",
+            "allowMultipleVotes":"Mehrfachauswahl erlauben",
+            "post":"Poll posten",
+            "missingTitle":"Du musst eine Frage eingeben!",
+            "missingAnswers":"Du musst mindestens zwei Antworten erstellen!",
+            "duplicateAnswers":"Die Antworten müssen unterschiedlich sein!"
+        },
+        "survey":{
+            "heading":"Umfrage erstellen",
+            "title":"Dein Umfragentitel",
+            "templateQuestion":"Deine Frage?",
+            "templatePlaceholderTextField":"z. B. Vorschlag A, B, C & 42",
+            "labelPlaceholderTextField":"Optional: Antwortvorschläge & Maximale Länge (5 <-> 50), Standardwert: 50",
+            "templatePlaceholderTextArea":"z. B. Vorschlag D oder E & 5",
+            "labelPlaceholderTextArea":"Optional: Antwortvorschläge & Maximale Reihen (~50 Zeichen pro Reihe, 1 <-> 15), Standardwert: 3 Reihen",
+            "templateAnswer":"Deine Antwort",
+            "allowMultipleVotes":"Mehrfachauswahl erlauben",
+            "questionWith":"(Weitere) Frage mit...",
+            "addInputFieldQuestion":"normalem Eingabefeld hinzufügen",
+            "addTextAreaQuestion":"großem Eingabefeld hinzufügen",
+            "addMultipleChoiceQuestion":"Auswahlmöglichkeiten hinzufügen",
+            "post":"Umfrage posten",
+            "missingTitle":"Du musst einen Umfragentitel eingeben!",
+            "missingIFQQuestion":"Du musst noch eine Frage für ein normales Eingabefeld eingeben!",
+            "missingTAQQuestion":"Du musst noch eine Frage für ein großes Eingabefeld eingeben!",
+            "missingMCQQuestion":"Du musst noch eine Frage für eine Auswahlmöglichkeit eingeben!",
+            "missingMCQAnswers":"Du musst mindestens zwei Antworten pro Frage mit Auswahlmöglichkeit erstellen!",
+            "emptyMCQAnswers":"Du musst mindestens zwei nicht leere Antworten pro Frage mit Auswahlmöglichkeit erstellen!",
+            "duplicateMCQAnswers":"Du musst verschiedene Antworten pro Frage mit Auswahlmöglichkeit erstellen!"
+        },
+        "datePicker":{
+            "dueDate":"Wähle ein Enddatum",
+            "currentDate":"Heute",
+            "language":"de"
+        }
+    },
+    "profile":{
+        "statusMsg":{
+            "updatingUsername":"Aktualisiere Nutzername . . .",
+            "updatingEmail":"Aktualisiere E-Mail . . .",
+            "updatingPassword":"Aktualisiere Passwort . . .",
+            "profileUpdated":"Profil aktualisiert!",
+            "usernameTaken":"Nutzername bereits vergeben!",
+            "emailTaken":"E-Mail bereits vergeben!",
+            "passwordTooSimilar":"Passwörter sind zu ähnlich!",
+            "incorrectPassword":"Falsches Passwort!",
+            "unexpectedError":"Etwas ist schiefgelaufen . . ."
+        },
+        "name":"Name",
+        "firstName":"Vorname",
+        "lastName":"Nachname",
+        "email":"E-Mail",
+        "username":"Nutzername",
+        "password":"Passwort",
+        "passwordOld":"Altes Passwort",
+        "passwordNew":"Neues Passwort",
+        "role":"Rolle",
+        "user":"Benutzer",
+        "admin":"Admin",
+        "affiliate":"Aufnehmen",
+        "confirmPassword":"Passwort bestätigen",
+        "displayname":"Anzeigename"
+    },
+    "ui":{
+        "boardSidebar": {
+            "public":"Öffentliche Boards",
+            "private":"Private Boards",
+            "default":"Haupt-Board",
+            "loginToViewA":"Einloggen",
+            "loginToViewB":" um private Boards zu sehen"
+        },
+        "add":"Neu",
+        "profile":"Profil",
+        "welcome":"Willkommen zurück!",
+        "login":"Anmelden",
+        "logout":"Abmelden",
+        "toLogin":"Ich habe bereits einen Account",
+        "register":"Registrieren",
+        "createAccount":"Erstelle einen neuen Account:",
+        "signUp":"Registrieren",
+        "toSignUp":"Ich habe noch keinen Account",
+        "adopt":"Übernehmen",
+        "addUser":"Benutzer hinzufügen:",
+        "addBoard":"Notice Board erstellen:",
+        "submit":"Bestätigen",
+        "reset":"Zurücksetzen",
+        "clear":"Leeren",
+        "apply":"Anwenden",
+        "cancel":"Zurück",
+        "edit":"Bearbeiten",
+        "ok":"OK",
+        "deletePost1":"Löschen",
+        "deletePost2":"Bist du dir sicher, dass du diese Notiz löschen möchtest?",
+        "error":"Fehler!",
+        "permissions":"Dir fehlen die Rechte um Notizen löschen zu können."
+    },
+    "type":{
+        "text":"Textnotiz",
+        "image":"Bild",
+        "file":"Datei",
+        "poll":"Abstimmung",
+        "survey":"Umfrage"
+    },
+    "cms":{
+        "title":"CMS",
+        "tables":{
+            "role":"Rolle",
+            "roles": {
+                "admin":"Admin",
+                "user":""
+            },
+            "id":"ID",
+            "boardCreatedAt":"Erstellt",
+            "userCreatedAt":"Beigetreten",
+            "lastSeen":"Zuletzt online",
+            "fullName":"Name",
+            "username":"Nutzername",
+            "email":"E-Mail",
+            "search":"Tippen zum suchen",
+            "access":"Zugang",
+            "default":"Haupt",
+            "public":"Öffentlich",
+            "private":"Privat"
+        },
+        "userMgmt":"Benutzerverwaltung",
+        "userList":"Nutzerliste",
+        "newUser":"Neuer Benutzer",
+        "userRights":"Nutzerrechte",
+        "contentMgmt":"Inhaltsverwaltung",
+        "boardList":"Board-Liste",
+        "newBoard":"Neues Notice Board",
+        "groupMgmt":"Gruppenverwaltung",
+        "editGroups":"Gruppen bearbeiten",
+        "delete":"Löschen",
+        "promoteAdmin":"Adminrechte erteilen",
+        "demoteAdmin":"Adminrechte aufheben",
+        "noSelfDemote":"Man kann sich nicht selbst Adminrechte geben oder entziehen",
+        "userRoleChanged":"Nutzerrole erfolgreich geändert",
+        "noSelfDelete":"Admins können sich nicht selbst löschen",
+        "unexpectedError":"Etwas ist schiefgelaufen...",
+        "userAdded":"Benutzer erfolgreich hinzugefügt",
+        "userDeleted":"Benutzer erfolgreich gelöscht",
+        "cannotDeleteDefaultBoard":"Haupt-Board kann nicht gelöscht werden"
+    },
+    "rights":{
+        "userRights":"Nutzerrechte",
+        "createBoards":"Benutzer können neue Boards erstellen",
+        "register":"Benutzer können sich selbst registrieren",
+        "like":"Benutzer können Inhalte mit \"Gefällt mir\" markieren",
+        "comment":"Benutzer können Inhalte kommentieren"
+    },
+    "boards":{
+        "id":"ID des Boards",
+        "boardName":"Name des Boards",
+        "creatorID":"ID des Erstellers",
+        "creatorName":"Name des Erstellers",
+        "creationDate":"Erstelldatum",
+        "boardAdded":"Board erfolgreich erstellt",
+        "boardDeleted":"Board erfolgreich gelöscht",
+        "notFound":"Ersteller nicht gefunden",
+        "malBoardName":"Muss mindestens 2 Zeichen enthalten und darf keine Sonderzeichen enthalten",
+        "accessInfo":"Kann nach Erstellen nicht geändert werden! Nur ein Haupt-Board kann gleichzeitig aktiv sein. Wird ein neues erstellt, wird das vorherige öffentlich."
+    },
+    "register":{
+        "passwordMissmatch":"Passwörter stimmen nicht überein",
+        "nameTaken":"Nutzername oder Email bereits vergeben",
+        "malEmail":"Muss eine valide Email Addresse sein",
+        "malFirstName":"Muss mindestens 2 Zeichen enthalten und darf keine Sonderzeichen enthalten",
+        "malLastName":"Muss mindestens 2 Zeichen enthalten und darf keine Sonderzeichen enthalten",
+        "malUsername":"Muss mindestens 5 Zeichen enthalten und darf keine Sonderzeichen enthalten",
+        "malPassword":"Muss mindestens 8 Stellen lang sein und 1 Groß-, 1 Kleinbuchstabe und 1 Sonderzeichen oder Zahl enthalten",
+        "missingForms":"Bitte fülle alle Felder aus",
+        "title":"Registrierung"
+    },
+    "login":{
+        "invalidLogin":"Email und Passwort stimmen nicht überein",
+        "emailOrName": "Email oder Nutzername",
+        "title":"Anmeldung"
+    },
+    "HelloWorld": "Hallo Welt!"
 }

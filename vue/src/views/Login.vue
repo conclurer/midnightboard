@@ -83,6 +83,7 @@ export default {
           window.localStorage.setItem('mnb_atok', response.data.accessToken)
           window.localStorage.setItem('mnb_rtok', response.data.refreshToken)
           window.localStorage.setItem('mnb_uid', response.data.uid)
+          window.localStorage.setItem('mnb_rid', response.data.rid)
           window.localStorage.setItem('mnb_inits', response.data.initials)
           this.$router.push({ name: 'Home' })
         })
