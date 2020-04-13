@@ -165,7 +165,8 @@
         "tables":{
             "role":"Rolle",
             "roles": {
-                "admin":"Admin"
+                "admin":"Admin",
+                "user":""
             },
             "id":"ID",
             "boardCreatedAt":"Erstellt",
@@ -190,9 +191,9 @@
         "groupMgmt":"Gruppenverwaltung",
         "editGroups":"Gruppen bearbeiten",
         "delete":"Löschen",
-        "promoteAdmin":"Admin erteilen",
-        "demoteAdmin":"Admin aufheben",
-        "noSelfDemote":"Admin Status kann nicht sich selbst erteilt/aufgehoben werden",
+        "promoteAdmin":"Adminrechte erteilen",
+        "demoteAdmin":"Adminrechte aufheben",
+        "noSelfDemote":"Man kann sich nicht selbst Adminrechte geben oder entziehen",
         "userRoleChanged":"Nutzerrole erfolgreich geändert",
         "noSelfDelete":"Admins können sich nicht selbst löschen",
         "unexpectedError":"Etwas ist schiefgelaufen...",

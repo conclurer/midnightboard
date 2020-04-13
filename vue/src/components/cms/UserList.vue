@@ -163,7 +163,14 @@ export default {
           sortable: true,
           sortByFormatted: true,
           formatter: (value, key, item) => {
-            return value === 0 ? i18n.t('cms.tables.roles.admin') : null
+            switch (value) {
+              case 0 :
+                return i18n.t('cms.tables.roles.admin')
+              case 1 :
+                return i18n.t('cms.tables.roles.user')
+              default:
+                return '--undef'
+            }
           }
         }
         // { key: 'delete', label: i18n.t('cms.delete') }
@@ -257,7 +264,6 @@ export default {
       this.loading = false
     },
     moteUser: function (id, role) {
-      alert(role)
       this.delStatus = 0
       this.loading = true
       this.refreshToken()
