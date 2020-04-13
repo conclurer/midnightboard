@@ -2,7 +2,7 @@
   <div class="cms">
     <Header
       id="titlebar"
-      title="CMS"
+      :title="$t('cms.title')"
     />
     <div class="cmsNav">
       <div class="bg-dark text-white">

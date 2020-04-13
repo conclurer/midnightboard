@@ -72,21 +72,35 @@
           variant="success"
           dismissible
         >
-          <h>{{$t('cms.userDeleted')}}</h>
+          {{$t('cms.userDeleted')}}
         </b-alert>
         <b-alert
           :show="delStatus === 403"
           variant="danger"
           dismissible
         >
-          <h>{{$t('cms.noSelfDelete')}}</h>
+          {{$t('cms.noSelfDelete')}}
         </b-alert>
         <b-alert
           :show="delStatus === 400"
           variant="danger"
           dismissible
         >
-          <h>{{$t('cms.unexpectedError')}}</h>
+          {{$t('cms.unexpectedError')}}
+        </b-alert>
+        <b-alert
+          :show="delStatus === 201"
+          variant="success"
+          dismissible
+        >
+          {{$t('cms.userRoleChanged')}}
+        </b-alert>
+        <b-alert
+          :show="delStatus === 410"
+          variant="danger"
+          dismissible
+        >
+          {{$t('cms.noSelfDemote')}}
         </b-alert>
       </div>
 
@@ -96,6 +110,9 @@
             <li @click="clickProfile">{{$t('ui.profile')}}</li>
             <li @click="clickEdit">{{$t('ui.edit')}}</li>
             <li @click="clickDelete">{{$t('cms.delete')}}</li>
+
+            <li @click="clickMote" v-if="selectedRole === 0">{{$t('cms.demoteAdmin')}}</li>
+            <li @click="clickMote" v-else>{{$t('cms.promoteAdmin')}}</li>
           </ul>
       </div>
   </div>
@@ -140,7 +157,22 @@ export default {
           formatter: (value, key, item) => { return item.lastName + ', ' + item.firstName }
         },
         { key: 'email', label: i18n.t('cms.tables.email'), sortable: true },
-        { key: 'userName', label: i18n.t('cms.tables.username'), sortable: true }
+        { key: 'userName', label: i18n.t('cms.tables.username'), sortable: true },
+        { key: 'role',
+          label: i18n.t('cms.tables.role'),
+          sortable: true,
+          sortByFormatted: true,
+          formatter: (value, key, item) => {
+            switch (value) {
+              case 0 :
+                return i18n.t('cms.tables.roles.admin')
+              case 1 :
+                return i18n.t('cms.tables.roles.user')
+              default:
+                return '--undef'
+            }
+          }
+        }
         // { key: 'delete', label: i18n.t('cms.delete') }
       ],
       totalRows: 1,
@@ -149,12 +181,12 @@ export default {
       sortBy: '',
       filter: null,
       filterOn: ['fullName', 'userName', 'email'],
-
       viewContextMenu: false,
       top: '0px',
       left: '0px',
       selectedId: null,
-      selectedUser: null
+      selectedUser: null,
+      selectedRole: null
     }
   },
   created () {
@@ -196,12 +228,13 @@ export default {
         .catch(err => {
           switch (err.response.status) {
             case 403:
-              this.delStatus = err.response.status
+              this.delStatus = 403
               break
             case 400:
             case 401:
             case 500:
             default:
+              this.delStatus = 400
               this.$log.error(err)
           }
         })
@@ -230,6 +263,36 @@ export default {
         })
       this.loading = false
     },
+    moteUser: function (id, role) {
+      this.delStatus = 0
+      this.loading = true
+      this.refreshToken()
+      axios
+        .put('http://localhost:1337/api/users/' + id, { role: role }, {
+          headers: {
+            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(response => {
+          this.delStatus = 201
+          this.loadUserData()
+        })
+        .catch(err => {
+          switch (err.response.status) {
+            case 409:
+              this.delStatus = 410
+              break
+            case 400:
+            case 401:
+            case 500:
+            default:
+              this.delStatus = 400
+              this.$log.error(err)
+          }
+        })
+      this.loading = false
+    },
     onFiltered (filteredItems) {
       this.totalRows = filteredItems.length
       this.currentPage = 1
@@ -246,7 +309,7 @@ export default {
     },
     onRightClicked (item, index, event) {
       event.preventDefault()
-      var top = event.y - 30
+      var top = event.y
       var left = event.x
 
       this.top = top + 'px'
@@ -254,6 +317,8 @@ export default {
 
       this.selectedId = item.id
       this.selectedUser = item.firstName + ' ' + item.lastName
+      this.selectedRole = item.role
+
       this.viewContextMenu = true
       this.$nextTick(() => this.$refs.cm.focus())
     },
@@ -283,6 +348,11 @@ export default {
           editable: false
         }
       })
+    },
+    clickMote () {
+      this.viewContextMenu = false
+      var role = this.selectedRole === 0 ? 1 : 0
+      this.moteUser(this.selectedId, role)
     }
   }
 }
