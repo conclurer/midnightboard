@@ -1,9 +1,12 @@
+<!-- The Content Management System is used to configure the boards and users belonging to the system.
+     Only admins (Super-Users) can access the CMS -->
 <template>
   <div class="cms">
     <Header
       id="titlebar"
       :title="$t('cms.title')"
     />
+    <!-- Displays the navigation bar on the left -->
     <div class="cmsNav">
       <div class="bg-dark text-white">
         <b-nav vertical pills>
@@ -26,28 +29,28 @@
       </div>
 
       <div class="cmsContent" align="center">
-
+        <!-- Displays a list of all registered users -->
         <div v-if="selectedPanel === 'userList'">
           <UserList />
         </div>
-
-        <div v-if="selectedPanel === 'registration'">
+        <!-- Displays a form to register new users -->
+        <div v-else-if="selectedPanel === 'registration'">
           <AddUser />
         </div>
-
-        <div v-if="selectedPanel === 'permissions'">
+        <!-- Displays a panel to adapt user rights -->
+        <div v-else-if="selectedPanel === 'permissions'">
           <PermissionPanel />
         </div>
-
-        <div v-if="selectedPanel === 'noticeBoards'">
+        <!-- Displays a list of all notice boards -->
+        <div v-else-if="selectedPanel === 'noticeBoards'">
           <BoardList />
         </div>
-
-        <div v-if="selectedPanel === 'newBoard'">
+        <!-- Displays a form to create new notice boards -->
+        <div v-else-if="selectedPanel === 'newBoard'">
           <AddBoard />
         </div>
-
-        <div v-if="selectedPanel === 'groups'">
+        <!-- Displays a panel to manage user groups. This panel is not yet implemented -->
+        <div v-else-if="selectedPanel === 'groups'">
           <!-- TODO -->
         </div>
 

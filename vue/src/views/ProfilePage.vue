@@ -1,3 +1,4 @@
+<!-- The profile page shows all relevant user data. It can either be static or editable -->
 <template>
   <div class="main">
     <Header
@@ -7,7 +8,6 @@
       @profile-changed-to-edit="forceChangeToEdit"
       @profile-changed-to-view="forceChangeToView"
     />
-
     <b-card
       bg-variant="dark"
       class="userCard"

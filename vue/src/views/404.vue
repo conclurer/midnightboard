@@ -1,3 +1,4 @@
+<!-- Error 404 page. Displayed when the requested page can't be found -->
 <template>
   <div class="p404">
     <h1><b>404</b></h1>

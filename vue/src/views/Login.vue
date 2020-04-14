@@ -1,12 +1,14 @@
+<!-- Login page. Users can log in with their e-mail addresses or usernames -->
 <template>
   <div class="login">
     <Header id="titlebar" :title="$t('login.title')" />
 
+    <!-- Loading circle displayed while system is sending user data to the database -->
     <b-overlay :show="loading" variant="light" opacity="0.6" blur="2px" rounded="sm">
       <b-card class="loginBox" align="center" bg-variant="dark" text-variant="white">
-        <br />
+        <br>
         <h2>{{$t('ui.welcome')}}</h2>
-        <br />
+        <br>
         <b-form @submit="onSubmit">
           <b-form-input
             id="email"
@@ -15,8 +17,9 @@
             :placeholder="$t('login.emailOrName')"
             trim
             autocomplete="email"
-          ></b-form-input>
-          <br />
+          >
+          </b-form-input>
+          <br>
           <b-form-input
             type="password"
             id="passwd"
@@ -25,7 +28,8 @@
             :placeholder="$t('profile.password')"
             trim
             autocomplete="current-password"
-          ></b-form-input>
+          >
+          </b-form-input>
           <b-tooltip
             :show.sync="tooltipState"
             target="passwd"
@@ -33,13 +37,14 @@
             placement="bottom"
             v-if="loginState === false"
             triggers="blur"
-          >{{$t('login.invalidLogin')}}</b-tooltip>
-
-          <br />
+          >
+            {{$t('login.invalidLogin')}}
+          </b-tooltip>
+          <br>
           <b-button type="submit" variant="primary">{{$t('ui.submit')}}</b-button>
         </b-form>
-
-        <br />
+        <br>
+        <!-- Users who don't have an account yet can register here -->
         <router-link to="/register">{{$t('ui.toSignUp')}}</router-link>
       </b-card>
     </b-overlay>

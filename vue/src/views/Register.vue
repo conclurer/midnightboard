@@ -1,3 +1,4 @@
+<!-- Registration page. Used to create new user accounts-->
 <template>
   <div class="register">
     <Header
@@ -14,7 +15,6 @@
       <br>
       <h4 v-html="$t('ui.createAccount')"></h4>
       <br>
-
       <div>
         <b-overlay
           :show="loading"
@@ -87,8 +87,8 @@
             <b-tooltip target="passwd" variant="info" triggers="hover">
               {{$t('register.malPassword')}}
             </b-tooltip>
-
             <br>
+
             <b-button-group>
               <b-button type="submit" variant="primary" :disabled="!finalState">{{$t('ui.submit')}}</b-button>
               <b-button type="reset" variant="danger">{{$t('ui.reset')}}</b-button>
@@ -98,8 +98,9 @@
           </b-form>
         </b-overlay>
       </div>
-
       <br>
+      
+      <!-- Registered users can click here and log in -->
       <router-link to="/login">
         {{$t('ui.toLogin')}}
       </router-link>

@@ -1,3 +1,4 @@
+<!-- Parent component for all notice boards. Essential data is saved here -->
 <template>
   <div class="home">
     <Header
