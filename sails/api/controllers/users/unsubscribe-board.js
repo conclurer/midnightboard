@@ -1,8 +1,8 @@
 module.exports = {
 
-  friendlyName: 'Subscribe to a board',
+  friendlyName: 'Unsubscribe a board',
 
-  description: 'Subscribe the user to a notice board',
+  description: 'Unsubscribe the user to a notice board',
 
   inputs: {
     userId: {
@@ -41,10 +41,10 @@ module.exports = {
     const userId = inputs.userId;
     const boardId = inputs.boardId;
     const recipent = 'brad.leffler58@ethereal.email';
-    const subject = 'Successfully subscribed to board #' + boardId;
-    const plainText = 'You will get now notifications if new posts get created on this board.';
-    const htmlText = '<p>You will get now notifications if new posts get created on this board.</p>';
-    sails.log.verbose('USER_PUT::: Subscribing user #' + userId + ' to board #' + boardId);
+    const subject = 'Successfully unsubscribed to board #' + boardId;
+    const plainText = 'You will get no longer notifications for this board.';
+    const htmlText = '<p>You will get no longer notifications for this board.</p>';
+    sails.log.verbose('USER_PUT::: Unsubscribing user #' + userId + ' to board #' + boardId);
     var usr = await Member.findOne({id: userId});
     var brd = await Board.findOne({id: boardId});
     if(!usr || !brd) {
@@ -53,11 +53,11 @@ module.exports = {
       // Currently it will just send a confirmation email to this user
       await sails.helpers.sendEmail(recipent, subject, plainText, htmlText)
         .then(() => {
-          sails.log.verbose('USER_PUT::: Subscribed user #' + userId + ' to board #' + boardId + ' successfully');
+          sails.log.verbose('USER_PUT::: Unsubscribed user #' + userId + ' to board #' + boardId + ' successfully');
           return exits.success();
         })
         .catch(() => {
-          sails.log.verbose('USER_PUT::: Could not subscribe user #' + userId + ' to board #' + boardId);
+          sails.log.verbose('USER_PUT::: Could not unsubscribe user #' + userId + ' to board #' + boardId);
           return exits.serverError();
         });
     }

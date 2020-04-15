@@ -76,6 +76,11 @@ module.exports.routes = {
         action: 'subscribe-board',
         skipAssets: true
     },
+    'PUT    /api/users/unsubscribe/:userId/:boardId': {
+        controller: 'users',
+        action: 'unsubscribe-board',
+        skipAssets: true
+    },
 
     //BOARDS
     'GET    /api/boards/:boardId': {
