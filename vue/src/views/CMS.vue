@@ -83,6 +83,7 @@ export default {
     }
   },
   created () {
+    // Users with no access token are forwarded
     if (!window.localStorage.getItem('mnb_atok')) { this.$router.push({ name: 'Home' }) }
   }
 }

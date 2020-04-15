@@ -174,7 +174,7 @@
             "boardCreatedAt":"Erstellt",
             "userCreatedAt":"Beigetreten",
             "lastSeen":"Zuletzt online",
-            "fullName":"Name",
+            "name":"Name",
             "username":"Nutzername",
             "email":"E-Mail",
             "search":"Tippen zum suchen",

@@ -72,6 +72,7 @@ export default {
     }
   },
   methods: {
+    // Sends user input to the database to check if credentials are valid
     onSubmit (event) {
       event.preventDefault()
       this.loginState = null

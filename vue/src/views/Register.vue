@@ -99,7 +99,7 @@
         </b-overlay>
       </div>
       <br>
-      
+
       <!-- Registered users can click here and log in -->
       <router-link to="/login">
         {{$t('ui.toLogin')}}
@@ -128,6 +128,7 @@ export default {
       lname: ''
     }
   },
+  // Computed values show whether the input strings are valid
   computed: {
     fnameState () {
       return /^[\'\-\. a-zA-ZŠŽšžŸÀ-ÖÙ-öù-ÿ]{2,20}$/.test(this.fname)
@@ -149,6 +150,7 @@ export default {
     }
   },
   methods: {
+    // Sends user input to the database to create a new account
     onSubmit (event) {
       event.preventDefault()
       if (!this.finalState) { return }
@@ -170,7 +172,7 @@ export default {
             }
           })
         .then(response => {
-          this.direktLogin()
+          this.directLogin()
         })
         .catch(err => {
           switch (err.response.status) {
@@ -182,6 +184,7 @@ export default {
         })
       this.loading = false
     },
+    // Used to reset the input fields
     onReset (event) {
       event.preventDefault()
       this.uname = ''
@@ -190,7 +193,8 @@ export default {
       this.fname = ''
       this.lname = ''
     },
-    direktLogin () {
+    // If registration was successful the user gets logged in directly
+    directLogin () {
       axios
         .post('http://localhost:1337/api/users/login', {
           email: this.email,

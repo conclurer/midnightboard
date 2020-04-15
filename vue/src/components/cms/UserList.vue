@@ -1,3 +1,5 @@
+<!-- This panel shows a list of all registered users. For each user the profil page can be visited and edited.
+     It also allows to promote, demote and delte users -->
 <template>
   <div class="m">
       <div id="userTable">
@@ -124,9 +126,6 @@ import { i18n } from '@/main.js'
 
 export default {
   name: 'UserList',
-  components: {
-
-  },
   data () {
     return {
       members: [],
@@ -194,6 +193,7 @@ export default {
     this.totalRows = this.members.length
   },
   methods: {
+    // Called to refresh the access token
     refreshToken: async function () {
       await axios
         .post('http://localhost:1337/api/users/refresh', {
@@ -211,6 +211,7 @@ export default {
           }
         })
     },
+    // Called to remove users from the database
     deleteUser: async function (id) {
       this.delStatus = 0
       this.loading = true
@@ -240,6 +241,7 @@ export default {
         })
       this.loading = false
     },
+    // Used to load user data from the database
     loadUserData: async function () {
       this.loading = true
       this.refreshToken()
@@ -263,6 +265,7 @@ export default {
         })
       this.loading = false
     },
+    // This method allows to promote and demote users
     moteUser: function (id, role) {
       this.delStatus = 0
       this.loading = true
@@ -293,10 +296,12 @@ export default {
         })
       this.loading = false
     },
+    // Called when the table gets filtered
     onFiltered (filteredItems) {
       this.totalRows = filteredItems.length
       this.currentPage = 1
     },
+    // Double click opens the profile page of the selected user
     onDoubleClicked (item, index, event) {
       event.preventDefault()
       this.$router.push({
@@ -307,6 +312,7 @@ export default {
         }
       })
     },
+    // Used to display the context menu
     onRightClicked (item, index, event) {
       event.preventDefault()
       var top = event.y
@@ -322,23 +328,11 @@ export default {
       this.viewContextMenu = true
       this.$nextTick(() => this.$refs.cm.focus())
     },
+    // Used to hide the context menu
     clickOutside () {
       this.viewContextMenu = false
     },
-    clickEdit () {
-      this.viewContextMenu = false
-      this.$router.push({
-        name: 'Profile',
-        params: {
-          userId: this.selectedId,
-          editable: true
-        }
-      })
-    },
-    clickDelete () {
-      this.viewContextMenu = false
-      this.deleteUser(this.selectedId)
-    },
+    // This method opens the profile page of the selected user
     clickProfile () {
       this.viewContextMenu = false
       this.$router.push({
@@ -349,6 +343,23 @@ export default {
         }
       })
     },
+    // This method opens the profile page in editing mode
+    clickEdit () {
+      this.viewContextMenu = false
+      this.$router.push({
+        name: 'Profile',
+        params: {
+          userId: this.selectedId,
+          editable: true
+        }
+      })
+    },
+    // Called when the user clicks on the delete button
+    clickDelete () {
+      this.viewContextMenu = false
+      this.deleteUser(this.selectedId)
+    },
+    // Called when the user clicks on the promote/demote button
     clickMote () {
       this.viewContextMenu = false
       var role = this.selectedRole === 0 ? 1 : 0

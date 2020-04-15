@@ -43,11 +43,13 @@ export default {
     this.editing = this.editable
   },
   methods: {
+    // Allows the user to edit his properties
     forceChangeToEdit: function () {
       if (this.editing) { return }
       this.editing = true
       this.$refs.profile.reload()
     },
+    // Change to static user data view
     forceChangeToView: function () {
       if (!this.editing) { return }
       this.editing = false
