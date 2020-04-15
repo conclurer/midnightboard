@@ -1,5 +1,4 @@
 assets
-config/local.js
 node_modules
 .tmp
 *~

@@ -71,6 +71,11 @@ module.exports.routes = {
         action: 'get-participations',
         skipAssets: true
     },
+    'PUT    /api/users/subscribe/:userId/:boardId': {
+        controller: 'users',
+        action: 'subscribe-board',
+        skipAssets: true
+    },
 
     //BOARDS
     'GET    /api/boards/:boardId': {

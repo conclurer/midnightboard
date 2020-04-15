@@ -28,6 +28,7 @@ module.exports.policies = {
     'users/update': 'is-self',
     'users/update-email': 'is-self',
     'users/update-password': 'is-self',
+    'users/subscribe-board': true,
 
     'polls/*': 'is-logged-in',
 
