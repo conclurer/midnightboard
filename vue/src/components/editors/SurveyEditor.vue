@@ -1,3 +1,4 @@
+<!-- This editor is used to create complex survey. They can contain several questions with a text field for the answer and polls -->
 <template>
   <div class="surveyEditor">
     <br>
@@ -169,24 +170,28 @@ export default {
     }
   },
   methods: {
+    // Adds a question with an input field to the survey
     addInputFieldQuestion () {
       this.allowMultipleVotes.push(null)
       this.surveyQuestions.push('')
       this.surveyQuestionType.push('IFQ')
       this.surveyQuestionElement.push('')
     },
+    // Adds a question with a large text field for the answer
     addTextAreaQuestion () {
       this.allowMultipleVotes.push(null)
       this.surveyQuestions.push('')
       this.surveyQuestionType.push('TAQ')
       this.surveyQuestionElement.push('')
     },
+    // Used to add a new single/multiple-choice question
     addMultipleChoiceQuestion () {
       this.allowMultipleVotes.push(false)
       this.surveyQuestions.push('')
       this.surveyQuestionType.push('MCQ')
       this.surveyQuestionElement.push([''])
     },
+    // Used to remove a single/multiple-choice question
     removeQuestion (questionIndex) {
       this.allowMultipleVotes.splice(questionIndex, 1)
       this.surveyQuestions.splice(questionIndex, 1)
@@ -198,12 +203,15 @@ export default {
         this.surveyQuestionElement.splice(questionIndex, 1)
       }
     },
+    // Adds a single/multiple-choice answer to a question
     addChoiceAnswer (questionIndex) {
       this.surveyQuestionElement[questionIndex].push('')
     },
+    // Removes a single/multiple-choice answer
     removeChoiceAnswer (answerIndex, questionIndex) {
       this.surveyQuestionElement[questionIndex].splice(answerIndex, 1)
     },
+    // Used to create new surveys which can be send to the database
     createSurvey () {
       var invalidInput = false
       var containsMCQ = false

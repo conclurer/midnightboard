@@ -1,3 +1,4 @@
+<!-- This editor is used to create simple polls. They consist of a question and several single/multiple-choice answers -->
 <template>
   <div class="pollEditor">
     <b-form-input
@@ -84,12 +85,15 @@ export default {
     }
   },
   methods: {
+    // Adds a new option to vote for
     addAnswer: function () {
       this.pollAnswers.push({ answer: '' })
     },
+    // Deletes an answer field
     removeAnswer: function (index) {
       this.pollAnswers.splice(index, 1)
     },
+    // Used to create new polls which can be send to the database
     createPoll: function () {
       if (this.pollTitle === '') {
         alert(this.$t('editor.poll.missingTitle'))

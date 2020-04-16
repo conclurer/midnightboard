@@ -1,3 +1,4 @@
+<!-- This class is used to draw the icons visible beneath the text note editor -->
 <template>
   <div
     class="icon"

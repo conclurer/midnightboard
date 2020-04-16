@@ -57,10 +57,6 @@ export default {
 </script>
 
 <style scoped>
-  a {
-    cursor: pointer;
-  }
-
   .no-padding {
     padding: 0px;
   }

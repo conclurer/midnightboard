@@ -1,3 +1,4 @@
+<!-- This editor is used to to upload image files -->
 <template>
   <div class="imageUpload">
     <b-form-input
@@ -60,6 +61,7 @@ export default {
     PictureInput
   },
   methods: {
+    // Called when a user changes the selected image
     onChange: function (image) {
       if (image) {
         this.image = image
@@ -68,6 +70,7 @@ export default {
         this.imageRef = ''
       }
     },
+    // Called when a user removes the selected image
     onRemove: function () {
       this.imageRef = ''
       this.imageTitle = this.$t('editor.image.title')

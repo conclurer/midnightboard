@@ -1,16 +1,23 @@
+<!-- This bar is displayed on top of the editor sidebar -->
 <template>
   <div
     class="editor-header"
   >
-    <!-- Table for layout -->
-    <table>
-      <tr>
-        <td class="left-column">
-        </td>
-        <td class="middle-column">
+    <b-container fluid>
+      <b-row>
+        <b-col
+          cols="1"
+        >
+        </b-col>
+        <b-col
+          cols="10"
+        >
           <h2>{{editorTitle}}</h2>
-        </td>
-        <td class="right-column">
+        </b-col>
+        <b-col
+          class="text-right"
+          cols="1"
+        >
           <a>
             <span
               class="unselectable"
@@ -19,30 +26,22 @@
               <font-awesome-icon icon="times" class="cross" @click="close" />
             </span>
           </a>
-        </td>
-      </tr>
-      <tr>
-        <td class="left-column">
-        </td>
-        <td class="middle-column">
-          <VueCtkDateTimePicker
-            id="DatePicker"
-            class="datePicker"
-            format="YYYY-MM-DD"
-            formatted="ll"
-            onlyDate
-            v-model="date"
-            color="#F9A618"
-            :label="$t('editor.datePicker.dueDate')"
-            :buttonNowTranslation="$t('editor.datePicker.currentDate')"
-            :locale="$t('editor.datePicker.language')"
-          >
-          </VueCtkDateTimePicker>
-        </td>
-        <td class="right-column">
-        </td>
-      </tr>
-    </table>
+        </b-col>
+      </b-row>
+    </b-container>
+    <VueCtkDateTimePicker
+      id="DatePicker"
+      class="datePicker"
+      format="YYYY-MM-DD"
+      formatted="ll"
+      onlyDate
+      v-model="date"
+      color="#F9A618"
+      :label="$t('editor.datePicker.dueDate')"
+      :buttonNowTranslation="$t('editor.datePicker.currentDate')"
+      :locale="$t('editor.datePicker.language')"
+    >
+    </VueCtkDateTimePicker>
   </div>
 </template>
 
@@ -56,6 +55,8 @@ export default {
     }
   },
   watch: {
+    // This funtion is triggered when the date property changes. It sends the
+    // date to the editor sidebar, which is responsible for creating new notes
     date: function (date) {
       this.$emit('update-date', date)
     }
@@ -91,10 +92,6 @@ export default {
 </script>
 
 <style scoped>
-  table {
-    width: 100%;
-  }
-
   .editor-header {
     width: 100%;
     color: #000;
@@ -102,27 +99,12 @@ export default {
     padding-top: 12px;
   }
 
-  .left-column {
-    width: 10%;
-  }
-
-  .middle-column {
-    width: 80%
-  }
-
-  .right-column {
-    width: 10%;
-    text-align: right;
-    vertical-align: top;
-  }
-
   .cross {
-    float: right;
     color: #000;
   }
 
   .datePicker {
-    width: 300px;
+    width: 90%;
     z-index: 10003;
   }
 </style>

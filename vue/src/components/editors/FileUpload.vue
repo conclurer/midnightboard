@@ -1,3 +1,4 @@
+<!-- This editor is used to create notes which contain files -->
 <template>
   <div class="fileUpload">
     <b-form-input
@@ -81,6 +82,7 @@ export default {
     PictureInput
   },
   methods: {
+    // Called when a user changes the selected file
     onChange: function (file) {
       this.pdfSelected = false
       this.wordSelected = false
@@ -104,6 +106,7 @@ export default {
         this.fileRef = ''
       }
     },
+    // Called when a user removes the selected file
     onRemove: function () {
       document.getElementsByClassName('preview-container')[0].style.display = 'block'
       this.fileRef = ''
