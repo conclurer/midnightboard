@@ -119,14 +119,12 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { i18n } from '@/main.js'
+import { axios } from '@/mixins/axios.js'
 
 export default {
   name: 'UserList',
-  components: {
-
-  },
+  mixins: [axios],
   data () {
     return {
       members: [],
@@ -194,33 +192,11 @@ export default {
     this.totalRows = this.members.length
   },
   methods: {
-    refreshToken: async function () {
-      await axios
-        .post('http://localhost:1337/api/users/refresh', {
-          token: window.localStorage.getItem('mnb_rtok')
-        })
-        .then(response => {
-          window.localStorage.setItem('mnb_atok', response.data.accessToken)
-        })
-        .catch(err => {
-          this.$log.error(err.response.config.token)
-          switch (err.response.status) {
-            case 500:
-            default:
-              this.$log.error(err)
-          }
-        })
-    },
     deleteUser: async function (id) {
       this.delStatus = 0
       this.loading = true
-      this.refreshToken()
-      await axios
-        .delete('http://localhost:1337/api/users/' + id, {
-          headers: {
-            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
-          }
-        })
+
+      await this.axiosDELETE('api/users/' + id, null, true, true)
         .then(response => {
           this.delStatus = 200
           this.loadUserData()
@@ -242,13 +218,8 @@ export default {
     },
     loadUserData: async function () {
       this.loading = true
-      this.refreshToken()
-      await axios
-        .get('http://localhost:1337/api/users/all?skipAvatar=true', {
-          headers: {
-            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
-          }
-        })
+
+      await this.axiosGET('api/users/all', { skipAvatar: true }, true, true)
         .then(response => {
           this.members = response.data
         })
@@ -263,17 +234,11 @@ export default {
         })
       this.loading = false
     },
-    moteUser: function (id, role) {
+    moteUser: async function (id, role) {
       this.delStatus = 0
       this.loading = true
-      this.refreshToken()
-      axios
-        .put('http://localhost:1337/api/users/' + id, { role: role }, {
-          headers: {
-            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
-            'Content-Type': 'application/json'
-          }
-        })
+
+      await this.axiosPUT('api/users/' + id, { 'role': role }, true, true)
         .then(response => {
           this.delStatus = 201
           this.loadUserData()

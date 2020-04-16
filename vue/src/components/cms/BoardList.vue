@@ -91,13 +91,12 @@
 
 <script>
 // @ is an alias to /src
-import axios from 'axios'
+import { axios } from '@/mixins/axios.js'
 import { i18n } from '@/main.js'
 
 export default {
   name: 'BoardList',
-  components: {
-  },
+  mixins: [axios],
   data () {
     return {
       boards: [],
@@ -143,33 +142,10 @@ export default {
     this.loadBoardData()
   },
   methods: {
-    refreshToken: async function () {
-      await axios
-        .post('http://localhost:1337/api/users/refresh', {
-          token: window.localStorage.getItem('mnb_rtok')
-        })
-        .then(response => {
-          window.localStorage.setItem('mnb_atok', response.data.accessToken)
-        })
-        .catch(err => {
-          this.$log.error(err.response.config.token)
-          switch (err.response.status) {
-            case 500:
-            default:
-              this.$log.error(err)
-          }
-        })
-    },
     deleteBoard: async function (id) {
       this.delStatus = 0
       this.loading = true
-      this.refreshToken()
-      await axios
-        .delete('http://localhost:1337/api/boards/' + id, {
-          headers: {
-            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
-          }
-        })
+      await this.axiosDELETE('api/boards/' + id, null, true, true)
         .then(response => {
           this.delStatus = 200
           this.loadBoardData()
@@ -191,13 +167,7 @@ export default {
     },
     loadBoardData: async function () {
       this.loading = true
-      this.refreshToken()
-      await axios
-        .get('http://localhost:1337/api/boards/all', {
-          headers: {
-            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
-          }
-        })
+      await this.axiosGET('api/boards/all', null, true, true)
         .then(response => {
           this.boards = []
           this.boards.push(response.data.default)

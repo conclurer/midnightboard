@@ -140,11 +140,12 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { axios } from '@/mixins/axios.js'
 
 export default {
   name: 'ProfileComp',
   props: ['userId', 'editable'],
+  mixins: [axios],
   computed: {
     emailState () {
       return this.emailToggle ? this.emailRegex : null
@@ -211,20 +212,8 @@ export default {
       this.loading = true
       if (this.userData.userName !== this.pUname) {
         this.loadingState = 'update'
-        await axios // Update
-          .put('http://localhost:1337/api/users/' + this.userData.id,
-            {
-              'userName': this.pUname
-            },
-            {
-              headers: {
-                'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
-                'Content-Type': 'application/json'
-              }
-            })
-          .then(response => {
-
-          })
+        this.axiosPUT('api/users/' + this.userData.id, { 'userName': this.pUname }, true, true)
+          .then(response => { })
           .catch(err => {
             this.loadingState = 'error'
             switch (err.response.status) {
@@ -248,20 +237,8 @@ export default {
 
       if (this.userData.email !== this.pMail) {
         this.loadingState = 'email'
-        await axios // Email
-          .put('http://localhost:1337/api/users/' + this.userData.id + '/updateemail',
-            {
-              'email': this.pMail
-            },
-            {
-              headers: {
-                'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
-                'Content-Type': 'application/json'
-              }
-            })
-          .then(response => {
-
-          })
+        this.axiosPUT('api/users/' + this.userData.id + '/updateemail', { 'email': this.pMail }, true, true)
+          .then(response => {})
           .catch(err => {
             this.loadingState = 'error'
             switch (err.response.status) {
@@ -283,21 +260,13 @@ export default {
 
       if (this.pPasswdNew.length > 3 && this.pPasswdOld.length > 3) {
         this.loadingState = 'passwd'
-        await axios // Password
-          .put('http://localhost:1337/api/users/' + this.userData.id + '/updatepassword',
-            {
-              'oldPassword': this.pPasswdOld,
-              'newPassword': this.pPasswdNew
-            },
-            {
-              headers: {
-                'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
-                'Content-Type': 'application/json'
-              }
-            })
-          .then(response => {
-
-          })
+        this.axiosPUT('api/users/' + this.userData.id + '/updatepassword',
+          {
+            'oldPassword': this.pPasswdOld,
+            'newPassword': this.pPasswdNew
+          },
+          true, true)
+          .then(response => {})
           .catch(err => {
             this.loadingState = 'error'
             switch (err.response.status) {
@@ -344,34 +313,8 @@ export default {
       this.loading = false
       this.loadingState = null
     },
-    refreshToken: async function () {
-      await axios
-        .post('http://localhost:1337/api/users/refresh', {
-          token: window.localStorage.getItem('mnb_rtok')
-        })
-        .then(response => {
-          window.localStorage.setItem('mnb_atok', response.data.accessToken)
-        })
-        .catch(err => {
-          switch (err.response.status) {
-            case 401:
-            case 400:
-            case 500:
-            default:
-              this.$log.error(err)
-          }
-        })
-    },
     fetchProfile: async function () {
-      var fetchLink = 'http://localhost:1337/api/users/'
-      if (!this.userId) { fetchLink += 'me' } else { fetchLink += this.userId }
-
-      await axios
-        .get(fetchLink, {
-          headers: {
-            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
-          }
-        })
+      await this.axiosGET('api/users/' + this.userId, null, true, true)
         .then(response => {
           this.userData = response.data
           this.pMail = response.data.email

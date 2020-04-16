@@ -1,7 +1,4 @@
 {
-    "about":{
-        "message":"This is an About page"
-    },
     "board":{
         "download":{
             "image":"Click here to download the image",
@@ -239,6 +236,5 @@
         "invalidLogin":"Email and password do not match",
         "emailOrName": "Email or username",
         "title":"Login"
-    },
-    "HelloWorld": "Hello World!"
+    }
 }

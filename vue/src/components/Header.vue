@@ -88,11 +88,13 @@
 
 <script>
 import { i18n } from '@/main.js'
-import axios from 'axios'
 import BoardSidebar from '@/components/BoardSidebar.vue'
+import { logoutUser } from '@/mixins/logoutUser.js'
+
 export default {
   name: 'Header',
   props: ['addActive', 'title'],
+  mixins: [logoutUser],
   components: { BoardSidebar },
   data () {
     return {
@@ -176,25 +178,7 @@ export default {
         .then(() => this.$emit('profile-changed'))
     },
     avatarLogout: function () {
-      axios
-        .delete('http://localhost:1337/api/users/logout', {
-          headers: {
-            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
-          }
-        })
-        .then(response => {
-          window.localStorage.clear()
-          this.$router.push({ name: 'Login' })
-        })
-        .catch(err => {
-          switch (err.response.status) {
-            case 401:
-            case 400:
-            case 500:
-            default:
-              this.$log.error(err)
-          }
-        })
+      this.logout()
     },
     avatarLogin: function () {
       if (this.$route.path === '/login') { return }

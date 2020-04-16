@@ -109,11 +109,12 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { axios } from '@/mixins/axios.js'
 import Header from '@/components/Header.vue'
 
 export default {
   name: 'Register',
+  mixins: [axios],
   components: {
     Header
   },
@@ -153,25 +154,20 @@ export default {
       if (!this.finalState) { return }
       this.loading = true
 
-      axios
-        .post('http://localhost:1337/api/users/register',
-          {
-            'userName': this.uname,
-            'email': this.email,
-            'password': this.passwd,
-            'firstName': this.fname,
-            'lastName': this.lname
-          },
-          {
-            headers: {
-              'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
-              'Content-Type': 'application/json'
-            }
-          })
+      this.axiosPOST('api/users/register',
+        {
+          'userName': this.uname,
+          'email': this.email,
+          'password': this.passwd,
+          'firstName': this.fname,
+          'lastName': this.lname
+        }
+      )
         .then(response => {
           this.direktLogin()
         })
         .catch(err => {
+          this.loading = false
           switch (err.response.status) {
             case 400:
             case 500:
@@ -179,7 +175,6 @@ export default {
               this.$log.error(err)
           }
         })
-      this.loading = false
     },
     onReset (event) {
       event.preventDefault()
@@ -190,11 +185,10 @@ export default {
       this.lname = ''
     },
     direktLogin () {
-      axios
-        .post('http://localhost:1337/api/users/login', {
-          email: this.email,
-          password: this.passwd
-        })
+      this.axiosPOST('api/users/login', {
+        email: this.email,
+        password: this.passwd
+      })
         .then(response => {
           window.localStorage.setItem('mnb_atok', response.data.accessToken)
           window.localStorage.setItem('mnb_rtok', response.data.refreshToken)
@@ -213,6 +207,7 @@ export default {
               this.$log.error(err)
           }
         })
+      this.loading = false
     }
   }
 }

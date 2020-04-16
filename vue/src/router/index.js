@@ -29,11 +29,6 @@ export default new Router({
 
     children: [
       {
-        path: 'about',
-        name: 'About',
-        component: () => import('../views/About.vue')
-      },
-      {
         path: '',
         name: 'Home',
         component: () => import('../views/NoticeBoard.vue')
@@ -56,13 +51,19 @@ export default new Router({
       {
         path: 'cms',
         name: 'CMS',
-        component: () => import('../views/CMS.vue')
+        component: () => import('../views/CMS.vue'),
+        beforeEnter: (to, from, next) => {
+          if (window.localStorage.getItem('mnb_rid') !== '0') { next({ name: 'Login' }) } else next()
+        }
       },
       {
         path: 'profile/:userId',
         name: 'Profile',
         props: true,
-        component: () => import('../views/ProfilePage.vue')
+        component: () => import('../views/ProfilePage.vue'),
+        beforeEnter: (to, from, next) => {
+          if (!window.localStorage.getItem('mnb_atok')) { next({ name: 'Login' }) } else next()
+        }
       }
 
     ]

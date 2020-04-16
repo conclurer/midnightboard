@@ -1,7 +1,4 @@
 {
-    "about":{
-        "message":"Das ist eine About Seite"
-    },
     "board":{
         "download":{
             "image":"Hier klicken um das Bild herunterzuladen",
@@ -177,7 +174,7 @@
             "boardCreatedAt":"Erstellt",
             "userCreatedAt":"Beigetreten",
             "lastSeen":"Zuletzt online",
-            "fullName":"Name",
+            "name":"Name",
             "username":"Nutzername",
             "email":"E-Mail",
             "search":"Tippen zum suchen",
@@ -240,6 +237,5 @@
         "invalidLogin":"Email und Passwort stimmen nicht überein",
         "emailOrName": "Email oder Nutzername",
         "title":"Anmeldung"
-    },
-    "HelloWorld": "Hallo Welt!"
+    }
 }

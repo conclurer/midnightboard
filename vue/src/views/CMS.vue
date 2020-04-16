@@ -78,9 +78,6 @@ export default {
     return {
       selectedPanel: 'userList'
     }
-  },
-  created () {
-    if (!window.localStorage.getItem('mnb_atok')) { this.$router.push({ name: 'Home' }) }
   }
 }
 </script>

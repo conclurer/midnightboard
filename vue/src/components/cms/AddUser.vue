@@ -122,10 +122,11 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { axios } from '@/mixins/axios.js'
 
 export default {
   name: 'AddUser',
+  mixins: [axios],
   computed: {
     fnameState () {
       return /^[\'\-\. a-zA-ZŠŽšžŸÀ-ÖÙ-öù-ÿ]{2,20}$/.test(this.fname)
@@ -163,23 +164,15 @@ export default {
       if (!this.finalState) { return }
       this.addStatus = 0
       this.loading = true
-
-      this.refreshToken()
-      axios
-        .post('http://localhost:1337/api/users/register',
-          {
-            'userName': this.uname,
-            'email': this.email,
-            'password': this.passwd,
-            'firstName': this.fname,
-            'lastName': this.lname
-          },
-          {
-            headers: {
-              'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
-              'Content-Type': 'application/json'
-            }
-          })
+      this.axiosPOST('api/users/register',
+        {
+          'userName': this.uname,
+          'email': this.email,
+          'password': this.passwd,
+          'firstName': this.fname,
+          'lastName': this.lname
+        }
+      )
         .then(response => {
           this.addStatus = 201
           this.uname = ''
@@ -213,25 +206,6 @@ export default {
       this.passwd = ''
       this.fname = ''
       this.lname = ''
-    },
-    refreshToken () {
-      axios
-        .post('http://localhost:1337/api/users/refresh', {
-          token: window.localStorage.getItem('mnb_rtok')
-        })
-        .then(response => {
-          window.localStorage.setItem('mnb_atok', response.data.accessToken)
-        })
-        .catch(err => {
-          this.$log.error(err.response.config.token)
-          switch (err.response.status) {
-            case 500:
-              this.$log.error(err)
-              break
-            default:
-              this.$log.error(err)
-          }
-        })
     }
   }
 }
