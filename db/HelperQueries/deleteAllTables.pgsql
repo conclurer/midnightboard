@@ -1,3 +1,4 @@
+DROP TABLE board_subscription;
 DROP TABLE post_location;
 DROP TABLE team_membership;
 DROP TABLE team;

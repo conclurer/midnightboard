@@ -8,11 +8,17 @@
       class="m"
     >
       <b-navbar-brand href="#">
-        <img src="../../../configuration/logo.png" alt="Logo" class="navImg" @click="logoClick">
+        <img src="../../../configuration/logo.png" alt="Logo" class="navImg" @click="logoClick()">
       </b-navbar-brand>
       <b-nav-text id="navTitle">
         {{ title }}
       </b-nav-text>
+      <b-navbar-item class="navSub" v-if="isLoggedIn()">
+        <b-button variant="link" @click="changeSubscriberMode()">
+          <font-awesome-icon v-if="!boardSubscribed" icon="bell-slash" size="lg" />
+          <font-awesome-icon v-else-if="boardSubscribed" icon="bell" size="lg" />
+        </b-button>
+      </b-navbar-item>
       <b-navbar-toggle target="navbar-toggle-collapse" >
         <template>
           <font-awesome-icon icon="caret-down" />
@@ -98,7 +104,8 @@ export default {
     return {
       selLanguage: '',
       avatarText: '',
-      boardSidebarToggle: false
+      boardSidebarToggle: false,
+      boardSubscribed: false
     }
   },
   created () {
@@ -226,6 +233,16 @@ export default {
     },
     isLoggedInAsAdmin: function () {
       return window.localStorage.getItem('mnb_rid') === '0'
+    },
+    isSubscriber: async function () {
+      // Check if user has subscribed
+      // TODO: Axios
+      return this.boardSubscribed
+    },
+    changeSubscriberMode: async function () {
+      // (Un-)Subscribe user to current board
+      // TODO: Axios
+      this.boardSubscribed = !this.boardSubscribed
     }
   }
 }
@@ -237,6 +254,7 @@ export default {
     border-bottom: 1px black solid;
     position: fixed;
   }
+
   .navImg {
     padding-left: 1vw;
     height: 35px;
@@ -246,6 +264,21 @@ export default {
     padding: 0 0 0 5vw;
     color: white;
     font-size: calc(12pt + 0.8vh);
+  }
+
+  .navSub {
+    padding: 0 0 0 1vw;
+    color: white;
+  }
+
+  .btn-link {
+    color: white;
+    background-color: transparent;
+    border: none;
+  }
+
+  .btn-link:hover {
+    color: red;
   }
 
   .navItem {

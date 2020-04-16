@@ -59,6 +59,41 @@ ALTER SEQUENCE public.board_id_seq OWNED BY public.board.id;
 
 
 --
+-- Name: board_subscription; Type: TABLE; Schema: public; Owner: dev
+--
+
+CREATE TABLE public.board_subscription (
+    id integer NOT NULL,
+    board_id integer NOT NULL,
+    member_id integer NOT NULL
+);
+
+
+ALTER TABLE public.board_subscription OWNER TO dev;
+
+--
+-- Name: board_subscription_id_seq; Type: SEQUENCE; Schema: public; Owner: dev
+--
+
+CREATE SEQUENCE public.board_subscription_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.board_subscription_id_seq OWNER TO dev;
+
+--
+-- Name: board_subscription_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dev
+--
+
+ALTER SEQUENCE public.board_subscription_id_seq OWNED BY public.board_subscription.id;
+
+
+--
 -- Name: member; Type: TABLE; Schema: public; Owner: dev
 --
 
@@ -420,6 +455,13 @@ ALTER TABLE ONLY public.board ALTER COLUMN id SET DEFAULT nextval('public.board_
 
 
 --
+-- Name: board_subscription id; Type: DEFAULT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public.board_subscription ALTER COLUMN id SET DEFAULT nextval('public.board_subscription_id_seq'::regclass);
+
+
+--
 -- Name: member id; Type: DEFAULT; Schema: public; Owner: dev
 --
 
@@ -490,6 +532,14 @@ COPY public.board (id, created_at, updated_at, creator_id, board_name, board_typ
 1	1577833200000	1577833200000	1	Default Board	0
 2	1577833200000	1577833200000	1	Private Board	1
 3	1577833200000	1577833200000	1	Public Board	2
+\.
+
+
+--
+-- Data for Name: board_subscription; Type: TABLE DATA; Schema: public; Owner: dev
+--
+
+COPY public.board_subscription (id, board_id, member_id) FROM stdin;
 \.
 
 
@@ -608,6 +658,13 @@ SELECT pg_catalog.setval('public.board_id_seq', 3, true);
 
 
 --
+-- Name: board_subscription_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dev
+--
+
+SELECT pg_catalog.setval('public.board_subscription_id_seq', 1, false);
+
+
+--
 -- Name: member_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dev
 --
 
@@ -691,6 +748,14 @@ ALTER TABLE ONLY public.board
 
 ALTER TABLE ONLY public.board
     ADD CONSTRAINT board_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: board_subscription board_subscription_pkey; Type: CONSTRAINT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public.board_subscription
+    ADD CONSTRAINT board_subscription_pkey PRIMARY KEY (id);
 
 
 --
@@ -795,6 +860,22 @@ ALTER TABLE ONLY public.token
 
 ALTER TABLE ONLY public.board
     ADD CONSTRAINT board_creator_id_fkey FOREIGN KEY (creator_id) REFERENCES public.member(id) ON DELETE SET NULL;
+
+
+--
+-- Name: board_subscription board_subscription_board_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public.board_subscription
+    ADD CONSTRAINT board_subscription_board_id_fkey FOREIGN KEY (board_id) REFERENCES public.board(id) ON DELETE CASCADE;
+
+
+--
+-- Name: board_subscription board_subscription_member_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public.board_subscription
+    ADD CONSTRAINT board_subscription_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.member(id) ON DELETE CASCADE;
 
 
 --

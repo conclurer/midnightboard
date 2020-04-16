@@ -40,7 +40,7 @@ module.exports = {
     }
     const userId = inputs.userId;
     const boardId = inputs.boardId;
-    const recipent = 'brad.leffler58@ethereal.email';
+    const recipent = 'brad.leffler58@ethereal.email'; // Delete it if recipent -> member.email
     const subject = 'Successfully unsubscribed to board #' + boardId;
     const plainText = 'You will get no longer notifications for this board.';
     const htmlText = '<p>You will get no longer notifications for this board.</p>';
@@ -50,15 +50,25 @@ module.exports = {
     if(!usr || !brd) {
       return exits.nonExistent();
     } else {
-      // Currently it will just send a confirmation email to this user
-      await sails.helpers.sendEmail(recipent, subject, plainText, htmlText)
-        .then(() => {
-          sails.log.verbose('USER_PUT::: Unsubscribed user #' + userId + ' to board #' + boardId + ' successfully');
-          return exits.success();
+      await BoardSubscription.destroy({
+        boardId: boardId,
+        memberId: userId
+      }).fetch()
+        .then(async () => {
+          // Currently it will just send a confirmation email to this user
+          await sails.helpers.sendEmail(recipent, subject, plainText, htmlText) // Later, recipent -> usr.email!
+            .then(() => {
+              sails.log.verbose('USER_PUT::: Unsubscribed user #' + userId + ' to board #' + boardId + ' successfully');
+              return exits.success();
+            })
+            .catch(() => {
+              sails.log.verbose('USER_PUT::: Could not unsubscribe user #' + userId + ' to board #' + boardId);
+              return exits.serverError();
+            });
         })
         .catch(() => {
           sails.log.verbose('USER_PUT::: Could not unsubscribe user #' + userId + ' to board #' + boardId);
-          return exits.serverError();
+          return exits.serverError('USER_PUT::: Failed to delete subscription entry for user #' + userId);
         });
     }
   }

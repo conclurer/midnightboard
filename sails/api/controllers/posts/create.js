@@ -76,6 +76,7 @@ module.exports = {
     if(!titleRegex.test(inputs.title)) {
       return exits.invalidParams('Title is too long/short or contains illegal characters');
     }
+    const boardId = inputs.boardId;
 
     // Validate type
     if(![
@@ -191,7 +192,7 @@ module.exports = {
     }
 
 
-    var boardExists = await Board.findOne({id: inputs.boardId});
+    var boardExists = await Board.findOne({id: boardId});
     if(!boardExists) {
       return exits.nonExistent();
     }
@@ -209,9 +210,31 @@ module.exports = {
 
     var createdPost = await Post.create(createData).fetch();
     await PostLocation.create({
-      boardId: inputs.boardId,
+      boardId: boardId,
       postId: createdPost.id
     });
+
+    // Send notifications to all subscribed members
+    const recipent = 'brad.leffler58@ethereal.email'; // Delete it if recipent -> member.email
+    const subject = 'New post on board #' + boardId;
+    const plainText = 'Someone have created a new post on board #' + boardId + 
+      '. Check it out! If you want to unsubscribe use the bell on the board!';
+    const htmlText = 'Someone have created a new post on board #' + boardId + 
+    '. Check it out!<br>If you want to unsubscribe use the bell on the board!';
+    const subscribers = await BoardSubscription.find({boardId: boardId});
+    for(const subscriber of subscribers) {
+      const member = await Member.findOne({memberId: subscriber.memberId});
+      if(member) {
+        await sails.helpers.sendEmail(recipent, subject, plainText, htmlText) // Later, recipent -> member.email
+        .then(() => {
+          sails.log.verbose('POSTS_CREATE::: Send notification to user #' + member.id);
+        })
+        .catch(() => {
+          sails.log.verbose('POSTS_CREATE::: Failed to send notification to user #' + member.id);
+        });
+      }
+    }
+
 
     if(inputs.skipReturn && inputs.skipReturn === true) {
       return exits.success();
