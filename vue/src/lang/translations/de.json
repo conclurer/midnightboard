@@ -22,7 +22,7 @@
     "editor":{
         "note":{
             "heading":"Texteditor",
-            "title":"Titel hier einfügen",
+            "title":"Titel der Notiz",
             "content":"<p>Inhalt hier einf&uuml;gen</p><ul><li><p>Beginne eine Liste</p></li></ul><ol><li><p>Oder eine Aufz&auml;hlung</p></li></ol>",
             "create":"Erstellen"
         },
@@ -61,7 +61,7 @@
             "templateAnswer":"Deine Antwort",
             "allowMultipleVotes":"Mehrfachauswahl erlauben",
             "post":"Poll posten",
-            "missingTitle":"Du musst eine Frage eingeben!",
+            "missingTitle":"Die Frage muss mindestens 2 Zeichen lang sein!",
             "missingAnswers":"Du musst mindestens zwei Antworten erstellen!",
             "duplicateAnswers":"Die Antworten müssen unterschiedlich sein!"
         },
@@ -80,7 +80,7 @@
             "addTextAreaQuestion":"großem Eingabefeld hinzufügen",
             "addMultipleChoiceQuestion":"Auswahlmöglichkeiten hinzufügen",
             "post":"Umfrage posten",
-            "missingTitle":"Du musst einen Umfragentitel eingeben!",
+            "missingTitle":"Der Umfragentitel muss mindestens 2 Zeichen lang sein!",
             "missingIFQQuestion":"Du musst noch eine Frage für ein normales Eingabefeld eingeben!",
             "missingTAQQuestion":"Du musst noch eine Frage für ein großes Eingabefeld eingeben!",
             "missingMCQQuestion":"Du musst noch eine Frage für eine Auswahlmöglichkeit eingeben!",
@@ -92,7 +92,8 @@
             "dueDate":"Wähle ein Enddatum",
             "currentDate":"Heute",
             "language":"de"
-        }
+        },
+        "tooShort":"Der Titel muss mindestens 2 Zeichen lang sein"
     },
     "profile":{
         "statusMsg":{

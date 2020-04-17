@@ -3,10 +3,14 @@
   <div class="fileUpload">
     <b-form-input
       class="fileTitle"
-      v-bind:value="fileTitle"
-      v-on:input="fileTitle = $event"
+      v-model="fileTitle"
       :maxlength="maxFileTitleLength"
+      :placeholder="$t('editor.file.title')"
+      :state="titleState"
     />
+    <b-form-invalid-feedback>
+      {{$t('editor.tooShort')}}
+    </b-form-invalid-feedback>
     <br>
     <div v-if="pdfSelected">
       <font-awesome-icon icon="file-pdf" size="10x"/>
@@ -67,10 +71,13 @@ import PictureInput from 'vue-picture-input'
 
 export default {
   name: 'FileUpload',
+  components: {
+    PictureInput
+  },
   data () {
     return {
       fileRef: '',
-      fileTitle: this.$t('editor.file.title'),
+      fileTitle: '',
       maxFileTitleLength: 50,
       pdfSelected: false,
       wordSelected: false,
@@ -78,8 +85,11 @@ export default {
       powerpointSelected: false
     }
   },
-  components: {
-    PictureInput
+  // Computed value shows whether the title string is valid
+  computed: {
+    titleState () {
+      return this.fileTitle.length > 1
+    }
   },
   methods: {
     // Called when a user changes the selected file

@@ -97,6 +97,8 @@ export default {
     },
     // Used to send a note to the backend
     createNote: async function (titleContent, jsonContent) {
+      if (titleContent.length < 2) { return }
+
       var jsonBody
       if (this.dueDate == null) {
         jsonBody = JSON.stringify({
@@ -131,6 +133,8 @@ export default {
     },
     // Used to send an image to the backend
     uploadImage: async function (titleContent, dataURI) {
+      if (titleContent.length < 2) { return }
+
       const dataURISplit = dataURI.split(',')
       const datapart = dataURISplit[0] // E.g. data:image/png;base64
       const base64Data = dataURISplit[1] // BORw0KGgoAAAANSUhEUgAAB...
@@ -170,6 +174,8 @@ export default {
     },
     // Used to send a file to the backend
     uploadFile: async function (titleContent, dataURI) {
+      if (titleContent.length < 2) { return }
+
       const dataURISplit = dataURI.split(',')
       const datapart = dataURISplit[0] // e.g. data:application/pdf;base64
       const base64Data = dataURISplit[1] // ZGgoAAAANSUhEUgAASs54B...
@@ -209,6 +215,8 @@ export default {
     },
     // Used to send a poll draft to the backend
     createPoll: async function (titleContent, jsonContent, answerIndices, answerNames) {
+      if (titleContent.length < 2) { return }
+
       var jsonBodyNote
       if (this.dueDate == null) {
         jsonBodyNote = JSON.stringify({
@@ -259,6 +267,8 @@ export default {
     },
     // Used to send a survey draft to the backend
     createSurvey: async function (titleContent, jsonContent, questionIndices, questions, mcqAnswers) {
+      if (titleContent.length < 2) { return }
+
       const jsonBodyNote = JSON.stringify({
         title: titleContent,
         typeOfPost: 'application/survey',

@@ -4,9 +4,13 @@
     <b-form-input
       class="pollTitle"
       v-model="pollTitle"
-      :placeholder="$t('editor.poll.title')"
       :maxlength="maxPollTitleLength"
+      :placeholder="$t('editor.poll.title')"
+      :state="titleState"
     />
+    <b-form-invalid-feedback>
+      {{$t('editor.tooShort')}}
+    </b-form-invalid-feedback>
     <br>
     <b-container>
       <div
@@ -84,6 +88,12 @@ export default {
       pollContent: ''
     }
   },
+  // Computed value shows whether the title string is valid
+  computed: {
+    titleState () {
+      return this.pollTitle.length > 1
+    }
+  },
   methods: {
     // Adds a new option to vote for
     addAnswer: function () {
@@ -95,7 +105,7 @@ export default {
     },
     // Used to create new polls which can be send to the backend
     createPoll: function () {
-      if (this.pollTitle === '') {
+      if (this.pollTitle.length < 2) {
         alert(this.$t('editor.poll.missingTitle'))
       } else {
         // 2 or more answers = valid poll

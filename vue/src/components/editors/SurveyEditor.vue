@@ -4,9 +4,13 @@
     <b-form-input
       class="surveyTitle"
       v-model="surveyTitle"
-      :placeholder="$t('editor.survey.title')"
       :maxlength="maxSurveyTitleLength"
+      :placeholder="$t('editor.survey.title')"
+      :state="titleState"
     />
+    <b-form-invalid-feedback>
+      {{$t('editor.tooShort')}}
+    </b-form-invalid-feedback>
     <div v-if="surveyQuestions.length >= 0">
       <div
         v-for="(question, index) in surveyQuestions"
@@ -167,6 +171,12 @@ export default {
       surveyContent: ''
     }
   },
+  // Computed value shows whether the title string is valid
+  computed: {
+    titleState () {
+      return this.surveyTitle.length > 1
+    }
+  },
   methods: {
     // Adds a question with an input field to the survey
     addInputFieldQuestion () {
@@ -214,7 +224,7 @@ export default {
       var invalidInput = false
       var containsMCQ = false
       var answerDuplicates = false
-      if (this.surveyTitle === '') {
+      if (this.surveyTitle.length < 2) {
         alert(this.$t('editor.survey.missingTitle'))
         invalidInput = true
       } else {

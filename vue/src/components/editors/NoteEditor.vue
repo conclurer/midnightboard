@@ -7,7 +7,12 @@
       v-model="titleContent"
       maxlength="25"
       autocomplete="off"
+      :placeholder="$t('editor.note.title')"
+      :state="titleState"
     />
+    <b-form-invalid-feedback>
+      {{$t('editor.tooShort')}}
+    </b-form-invalid-feedback>
     <br>
     <editor-content
       class="content-editor"
@@ -187,7 +192,7 @@ export default {
   },
   data () {
     return {
-      titleContent: this.$t('editor.note.title'),
+      titleContent: '',
       textContent: this.$t('editor.note.content'),
       contentEditor: new Editor({
         extensions: [
@@ -222,6 +227,12 @@ export default {
           this.textContent = this.textContent.replace('ß', '&szlig;')
         }
       })
+    }
+  },
+  // Computed value shows whether the title string is valid
+  computed: {
+    titleState () {
+      return this.titleContent.length > 1
     }
   },
   // Called before the instance is destroyed
