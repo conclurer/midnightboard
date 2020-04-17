@@ -54,7 +54,7 @@ module.exports = {
         boardId: boardId,
         memberId: userId
       }).fetch()
-        .then(async () => {
+        .then(async() => {
           // Currently it will just send a confirmation email to this user
           await sails.helpers.sendEmail(recipent, subject, plainText, htmlText) // Later, recipent -> usr.email!
             .then(() => {

@@ -217,21 +217,21 @@ module.exports = {
     // Send notifications to all subscribed members
     const recipent = 'brad.leffler58@ethereal.email'; // Delete it if recipent -> member.email
     const subject = 'New post on board #' + boardId;
-    const plainText = 'Someone have created a new post on board #' + boardId + 
-      '. Check it out! If you want to unsubscribe use the bell on the board!';
-    const htmlText = 'Someone have created a new post on board #' + boardId + 
-    '. Check it out!<br>If you want to unsubscribe use the bell on the board!';
+    const plainText = 'Someone have created a new post on board #' + boardId
+      + '. Check it out! If you want to unsubscribe use the bell on the board!';
+    const htmlText = 'Someone have created a new post on board #' + boardId
+      + '. Check it out!<br>If you want to unsubscribe use the bell on the board!';
     const subscribers = await BoardSubscription.find({boardId: boardId});
     for(const subscriber of subscribers) {
       const member = await Member.findOne({memberId: subscriber.memberId});
       if(member) {
         await sails.helpers.sendEmail(recipent, subject, plainText, htmlText) // Later, recipent -> member.email
-        .then(() => {
-          sails.log.verbose('POSTS_CREATE::: Send notification to user #' + member.id);
-        })
-        .catch(() => {
-          sails.log.verbose('POSTS_CREATE::: Failed to send notification to user #' + member.id);
-        });
+          .then(() => {
+            sails.log.verbose('POSTS_CREATE::: Send notification to user #' + member.id);
+          })
+          .catch(() => {
+            sails.log.verbose('POSTS_CREATE::: Failed to send notification to user #' + member.id);
+          });
       }
     }
 
