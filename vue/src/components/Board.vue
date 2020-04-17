@@ -3,13 +3,12 @@
   <div class="board">
     <!-- Displays content when editor is displayed -->
     <div
-      class="inner-board"
+      class="inner-board editor-active"
       v-if="editorActive"
-      style="display: grid; grid-template-columns: 1fr 500px;"
     >
       <PostPanel
+        class="small-board"
         @reload-board="reloadBoard"
-        style="grid-column: 1 / 2;"
         :notes="notes"
         :upateKey="editorActive"
       />
@@ -82,6 +81,15 @@ export default {
 
   .inner-board {
     grid-row: 1 / 2;
+  }
+
+  .editor-active {
+    display: grid;
+    grid-template-columns: 1fr 500px;
+  }
+
+  .small-board {
+    grid-column: 1 / 2;
   }
 
   .right-bar {

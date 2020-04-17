@@ -1,3 +1,4 @@
+<!-- The main class of the website. All views and components are rendered inside of this one -->
 <template>
   <div id="app">
     <router-view />

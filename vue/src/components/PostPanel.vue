@@ -49,9 +49,9 @@
         </div>
 
         <!-- Display PDF as preview and link -->
-        <div v-else-if="note.typeOfPost === 'application/pdf'" style="min-height: 640px;">
+        <div v-else-if="note.typeOfPost === 'application/pdf'" class="pdf-note">
           <b-card-text>
-            <pdf :src="'data:application/pdf;base64,' + note.content" style="height: 585;"></pdf>
+            <pdf :src="'data:application/pdf;base64,' + note.content" class="pdf"></pdf>
             <a v-bind:href="'data:application/pdf;base64,' + note.content" :download="note.title + '.pdf'">{{$t('board.download.pdf')}}</a>
           </b-card-text>
         </div>
@@ -524,6 +524,14 @@ export default {
   .note {
     width: 480px;
     margin: 10px;
+  }
+
+  .pdf-note {
+    min-height: 640px;
+  }
+
+  .pdf {
+    height: 585;
   }
 
   .chart-horizontal {
