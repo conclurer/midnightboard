@@ -1,3 +1,4 @@
+<!-- This panel in the Board class is responsible for rendering all the different types of posts -->
 <template>
   <div
     class="content"
@@ -184,7 +185,7 @@
       </b-card>
     </div>
 
-    <!-- Displayed when a user wants to delete a post -->
+    <!-- Dialog displayed when a user wants to delete a post -->
     <b-modal
       id="modal-delete-post"
       ref="modal"
@@ -196,7 +197,7 @@
       {{ $t('ui.deletePost2') }}
     </b-modal>
 
-    <!-- Displayed when user can't delete a post because of missing permissions -->
+    <!-- Dialog displayed when a user can't delete a post because of missing permissions -->
     <b-modal
       id="modal-missing-permissions"
       ref="modal"
@@ -234,7 +235,7 @@ export default {
   },
   props: ['notes', 'updateKey'],
   computed: {
-    // Return whether the user is logged in
+    // Returns whether the user is logged in
     isLoggedIn: function () {
       return window.localStorage.getItem('mnb_rid')
     }
@@ -261,6 +262,7 @@ export default {
       .catch(err => this.$log.error(err))
   },
   methods: {
+    // Called to refresh the access token
     refreshToken: async function () {
       await axios
         .post('http://localhost:1337/api/users/refresh', {
@@ -278,6 +280,7 @@ export default {
           }
         })
     },
+    // Used to get and display the results of a poll
     initPoll: async function (postId) {
       // Axios GET for current votes (if post is not a poll ignore it)
       await axios
@@ -341,6 +344,7 @@ export default {
           }
         })
     },
+    // Called when a user votes on a poll
     votePoll: async function (element) {
       const postId = element.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id
       // Axios PUT to update votes for the answer
@@ -371,11 +375,13 @@ export default {
           .catch(err => this.$log.error(err))
       }
     },
+    // This method is used to find out the post id of a poll. Then the results are rendered
     showResult: async function (element) {
       // Show current results
       const postId = element.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id
       this.initPoll(postId)
     },
+    // Used to validate and transfer the input data from a survey to the backend
     submitSurvey: async function (element) {
       const postId = element.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id
       // Axios PUT to submit survey
@@ -461,6 +467,7 @@ export default {
         this.refreshBoard = !this.refreshBoard
       }
     },
+    // Called when a user wants to delete a post
     deletePost: async function () {
       this.refreshToken()
 

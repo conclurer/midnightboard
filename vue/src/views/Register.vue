@@ -150,7 +150,7 @@ export default {
     }
   },
   methods: {
-    // Sends user input to the database to create a new account
+    // Sends user input to the backend to create a new account
     onSubmit (event) {
       event.preventDefault()
       if (!this.finalState) { return }

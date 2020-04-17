@@ -158,7 +158,7 @@ export default {
     }
   },
   methods: {
-    // This method sends the input field content to the database to register a new user
+    // This method sends the input field content to the backend to register a new user
     onSubmit: async function (event) {
       event.preventDefault()
       if (!this.finalState) { return }

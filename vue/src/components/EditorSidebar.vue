@@ -1,3 +1,4 @@
+<!-- This sidebar displays the selected editor and has an own header -->
 <template>
   <div
     class="editorSidebar"
@@ -74,6 +75,7 @@ export default {
     }
   },
   methods: {
+    // Called to refresh the access token
     refreshToken: async function () {
       await axios
         .post('http://localhost:1337/api/users/refresh', {
@@ -93,6 +95,7 @@ export default {
           }
         })
     },
+    // Used to send a note to the backend
     createNote: async function (titleContent, jsonContent) {
       var jsonBody
       if (this.dueDate == null) {
@@ -126,6 +129,7 @@ export default {
       // Notify notice board
       this.$emit('add-note')
     },
+    // Used to send an image to the backend
     uploadImage: async function (titleContent, dataURI) {
       const dataURISplit = dataURI.split(',')
       const datapart = dataURISplit[0] // E.g. data:image/png;base64
@@ -164,6 +168,7 @@ export default {
       // Notify board component
       this.$emit('add-note')
     },
+    // Used to send a file to the backend
     uploadFile: async function (titleContent, dataURI) {
       const dataURISplit = dataURI.split(',')
       const datapart = dataURISplit[0] // e.g. data:application/pdf;base64
@@ -202,6 +207,7 @@ export default {
       // Notify notice board
       this.$emit('add-note')
     },
+    // Used to send a poll draft to the backend
     createPoll: async function (titleContent, jsonContent, answerIndices, answerNames) {
       var jsonBodyNote
       if (this.dueDate == null) {
@@ -251,6 +257,7 @@ export default {
       // Notify notice board
       this.$emit('add-note')
     },
+    // Used to send a survey draft to the backend
     createSurvey: async function (titleContent, jsonContent, questionIndices, questions, mcqAnswers) {
       const jsonBodyNote = JSON.stringify({
         title: titleContent,
@@ -291,11 +298,11 @@ export default {
       // Notify notice board
       this.$emit('add-note')
     },
-    // Used to update the date property
+    // Called when the date property in the editor header changes
     updateDate: function (date) {
       this.dueDate = (new Date(date)).getTime()
     },
-    // Used to close the editor sidebar
+    // This method sends the command to close the editor sidebar to the board component
     close: function () {
       this.$emit('close')
     }

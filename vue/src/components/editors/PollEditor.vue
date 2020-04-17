@@ -93,7 +93,7 @@ export default {
     removeAnswer: function (index) {
       this.pollAnswers.splice(index, 1)
     },
-    // Used to create new polls which can be send to the database
+    // Used to create new polls which can be send to the backend
     createPoll: function () {
       if (this.pollTitle === '') {
         alert(this.$t('editor.poll.missingTitle'))

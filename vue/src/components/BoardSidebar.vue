@@ -1,3 +1,4 @@
+<!-- This sidebar displays all notice board accessable for the user -->
 <template>
   <div class="boardSidebar">
     <div class="menu" v-smoothscrollbar="{ listener, options }">
@@ -8,7 +9,7 @@
             blur="2px"
             rounded="sm"
         >
-          <br><br><br>
+          <br><br><br> <!-- These breaks are needed so the board list starts below the header bar -->
           <p class="panelHeading">{{$t('ui.boardSidebar.default')}}</p>
           <hr>
           <b-overlay
@@ -93,6 +94,7 @@ export default {
     this.loading = false
   },
   methods: {
+    // Used to load the all boards accessable for the user
     fetchBoards: async function () {
       await axios
         .get('http://localhost:1337/api/boards/all', {
@@ -115,6 +117,7 @@ export default {
           }
         })
     },
+    // Called when the user clicks on a board. He then gets forwarded to the board
     navClick: function (id) {
       if (this.$route.params.boardId === id) { return }
       this.$router.push({
@@ -125,6 +128,7 @@ export default {
       })
         .then(() => this.$emit('board-changed'))
     },
+    // Called when the user clicks on the default board button
     navClickDefault: function () {
       if (this.$route.path === '/') { return }
       this.boardId = this.boardDefault.id
@@ -133,15 +137,18 @@ export default {
       })
         .then(() => this.$emit('board-changed'))
     },
+    // If the user isn't already at the login page, he gets forwarded there
     navClickLogin: function () {
       if (this.$route.path === '/login') { return }
       this.$router.push({
         name: 'Login'
       })
     },
+    // Used to find out whether the user is logged in
     isLoggedIn: function () {
       return !!window.localStorage.getItem('mnb_rtok')
     },
+    // Returns whether the board with the passed on id is currently displayed
     isActive: function (id) {
       if (typeof id === 'undefined' && this.$route.path !== '/') return null
       return this.$route.params.boardId === id
@@ -151,56 +158,68 @@ export default {
 </script>
 
 <style scoped>
-    .menu {
-      position: fixed;
-      z-index: 1000;
-      list-style: none;
-      min-width: 350px;
-      max-width: 100%;
-      min-height: 100vh;
-      background: rgba(24,24,24,.9);
-      top: 0;
-      left: 0;
-    }
-    .navItem {
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 1.2rem;
-      text-align: left;
-      height: 100%;
-      background:rgba(64, 64, 64, 0.6);
-      color: white;
-    }
-    .navItem:hover {
-      background:rgba(88, 88, 88, 0.6);
-    }
-    .navItemOverlay {
-      cursor: pointer;
-      margin:  1rem 2rem 0.25rem 2rem;
-    }
+  .menu {
+    position: fixed;
+    z-index: 1000;
+    list-style: none;
+    min-width: 350px;
+    max-width: 100%;
+    min-height: 100vh;
+    background: rgba(24,24,24,.9);
+    top: 0;
+    left: 0;
+  }
 
-    hr {
-      border-top: 1px gray solid;
-      margin: 0 0 6px 0;
-    }
-    .panelHeading {
-      padding-top: 1rem;
-      padding-left: 1rem;
-      margin: 0 0 -6px 0;
-      color: gray;
-      text-align: left;
-      font-weight: bold;
-      font-size: 1.25rem;
-    }
-    .panelFooting {
-      color: gray;
-      text-align: center;
-      font-size: 1rem;
-    }
-    .panelLink {
-      font-weight: bold;
-      color: dodgerblue;
-    }
-    .panelLink:hover {color: deepskyblue;}
-    .panelLink:visited {color: dodgerblue;}
+  .navItem {
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-align: left;
+    height: 100%;
+    background:rgba(64, 64, 64, 0.6);
+    color: white;
+  }
+
+  .navItem:hover {
+    background:rgba(88, 88, 88, 0.6);
+  }
+
+  .navItemOverlay {
+    cursor: pointer;
+    margin:  1rem 2rem 0.25rem 2rem;
+  }
+
+  hr {
+    border-top: 1px gray solid;
+    margin: 0 0 6px 0;
+  }
+
+  .panelHeading {
+    padding-top: 1rem;
+    padding-left: 1rem;
+    margin: 0 0 -6px 0;
+    color: gray;
+    text-align: left;
+    font-weight: bold;
+    font-size: 1.25rem;
+  }
+
+  .panelFooting {
+    color: gray;
+    text-align: center;
+    font-size: 1rem;
+  }
+
+  .panelLink {
+    font-weight: bold;
+    color: dodgerblue;
+  }
+
+  .panelLink:hover {
+    color: deepskyblue;
+  }
+
+  .panelLink:visited {
+    color: dodgerblue;
+  }
 </style>

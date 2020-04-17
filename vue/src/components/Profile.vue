@@ -1,3 +1,4 @@
+<!-- The profile page shows all important user data. When the editing variable is set, users also can modify their properties -->
 <template>
   <b-overlay
     :show="loading"
@@ -167,6 +168,7 @@ export default {
     passwdRegex () {
       return /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]|.*[\-=._#§@$!%*?&])[A-Za-z0-9\-=._#§@$!%*?&]{8,}$/.test(this.pPasswdNew)
     },
+    // Returns whether the complete user data is valid
     submitState () {
       if (this.userData.email !== this.pMail && !this.emailRegex) { return false }
       if (this.userData.userName !== this.pUname && !this.unameRegex) { return false }
@@ -206,6 +208,7 @@ export default {
     this.reload()
   },
   methods: {
+    // Used to change the user data as specified in the text fields
     onSubmit: async function (event) {
       event.preventDefault()
       this.loading = true
@@ -324,6 +327,7 @@ export default {
       this.loading = false
       this.onCancel()
     },
+    // This method is used to leave the editing mode
     onCancel () {
       this.loadingState = null
       this.pMail = this.userData.email
@@ -333,17 +337,21 @@ export default {
       this.editing = this.loading = false
       this.errorCode = ''
     },
+    // Used to upload an avatar image. Not yet implemented
     avatarClick () {
       // TODO Upload Avatar
     },
+    // Brings the user into the editing mode
     editClick () {
       if (this.editable) { this.editing = true }
     },
+    // Called when a user clicks OK at the error dialog
     errOkClick () {
       this.errorCode = ''
       this.loading = false
       this.loadingState = null
     },
+    // Called to refresh the access token
     refreshToken: async function () {
       await axios
         .post('http://localhost:1337/api/users/refresh', {
@@ -362,6 +370,7 @@ export default {
           }
         })
     },
+    // This method is used to load all relevant user data from the database
     fetchProfile: async function () {
       var fetchLink = 'http://localhost:1337/api/users/'
       if (!this.userId) { fetchLink += 'me' } else { fetchLink += this.userId }
@@ -387,6 +396,7 @@ export default {
           }
         })
     },
+    // Used to reload the profile page
     reload: async function () {
       this.loading = true
       await this.refreshToken()

@@ -89,7 +89,7 @@ export default {
     }
   },
   methods: {
-    // This method sends the board name to the database to create a new notice board
+    // This method sends the board name to the backend to create a new notice board
     onSubmit (event) {
       event.preventDefault()
       if (!this.bnameState) { return }

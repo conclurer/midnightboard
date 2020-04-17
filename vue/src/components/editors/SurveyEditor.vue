@@ -211,7 +211,7 @@ export default {
     removeChoiceAnswer (answerIndex, questionIndex) {
       this.surveyQuestionElement[questionIndex].splice(answerIndex, 1)
     },
-    // Used to create new surveys which can be send to the database
+    // Used to create new surveys which can be send to the backend
     createSurvey () {
       var invalidInput = false
       var containsMCQ = false

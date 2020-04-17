@@ -3,7 +3,7 @@
   <div class="login">
     <Header id="titlebar" :title="$t('login.title')" />
 
-    <!-- Loading circle displayed while system is sending user data to the database -->
+    <!-- Loading circle displayed while system is sending user data to the backend -->
     <b-overlay :show="loading" variant="light" opacity="0.6" blur="2px" rounded="sm">
       <b-card class="loginBox" align="center" bg-variant="dark" text-variant="white">
         <br>
@@ -72,7 +72,7 @@ export default {
     }
   },
   methods: {
-    // Sends user input to the database to check if credentials are valid
+    // Sends user input to the backend to check if credentials are valid
     onSubmit (event) {
       event.preventDefault()
       this.loginState = null
