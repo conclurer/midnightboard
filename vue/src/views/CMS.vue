@@ -9,6 +9,7 @@
     <!-- Displays the navigation bar on the left -->
     <div class="cmsNav">
       <div class="bg-dark text-white">
+        <br>
         <b-nav vertical pills>
           <b-nav-text class="navHeader">{{$t('cms.userMgmt')}}</b-nav-text>
           <b-nav-item :active="selectedPanel === 'userList'" @click="selectedPanel='userList'">{{$t('cms.userList')}}</b-nav-item>

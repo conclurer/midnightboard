@@ -1,19 +1,16 @@
 <!-- This editor is used to create common text notes. It provides tools for text formatting -->
 <template>
   <div class="editor">
-    <h2>
-      <input
-        type="text"
-        class="editor__title"
-        name="title"
-        v-model="titleContent"
-        maxlength="25"
-        autocomplete="off"
-      >
-    </h2>
-    <hr>
+    <b-form-input
+      class="title-editor"
+      name="title"
+      v-model="titleContent"
+      maxlength="25"
+      autocomplete="off"
+    />
+    <br>
     <editor-content
-      class="editor__content"
+      class="content-editor"
       :editor="contentEditor"
     />
     <br>
@@ -239,17 +236,18 @@ export default {
     width: 43px;
   }
 
-  .editor {
-    margin-left: 12px;
-    margin-right: 12px;
-  }
-
-  .editor__title {
-    width: 480px;
-    text-align: center;
+  .title-editor {
+    width: 90%;
+    margin-right: auto;
+    margin-left: auto;
     border: 1px solid #4d90fe;
     border-radius: 3px;
-    outline: none;
+  }
+
+  .content-editor {
+    width: 90%;
+    margin-right: auto;
+    margin-left: auto;
   }
 
   .menubar__button {

@@ -1,8 +1,6 @@
 <!-- This editor is used to create complex survey. They can contain several questions with a text field for the answer and polls -->
 <template>
   <div class="surveyEditor">
-    <br>
-    <h2>{{$t('editor.survey.heading')}}</h2>
     <b-form-input
       class="surveyTitle"
       v-model="surveyTitle"
