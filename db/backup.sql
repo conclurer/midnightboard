@@ -548,12 +548,12 @@ COPY public.board_subscription (id, board_id, member_id) FROM stdin;
 --
 
 COPY public.member (id, created_at, updated_at, last_seen, user_name, first_name, last_name, email, password, avatar, language_preference, hide_last_name, user_role) FROM stdin;
-2	1577833200000	1577833200000	\N	user1	Max	Mustermann	max.mustermann@ma.il	$2b$10$B2gmqgKGsSbm8G2VIjulKOadTUMctZ7LC3ETxyOn49XnkVrgS.Ghy	\N	en	t	1
-3	1577833200000	1577833200000	\N	user2	Peter	Mustermann	peter.mustermann@ma.il	$2b$10$oPMKDfrsHctVQwU2KPoOfOdeef0ZD0WAKCvSKFgS5Ayv6HS1umEwG	\N	en	t	1
-4	1577833200000	1577833200000	\N	user3	Hans	Mustermann	hans.mustermann@ma.il	$2b$10$byrA4n1xu4uOzJm4W71bneIyjh0EChk6wAPN4n2r0.jWaopLLVIFO	\N	en	t	1
-5	1577833200000	1577833200000	\N	user4	Bibi	Mustermann	bibi.mustermann@ma.il	$2b$10$k9yjuXtnda9eqmYoLGGlTumNsqR8WyaEMMtSj.qrtKpE1mRhTvQzq	\N	en	t	1
-6	1577833200000	1577833200000	\N	user5	Heidi	Mustermann	heidi.mustermann@ma.il	$2b$10$f5E5wmCfNVE2blW0L1ucNOu5.7F3FbdR.n6p30m.07TzwY/u2kTce	\N	en	t	1
-1	1577833200000	1586447656223	1586447656223	admin	Max	Admin	admin@ma.il	$2b$10$0mjxHpG1qnZzU5PBCW9PSe2BZ19299625/x53nkV510Ljcj3ph3Ia	\N	en	t	0
+2	1577833200000	1577833200000	\N	user1	Amiya	Pollich	amiya.pollich22@ethereal.email	$2b$10$B2gmqgKGsSbm8G2VIjulKOadTUMctZ7LC3ETxyOn49XnkVrgS.Ghy	\N	en	t	1
+3	1577833200000	1577833200000	\N	user2	Sophie	Schmidt	sophie35@ethereal.email	$2b$10$oPMKDfrsHctVQwU2KPoOfOdeef0ZD0WAKCvSKFgS5Ayv6HS1umEwG	\N	en	t	1
+4	1577833200000	1577833200000	\N	user3	Kayleigh	Baumbach	kayleigh.baumbach32@ethereal.email	$2b$10$byrA4n1xu4uOzJm4W71bneIyjh0EChk6wAPN4n2r0.jWaopLLVIFO	\N	en	t	1
+5	1577833200000	1577833200000	\N	user4	Mckenzie	Kulas	mckenzie.kulas44@ethereal.email	$2b$10$k9yjuXtnda9eqmYoLGGlTumNsqR8WyaEMMtSj.qrtKpE1mRhTvQzq	\N	en	t	1
+6	1577833200000	1577833200000	\N	user5	Tatum	McGlynn	tatum.mcglynn@ethereal.email	$2b$10$f5E5wmCfNVE2blW0L1ucNOu5.7F3FbdR.n6p30m.07TzwY/u2kTce	\N	en	t	1
+1	1577833200000	1586447656223	1586447656223	admin	Brad	Leffler	brad.leffler58@ethereal.email	$2b$10$0mjxHpG1qnZzU5PBCW9PSe2BZ19299625/x53nkV510Ljcj3ph3Ia	\N	en	t	0
 \.
 
 

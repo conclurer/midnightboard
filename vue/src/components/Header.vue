@@ -8,12 +8,12 @@
       class="m"
     >
       <b-navbar-brand href="#">
-        <img src="../../../configuration/logo.png" alt="Logo" class="navImg" @click="logoClick()">
+        <img src="../../../configuration/logo.png" alt="Logo" class="nav-img" @click="logoClick()">
       </b-navbar-brand>
-      <b-nav-text id="navTitle">
+      <b-nav-text class="nav-title">
         {{ title }}
       </b-nav-text>
-      <b-navbar-item class="navSub" v-if="isLoggedIn()">
+      <b-navbar-item class="nav-sub" v-if="boardVisible && isLoggedIn()">
         <b-button variant="link" @click="changeSubscriberMode()">
           <font-awesome-icon v-if="!boardSubscribed" icon="bell-slash" size="lg" />
           <font-awesome-icon v-else-if="boardSubscribed" icon="bell" size="lg" />
@@ -27,7 +27,7 @@
       <b-collapse id="navbar-toggle-collapse" is-nav >
         <b-navbar-nav class="ml-auto">
           <b-nav-item-dropdown
-              class="navItem"
+              class="nav-item"
               right
               no-caret
           >
@@ -52,7 +52,7 @@
 
           <b-nav-item-dropdown
             v-if="addActive"
-            class="navItem"
+            class="nav-item"
             right
             no-caret
           >
@@ -67,7 +67,7 @@
           </b-nav-item-dropdown>
 
           <b-nav-item-dropdown
-            class="navItem pr-3"
+            class="nav-item pr-3"
             right
             no-caret
           >
@@ -105,6 +105,7 @@ export default {
       selLanguage: '',
       avatarText: '',
       boardSidebarToggle: false,
+      boardVisible: false,
       boardSubscribed: false
     }
   },
@@ -118,6 +119,10 @@ export default {
         this.selLanguage = 'en'
     }
     this.avatarText = window.localStorage.getItem('mnb_inits')
+    this.isNoticeBoard()
+  },
+  updated () {
+    this.isNoticeBoard()
   },
   methods: {
     cToEN: function (e) {
@@ -183,12 +188,11 @@ export default {
         .then(() => this.$emit('profile-changed'))
     },
     avatarLogout: function () {
+      axios.defaults.headers = {
+        'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
+      }
       axios
-        .delete('http://localhost:1337/api/users/logout', {
-          headers: {
-            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
-          }
-        })
+        .delete('http://localhost:1337/api/users/logout')
         .then(response => {
           window.localStorage.clear()
           this.$router.push({ name: 'Login' })
@@ -235,14 +239,70 @@ export default {
       return window.localStorage.getItem('mnb_rid') === '0'
     },
     isSubscriber: async function () {
-      // Check if user has subscribed
-      // TODO: Axios
-      return this.boardSubscribed
+      // Check if user has subscribed current board
+      if (this.isLoggedIn) {
+        axios.defaults.headers = {
+          'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
+        }
+        await axios.get('http://localhost:1337/api/users/subscriptions')
+          .then(async response => {
+            var brdId = parseInt(this.$route.params.boardId)
+            if (brdId) {
+              for (const boardId of response.data) {
+                if (boardId === brdId) {
+                  this.boardSubscribed = true
+                  return
+                }
+              }
+            }
+            this.boardSubscribed = false
+          })
+          .catch(err => {
+            this.$log.error(err)
+          })
+      }
     },
     changeSubscriberMode: async function () {
       // (Un-)Subscribe user to current board
-      // TODO: Axios
-      this.boardSubscribed = !this.boardSubscribed
+      if (this.isLoggedIn) {
+        const userId = window.localStorage.getItem('mnb_uid')
+        const boardId = this.$route.params.boardId ? this.$route.params.boardId : 0
+        const suffix = '/' + userId + '/' + boardId
+        const language = window.localStorage.getItem('mnb_lang')
+          ? window.localStorage.getItem('mnb_lang') : this.selLanguage
+        axios.defaults.headers = {
+          'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
+          'Accept-Language': language
+        }
+        if (this.boardSubscribed) {
+          // Unsubscribe
+          await axios.put('http://localhost:1337/api/users/unsubscribe' + suffix, {
+          })
+            .then(response => {})
+            .catch(err => {
+              this.$log.error(err)
+            })
+        } else {
+          // Subscribe
+          await axios.put('http://localhost:1337/api/users/subscribe' + suffix, {
+          })
+            .then(response => {})
+            .catch(err => {
+              this.$log.error(err)
+            })
+        }
+        this.boardSubscribed = !this.boardSubscribed
+      }
+    },
+    isNoticeBoard: function () {
+      // Check if a notice board is open and user is logged in
+      // Default board is not subscribable
+      if (this.$route.path.startsWith('/board') && this.isLoggedIn) {
+        this.boardVisible = true
+        this.isSubscriber()
+      } else {
+        this.boardVisible = false
+      }
     }
   }
 }
@@ -255,18 +315,18 @@ export default {
     position: fixed;
   }
 
-  .navImg {
+  .nav-img {
     padding-left: 1vw;
     height: 35px;
   }
 
-  #navTitle {
+  .nav-title {
     padding: 0 0 0 5vw;
     color: white;
     font-size: calc(12pt + 0.8vh);
   }
 
-  .navSub {
+  .nav-sub {
     padding: 0 0 0 1vw;
     color: white;
   }
@@ -281,16 +341,15 @@ export default {
     color: red;
   }
 
-  .navItem {
+  .nav-item {
     margin-top: -5px;
     padding-right: 5px;
     font-size: calc(12pt + 0.75vw);
   }
 
-  .navAvatar {
+  .nav-avatar {
     padding: 0px;
     margin: 0px;
     font-size: 0.9rem;
   }
-
 </style>

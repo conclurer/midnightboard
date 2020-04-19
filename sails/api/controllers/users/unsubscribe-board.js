@@ -40,10 +40,9 @@ module.exports = {
     }
     const userId = inputs.userId;
     const boardId = inputs.boardId;
-    const recipent = 'brad.leffler58@ethereal.email'; // Delete it if recipent -> member.email
-    const subject = 'Successfully unsubscribed to board #' + boardId;
-    const plainText = 'You will get no longer notifications for this board.';
-    const htmlText = '<p>You will get no longer notifications for this board.</p>';
+    const subject = sails.__('email.unsubscribe.subject') + boardId;
+    const plainText = sails.__('email.unsubscribe.plainText');
+    const htmlText = sails.__('email.unsubscribe.htmlText');
     sails.log.verbose('USER_PUT::: Unsubscribing user #' + userId + ' to board #' + boardId);
     var usr = await Member.findOne({id: userId});
     var brd = await Board.findOne({id: boardId});
@@ -55,8 +54,8 @@ module.exports = {
         memberId: userId
       }).fetch()
         .then(async() => {
-          // Currently it will just send a confirmation email to this user
-          await sails.helpers.sendEmail(recipent, subject, plainText, htmlText) // Later, recipent -> usr.email!
+          // It will also send a confirmation email
+          await sails.helpers.sendEmail(usr.email, subject, plainText, htmlText)
             .then(() => {
               sails.log.verbose('USER_PUT::: Unsubscribed user #' + userId + ' to board #' + boardId + ' successfully');
               return exits.success();
