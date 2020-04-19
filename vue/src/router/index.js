@@ -54,7 +54,34 @@ export default new Router({
         component: () => import('../views/CMS.vue'),
         beforeEnter: (to, from, next) => {
           if (window.localStorage.getItem('mnb_rid') !== '0') { next({ name: 'Login' }) } else next()
-        }
+        },
+        children: [
+          {
+            path: 'users/list',
+            name: 'cms_users_list',
+            component: () => import('../components/cms/UserList.vue')
+          },
+          {
+            path: 'users/add',
+            name: 'cms_users_add',
+            component: () => import('../components/cms/AddUser.vue')
+          },
+          {
+            path: 'users/permissions',
+            name: 'cms_users_permissions',
+            component: () => import('../components/cms/PermissionPanel.vue')
+          },
+          {
+            path: 'boards/list',
+            name: 'cms_boards_list',
+            component: () => import('../components/cms/BoardList.vue')
+          },
+          {
+            path: 'boards/add',
+            name: 'cms_boards_add',
+            component: () => import('../components/cms/AddBoard.vue')
+          }
+        ]
       },
       {
         path: 'profile/:userId',

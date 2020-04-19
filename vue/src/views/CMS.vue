@@ -4,79 +4,54 @@
       id="titlebar"
       :title="$t('cms.title')"
     />
-    <div class="cmsNav">
-      <div class="bg-dark text-white">
+    <div class="cmsNav bg-dark">
         <b-nav vertical pills>
           <b-nav-text class="navHeader">{{$t('cms.userMgmt')}}</b-nav-text>
-          <b-nav-item :active="selectedPanel === 'userList'" @click="selectedPanel='userList'">{{$t('cms.userList')}}</b-nav-item>
-          <b-nav-item :active="selectedPanel === 'registration'" @click="selectedPanel='registration'">{{$t('cms.newUser')}}</b-nav-item>
-          <b-nav-item :active="selectedPanel === 'permissions'" @click="selectedPanel='permissions'">{{$t('cms.userRights')}}</b-nav-item>
-        </b-nav>
+          <b-nav-item :to="{ name: 'cms_users_list'}" :active="selectedPanel === 'userList'" @click="selectedPanel='userList'">{{$t('cms.userList')}}</b-nav-item>
+          <b-nav-item :to="{ name: 'cms_users_add'}" :active="selectedPanel === 'registration'" @click="selectedPanel='registration'">{{$t('cms.newUser')}}</b-nav-item>
+          <b-nav-item disabled :active="selectedPanel === 'permissions'" @click="selectedPanel='permissions'">{{$t('cms.userRights')}}</b-nav-item>
         <hr>
-        <b-nav vertical pills>
           <b-nav-text class="navHeader">{{$t('cms.contentMgmt')}}</b-nav-text>
-          <b-nav-item :active="selectedPanel === 'noticeBoards'" @click="selectedPanel='noticeBoards'">{{$t('cms.boardList')}}</b-nav-item>
-          <b-nav-item :active="selectedPanel === 'newBoard'" @click="selectedPanel='newBoard'">{{$t('cms.newBoard')}}</b-nav-item>
-        </b-nav>
+          <b-nav-item :to="{ name: 'cms_boards_list'}" :active="selectedPanel === 'noticeBoards'" @click="selectedPanel='noticeBoards'">{{$t('cms.boardList')}}</b-nav-item>
+          <b-nav-item :to="{ name: 'cms_boards_add'}" :active="selectedPanel === 'newBoard'" @click="selectedPanel='newBoard'">{{$t('cms.newBoard')}}</b-nav-item>
         <hr>
-        <b-nav vertical pills>
           <b-nav-text class="navHeader">{{$t('cms.groupMgmt')}}</b-nav-text>
-          <b-nav-item :active="selectedPanel === 'groups'" @click="selectedPanel='groups'">{{$t('cms.editGroups')}}</b-nav-item>
+          <b-nav-item disabled :active="selectedPanel === 'groups'" @click="selectedPanel='groups'">{{$t('cms.editGroups')}}</b-nav-item>
         </b-nav>
-      </div>
-
-      <div class="cmsContent" align="center">
-
-        <div v-if="selectedPanel === 'userList'">
-          <UserList />
-        </div>
-
-        <div v-if="selectedPanel === 'registration'">
-          <AddUser />
-        </div>
-
-        <div v-if="selectedPanel === 'permissions'">
-          <PermissionPanel />
-        </div>
-
-        <div v-if="selectedPanel === 'noticeBoards'">
-          <BoardList />
-        </div>
-
-        <div v-if="selectedPanel === 'newBoard'">
-          <AddBoard />
-        </div>
-
-        <div v-if="selectedPanel === 'groups'">
-          <!-- TODO -->
-        </div>
-
-      </div>
+    </div>
+    <div class="cmsContent">
+      <router-view></router-view>
     </div>
   </div>
 </template>
 
 <script>
 import Header from '@/components/Header.vue'
-import UserList from '@/components/cms/UserList.vue'
-import AddUser from '@/components/cms/AddUser.vue'
-import PermissionPanel from '@/components/cms/PermissionPanel.vue'
-import BoardList from '@/components/cms/BoardList.vue'
-import AddBoard from '@/components/cms/AddBoard.vue'
-
 export default {
   name: 'CMS',
   components: {
-    Header,
-    UserList,
-    AddUser,
-    PermissionPanel,
-    BoardList,
-    AddBoard
+    Header
   },
   data () {
     return {
-      selectedPanel: 'userList'
+      selectedPanel: ''
+    }
+  },
+  created: function () {
+    switch(this.$route.path) {
+      case '/cms/users/list':
+        this.selectedPanel = 'userList'
+        break
+      case '/cms/users/add':
+        this.selectedPanel = 'registration'
+        break
+      case '/cms/boards/list':
+        this.selectedPanel = 'noticeBoards'
+        break
+      case '/cms/boards/add':
+        this.selectedPanel = 'newBoard'
+        break
+      
     }
   }
 }
@@ -90,14 +65,16 @@ export default {
   }
 
   .cmsNav {
-    display: grid;
-    grid-template-columns: minmax(160px, 16vw) 1fr;
-    min-width: 180px;
-    min-height: calc(98vh - 28px);
-    max-height: 100%;
+    height: 100%;
+    width: 240px;
+    position: fixed;
+    color: #EEE;
+    overflow-x: hidden;
+    padding: 20px 8px 0 8px;
   }
 
   .cmsContent {
+    margin-left: 240px;
     padding: 5vh 2vh 2vh 2vh;
   }
 
