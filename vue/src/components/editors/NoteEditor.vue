@@ -1,18 +1,21 @@
+<!-- This editor is used to create common text notes. It provides tools for text formatting -->
 <template>
   <div class="editor">
-    <h2>
-      <input
-        type="text"
-        class="editor__title"
-        name="title"
-        v-model="titleContent"
-        maxlength="25"
-        autocomplete="off"
-      >
-    </h2>
-    <hr>
+    <b-form-input
+      class="title-editor"
+      name="title"
+      v-model="titleContent"
+      maxlength="25"
+      autocomplete="off"
+      :placeholder="$t('editor.note.title')"
+      :state="titleState"
+    />
+    <b-form-invalid-feedback>
+      {{$t('editor.tooShort')}}
+    </b-form-invalid-feedback>
+    <br>
     <editor-content
-      class="editor__content"
+      class="content-editor"
       :editor="contentEditor"
     />
     <br>
@@ -23,124 +26,138 @@
       :editor="contentEditor"
     >
       <div class="menubar">
-        <button
+        <b-button
+          variant="secondary"
           class="menubar__button"
-          :class="{ 'is-active': isActive.bold() }"
+          :class="{ 'active': isActive.bold() }"
           @click="commands.bold"
         >
           <icon name="bold" />
-        </button>
+        </b-button>
 
-        <button
+        <b-button
+          variant="secondary"
           class="menubar__button"
-          :class="{ 'is-active': isActive.italic() }"
+          :class="{ 'active': isActive.italic() }"
           @click="commands.italic"
         >
           <icon name="italic" />
-        </button>
+        </b-button>
 
-        <button
+        <b-button
+          variant="secondary"
           class="menubar__button"
-          :class="{ 'is-active': isActive.underline() }"
+          :class="{ 'active': isActive.underline() }"
           @click="commands.underline"
         >
           <icon name="underline" />
-        </button>
+        </b-button>
 
-        <button
+        <b-button
+          variant="secondary"
           class="menubar__button"
-          :class="{ 'is-active': isActive.strike() }"
+          :class="{ 'active': isActive.strike() }"
           @click="commands.strike"
         >
           <icon name="strikethrough" />
-        </button>
+        </b-button>
 
-        <button
+        <b-button
+          variant="secondary"
           class="menubar__button"
-          :class="{ 'is-active': isActive.code() }"
+          :class="{ 'active': isActive.code() }"
           @click="commands.code"
         >
           <icon name="code" />
-        </button>
+        </b-button>
 
-        <button
+        <b-button
+          variant="secondary"
           class="menubar__button"
-          :class="{ 'is-active': isActive.heading({ level: 3 }) }"
+          :class="{ 'active': isActive.heading({ level: 3 }) }"
           @click="commands.heading({ level: 3 })"
         >
           <b>H1</b>
-        </button>
+        </b-button>
 
-        <button
+        <b-button
+          variant="secondary"
           class="menubar__button"
-          :class="{ 'is-active': isActive.heading({ level: 4 }) }"
+          :class="{ 'active': isActive.heading({ level: 4 }) }"
           @click="commands.heading({ level: 4 })"
         >
           <b>H2</b>
-        </button>
+        </b-button>
         <br>
-        <button
+        <b-button
+          variant="secondary"
           class="menubar__button"
-          :class="{ 'is-active': isActive.bullet_list() }"
+          :class="{ 'active': isActive.bullet_list() }"
           @click="commands.bullet_list"
         >
           <icon name="list-ul" />
-        </button>
+        </b-button>
 
-        <button
+        <b-button
+          variant="secondary"
           class="menubar__button"
-          :class="{ 'is-active': isActive.ordered_list() }"
+          :class="{ 'active': isActive.ordered_list() }"
           @click="commands.ordered_list"
         >
           <icon name="list-ol" />
-        </button>
+        </b-button>
 
-        <button
+        <b-button
+          variant="secondary"
           class="menubar__button"
-          :class="{ 'is-active': isActive.blockquote() }"
+          :class="{ 'active': isActive.blockquote() }"
           @click="commands.blockquote"
         >
           <icon name="quote-right" />
-        </button>
+        </b-button>
 
-        <button
+        <b-button
+          variant="secondary"
           class="menubar__button"
-          :class="{ 'is-active': isActive.code_block() }"
+          :class="{ 'active': isActive.code_block() }"
           @click="commands.code_block"
         >
           <icon name="terminal" />
-        </button>
+        </b-button>
 
-        <button
+        <b-button
+          variant="secondary"
           class="menubar__button"
           @click="commands.horizontal_rule"
         >
           <b>—</b>
-        </button>
+        </b-button>
 
-        <button
+        <b-button
+          variant="secondary"
           class="menubar__button"
           @click="commands.undo"
         >
           <icon name="undo" />
-        </button>
+        </b-button>
 
-        <button
+        <b-button
+          variant="secondary"
           class="menubar__button"
           @click="commands.redo"
         >
           <icon name="redo" />
-        </button>
+        </b-button>
       </div>
     </editor-menu-bar>
     <br>
     <b-button
+      variant="secondary"
       class="button"
       @click="$emit('create-note', titleContent, textContent)"
     >
       {{$t('editor.note.create')}}
     </b-button>
-    <br><br>
   </div>
 </template>
 
@@ -175,7 +192,7 @@ export default {
   },
   data () {
     return {
-      titleContent: this.$t('editor.note.title'),
+      titleContent: '',
       textContent: this.$t('editor.note.content'),
       contentEditor: new Editor({
         extensions: [
@@ -198,6 +215,7 @@ export default {
           new History()
         ],
         content: this.$t('editor.note.content'),
+        // When the user changes the text, it is saved in a suitable format
         onUpdate: ({ getHTML }) => {
           this.textContent = getHTML()
           this.textContent = this.textContent.replace('Ä', '&Auml;')
@@ -211,6 +229,13 @@ export default {
       })
     }
   },
+  // Computed value shows whether the title string is valid
+  computed: {
+    titleState () {
+      return this.titleContent.length > 1
+    }
+  },
+  // Called before the instance is destroyed
   beforeDestroy: function () {
     this.contentEditor.destroy()
   }
@@ -222,17 +247,22 @@ export default {
     width: 43px;
   }
 
-  .editor {
-    margin-left: 12px;
-    margin-right: 12px;
-  }
-
-  .editor__title {
-    width: 480px;
-    text-align: center;
+  .title-editor {
+    width: 90%;
+    margin-right: auto;
+    margin-left: auto;
     border: 1px solid #4d90fe;
     border-radius: 3px;
-    outline: none;
+  }
+
+  .content-editor {
+    width: 90%;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .menubar__button {
+    margin: 1px;
   }
 
   .button {

@@ -1,6 +1,7 @@
+<!-- This sidebar displays the selected editor and has an own header -->
 <template>
   <div
-    class="editorSidebar"
+    class="editor-sidebar"
     v-smoothscrollbar="{ listener, options }"
   >
     <EditorHeader
@@ -74,6 +75,7 @@ export default {
     }
   },
   methods: {
+    // Called to refresh the access token
     refreshToken: async function () {
       axios.defaults.headers = {
         token: window.localStorage.getItem('mnb_rtok')
@@ -94,7 +96,10 @@ export default {
           }
         })
     },
+    // Used to send a note to the backend
     createNote: async function (titleContent, jsonContent) {
+      if (titleContent.length < 2) { return }
+
       var jsonBody
       if (this.dueDate == null) {
         jsonBody = JSON.stringify({
@@ -126,7 +131,10 @@ export default {
       // Notify notice board
       this.$emit('add-note')
     },
+    // Used to send an image to the backend
     uploadImage: async function (titleContent, dataURI) {
+      if (titleContent.length < 2) { return }
+
       const dataURISplit = dataURI.split(',')
       const datapart = dataURISplit[0] // E.g. data:image/png;base64
       const base64Data = dataURISplit[1] // BORw0KGgoAAAANSUhEUgAAB...
@@ -163,7 +171,10 @@ export default {
       // Notify board component
       this.$emit('add-note')
     },
+    // Used to send a file to the backend
     uploadFile: async function (titleContent, dataURI) {
+      if (titleContent.length < 2) { return }
+
       const dataURISplit = dataURI.split(',')
       const datapart = dataURISplit[0] // e.g. data:application/pdf;base64
       const base64Data = dataURISplit[1] // ZGgoAAAANSUhEUgAASs54B...
@@ -200,7 +211,10 @@ export default {
       // Notify notice board
       this.$emit('add-note')
     },
+    // Used to send a poll draft to the backend
     createPoll: async function (titleContent, jsonContent, answerIndices, answerNames) {
+      if (titleContent.length < 2) { return }
+
       var jsonBodyNote
       if (this.dueDate == null) {
         jsonBodyNote = JSON.stringify({
@@ -242,7 +256,10 @@ export default {
       // Notify notice board
       this.$emit('add-note')
     },
+    // Used to send a survey draft to the backend
     createSurvey: async function (titleContent, jsonContent, questionIndices, questions, mcqAnswers) {
+      if (titleContent.length < 2) { return }
+
       const jsonBodyNote = JSON.stringify({
         title: titleContent,
         typeOfPost: 'application/survey',
@@ -275,11 +292,11 @@ export default {
       // Notify notice board
       this.$emit('add-note')
     },
-    // Used to update the date property
+    // Called when the date property in the editor header changes
     updateDate: function (date) {
       this.dueDate = (new Date(date)).getTime()
     },
-    // Used to close the editor sidebar
+    // This method sends the command to close the editor sidebar to the board component
     close: function () {
       this.$emit('close')
     }

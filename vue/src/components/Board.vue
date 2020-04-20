@@ -1,14 +1,14 @@
+<!-- The Board contains the content displayed on a notice board and the editor if selected -->
 <template>
   <div class="board">
     <!-- Displays content when editor is displayed -->
     <div
-      class="inner-board"
+      class="inner-board editor-active"
       v-if="editorActive"
-      style="display: grid; grid-template-columns: 1fr 500px;"
     >
       <PostPanel
+        class="small-board"
         @reload-board="reloadBoard"
-        style="grid-column: 1 / 2;"
         :notes="notes"
         :upateKey="editorActive"
       />
@@ -53,15 +53,16 @@ export default {
     EditorSidebar
   },
   methods: {
+    // Called when a new note was created
     addNote: function () {
-      // Notify notice board
+      // Notify the notice board about the new note
       this.$emit('add-note')
     },
-    // Used to reload the board when a note gets deleted
+    // Used to reload the board when a note was deleted
     reloadBoard: function () {
       this.$emit('reload-board')
     },
-    // Used to close the sidebars
+    // Used to close the editor sidebar
     close: function () {
       this.$emit('close')
     }
@@ -82,16 +83,13 @@ export default {
     grid-row: 1 / 2;
   }
 
-  li {
-    display: list-item;
+  .editor-active {
+    display: grid;
+    grid-template-columns: 1fr 500px;
   }
 
-  ul {
-    text-align: left;
-  }
-
-  a {
-    color: var(--link);
+  .small-board {
+    grid-column: 1 / 2;
   }
 
   .right-bar {

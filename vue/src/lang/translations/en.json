@@ -1,7 +1,4 @@
 {
-    "about":{
-        "message":"This is an About page"
-    },
     "board":{
         "download":{
             "image":"Click here to download the image",
@@ -25,7 +22,7 @@
     "editor":{
         "note":{
             "heading":"Text editor",
-            "title":"Insert title here",
+            "title":"Your note title",
             "content":"<p>Insert content here</p><ul><li><p>Start a bulleted list</p></li></ul><ol><li><p>Or start a numerical list</p></li></ol>",
             "create":"Create"
         },
@@ -64,13 +61,13 @@
             "templateAnswer":"Your answer",
             "allowMultipleVotes":"Allow multiple answers",
             "post":"Post poll",
-            "missingTitle":"You have to enter a question!",
+            "missingTitle":"The question must have at least 2 characters!",
             "missingAnswers":"You have to create at least two answers!",
             "duplicateAnswers":"You have to create different answers!"
         },
         "survey":{
             "heading":"Survey editor",
-            "title":"Your survery title",
+            "title":"Your survey title",
             "templateQuestion":"Your question?",
             "templatePlaceholderTextField":"e. g. Suggestion A, B, C & 42",
             "labelPlaceholderTextField":"Optional: Suggestions & Maximal length (5 <-> 50), default: 50",
@@ -83,7 +80,7 @@
             "addTextAreaQuestion":"large text area",
             "addMultipleChoiceQuestion":"single/multiple choice(s)",
             "post":"Post survey",
-            "missingTitle":"You have to enter a survey title!",
+            "missingTitle":"The survey title must have at least 2 characters!",
             "missingIFQQuestion":"You have to enter a question for a regular input field!",
             "missingTAQQuestion":"You have to enter a question for a large text area!",
             "missingMCQQuestion":"You have to enter a question for a single/multiple choice element!",
@@ -95,7 +92,8 @@
             "dueDate":"Select a due date",
             "currentDate":"Today",
             "language":"en"
-        }
+        },
+        "tooShort":"The title must have at least 2 characters"
     },
     "profile":{
         "statusMsg":{

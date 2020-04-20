@@ -1,3 +1,4 @@
+<!-- This panel in the Board class is responsible for rendering all the different types of posts -->
 <template>
   <div
     class="content"
@@ -31,26 +32,20 @@
 
         <!-- Display images of type JPEG -->
         <div v-else-if="note.typeOfPost === 'image/jpeg'">
-          <b-card-img
-            v-bind:src="'data:image/jpeg;base64,' + note.content"
-          >
-          </b-card-img>
+          <b-card-img v-bind:src="'data:image/jpeg;base64,' + note.content"></b-card-img>
           <a v-bind:href="'data:image/jpeg;base64,' + note.content" :download="note.title + '.jpeg'">{{$t('board.download.image')}}</a>
         </div>
 
         <!-- Display images of type PNG -->
         <div v-else-if="note.typeOfPost === 'image/png'">
-          <b-card-img
-            v-bind:src="'data:image/png;base64,' + note.content"
-          >
-          </b-card-img>
+          <b-card-img v-bind:src="'data:image/png;base64,' + note.content"></b-card-img>
           <a v-bind:href="'data:image/png;base64,' + note.content" :download="note.title + '.png'">{{$t('board.download.image')}}</a>
         </div>
 
         <!-- Display PDF as preview and link -->
-        <div v-else-if="note.typeOfPost === 'application/pdf'" style="min-height: 640px;">
+        <div v-else-if="note.typeOfPost === 'application/pdf'" class="pdf-note">
           <b-card-text>
-            <pdf :src="'data:application/pdf;base64,' + note.content" style="height: 585;"></pdf>
+            <pdf :src="'data:application/pdf;base64,' + note.content" class="pdf"></pdf>
             <a v-bind:href="'data:application/pdf;base64,' + note.content" :download="note.title + '.pdf'">{{$t('board.download.pdf')}}</a>
           </b-card-text>
         </div>
@@ -58,7 +53,7 @@
         <!-- Display Word 97-2003 document as link -->
         <div v-else-if="note.typeOfPost === 'application/msword'">
           <b-card-text>
-            <font-awesome-icon icon="file-word" size="10x"/><br><br>
+            <font-awesome-icon icon="file-word" size="10x"/><br>
             <a v-bind:href="'data:application/msword;base64,' + note.content" :download="note.title + '.doc'">{{$t('board.download.word')}}</a>
           </b-card-text>
         </div>
@@ -66,7 +61,7 @@
         <!-- Display Word document as link -->
         <div v-else-if="note.typeOfPost === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'">
           <b-card-text>
-            <font-awesome-icon icon="file-word" size="10x"/><br><br>
+            <font-awesome-icon icon="file-word" size="10x"/><br>
             <a v-bind:href="'data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,' + note.content" :download="note.title + '.docx'">{{$t('board.download.word')}}</a>
           </b-card-text>
         </div>
@@ -74,7 +69,7 @@
         <!-- Display Excel 97-2003 spreadsheet as link -->
         <div v-else-if="note.typeOfPost === 'application/vnd.ms-excel'">
           <b-card-text>
-            <font-awesome-icon icon="file-excel" size="10x"/><br><br>
+            <font-awesome-icon icon="file-excel" size="10x"/><br>
             <a v-bind:href="'data:application/vnd.ms-excel;base64,' + note.content" :download="note.title + '.xls'">{{$t('board.download.excel')}}</a>
           </b-card-text>
         </div>
@@ -82,7 +77,7 @@
         <!-- Display Excel spreadsheet as link -->
         <div v-else-if="note.typeOfPost === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'">
           <b-card-text>
-            <font-awesome-icon icon="file-excel" size="10x"/><br><br>
+            <font-awesome-icon icon="file-excel" size="10x"/><br>
             <a v-bind:href="'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,' + note.content" :download="note.title + '.xlsx'">{{$t('board.download.excel')}}</a>
           </b-card-text>
         </div>
@@ -90,7 +85,7 @@
         <!-- Display PowerPoint 97-2003 presentation as link -->
         <div v-else-if="note.typeOfPost === 'application/vnd.ms-powerpoint'">
           <b-card-text>
-            <font-awesome-icon icon="file-powerpoint" size="10x"/><br><br>
+            <font-awesome-icon icon="file-powerpoint" size="10x"/><br>
             <a v-bind:href="'data:application/vnd.ms-powerpoint;base64,' + note.content" :download="note.title + '.ppt'">{{$t('board.download.powerpoint')}}</a>
           </b-card-text>
         </div>
@@ -98,7 +93,7 @@
         <!-- Display PowerPoint presentation as link -->
         <div v-else-if="note.typeOfPost === 'application/vnd.openxmlformats-officedocument.presentationml.presentation'">
           <b-card-text>
-            <font-awesome-icon icon="file-powerpoint" size="10x"/><br><br>
+            <font-awesome-icon icon="file-powerpoint" size="10x"/><br>
             <a v-bind:href="'data:application/vnd.openxmlformats-officedocument.presentationml.presentation;base64,' + note.content" :download="note.title + '.pptx'">{{$t('board.download.powerpoint')}}</a>
           </b-card-text>
         </div>
@@ -113,14 +108,12 @@
                 <b-button-group>
                   <b-button
                     variant="primary"
-                    class="voteButton"
                     @click="votePoll"
                   >
                     {{$t('board.poll.vote')}}
                   </b-button>
                   <b-button
                     variant="info"
-                    class="showResultButton"
                     @click="showResult"
                   >
                     {{$t('board.poll.showResult')}}
@@ -157,7 +150,6 @@
                 <br>
                 <b-button
                   variant="primary"
-                  class="submitButton"
                   @click="submitSurvey"
                 >
                   {{$t('board.survey.submit')}}
@@ -184,7 +176,7 @@
       </b-card>
     </div>
 
-    <!-- Displayed when a user wants to delete a post -->
+    <!-- Dialog displayed when a user wants to delete a post -->
     <b-modal
       id="modal-delete-post"
       ref="modal"
@@ -196,7 +188,7 @@
       {{ $t('ui.deletePost2') }}
     </b-modal>
 
-    <!-- Displayed when user can't delete a post because of missing permissions -->
+    <!-- Dialog displayed when a user can't delete a post because of missing permissions -->
     <b-modal
       id="modal-missing-permissions"
       ref="modal"
@@ -234,7 +226,7 @@ export default {
   },
   props: ['notes', 'updateKey'],
   computed: {
-    // Return whether the user is logged in
+    // Returns whether the user is logged in
     isLoggedIn: function () {
       return window.localStorage.getItem('mnb_rid')
     }
@@ -261,6 +253,7 @@ export default {
       .catch(err => this.$log.error(err))
   },
   methods: {
+    // Called to refresh the access token
     refreshToken: async function () {
       await axios
         .post('http://localhost:1337/api/users/refresh', {
@@ -278,6 +271,7 @@ export default {
           }
         })
     },
+    // Used to get and display the results of a poll
     initPoll: async function (postId) {
       // Axios GET for current votes (if post is not a poll ignore it)
       await axios
@@ -341,6 +335,7 @@ export default {
           }
         })
     },
+    // Called when a user votes on a poll
     votePoll: async function (element) {
       const postId = element.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id
       // Axios PUT to update votes for the answer
@@ -371,11 +366,13 @@ export default {
           .catch(err => this.$log.error(err))
       }
     },
+    // This method is used to find out the post id of a poll. Then the results are rendered
     showResult: async function (element) {
       // Show current results
       const postId = element.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id
       this.initPoll(postId)
     },
+    // Used to validate and transfer the input data from a survey to the backend
     submitSurvey: async function (element) {
       const postId = element.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id
       // Axios PUT to submit survey
@@ -461,6 +458,7 @@ export default {
         this.refreshBoard = !this.refreshBoard
       }
     },
+    // Called when a user wants to delete a post
     deletePost: async function () {
       this.refreshToken()
 
@@ -517,6 +515,14 @@ export default {
   .note {
     width: 480px;
     margin: 10px;
+  }
+
+  .pdf-note {
+    min-height: 640px;
+  }
+
+  .pdf {
+    height: 585;
   }
 
   .chart-horizontal {
