@@ -64,7 +64,7 @@ module.exports = {
       return exits.nonExistent('Board not found');
     }
     if(brd.boardType === 1 && !this.req.me) {
-      return exits.unauthorized('Authorization required');
+      return exits.unauthorized();
     }
 
     sails.log.verbose('POSTS_ALL::: Fetching Posts from board #' + inputs.boardId);

@@ -11,15 +11,15 @@ module.exports = {
       responseType: '',
       statusCode: 200
     },
-    missingParams: {
-      description: 'Missing the ID of the user',
-      statusCode: 400
+    unauthorized: {
+      description: 'Unauthorized request',
+      statusCode: 401
     }
   },
 
   fn: async function(inputs, exits) {
     if(!this.req.me['id']) {
-      return exits.missingParams();
+      return exits.unauthorized();
     }
     const userId = this.req.me['id'];
     var boardIds = [];
