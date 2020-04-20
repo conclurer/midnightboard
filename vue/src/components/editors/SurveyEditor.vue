@@ -1,8 +1,8 @@
 <!-- This editor is used to create complex survey. They can contain several questions with a text field for the answer and polls -->
 <template>
-  <div class="surveyEditor">
+  <div class="survey-editor">
     <b-form-input
-      class="surveyTitle"
+      class="survey-title"
       v-model="surveyTitle"
       :maxlength="maxSurveyTitleLength"
       :placeholder="$t('editor.survey.title')"
@@ -91,7 +91,7 @@
           <br>
           <b-button
             variant="primary"
-            class="surveyAddChoiceButton"
+            class="survey-add-choice-button"
             @click="addChoiceAnswer(index)"
           >
           <font-awesome-icon icon="plus"/>
@@ -113,21 +113,21 @@
     <b-button-group>
       <b-button
         variant="primary"
-        class="surveyAddInputFieldQuestion"
+        class="survey-add-input-field-question"
         @click="addInputFieldQuestion()"
       >
       {{$t('editor.survey.addInputFieldQuestion')}}
       </b-button>
       <b-button
         variant="primary"
-        class="surveyAddTextAreaQuestion"
+        class="survey-add-text-area-question"
         @click="addTextAreaQuestion()"
       >
       {{$t('editor.survey.addTextAreaQuestion')}}
       </b-button>
       <b-button
         variant="primary"
-        class="surveyAddMultipleChoiceQuestion"
+        class="survey-add-multiple-choice-question"
         @click="addMultipleChoiceQuestion()"
       >
       {{$t('editor.survey.addMultipleChoiceQuestion')}}
@@ -136,7 +136,7 @@
     <hr>
     <b-button
       variant="secondary"
-      class="postButton"
+      class="post-button"
       @click="createSurvey()"
     >
       {{$t('editor.survey.post')}}
@@ -368,17 +368,17 @@ export default {
 </script>
 
 <style scoped>
-  .surveyTitle {
+  .survey-title {
     width: 90%;
     margin-right: auto;
     margin-left: auto;
   }
 
-  .surveyAddChoiceButton {
+  .survey-add-choice-button {
     width: 45%;
   }
 
-  .postButton {
+  .post-button {
     width: auto;
   }
 </style>

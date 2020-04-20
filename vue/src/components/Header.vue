@@ -9,7 +9,7 @@
       class="m"
     >
       <b-navbar-brand href="#">
-        <img src="../../../configuration/logo.png" alt="Logo" class="navImg" @click="logoClick">
+        <img src="../../../configuration/logo.png" alt="Logo" class="nav-img" @click="logoClick">
       </b-navbar-brand>
       <b-nav-text id="navTitle">
         {{ title }}
@@ -22,7 +22,7 @@
       <b-collapse id="navbar-toggle-collapse" is-nav >
         <b-navbar-nav class="ml-auto">
           <b-nav-item-dropdown
-              class="navItem"
+              class="nav-item"
               right
               no-caret
           >
@@ -47,7 +47,7 @@
 
           <b-nav-item-dropdown
             v-if="addActive"
-            class="navItem"
+            class="nav-item"
             right
             no-caret
           >
@@ -62,7 +62,7 @@
           </b-nav-item-dropdown>
 
           <b-nav-item-dropdown
-            class="navItem pr-3"
+            class="nav-item pr-3"
             right
             no-caret
           >
@@ -251,26 +251,27 @@ export default {
     border-bottom: 1px black solid;
     position: fixed;
   }
-  .navImg {
+
+  .nav-img {
     padding-left: 1vw;
     height: 35px;
+  }
+
+  .nav-item {
+    margin-top: -5px;
+    padding-right: 5px;
+    font-size: calc(12pt + 0.75vw);
+  }
+
+  .nav-avatar {
+    padding: 0px;
+    margin: 0px;
+    font-size: 0.9rem;
   }
 
   #navTitle {
     padding: 0 0 0 5vw;
     color: white;
     font-size: calc(12pt + 0.8vh);
-  }
-
-  .navItem {
-    margin-top: -5px;
-    padding-right: 5px;
-    font-size: calc(12pt + 0.75vw);
-  }
-
-  .navAvatar {
-    padding: 0px;
-    margin: 0px;
-    font-size: 0.9rem;
   }
 </style>

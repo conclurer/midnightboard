@@ -5,7 +5,7 @@
   >
     <br>
     <b-card
-      class="creationBox"
+      class="creation-box"
       align="center"
       bg-variant="dark"
       text-variant="white"
@@ -28,14 +28,14 @@
           <br>
 
           <b-form-group>
-            <font-awesome-icon icon="question-circle" id="tooltipIcon"/>
+            <font-awesome-icon icon="question-circle" id="tooltip-icon"/>
             <b-form-radio-group buttons button-variant="outline-info" v-model="selected" class="radio-group">
               <b-form-radio v-model="selected" value="1">Private</b-form-radio>
               <b-form-radio v-model="selected" value="2">Public</b-form-radio>
               <b-form-radio v-model="selected" value="0">Default</b-form-radio>
             </b-form-radio-group>
           </b-form-group>
-          <b-tooltip target="tooltipIcon" variant="info" triggers="hover" placement="topright" html="true">
+          <b-tooltip target="tooltip-icon" variant="info" triggers="hover" placement="topright" html="true">
              {{$t('boards.accessInfo')}}
           </b-tooltip>
           <br>
@@ -162,7 +162,7 @@ export default {
     text-align: left;
   }
 
-  .creationBox {
+  .creation-box {
     width: 450px;
     margin: 0px auto;
   }
@@ -171,7 +171,7 @@ export default {
     padding-left: 16px;
   }
 
-  #tooltipIcon {
+  #tooltip-icon {
     cursor: help;
     font-size: 20pt;
     margin-left: -36px;

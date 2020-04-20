@@ -108,14 +108,12 @@
                 <b-button-group>
                   <b-button
                     variant="primary"
-                    class="voteButton"
                     @click="votePoll"
                   >
                     {{$t('board.poll.vote')}}
                   </b-button>
                   <b-button
                     variant="info"
-                    class="showResultButton"
                     @click="showResult"
                   >
                     {{$t('board.poll.showResult')}}
@@ -152,7 +150,6 @@
                 <br>
                 <b-button
                   variant="primary"
-                  class="submitButton"
                   @click="submitSurvey"
                 >
                   {{$t('board.survey.submit')}}

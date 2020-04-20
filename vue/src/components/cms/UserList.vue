@@ -1,8 +1,8 @@
-<!-- This panel shows a list of all registered users. For each user the profil page can be visited and edited.
-     It also allows to promote, demote and delte users -->
+<!-- This panel shows a list of all registered users. Each user profile can be visited directly in view-only or edit mode.
+     It also allows to promote, demote and delete users -->
 <template>
   <div class="m">
-      <div id="userTable">
+      <div id="user-table">
         <b-container fluid>
           <b-row>
             <b-col lg="6">
@@ -11,7 +11,7 @@
                   <b-form-input
                     v-model="filter"
                     type="search"
-                    id="filterInput"
+                    id="filter-input"
                     :placeholder="$t('cms.tables.search')"
                   ></b-form-input>
                   <b-input-group-append>
@@ -67,7 +67,7 @@
           </b-overlay>
         </b-container>
       </div>
-      <div id="alertBox">
+      <div id="alert-box">
         <br>
         <b-alert
           :show="delStatus === 200"
@@ -343,7 +343,7 @@ export default {
         }
       })
     },
-    // This method opens the profile page in editing mode
+    // This method opens the profile page in edit mode
     clickEdit () {
       this.viewContextMenu = false
       this.$router.push({

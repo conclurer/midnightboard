@@ -1,6 +1,6 @@
-<!-- This sidebar displays all notice board accessable for the user -->
+<!-- This sidebar displays all notice board accessible for the user -->
 <template>
-  <div class="boardSidebar">
+  <div class="board-sidebar">
     <div class="menu" v-smoothscrollbar="{ listener, options }">
         <b-overlay
             :show="loading"
@@ -10,11 +10,11 @@
             rounded="sm"
         >
           <br><br><br> <!-- These breaks are needed so the board list starts below the header bar -->
-          <p class="panelHeading">{{$t('ui.boardSidebar.default')}}</p>
+          <p class="panel-heading">{{$t('ui.boardSidebar.default')}}</p>
           <hr>
           <b-overlay
               key="boardDefault.id"
-              class="navItemOverlay"
+              class="nav-item-overlay"
               v-bind:id="'nav-' + boardDefault.id"
               opacity="0.3"
               blur="1px"
@@ -23,17 +23,17 @@
               variant="info"
               :show="isActive(undefined)"
           >
-            <b-card @click="navClickDefault" class="navItem">
+            <b-card @click="navClickDefault" class="nav-item">
               {{boardDefault.boardName}}
             </b-card>
           </b-overlay>
 
-          <p class="panelHeading">{{$t('ui.boardSidebar.public')}}</p>
+          <p class="panel-heading">{{$t('ui.boardSidebar.public')}}</p>
           <hr>
           <b-overlay
               v-for="item in boardListPublic"
               :key="item.id"
-              class="navItemOverlay"
+              class="nav-item-overlay"
               v-bind:id="'nav-' + item.id"
               opacity="0.3"
               blur="1px"
@@ -42,18 +42,18 @@
               variant="info"
               :show="isActive(item.id)"
           >
-            <b-card @click="navClick(item.id)" class="navItem">
+            <b-card @click="navClick(item.id)" class="nav-item">
               {{item.boardName}}
             </b-card>
           </b-overlay>
 
-          <p class="panelHeading">{{$t('ui.boardSidebar.private')}}</p>
+          <p class="panel-heading">{{$t('ui.boardSidebar.private')}}</p>
           <hr>
-          <p class="panelFooting" v-if="!isLoggedIn()" @click="navClickLogin()"><a class="panelLink">{{$t('ui.boardSidebar.loginToViewA')}}</a>{{$t('ui.boardSidebar.loginToViewB')}}</p>
+          <p class="panel-footing" v-if="!isLoggedIn()" @click="navClickLogin()"><a class="panel-link">{{$t('ui.boardSidebar.loginToViewA')}}</a>{{$t('ui.boardSidebar.loginToViewB')}}</p>
           <b-overlay
               v-for="item in boardList"
               :key="item.id"
-              class="navItemOverlay"
+              class="nav-item-overlay"
               v-bind:id="'nav-' + item.id"
               opacity="0.3"
               blur="1px"
@@ -62,7 +62,7 @@
               variant="info"
               :show="isActive(item.id)"
           >
-            <b-card @click="navClick(item.id)" class="navItem">
+            <b-card @click="navClick(item.id)" class="nav-item">
               {{item.boardName}}
             </b-card>
           </b-overlay>
@@ -94,7 +94,7 @@ export default {
     this.loading = false
   },
   methods: {
-    // Used to load the all boards accessable for the user
+    // Used to load the all boards accessible for the user
     fetchBoards: async function () {
       await axios
         .get('http://localhost:1337/api/boards/all', {
@@ -170,7 +170,7 @@ export default {
     left: 0;
   }
 
-  .navItem {
+  .nav-item {
     cursor: pointer;
     font-weight: bold;
     font-size: 1.2rem;
@@ -180,11 +180,11 @@ export default {
     color: white;
   }
 
-  .navItem:hover {
+  .nav-item:hover {
     background:rgba(88, 88, 88, 0.6);
   }
 
-  .navItemOverlay {
+  .nav-item-overlay {
     cursor: pointer;
     margin:  1rem 2rem 0.25rem 2rem;
   }
@@ -194,7 +194,7 @@ export default {
     margin: 0 0 6px 0;
   }
 
-  .panelHeading {
+  .panel-heading {
     padding-top: 1rem;
     padding-left: 1rem;
     margin: 0 0 -6px 0;
@@ -204,22 +204,22 @@ export default {
     font-size: 1.25rem;
   }
 
-  .panelFooting {
+  .panel-footing {
     color: gray;
     text-align: center;
     font-size: 1rem;
   }
 
-  .panelLink {
+  .panel-link {
     font-weight: bold;
     color: dodgerblue;
   }
 
-  .panelLink:hover {
+  .panel-link:hover {
     color: deepskyblue;
   }
 
-  .panelLink:visited {
+  .panel-link:visited {
     color: dodgerblue;
   }
 </style>

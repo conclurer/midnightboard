@@ -1,8 +1,8 @@
 <!-- This editor is used to to upload image files -->
 <template>
-  <div class="imageUpload">
+  <div class="image-upload">
     <b-form-input
-      class="imageTitle"
+      class="image-title"
       v-model="imageTitle"
       :maxlength="maxImageTitleLength"
       :placeholder="$t('editor.image.title')"
@@ -90,7 +90,7 @@ export default {
 </script>
 
 <style scoped>
-  .imageTitle {
+  .image-title {
     width: 90%;
     margin-right: auto;
     margin-left: auto;

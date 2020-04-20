@@ -14,7 +14,7 @@
       opacity="0.6"
       blur="2px"
       rounded="sm"
-      class="loadingOverlay"
+      class="loading-overlay"
     >
       <Board
         @add-note="addNote"
@@ -160,7 +160,7 @@ export default {
 </script>
 
 <style scoped>
-  .loadingOverlay {
+  .loading-overlay {
     top:0;
     left:0;
     min-height: 95vh;

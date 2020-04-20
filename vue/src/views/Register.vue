@@ -7,7 +7,7 @@
     />
 
     <b-card
-      class="loginBox"
+      class="login-box"
       align="center"
       bg-variant="dark"
       text-variant="white"
@@ -228,7 +228,7 @@ export default {
     color: var(--link);
   }
 
-  .loginBox {
+  .login-box {
     width: 400px;
     height: auto;
     margin: 7vh auto auto auto;

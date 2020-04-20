@@ -1,4 +1,4 @@
-<!-- This footer is displayed beneath every note. The deletion button only is shown if the user is authorized to delete it -->
+<!-- This footer is part of every note. The deletion button is only shown if the user is authorized to delete it -->
 <template>
   <div
     class="note-footer"

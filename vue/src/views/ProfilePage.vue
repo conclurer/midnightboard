@@ -10,7 +10,7 @@
     />
     <b-card
       bg-variant="dark"
-      class="userCard"
+      class="user-card"
     >
       <Profile
         id="profile"
@@ -64,7 +64,8 @@ export default {
     padding: 54px 0 0 0;
     height: 100vh;
   }
-  .userCard {
+
+  .user-card {
     min-width: 400px;
     max-width: 40vw;
     margin: 20px auto auto auto;

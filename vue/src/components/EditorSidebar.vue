@@ -1,7 +1,7 @@
 <!-- This sidebar displays the selected editor and has an own header -->
 <template>
   <div
-    class="editorSidebar"
+    class="editor-sidebar"
     v-smoothscrollbar="{ listener, options }"
   >
     <EditorHeader

@@ -1,11 +1,11 @@
-<!-- This panel shows a list of user rights. They can be granted and deprived separately -->
+<!-- This panel shows a list of user rights. They can be granted and revoked separately -->
 <template>
   <div
     class="permission-panel"
   >
     <br>
     <b-card
-      class="permissionBox"
+      class="permission-box"
       bg-variant="dark"
       text-variant="white"
     >
@@ -14,7 +14,7 @@
       <b-form @submit="changePermissions">
         <div align="left">
           <b-form-checkbox
-            id="createBoards"
+            id="create-boards"
             name="createBoards"
             v-model="userPermissions.createBoards"
           >
@@ -86,7 +86,7 @@ export default {
 </script>
 
 <style scoped>
-  .permissionBox {
+  .permission-box {
     width: 25vw;
     min-width: 300px;
     margin: 0px auto;

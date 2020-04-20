@@ -30,8 +30,7 @@
       </b-row>
     </b-container>
     <VueCtkDateTimePicker
-      id="DatePicker"
-      class="datePicker"
+      class="date-picker"
       format="YYYY-MM-DD"
       formatted="ll"
       onlyDate
@@ -103,7 +102,7 @@ export default {
     color: #000;
   }
 
-  .datePicker {
+  .date-picker {
     width: 90%;
     z-index: 10003;
   }

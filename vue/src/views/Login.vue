@@ -5,7 +5,7 @@
 
     <!-- Loading circle displayed while system is sending user data to the backend -->
     <b-overlay :show="loading" variant="light" opacity="0.6" blur="2px" rounded="sm">
-      <b-card class="loginBox" align="center" bg-variant="dark" text-variant="white">
+      <b-card class="login-box" align="center" bg-variant="dark" text-variant="white">
         <br>
         <h2>{{$t('ui.welcome')}}</h2>
         <br>
@@ -117,7 +117,7 @@ a {
   color: var(--link);
 }
 
-.loginBox {
+.login-box {
   width: 400px;
   margin: 10vh auto auto auto;
 }

@@ -7,29 +7,29 @@
       :title="$t('cms.title')"
     />
     <!-- Displays the navigation bar on the left -->
-    <div class="cmsNav">
+    <div class="cms-nav">
       <div class="bg-dark text-white">
         <br>
         <b-nav vertical pills>
-          <b-nav-text class="navHeader">{{$t('cms.userMgmt')}}</b-nav-text>
+          <b-nav-text class="nav-header">{{$t('cms.userMgmt')}}</b-nav-text>
           <b-nav-item :active="selectedPanel === 'userList'" @click="selectedPanel='userList'">{{$t('cms.userList')}}</b-nav-item>
           <b-nav-item :active="selectedPanel === 'registration'" @click="selectedPanel='registration'">{{$t('cms.newUser')}}</b-nav-item>
           <b-nav-item :active="selectedPanel === 'permissions'" @click="selectedPanel='permissions'">{{$t('cms.userRights')}}</b-nav-item>
         </b-nav>
         <hr>
         <b-nav vertical pills>
-          <b-nav-text class="navHeader">{{$t('cms.contentMgmt')}}</b-nav-text>
+          <b-nav-text class="nav-header">{{$t('cms.contentMgmt')}}</b-nav-text>
           <b-nav-item :active="selectedPanel === 'noticeBoards'" @click="selectedPanel='noticeBoards'">{{$t('cms.boardList')}}</b-nav-item>
           <b-nav-item :active="selectedPanel === 'newBoard'" @click="selectedPanel='newBoard'">{{$t('cms.newBoard')}}</b-nav-item>
         </b-nav>
         <hr>
         <b-nav vertical pills>
-          <b-nav-text class="navHeader">{{$t('cms.groupMgmt')}}</b-nav-text>
+          <b-nav-text class="nav-header">{{$t('cms.groupMgmt')}}</b-nav-text>
           <b-nav-item :active="selectedPanel === 'groups'" @click="selectedPanel='groups'">{{$t('cms.editGroups')}}</b-nav-item>
         </b-nav>
       </div>
 
-      <div class="cmsContent" align="center">
+      <div class="cms-content" align="center">
         <!-- Displays a list of all registered users -->
         <div v-if="selectedPanel === 'userList'">
           <UserList />
@@ -97,7 +97,7 @@ export default {
     background-color: lightgray;
   }
 
-  .cmsNav {
+  .cms-nav {
     display: grid;
     grid-template-columns: minmax(160px, 16vw) 1fr;
     min-width: 180px;
@@ -105,13 +105,13 @@ export default {
     max-height: 100%;
   }
 
-  .cmsContent {
-    padding: 5vh 2vh 2vh 2vh;
-  }
-
-  .navHeader {
+  .nav-header {
     font-size: 1.3em;
     font-weight: bold;
     text-decoration: underline;
+  }
+
+  .cms-content {
+    padding: 5vh 2vh 2vh 2vh;
   }
 </style>

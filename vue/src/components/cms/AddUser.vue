@@ -5,7 +5,7 @@
   >
     <br>
     <b-card
-      class="creationBox"
+      class="creation-box"
       align="center"
       bg-variant="dark"
       text-variant="white"
@@ -249,7 +249,7 @@ export default {
     margin-left: 5px;
   }
 
-  .creationBox {
+  .creation-box {
     width: 25vw;
     min-width: 300px;
     margin: 0px auto;

@@ -1,8 +1,8 @@
 <!-- This editor is used to create notes which contain files -->
 <template>
-  <div class="fileUpload">
+  <div class="file-upload">
     <b-form-input
-      class="fileTitle"
+      class="file-title"
       v-model="fileTitle"
       :maxlength="maxFileTitleLength"
       :placeholder="$t('editor.file.title')"
@@ -131,7 +131,7 @@ export default {
 </script>
 
 <style scoped>
-  .fileTitle {
+  .file-title {
     width: 90%;
     margin-right: auto;
     margin-left: auto;

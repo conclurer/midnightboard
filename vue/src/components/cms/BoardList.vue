@@ -10,7 +10,7 @@
                 <b-form-input
                   v-model="filter"
                   type="search"
-                  id="filterInput"
+                  id="filter-input"
                   :placeholder="$t('cms.tables.search')"
                 ></b-form-input>
                 <b-input-group-append>

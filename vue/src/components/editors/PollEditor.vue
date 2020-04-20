@@ -1,8 +1,8 @@
 <!-- This editor is used to create simple polls. They consist of a question and several single/multiple-choice answers -->
 <template>
-  <div class="pollEditor">
+  <div class="poll-editor">
     <b-form-input
-      class="pollTitle"
+      class="poll-title"
       v-model="pollTitle"
       :maxlength="maxPollTitleLength"
       :placeholder="$t('editor.poll.title')"
@@ -47,7 +47,7 @@
     <br>
     <b-button
         variant="primary"
-        class="pollAddButton"
+        class="poll-add-button"
         @click="addAnswer()"
     >
     <font-awesome-icon icon="plus"/>
@@ -64,7 +64,7 @@
     <hr>
     <b-button
       variant="secondary"
-      class="postButton"
+      class="post-button"
       @click="createPoll()"
     >
       {{$t('editor.poll.post')}}
@@ -180,17 +180,17 @@ export default {
 </script>
 
 <style scoped>
-  .pollTitle {
+  .poll-title {
     width: 90%;
     margin-right: auto;
     margin-left: auto;
   }
 
-  .pollAddButton {
+  .poll-add-button {
     width: 45%;
   }
 
-  .postButton {
+  .post-button {
     width: auto;
   }
 </style>
