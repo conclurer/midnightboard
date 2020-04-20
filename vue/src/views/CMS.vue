@@ -8,20 +8,20 @@
     />
     <div class="cms-nav bg-dark">
         <b-nav vertical pills>
-          <b-nav-text class="navHeader">{{$t('cms.userMgmt')}}</b-nav-text>
+          <b-nav-text class="nav-header">{{$t('cms.userMgmt')}}</b-nav-text>
           <b-nav-item :to="{ name: 'cms_users_list'}" :active="selectedPanel === 'userList'" @click="selectedPanel='userList'">{{$t('cms.userList')}}</b-nav-item>
           <b-nav-item :to="{ name: 'cms_users_add'}" :active="selectedPanel === 'registration'" @click="selectedPanel='registration'">{{$t('cms.newUser')}}</b-nav-item>
           <b-nav-item disabled :active="selectedPanel === 'permissions'" @click="selectedPanel='permissions'">{{$t('cms.userRights')}}</b-nav-item>
         <hr>
-          <b-nav-text class="navHeader">{{$t('cms.contentMgmt')}}</b-nav-text>
+          <b-nav-text class="nav-header">{{$t('cms.contentMgmt')}}</b-nav-text>
           <b-nav-item :to="{ name: 'cms_boards_list'}" :active="selectedPanel === 'noticeBoards'" @click="selectedPanel='noticeBoards'">{{$t('cms.boardList')}}</b-nav-item>
           <b-nav-item :to="{ name: 'cms_boards_add'}" :active="selectedPanel === 'newBoard'" @click="selectedPanel='newBoard'">{{$t('cms.newBoard')}}</b-nav-item>
         <hr>
-          <b-nav-text class="navHeader">{{$t('cms.groupMgmt')}}</b-nav-text>
+          <b-nav-text class="nav-header">{{$t('cms.groupMgmt')}}</b-nav-text>
           <b-nav-item disabled :active="selectedPanel === 'groups'" @click="selectedPanel='groups'">{{$t('cms.editGroups')}}</b-nav-item>
         </b-nav>
     </div>
-    <div class="cmsContent">
+    <div class="cms-content">
       <router-view></router-view>
     </div>
   </div>
@@ -74,12 +74,12 @@ export default {
     padding: 20px 8px 0 8px;
   }
 
-  .cmsContent {
+  .cms-content {
     margin-left: 240px;
     padding: 5vh 2vh 2vh 2vh;
   }
 
-  .navHeader {
+  .nav-header {
     font-size: 1.3em;
     font-weight: bold;
     text-decoration: underline;

@@ -11,7 +11,7 @@
       <b-navbar-brand href="#">
         <img src="../../../configuration/logo.png" alt="Logo" class="nav-img" @click="logoClick">
       </b-navbar-brand>
-      <b-nav-text id="navTitle">
+      <b-nav-text id="nav-title">
         {{ title }}
       </b-nav-text>
       <b-navbar-toggle target="navbar-toggle-collapse" >
@@ -247,7 +247,7 @@ export default {
     font-size: calc(12pt + 0.75vw);
   }
 
-  #navTitle {
+  #nav-title {
     padding: 0 0 0 5vw;
     color: white;
     font-size: calc(12pt + 0.8vh);
