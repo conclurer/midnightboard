@@ -1,3 +1,4 @@
+<!-- The profile page shows all relevant user data. It can either be static or editable -->
 <template>
   <div class="main">
     <Header
@@ -7,10 +8,9 @@
       @profile-changed-to-edit="forceChangeToEdit"
       @profile-changed-to-view="forceChangeToView"
     />
-
     <b-card
       bg-variant="dark"
-      class="userCard"
+      class="user-card"
     >
       <Profile
         id="profile"
@@ -42,11 +42,13 @@ export default {
     this.editing = this.editable
   },
   methods: {
+    // Allows the user to edit his properties
     forceChangeToEdit: function () {
       if (this.editing) { return }
       this.editing = true
       this.$refs.profile.reload()
     },
+    // Change to static user data view
     forceChangeToView: function () {
       if (!this.editing) { return }
       this.editing = false
@@ -61,7 +63,8 @@ export default {
     padding: 54px 0 0 0;
     height: 100vh;
   }
-  .userCard {
+
+  .user-card {
     min-width: 400px;
     max-width: 40vw;
     margin: 20px auto auto auto;

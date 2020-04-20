@@ -1,16 +1,16 @@
+<!-- This panel allows admins to create new notice boards -->
 <template>
   <div
     class="add-board"
   >
     <br>
     <b-card
-      class="creationBox"
+      class="creation-box"
       align="center"
       bg-variant="dark"
       text-variant="white"
       required
     >
-      <br>
       <h2 v-html="$t('ui.addBoard')"></h2>
       <br>
       <div>
@@ -28,8 +28,8 @@
           <br>
 
           <b-form-group>
-            <font-awesome-icon icon="question-circle" id="tooltipIcon"/>
-            <b-form-radio-group buttons button-variant="outline-info" v-model="selected" class="radioGroup">
+            <font-awesome-icon icon="question-circle" id="tooltip-icon"/>
+            <b-form-radio-group buttons button-variant="outline-info" v-model="selected" class="radio-group">
               <b-form-radio v-model="selected" value="1">Private</b-form-radio>
               <b-form-radio v-model="selected" value="2">Public</b-form-radio>
               <b-form-radio v-model="selected" value="0">Default</b-form-radio>
@@ -76,11 +76,6 @@ import { axios } from '@/mixins/axios.js'
 export default {
   name: 'AddBoard',
   mixins: [axios],
-  computed: {
-    bnameState () {
-      return /^[a-zA-Z0-9äÄöÖüÜß \'\-\.\,\/\&]{2,50}$/.test(this.bname)
-    }
-  },
   data () {
     return {
       addStatus: 0,
@@ -88,7 +83,14 @@ export default {
       selected: 1
     }
   },
+  // Computed value shows whether the entered board name is valid
+  computed: {
+    bnameState () {
+      return /^[a-zA-Z0-9äÄöÖüÜß \'\-\.\,\/\&]{2,50}$/.test(this.bname)
+    }
+  },
   methods: {
+    // This method sends the board name to the backend to create a new notice board
     onSubmit (event) {
       event.preventDefault()
       if (!this.bnameState) { return }
@@ -118,6 +120,7 @@ export default {
           }
         })
     },
+    // Used to reset the board name field
     onReset (event) {
       event.preventDefault()
       this.addStatus = 0
@@ -132,19 +135,19 @@ export default {
     text-align: left;
   }
 
-  .creationBox {
+  .creation-box {
     width: 450px;
     margin: 0px auto;
   }
 
-  #tooltipIcon {
+  .radio-group {
+    padding-left: 16px;
+  }
+
+  #tooltip-icon {
     cursor: help;
     font-size: 20pt;
     margin-left: -36px;
     margin-bottom: -6px;
   }
-  .radioGroup {
-    padding-left: 16px;
-  }
-
 </style>

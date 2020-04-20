@@ -1,10 +1,12 @@
+<!-- The Content Management System is used to configure the boards and users belonging to the system.
+    Only admins (Super-Users) can access the CMS -->
 <template>
   <div class="cms">
     <Header
       id="titlebar"
       :title="$t('cms.title')"
     />
-    <div class="cmsNav bg-dark">
+    <div class="cms-nav bg-dark">
         <b-nav vertical pills>
           <b-nav-text class="navHeader">{{$t('cms.userMgmt')}}</b-nav-text>
           <b-nav-item :to="{ name: 'cms_users_list'}" :active="selectedPanel === 'userList'" @click="selectedPanel='userList'">{{$t('cms.userList')}}</b-nav-item>
@@ -64,7 +66,7 @@ export default {
     background-color: lightgray;
   }
 
-  .cmsNav {
+  .cms-nav {
     height: 100%;
     width: 240px;
     position: fixed;
@@ -82,5 +84,9 @@ export default {
     font-size: 1.3em;
     font-weight: bold;
     text-decoration: underline;
+  }
+
+  .cms-content {
+    padding: 5vh 2vh 2vh 2vh;
   }
 </style>

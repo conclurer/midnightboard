@@ -1,3 +1,4 @@
+<!-- This panel shows a list of all notice boards. They can also be visited and deleted -->
 <template>
   <div class="m">
     <div>
@@ -9,7 +10,7 @@
                 <b-form-input
                   v-model="filter"
                   type="search"
-                  id="filterInput"
+                  id="filter-input"
                   :placeholder="$t('cms.tables.search')"
                 ></b-form-input>
                 <b-input-group-append>
@@ -165,6 +166,7 @@ export default {
         })
       this.loading = false
     },
+    // This method loads all public and private notice boards
     loadBoardData: async function () {
       this.loading = true
       await this.axiosGET('api/boards/all', null, true, true)
@@ -186,10 +188,12 @@ export default {
       this.totalRows = this.boards.length
       this.loading = false
     },
+    // Called when the table gets filtered
     onFiltered (filteredItems) {
       this.totalRows = filteredItems.length
       this.currentPage = 1
     },
+    // Double click opens the selected notice board
     onDoubleClicked (item, index, event) {
       event.preventDefault()
       this.$router.push({
@@ -202,6 +206,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-
-</style>

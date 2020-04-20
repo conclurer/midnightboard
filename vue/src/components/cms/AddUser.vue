@@ -1,16 +1,16 @@
+<!-- This panel allows admins to register new users -->
 <template>
   <div
     class="add-user"
   >
     <br>
     <b-card
-      class="creationBox"
+      class="creation-box"
       align="center"
       bg-variant="dark"
       text-variant="white"
       required
     >
-      <br>
       <h2 v-html="$t('ui.addUser')"></h2>
       <br>
       <div>
@@ -117,7 +117,6 @@
         <h5>{{$t('cms.unexpectedError')}}</h5>
       </b-alert>
     </div>
-
   </div>
 </template>
 
@@ -127,6 +126,7 @@ import { axios } from '@/mixins/axios.js'
 export default {
   name: 'AddUser',
   mixins: [axios],
+  // Computed values show whether the input strings are valid
   computed: {
     fnameState () {
       return /^[\'\-\. a-zA-ZŠŽšžŸÀ-ÖÙ-öù-ÿ]{2,20}$/.test(this.fname)
@@ -159,6 +159,7 @@ export default {
     }
   },
   methods: {
+    // This method sends the input field content to the backend to register a new user
     onSubmit: async function (event) {
       event.preventDefault()
       if (!this.finalState) { return }
@@ -198,6 +199,7 @@ export default {
 
       this.loading = false
     },
+    // Used to reset the input fields
     onReset: async function (event) {
       event.preventDefault()
       this.addStatus = 0
@@ -220,13 +222,9 @@ export default {
     margin-left: 5px;
   }
 
-  .creationBox {
-    width: 22vw;
+  .creation-box {
+    width: 25vw;
     min-width: 300px;
     margin: 0px auto;
-  }
-
-  .radio-button {
-    margin-left: 10px;
   }
 </style>

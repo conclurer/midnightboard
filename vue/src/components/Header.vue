@@ -1,3 +1,4 @@
+<!-- This header is displayed on top of every view. Some buttons can be set visible or invisible -->
 <template>
   <div>
     <b-navbar
@@ -8,7 +9,7 @@
       class="m"
     >
       <b-navbar-brand href="#">
-        <img src="../../../configuration/logo.png" alt="Logo" class="navImg" @click="logoClick">
+        <img src="../../../configuration/logo.png" alt="Logo" class="nav-img" @click="logoClick">
       </b-navbar-brand>
       <b-nav-text id="navTitle">
         {{ title }}
@@ -21,7 +22,7 @@
       <b-collapse id="navbar-toggle-collapse" is-nav >
         <b-navbar-nav class="ml-auto">
           <b-nav-item-dropdown
-              class="navItem"
+              class="nav-item"
               right
               no-caret
           >
@@ -46,7 +47,7 @@
 
           <b-nav-item-dropdown
             v-if="addActive"
-            class="navItem"
+            class="nav-item"
             right
             no-caret
           >
@@ -61,7 +62,7 @@
           </b-nav-item-dropdown>
 
           <b-nav-item-dropdown
-            class="navItem pr-3"
+            class="nav-item pr-3"
             right
             no-caret
           >
@@ -115,6 +116,7 @@ export default {
     this.avatarText = window.localStorage.getItem('mnb_inits')
   },
   methods: {
+    // Used to change the selected language to English
     cToEN: function (e) {
       e.preventDefault()
       if (this.selLanguage === 'en') { return }
@@ -122,6 +124,7 @@ export default {
       this.selLanguage = 'en'
       i18n.locale = 'en-GB'
     },
+    // Used to change the selected language to German
     cToDE: function (e) {
       e.preventDefault()
       if (this.selLanguage === 'de') { return }
@@ -129,6 +132,7 @@ export default {
       this.selLanguage = 'de'
       i18n.locale = 'de-DE'
     },
+    // This method is called when the user selects an editor from the drop-down and emits the editor id to the NoticeBoard view
     selectEditor: function (selection) {
       switch (selection) {
         case 'text':
@@ -149,6 +153,7 @@ export default {
         default:
       }
     },
+    // This method forwards the user to his profile page
     avatarProfile: function () {
       if (this.$route.params.userId === window.localStorage.getItem('mnb_uid')) {
         this.$emit('profile-changed-to-view')
@@ -163,6 +168,7 @@ export default {
       })
         .then(() => this.$emit('profile-changed'))
     },
+    // Used to get to the profile page in editing mode
     avatarEdit: function () {
       if (this.$route.params.userId === window.localStorage.getItem('mnb_uid')) {
         this.$emit('profile-changed-to-edit')
@@ -177,37 +183,45 @@ export default {
       })
         .then(() => this.$emit('profile-changed'))
     },
+    // Called when users want to log out
     avatarLogout: function () {
       this.logout()
     },
+    // This method forwards the user to the login page
     avatarLogin: function () {
       if (this.$route.path === '/login') { return }
       this.$router.push({
         name: 'Login'
       })
     },
+    // This method forwards the user to the registration page
     avatarRegister: function () {
       if (this.$route.path === '/register') { return }
       this.$router.push({
         name: 'Register'
       })
     },
+    // This method forwards the user to the CMS page
     avatarCMS: function () {
       if (this.$route.path === '/cms') { return }
       this.$router.push({
         name: 'CMS'
       })
     },
+    // When the user clicks at the logo the board sidebar is displayed/hidden
     logoClick: function () {
       this.boardSidebarToggle = !this.boardSidebarToggle
     },
+    // Called when the notice board was changed
     boardChanged: function () {
       this.boardSidebarToggle = false
       this.$emit('board-changed')
     },
+    // Finds out whether the user is logged in
     isLoggedIn: function () {
       return !!window.localStorage.getItem('mnb_rtok')
     },
+    // Finds out whether the user is an admin (Super-User)
     isLoggedInAsAdmin: function () {
       return window.localStorage.getItem('mnb_rid') === '0'
     }
@@ -221,9 +235,16 @@ export default {
     border-bottom: 1px black solid;
     position: fixed;
   }
-  .navImg {
+
+  .nav-img {
     padding-left: 1vw;
     height: 35px;
+  }
+
+  .nav-item {
+    margin-top: -5px;
+    padding-right: 5px;
+    font-size: calc(12pt + 0.75vw);
   }
 
   #navTitle {
@@ -231,17 +252,4 @@ export default {
     color: white;
     font-size: calc(12pt + 0.8vh);
   }
-
-  .navItem {
-    margin-top: -5px;
-    padding-right: 5px;
-    font-size: calc(12pt + 0.75vw);
-  }
-
-  .navAvatar {
-    padding: 0px;
-    margin: 0px;
-    font-size: 0.9rem;
-  }
-
 </style>

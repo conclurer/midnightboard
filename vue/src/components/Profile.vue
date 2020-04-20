@@ -1,3 +1,4 @@
+<!-- The profile page shows all important user data. When the editing variable is set, users also can modify their properties -->
 <template>
   <b-overlay
     :show="loading"
@@ -8,35 +9,35 @@
   >
     <template v-slot:overlay>
       <b-spinner v-if="loadingState !== 'error'" class="mb-2"></b-spinner>
-      <p class="statusMessage" v-if="loadingState === 'update'"> {{$t('profile.statusMsg.updatingUsername')}} </p>
-      <p class="statusMessage" v-else-if="loadingState === 'mail'"> {{$t('profile.statusMsg.updatingEmail')}} </p>
-      <p class="statusMessage" v-else-if="loadingState === 'passwd'"> {{$t('profile.statusMsg.updatingPassword')}} </p>
-      <p class="statusMessage" v-else-if="loadingState === 'success'"> {{$t('profile.statusMsg.profileUpdated')}} </p>
+      <p class="status-message" v-if="loadingState === 'update'"> {{$t('profile.statusMsg.updatingUsername')}} </p>
+      <p class="status-message" v-else-if="loadingState === 'mail'"> {{$t('profile.statusMsg.updatingEmail')}} </p>
+      <p class="status-message" v-else-if="loadingState === 'passwd'"> {{$t('profile.statusMsg.updatingPassword')}} </p>
+      <p class="status-message" v-else-if="loadingState === 'success'"> {{$t('profile.statusMsg.profileUpdated')}} </p>
 
       <div v-else-if="loadingState === 'error'">
-        <p class="statusMessage" v-if="errorCode === 'duplicateUsername'"> {{$t('profile.statusMsg.usernameTaken')}} </p>
-        <p class="statusMessage" v-else-if="errorCode === 'duplicateEmail'"> {{$t('profile.statusMsg.emailTaken')}} </p>
-        <p class="statusMessage" v-else-if="errorCode === 'similarPasswd'"> {{$t('profile.statusMsg.passwordTooSimilar')}} </p>
-        <p class="statusMessage" v-else-if="errorCode === 'invalidPasswd'"> {{$t('profile.statusMsg.incorrectPassword')}} </p>
-        <p class="statusMessage" v-else> {{$t('profile.statusMsg.unexpectedError')}} </p>
+        <p class="status-message" v-if="errorCode === 'duplicateUsername'"> {{$t('profile.statusMsg.usernameTaken')}} </p>
+        <p class="status-message" v-else-if="errorCode === 'duplicateEmail'"> {{$t('profile.statusMsg.emailTaken')}} </p>
+        <p class="status-message" v-else-if="errorCode === 'similarPasswd'"> {{$t('profile.statusMsg.passwordTooSimilar')}} </p>
+        <p class="status-message" v-else-if="errorCode === 'invalidPasswd'"> {{$t('profile.statusMsg.incorrectPassword')}} </p>
+        <p class="status-message" v-else> {{$t('profile.statusMsg.unexpectedError')}} </p>
         <b-button @click="errOkClick" variant="info" >{{$t('ui.ok')}}</b-button>
       </div>
     </template>
 
     <div class="m">
-      <div class="avatarPanel">
+      <div class="avatar-panel">
         <b-avatar :text="avatarText" variant="info" button @click="avatarClick" size="15vh" class="p-0"></b-avatar>
         <div class="pt-2">
-          <p class="aTextFName">{{userData.firstName + ' ' + userData.lastName}}</p>
-          <p class="aTextUName" v-if="!editing">{{userData.userName}}</p>
+          <p class="a-text-fname">{{userData.firstName + ' ' + userData.lastName}}</p>
+          <p class="a-text-uname" v-if="!editing">{{userData.userName}}</p>
         </div>
         <hr>
       </div>
 
-      <div v-if="editing" class="editDiv">
+      <div v-if="editing" class="edit-mode">
         <b-input-group class="pt-3">
           <b-input-group-prepend>
-            <b-input-group-text class="editPrepend">{{$t('profile.username')}}</b-input-group-text>
+            <b-input-group-text class="edit-prepend">{{$t('profile.username')}}</b-input-group-text>
           </b-input-group-prepend>
 
           <b-form-input
@@ -48,7 +49,7 @@
           />
 
           <b-input-group-append>
-            <b-button :pressed.sync="unameToggle" variant="info" class="editAppend">
+            <b-button :pressed.sync="unameToggle" variant="info" class="edit-append">
               <font-awesome-icon v-if="!unameToggle" icon="unlock" flip="horizontal"/>
               <font-awesome-icon v-else icon="lock-open" />
             </b-button>
@@ -58,7 +59,7 @@
 
         <b-input-group class="pt-3">
         <b-input-group-prepend>
-          <b-input-group-text class="editPrepend">{{$t('profile.email')}}</b-input-group-text>
+          <b-input-group-text class="edit-prepend">{{$t('profile.email')}}</b-input-group-text>
         </b-input-group-prepend>
 
         <b-form-input
@@ -71,7 +72,7 @@
         />
 
         <b-input-group-append>
-          <b-button :pressed.sync="emailToggle" variant="info" class="editAppend">
+          <b-button :pressed.sync="emailToggle" variant="info" class="edit-append">
             <font-awesome-icon v-if="!emailToggle" icon="unlock" flip="horizontal"/>
             <font-awesome-icon v-else icon="lock-open" />
           </b-button>
@@ -83,7 +84,7 @@
 
               <b-input-group>
                 <b-input-group-prepend>
-                  <b-input-group-text class="editPrependPass">{{$t('profile.passwordOld')}}</b-input-group-text>
+                  <b-input-group-text class="edit-prepend-pass">{{$t('profile.passwordOld')}}</b-input-group-text>
                 </b-input-group-prepend>
                 <b-input
                   :state="passwdOldState"
@@ -94,7 +95,7 @@
                 />
 
                 <b-input-group-append>
-                  <b-button :pressed.sync="passwdToggle" variant="info" class="editAppend">
+                  <b-button :pressed.sync="passwdToggle" variant="info" class="edit-append">
                     <font-awesome-icon v-if="!passwdToggle" icon="unlock" flip="horizontal"/>
                     <font-awesome-icon v-else icon="lock-open" />
                   </b-button>
@@ -103,7 +104,7 @@
 
               <b-input-group>
                 <b-input-group-prepend>
-                  <b-input-group-text class="editPrependPass">{{$t('profile.passwordNew')}}</b-input-group-text>
+                  <b-input-group-text class="edit-prepend-pass">{{$t('profile.passwordNew')}}</b-input-group-text>
                 </b-input-group-prepend>
                 <b-input
                   :state="passwdState"
@@ -115,7 +116,7 @@
                 />
 
                 <b-input-group-append>
-                  <b-button :pressed.sync="passwdToggle" variant="info" class="editAppend"/>
+                  <b-button :pressed.sync="passwdToggle" variant="info" class="edit-append"/>
                 </b-input-group-append>
               </b-input-group>
 
@@ -127,10 +128,10 @@
         </b-button-group>
       </div>
 
-      <div v-else class="viewDiv">
+      <div v-else class="view-mode">
         <div class="pl-2">
-          <p class="viewTextLabel">{{$t('profile.email')}}</p>
-          <p class="viewText">{{this.userData.email}}</p>
+          <p class="view-text-label">{{$t('profile.email')}}</p>
+          <p class="view-text">{{this.userData.email}}</p>
         </div>
         <!--<b-button v-if="editable" @click="editClick" variant="primary" >{{$t('ui.edit')}}</b-button>-->
       </div>
@@ -168,6 +169,7 @@ export default {
     passwdRegex () {
       return /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]|.*[\-=._#§@$!%*?&])[A-Za-z0-9\-=._#§@$!%*?&]{8,}$/.test(this.pPasswdNew)
     },
+    // Returns whether the complete user data is valid
     submitState () {
       if (this.userData.email !== this.pMail && !this.emailRegex) { return false }
       if (this.userData.userName !== this.pUname && !this.unameRegex) { return false }
@@ -207,6 +209,7 @@ export default {
     this.reload()
   },
   methods: {
+    // Used to change the user data as specified in the text fields
     onSubmit: async function (event) {
       event.preventDefault()
       this.loading = true
@@ -293,6 +296,7 @@ export default {
       this.loading = false
       this.onCancel()
     },
+    // This method is used to leave the editing mode
     onCancel () {
       this.loadingState = null
       this.pMail = this.userData.email
@@ -302,12 +306,15 @@ export default {
       this.editing = this.loading = false
       this.errorCode = ''
     },
+    // Used to upload an avatar image. Not yet implemented
     avatarClick () {
       // TODO Upload Avatar
     },
+    // Brings the user into the editing mode
     editClick () {
       if (this.editable) { this.editing = true }
     },
+    // Called when a user clicks OK at the error dialog
     errOkClick () {
       this.errorCode = ''
       this.loading = false
@@ -330,6 +337,7 @@ export default {
           }
         })
     },
+    // Used to reload the profile page
     reload: async function () {
       this.loading = true
       await this.refreshToken()
@@ -347,46 +355,55 @@ export default {
   hr {
     border-top: solid 1px white;
   }
-  .aTextFName {
+
+  .a-text-fname {
     color: white;
     text-align: center;
     font-weight: bold;
     font-size: 2.6em;
   }
-  .aTextUName {
+
+  .a-text-uname {
     margin-top: -1.3em;
     font-size: 1.4em;
     color: lightgray;
     text-align: center;
   }
-  .viewTextLabel {
+
+  .view-text-label {
     padding-left: 0rem;
     margin-bottom: -0.3em;
     font-size: 1em;
     color: lightgray;
     text-align: left;
   }
-  .viewText {
+
+  .view-text {
     padding-left: 1rem;
     font-size: 1.2em;
     color: white;
     text-align: left;
   }
-  .editDiv {
+
+  .edit-mode {
     padding: 1vh;
   }
-  .editPrepend {
+
+  .edit-prepend {
     font-size: 0.9em;
     width:100px;
   }
-  .editPrependPass {
+
+  .edit-prepend-pass {
     font-size: 0.7em;
     width:100px;
   }
-  .editAppend {
+
+  .edit-append {
     width: 40px;
   }
-  .statusMessage {
+
+  .status-message {
     font-size: 1.4em;
     color: lightgray;
     text-align: center;

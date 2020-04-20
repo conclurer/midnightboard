@@ -1,3 +1,4 @@
+<!-- Registration page. Used to create new user accounts-->
 <template>
   <div class="register">
     <Header
@@ -6,7 +7,7 @@
     />
 
     <b-card
-      class="loginBox"
+      class="login-box"
       align="center"
       bg-variant="dark"
       text-variant="white"
@@ -14,7 +15,6 @@
       <br>
       <h4 v-html="$t('ui.createAccount')"></h4>
       <br>
-
       <div>
         <b-overlay
           :show="loading"
@@ -87,8 +87,8 @@
             <b-tooltip target="passwd" variant="info" triggers="hover">
               {{$t('register.malPassword')}}
             </b-tooltip>
-
             <br>
+
             <b-button-group>
               <b-button type="submit" variant="primary" :disabled="!finalState">{{$t('ui.submit')}}</b-button>
               <b-button type="reset" variant="danger">{{$t('ui.reset')}}</b-button>
@@ -98,8 +98,9 @@
           </b-form>
         </b-overlay>
       </div>
-
       <br>
+
+      <!-- Registered users can click here and log in -->
       <router-link to="/login">
         {{$t('ui.toLogin')}}
       </router-link>
@@ -128,6 +129,7 @@ export default {
       lname: ''
     }
   },
+  // Computed values show whether the input strings are valid
   computed: {
     fnameState () {
       return /^[\'\-\. a-zA-ZŠŽšžŸÀ-ÖÙ-öù-ÿ]{2,20}$/.test(this.fname)
@@ -149,6 +151,7 @@ export default {
     }
   },
   methods: {
+    // Sends user input to the backend to create a new account
     onSubmit (event) {
       event.preventDefault()
       if (!this.finalState) { return }
@@ -164,7 +167,7 @@ export default {
         }
       )
         .then(response => {
-          this.direktLogin()
+          this.directLogin()
         })
         .catch(err => {
           this.loading = false
@@ -176,6 +179,7 @@ export default {
           }
         })
     },
+    // Used to reset the input fields
     onReset (event) {
       event.preventDefault()
       this.uname = ''
@@ -184,7 +188,7 @@ export default {
       this.fname = ''
       this.lname = ''
     },
-    direktLogin () {
+    directLogin () {
       this.axiosPOST('api/users/login', {
         email: this.email,
         password: this.passwd
@@ -218,7 +222,7 @@ export default {
     color: var(--link);
   }
 
-  .loginBox {
+  .login-box {
     width: 400px;
     height: auto;
     margin: 7vh auto auto auto;
