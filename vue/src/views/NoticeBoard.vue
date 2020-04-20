@@ -104,7 +104,6 @@ export default {
     },
     // Called after a note was created
     addNote: async function () {
-      await this.refreshToken()
       this.fetchPosts()
       this.editorActive = false
     },

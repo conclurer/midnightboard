@@ -40,7 +40,7 @@ export default {
     }
   },
   created: function () {
-    switch(this.$route.path) {
+    switch (this.$route.path) {
       case '/cms/users/list':
         this.selectedPanel = 'userList'
         break
@@ -53,7 +53,6 @@ export default {
       case '/cms/boards/add':
         this.selectedPanel = 'newBoard'
         break
-      
     }
   }
 }

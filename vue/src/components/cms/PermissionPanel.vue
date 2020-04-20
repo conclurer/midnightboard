@@ -66,7 +66,12 @@ export default {
   name: 'PermissionPanel',
   data () {
     return {
-
+      userPermissions: {
+        createBoards: false,
+        register: false,
+        like: false,
+        comment: false
+      }
     }
   },
   methods: {
