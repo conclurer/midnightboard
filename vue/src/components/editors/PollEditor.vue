@@ -1,11 +1,16 @@
+<!-- This editor is used to create simple polls. They consist of a question and several single/multiple-choice answers -->
 <template>
-  <div class="pollEditor">
+  <div class="poll-editor">
     <b-form-input
-      class="pollTitle"
+      class="poll-title"
       v-model="pollTitle"
-      :placeholder="$t('editor.poll.title')"
       :maxlength="maxPollTitleLength"
+      :placeholder="$t('editor.poll.title')"
+      :state="titleState"
     />
+    <b-form-invalid-feedback>
+      {{$t('editor.tooShort')}}
+    </b-form-invalid-feedback>
     <br>
     <b-container>
       <div
@@ -42,7 +47,7 @@
     <br>
     <b-button
         variant="primary"
-        class="pollAddButton"
+        class="poll-add-button"
         @click="addAnswer()"
     >
     <font-awesome-icon icon="plus"/>
@@ -59,7 +64,7 @@
     <hr>
     <b-button
       variant="secondary"
-      class="postButton"
+      class="post-button"
       @click="createPoll()"
     >
       {{$t('editor.poll.post')}}
@@ -83,15 +88,24 @@ export default {
       pollContent: ''
     }
   },
+  // Computed value shows whether the title string is valid
+  computed: {
+    titleState () {
+      return this.pollTitle.length > 1
+    }
+  },
   methods: {
+    // Adds a new option to vote for
     addAnswer: function () {
       this.pollAnswers.push({ answer: '' })
     },
+    // Deletes an answer field
     removeAnswer: function (index) {
       this.pollAnswers.splice(index, 1)
     },
+    // Used to create new polls which can be send to the backend
     createPoll: function () {
-      if (this.pollTitle === '') {
+      if (this.pollTitle.length < 2) {
         alert(this.$t('editor.poll.missingTitle'))
       } else {
         // 2 or more answers = valid poll
@@ -166,17 +180,17 @@ export default {
 </script>
 
 <style scoped>
-  .pollTitle {
+  .poll-title {
     width: 90%;
     margin-right: auto;
     margin-left: auto;
   }
 
-  .pollAddButton {
+  .poll-add-button {
     width: 45%;
   }
 
-  .postButton {
+  .post-button {
     width: auto;
   }
 </style>

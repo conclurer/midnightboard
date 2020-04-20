@@ -1,11 +1,16 @@
+<!-- This editor is used to to upload image files -->
 <template>
-  <div class="imageUpload">
+  <div class="image-upload">
     <b-form-input
-      class="imageTitle"
-      v-bind:value="imageTitle"
-      v-on:input="imageTitle = $event"
+      class="image-title"
+      v-model="imageTitle"
       :maxlength="maxImageTitleLength"
+      :placeholder="$t('editor.image.title')"
+      :state="titleState"
     />
+    <b-form-invalid-feedback>
+      {{$t('editor.tooShort')}}
+    </b-form-invalid-feedback>
     <br>
     <picture-input
       ref="pictureInput"
@@ -49,17 +54,24 @@ import PictureInput from 'vue-picture-input'
 
 export default {
   name: 'ImageUpload',
-  data () {
-    return {
-      imageRef: '',
-      imageTitle: this.$t('editor.image.title'),
-      maxImageTitleLength: 50
-    }
-  },
   components: {
     PictureInput
   },
+  data () {
+    return {
+      imageRef: '',
+      imageTitle: '',
+      maxImageTitleLength: 50
+    }
+  },
+  // Computed value shows whether the title string is valid
+  computed: {
+    titleState () {
+      return this.imageTitle.length > 1
+    }
+  },
   methods: {
+    // Called when a user changes the selected image
     onChange: function (image) {
       if (image) {
         this.image = image
@@ -68,6 +80,7 @@ export default {
         this.imageRef = ''
       }
     },
+    // Called when a user removes the selected image
     onRemove: function () {
       this.imageRef = ''
       this.imageTitle = this.$t('editor.image.title')
@@ -77,7 +90,7 @@ export default {
 </script>
 
 <style scoped>
-  .imageTitle {
+  .image-title {
     width: 90%;
     margin-right: auto;
     margin-left: auto;

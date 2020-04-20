@@ -1,13 +1,16 @@
+<!-- This editor is used to create complex survey. They can contain several questions with a text field for the answer and polls -->
 <template>
-  <div class="surveyEditor">
-    <br>
-    <h2>{{$t('editor.survey.heading')}}</h2>
+  <div class="survey-editor">
     <b-form-input
-      class="surveyTitle"
+      class="survey-title"
       v-model="surveyTitle"
-      :placeholder="$t('editor.survey.title')"
       :maxlength="maxSurveyTitleLength"
+      :placeholder="$t('editor.survey.title')"
+      :state="titleState"
     />
+    <b-form-invalid-feedback>
+      {{$t('editor.tooShort')}}
+    </b-form-invalid-feedback>
     <div v-if="surveyQuestions.length >= 0">
       <div
         v-for="(question, index) in surveyQuestions"
@@ -88,7 +91,7 @@
           <br>
           <b-button
             variant="primary"
-            class="surveyAddChoiceButton"
+            class="survey-add-choice-button"
             @click="addChoiceAnswer(index)"
           >
           <font-awesome-icon icon="plus"/>
@@ -110,21 +113,21 @@
     <b-button-group>
       <b-button
         variant="primary"
-        class="surveyAddInputFieldQuestion"
+        class="survey-add-input-field-question"
         @click="addInputFieldQuestion()"
       >
       {{$t('editor.survey.addInputFieldQuestion')}}
       </b-button>
       <b-button
         variant="primary"
-        class="surveyAddTextAreaQuestion"
+        class="survey-add-text-area-question"
         @click="addTextAreaQuestion()"
       >
       {{$t('editor.survey.addTextAreaQuestion')}}
       </b-button>
       <b-button
         variant="primary"
-        class="surveyAddMultipleChoiceQuestion"
+        class="survey-add-multiple-choice-question"
         @click="addMultipleChoiceQuestion()"
       >
       {{$t('editor.survey.addMultipleChoiceQuestion')}}
@@ -133,7 +136,7 @@
     <hr>
     <b-button
       variant="secondary"
-      class="postButton"
+      class="post-button"
       @click="createSurvey()"
     >
       {{$t('editor.survey.post')}}
@@ -168,25 +171,35 @@ export default {
       surveyContent: ''
     }
   },
+  // Computed value shows whether the title string is valid
+  computed: {
+    titleState () {
+      return this.surveyTitle.length > 1
+    }
+  },
   methods: {
+    // Adds a question with an input field to the survey
     addInputFieldQuestion () {
       this.allowMultipleVotes.push(null)
       this.surveyQuestions.push('')
       this.surveyQuestionType.push('IFQ')
       this.surveyQuestionElement.push('')
     },
+    // Adds a question with a large text field for the answer
     addTextAreaQuestion () {
       this.allowMultipleVotes.push(null)
       this.surveyQuestions.push('')
       this.surveyQuestionType.push('TAQ')
       this.surveyQuestionElement.push('')
     },
+    // Used to add a new single/multiple-choice question
     addMultipleChoiceQuestion () {
       this.allowMultipleVotes.push(false)
       this.surveyQuestions.push('')
       this.surveyQuestionType.push('MCQ')
       this.surveyQuestionElement.push([''])
     },
+    // Used to remove a single/multiple-choice question
     removeQuestion (questionIndex) {
       this.allowMultipleVotes.splice(questionIndex, 1)
       this.surveyQuestions.splice(questionIndex, 1)
@@ -198,17 +211,20 @@ export default {
         this.surveyQuestionElement.splice(questionIndex, 1)
       }
     },
+    // Adds a single/multiple-choice answer to a question
     addChoiceAnswer (questionIndex) {
       this.surveyQuestionElement[questionIndex].push('')
     },
+    // Removes a single/multiple-choice answer
     removeChoiceAnswer (answerIndex, questionIndex) {
       this.surveyQuestionElement[questionIndex].splice(answerIndex, 1)
     },
+    // Used to create new surveys which can be send to the backend
     createSurvey () {
       var invalidInput = false
       var containsMCQ = false
       var answerDuplicates = false
-      if (this.surveyTitle === '') {
+      if (this.surveyTitle.length < 2) {
         alert(this.$t('editor.survey.missingTitle'))
         invalidInput = true
       } else {
@@ -352,17 +368,17 @@ export default {
 </script>
 
 <style scoped>
-  .surveyTitle {
+  .survey-title {
     width: 90%;
     margin-right: auto;
     margin-left: auto;
   }
 
-  .surveyAddChoiceButton {
+  .survey-add-choice-button {
     width: 45%;
   }
 
-  .postButton {
+  .post-button {
     width: auto;
   }
 </style>

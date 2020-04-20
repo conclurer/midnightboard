@@ -29,11 +29,6 @@ export default new Router({
 
     children: [
       {
-        path: 'about',
-        name: 'About',
-        component: () => import('../views/About.vue')
-      },
-      {
         path: '',
         name: 'Home',
         component: () => import('../views/NoticeBoard.vue')

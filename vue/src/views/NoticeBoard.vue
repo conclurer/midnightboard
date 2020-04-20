@@ -1,3 +1,4 @@
+<!-- Parent component for all notice boards. Essential data is saved here -->
 <template>
   <div class="home">
     <Header
@@ -13,7 +14,7 @@
       opacity="0.6"
       blur="2px"
       rounded="sm"
-      class="loadingOverlay"
+      class="loading-overlay"
     >
       <Board
         @add-note="addNote"
@@ -55,6 +56,7 @@ export default {
     this.reload()
   },
   methods: {
+    // Called to refresh the access token
     refreshToken: function () {
       axios
         .post('http://localhost:1337/api/users/refresh', {
@@ -75,6 +77,7 @@ export default {
           }
         })
     },
+    // This method is used to load the posts of a notice board from the database
     fetchPosts: async function () {
       axios
         .get('http://localhost:1337/api/posts/all/' + this.boardId, {
@@ -98,6 +101,7 @@ export default {
           }
         })
     },
+    // This method is called to load notice board properties
     fetchBoard: async function () {
       return await axios
         .get('http://localhost:1337/api/boards/' + this.boardId, {
@@ -126,18 +130,22 @@ export default {
           }
         })
     },
+    // Called after a note was created
     addNote: async function () {
       this.refreshToken()
       this.fetchPosts()
       this.editorActive = false
     },
+    // Sets the editor id which is used in the editor sidebar
     selectEditor: function (selection) {
       this.editorActive = true
       this.editorId = selection
     },
+    // Used to close the editor sidebar
     close: function () {
       this.editorActive = false
     },
+    // Used to update the note array in data
     reload: async function () {
       this.loading = true
       this.notes = []
@@ -152,7 +160,7 @@ export default {
 </script>
 
 <style scoped>
-  .loadingOverlay {
+  .loading-overlay {
     top:0;
     left:0;
     min-height: 95vh;
