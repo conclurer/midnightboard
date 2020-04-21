@@ -12,9 +12,9 @@
 		},
 		"create": {
 			"subject": "New post on board ",
-			"plainText1": "Someone have created a new post on board ",
+			"plainText1": "Someone has created a new post on board ",
 			"plainText2": ". Check it out! If you want to unsubscribe use the bell on the board!",
-			"htmlText1": "Someone have created a new post on board ",
+			"htmlText1": "Someone has created a new post on board ",
 			"htmlText2": ". Check it out!<br>If you want to unsubscribe use the bell on the board!"
 		}
 	}
