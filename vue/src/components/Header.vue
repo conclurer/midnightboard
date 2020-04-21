@@ -17,7 +17,7 @@
       <b-navbar-item class="nav-sub" v-if="boardVisible && isLoggedIn()">
         <b-button variant="link" @click="changeSubscriberMode()">
           <font-awesome-icon v-if="!boardSubscribed" icon="bell-slash" size="lg" />
-          <font-awesome-icon v-else-if="boardSubscribed" icon="bell" size="lg" />
+          <font-awesome-icon v-else-if="boardSubscribed" icon="bell" size="lg" class="nav-sub-bell" />
         </b-button>
       </b-navbar-item>
       <b-navbar-toggle target="navbar-toggle-collapse" >
@@ -343,6 +343,10 @@ export default {
   .nav-sub {
     padding: 0 0 0 1vw;
     color: white;
+  }
+
+  .nav-sub-bell {
+    margin-left: 4px;
   }
 
   .btn-link {
