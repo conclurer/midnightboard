@@ -46,9 +46,9 @@ module.exports = {
     if(!usr || !brd) {
       return exits.nonExistent();
     } else {
-      const subject = sails.__('email.subscribe.subject') + brd.boardName;
-      const plainText = sails.__('email.subscribe.plainText');
-      const htmlText = sails.__('email.subscribe.htmlText');
+      const subject = sails.__('email.unsubscribe.subject') + brd.boardName;
+      const plainText = sails.__('email.unsubscribe.plainText');
+      const htmlText = sails.__('email.unsubscribe.htmlText');
       await BoardSubscription.destroy({
         boardId: boardId,
         memberId: userId
