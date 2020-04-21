@@ -47,7 +47,7 @@ module.exports = {
       port: sails.config.mailbox.port,
       secure: sails.config.mailbox.secure,
       auth: sails.config.mailbox.auth,
-      logger: true, // Enable logging
+      logger: false, // Enable logging
       debug: false // Include SMTP traffic in the logs
     },
     {

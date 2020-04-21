@@ -64,7 +64,7 @@ module.exports = {
   },
 
   fn: async function(inputs, exits) {
-    var DefaultDueDates = require('../../../../configuration/DefaultDisplayTimes');
+    var DefaultDueDates = require('../../../../config/default-display-times');
     let titleRegex = new RegExp(sails.config.custom.POSTTITLE_REGEX);
 
     /*if(!this.req.me) {
