@@ -215,10 +215,10 @@ module.exports = {
     });
 
     // Send notifications to all subscribed members
-    const subject = sails.__('email.create.subject') + boardId;
-    const plainText = sails.__('email.create.plainText1') + boardId
+    const subject = sails.__('email.create.subject') + boardExists.boardName;
+    const plainText = sails.__('email.create.plainText1') + boardExists.boardName
       + sails.__('email.create.plainText2');
-    const htmlText = sails.__('email.create.htmlText1') + boardId
+    const htmlText = sails.__('email.create.htmlText1') + boardExists.boardName
       + sails.__('email.create.htmlText2');
     const subscribers = await BoardSubscription.find({boardId: boardId});
     for(const subscriber of subscribers) {

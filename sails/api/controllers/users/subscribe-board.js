@@ -40,15 +40,15 @@ module.exports = {
     }
     const userId = inputs.userId;
     const boardId = inputs.boardId;
-    const subject = sails.__('email.subscribe.subject') + boardId;
-    const plainText = sails.__('email.subscribe.plainText');
-    const htmlText = sails.__('email.subscribe.htmlText');
     sails.log.verbose('USER_PUT::: Subscribing user #' + userId + ' to board #' + boardId);
     var usr = await Member.findOne({id: userId});
     var brd = await Board.findOne({id: boardId});
     if(!usr || !brd) {
       return exits.nonExistent();
     } else {
+      const subject = sails.__('email.subscribe.subject') + brd.boardName;
+      const plainText = sails.__('email.subscribe.plainText');
+      const htmlText = sails.__('email.subscribe.htmlText');
       await BoardSubscription.create({
         boardId: boardId,
         memberId: userId
