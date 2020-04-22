@@ -53,11 +53,12 @@
 
 <script>
 // @ is an alias to /src
-import axios from 'axios'
+import { axios } from '@/mixins/axios.js'
 import Header from '@/components/Header.vue'
 
 export default {
   name: 'Login',
+  mixins: [axios],
   components: {
     Header
   },
@@ -82,10 +83,10 @@ export default {
         ? (this.loginData.email = this.email)
         : (this.loginData.userName = this.email)
 
-      axios
-        .post('http://localhost:1337/api/users/login', this.loginData)
+      this.axiosPOST('api/users/login', this.loginData)
         .then(response => {
           this.loginState = true
+          this.loading = false
           window.localStorage.setItem('mnb_atok', response.data.accessToken)
           window.localStorage.setItem('mnb_rtok', response.data.refreshToken)
           window.localStorage.setItem('mnb_uid', response.data.uid)
@@ -94,6 +95,7 @@ export default {
           this.$router.push({ name: 'Home' })
         })
         .catch(err => {
+          this.loading = false
           switch (err.response.status) {
             case 400:
             case 403:
@@ -106,7 +108,6 @@ export default {
           }
         })
       this.loginData = {}
-      this.loading = false
     }
   }
 }

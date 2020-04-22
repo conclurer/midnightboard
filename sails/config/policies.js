@@ -11,8 +11,8 @@
 module.exports.policies = {
     '*': true,
 
-    'board/get': true,
-    'board/get-all': true,
+    'boards/get': true,
+    'boards/get-all': true,
     'boards/create': 'is-logged-in',
     'boards/delete': 'is-board-owner',
     'boards/update': 'is-board-owner',

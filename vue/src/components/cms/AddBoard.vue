@@ -23,7 +23,7 @@
             trim
           ></b-form-input>
           <b-tooltip target="bname" variant="info" triggers="hover">
-             {{$t('boards.malBoardName')}}
+            {{$t('boards.malBoardName')}}
           </b-tooltip>
           <br>
 
@@ -36,7 +36,7 @@
             </b-form-radio-group>
           </b-form-group>
           <b-tooltip target="tooltip-icon" variant="info" triggers="hover" placement="topright" html="true">
-             {{$t('boards.accessInfo')}}
+            {{$t('boards.accessInfo')}}
           </b-tooltip>
           <br>
 
@@ -71,10 +71,11 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { axios } from '@/mixins/axios.js'
 
 export default {
   name: 'AddBoard',
+  mixins: [axios],
   data () {
     return {
       addStatus: 0,
@@ -94,20 +95,12 @@ export default {
       event.preventDefault()
       if (!this.bnameState) { return }
       this.addStatus = 0
-
-      this.refreshToken()
-      axios
-        .post('http://localhost:1337/api/boards',
-          {
-            'boardName': this.bname,
-            'boardType': this.selected
-          },
-          {
-            headers: {
-              'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
-              'Content-Type': 'application/json'
-            }
-          })
+      this.axiosPOST('api/boards',
+        {
+          'boardName': this.bname,
+          'boardType': this.selected
+        },
+        true, true)
         .then(response => {
           this.addStatus = 201
           this.bname = ''
@@ -132,26 +125,6 @@ export default {
       event.preventDefault()
       this.addStatus = 0
       this.bname = ''
-    },
-    // Called to refresh the access token
-    refreshToken () {
-      axios
-        .post('http://localhost:1337/api/users/refresh', {
-          token: window.localStorage.getItem('mnb_rtok')
-        })
-        .then(response => {
-          window.localStorage.setItem('mnb_atok', response.data.accessToken)
-        })
-        .catch(err => {
-          this.$log.error(err.response.config.token)
-          switch (err.response.status) {
-            case 500:
-              this.$log.error(err)
-              break
-            default:
-              this.$log.error(err)
-          }
-        })
     }
   }
 }

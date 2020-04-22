@@ -202,12 +202,14 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { axios } from '@/mixins/axios.js'
 import pdf from 'vue-pdf'
 import NoteFooter from '@/components/NoteFooter.vue'
 
 export default {
   name: 'Board',
+  props: ['notes', 'updateKey'],
+  mixins: [axios],
   components: {
     pdf,
     NoteFooter
@@ -224,7 +226,6 @@ export default {
       idToDelete: null
     }
   },
-  props: ['notes', 'updateKey'],
   computed: {
     // Returns whether the user is logged in
     isLoggedIn: function () {
@@ -234,14 +235,7 @@ export default {
   created () {
     // Check for voted polls and submitted surveys
     if (!window.localStorage.getItem('mnb_rtok')) { return }
-    axios
-      .get('http://localhost:1337/api/users/participations', {
-        headers: {
-          'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
-          'Content-Type': 'application/json'
-        }
-      }
-      )
+    this.axiosGET('api/users/participations', null, true, false)
       .then(response => {
         response.data.postIds.forEach(postId => {
           this.participatedPosts[postId] = true
@@ -253,35 +247,9 @@ export default {
       .catch(err => this.$log.error(err))
   },
   methods: {
-    // Called to refresh the access token
-    refreshToken: async function () {
-      await axios
-        .post('http://localhost:1337/api/users/refresh', {
-          token: window.localStorage.getItem('mnb_rtok')
-        })
-        .then(response => {
-          window.localStorage.setItem('mnb_atok', response.data.accessToken)
-        })
-        .catch(err => {
-          this.$log.error(err.response.config.token)
-          switch (err.response.status) {
-            case 500:
-            default:
-              this.$log.error(err)
-          }
-        })
-    },
-    // Used to get and display the results of a poll
     initPoll: async function (postId) {
       // Axios GET for current votes (if post is not a poll ignore it)
-      await axios
-        .get('http://localhost:1337/api/polls/' + postId, {
-          headers: {
-            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
-            'Content-Type': 'application/json'
-          }
-        }
-        )
+      await this.axiosGET('api/polls/' + postId, null, true, false)
         .then(response => {
           // Add poll to result map
           this.pollResultMap[postId] = this.pollAVVPMap.length
@@ -354,14 +322,7 @@ export default {
           postId: postId,
           answerIds: answerIds
         })
-        await axios
-          .put('http://localhost:1337/api/polls', jsonBody, {
-            headers: {
-              'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
-              'Content-Type': 'application/json'
-            }
-          }
-          )
+        await this.axiosPUT('api/polls', jsonBody, true, false)
           .then(res => this.initPoll(postId))
           .catch(err => this.$log.error(err))
       }
@@ -443,14 +404,7 @@ export default {
           answers: answers
         })
         // Send PUT request
-        await axios
-          .put('http://localhost:1337/api/surveys', jsonBody, {
-            headers: {
-              'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
-              'Content-Type': 'application/json'
-            }
-          }
-          )
+        await this.axiosPUT('api/surveys', jsonBody, true, false)
           .then(res => {})
           .catch(err => this.$log.error(err))
         // Set survey in submitted state
@@ -460,15 +414,7 @@ export default {
     },
     // Called when a user wants to delete a post
     deletePost: async function () {
-      this.refreshToken()
-
-      var id = this.idToDelete
-      await axios
-        .delete('http://localhost:1337/api/posts/' + id, {
-          headers: {
-            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
-          }
-        })
+      await this.axiosDELETE('api/posts/' + this.idToDelete, null, true, true)
         .then(response => { this.$emit('reload-board') })
         .catch(err => {
           switch (err.response.status) {

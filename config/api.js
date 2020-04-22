@@ -1,3 +1,3 @@
 module.exports = {
-  localRoute: "http://192.168.178.52:1337"
+  localRoute: "http://127.0.0.1:1337"
 }

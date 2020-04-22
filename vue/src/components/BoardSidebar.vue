@@ -75,9 +75,11 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { axios } from '@/mixins/axios.js'
 
 export default {
+  name: 'BoardSidebar',
+  mixins: [axios],
   data () {
     return {
       listener: () => {},
@@ -96,12 +98,7 @@ export default {
   methods: {
     // Used to load the all boards accessible for the user
     fetchBoards: async function () {
-      await axios
-        .get('http://localhost:1337/api/boards/all', {
-          headers: {
-            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
-          }
-        })
+      await this.axiosGET('api/boards/all', null, true, true)
         .then(response => {
           this.boardList = response.data.boards
           this.boardListPublic = response.data.public

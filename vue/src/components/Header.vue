@@ -95,11 +95,14 @@
 
 <script>
 import { i18n } from '@/main.js'
-import axios from 'axios'
+import { axios } from '@/mixins/axios.js'
 import BoardSidebar from '@/components/BoardSidebar.vue'
+import { logoutUser } from '@/mixins/logoutUser.js'
+
 export default {
   name: 'Header',
   props: ['addActive', 'title'],
+  mixins: [logoutUser, axios],
   components: { BoardSidebar },
   data () {
     return {
@@ -195,24 +198,7 @@ export default {
     },
     // Called when users want to log out
     avatarLogout: function () {
-      axios.defaults.headers = {
-        'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
-      }
-      axios
-        .delete('http://localhost:1337/api/users/logout')
-        .then(response => {
-          window.localStorage.clear()
-          this.$router.push({ name: 'Login' })
-        })
-        .catch(err => {
-          switch (err.response.status) {
-            case 401:
-            case 400:
-            case 500:
-            default:
-              this.$log.error(err)
-          }
-        })
+      this.logout()
     },
     // This method forwards the user to the login page
     avatarLogin: function () {
@@ -255,10 +241,7 @@ export default {
     isSubscriber: async function () {
       // Check if user has subscribed current board
       if (this.isLoggedIn) {
-        axios.defaults.headers = {
-          'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
-        }
-        await axios.get('http://localhost:1337/api/users/subscriptions')
+        this.axiosGET('api/users/subscriptions', null, true, false)
           .then(async response => {
             var brdId = parseInt(this.$route.params.boardId)
             if (brdId) {
@@ -282,24 +265,16 @@ export default {
         const userId = window.localStorage.getItem('mnb_uid')
         const boardId = this.$route.params.boardId ? this.$route.params.boardId : 0
         const suffix = '/' + userId + '/' + boardId
-        const language = window.localStorage.getItem('mnb_lang')
-          ? window.localStorage.getItem('mnb_lang') : this.selLanguage
-        axios.defaults.headers = {
-          'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
-          'Accept-Language': language
-        }
         if (this.boardSubscribed) {
           // Unsubscribe
-          await axios.put('http://localhost:1337/api/users/unsubscribe' + suffix, {
-          })
+          this.axiosPUT('api/users/unsubscribe' + suffix, null, true, false)
             .then(response => {})
             .catch(err => {
               this.$log.error(err)
             })
         } else {
           // Subscribe
-          await axios.put('http://localhost:1337/api/users/subscribe' + suffix, {
-          })
+          this.axiosPUT('api/users/subscribe' + suffix, null, true, false)
             .then(response => {})
             .catch(err => {
               this.$log.error(err)

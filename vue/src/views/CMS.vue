@@ -1,91 +1,59 @@
 <!-- The Content Management System is used to configure the boards and users belonging to the system.
-     Only admins (Super-Users) can access the CMS -->
+    Only admins (Super-Users) can access the CMS -->
 <template>
   <div class="cms">
     <Header
       id="titlebar"
       :title="$t('cms.title')"
     />
-    <!-- Displays the navigation bar on the left -->
-    <div class="cms-nav">
-      <div class="bg-dark text-white">
-        <br>
+    <div class="cms-nav bg-dark">
         <b-nav vertical pills>
           <b-nav-text class="nav-header">{{$t('cms.userMgmt')}}</b-nav-text>
-          <b-nav-item :active="selectedPanel === 'userList'" @click="selectedPanel='userList'">{{$t('cms.userList')}}</b-nav-item>
-          <b-nav-item :active="selectedPanel === 'registration'" @click="selectedPanel='registration'">{{$t('cms.newUser')}}</b-nav-item>
-          <b-nav-item :active="selectedPanel === 'permissions'" @click="selectedPanel='permissions'">{{$t('cms.userRights')}}</b-nav-item>
-        </b-nav>
+          <b-nav-item :to="{ name: 'cms_users_list'}" :active="selectedPanel === 'userList'" @click="selectedPanel='userList'">{{$t('cms.userList')}}</b-nav-item>
+          <b-nav-item :to="{ name: 'cms_users_add'}" :active="selectedPanel === 'registration'" @click="selectedPanel='registration'">{{$t('cms.newUser')}}</b-nav-item>
+          <b-nav-item disabled :active="selectedPanel === 'permissions'" @click="selectedPanel='permissions'">{{$t('cms.userRights')}}</b-nav-item>
         <hr>
-        <b-nav vertical pills>
           <b-nav-text class="nav-header">{{$t('cms.contentMgmt')}}</b-nav-text>
-          <b-nav-item :active="selectedPanel === 'noticeBoards'" @click="selectedPanel='noticeBoards'">{{$t('cms.boardList')}}</b-nav-item>
-          <b-nav-item :active="selectedPanel === 'newBoard'" @click="selectedPanel='newBoard'">{{$t('cms.newBoard')}}</b-nav-item>
-        </b-nav>
+          <b-nav-item :to="{ name: 'cms_boards_list'}" :active="selectedPanel === 'noticeBoards'" @click="selectedPanel='noticeBoards'">{{$t('cms.boardList')}}</b-nav-item>
+          <b-nav-item :to="{ name: 'cms_boards_add'}" :active="selectedPanel === 'newBoard'" @click="selectedPanel='newBoard'">{{$t('cms.newBoard')}}</b-nav-item>
         <hr>
-        <b-nav vertical pills>
           <b-nav-text class="nav-header">{{$t('cms.groupMgmt')}}</b-nav-text>
-          <b-nav-item :active="selectedPanel === 'groups'" @click="selectedPanel='groups'">{{$t('cms.editGroups')}}</b-nav-item>
+          <b-nav-item disabled :active="selectedPanel === 'groups'" @click="selectedPanel='groups'">{{$t('cms.editGroups')}}</b-nav-item>
         </b-nav>
-      </div>
-
-      <div class="cms-content" align="center">
-        <!-- Displays a list of all registered users -->
-        <div v-if="selectedPanel === 'userList'">
-          <UserList />
-        </div>
-        <!-- Displays a form to register new users -->
-        <div v-else-if="selectedPanel === 'registration'">
-          <AddUser />
-        </div>
-        <!-- Displays a panel to adapt user rights -->
-        <div v-else-if="selectedPanel === 'permissions'">
-          <PermissionPanel />
-        </div>
-        <!-- Displays a list of all notice boards -->
-        <div v-else-if="selectedPanel === 'noticeBoards'">
-          <BoardList />
-        </div>
-        <!-- Displays a form to create new notice boards -->
-        <div v-else-if="selectedPanel === 'newBoard'">
-          <AddBoard />
-        </div>
-        <!-- Displays a panel to manage user groups. This panel is not yet implemented -->
-        <div v-else-if="selectedPanel === 'groups'">
-          <!-- TODO -->
-        </div>
-
-      </div>
+    </div>
+    <div class="cms-content">
+      <router-view></router-view>
     </div>
   </div>
 </template>
 
 <script>
 import Header from '@/components/Header.vue'
-import UserList from '@/components/cms/UserList.vue'
-import AddUser from '@/components/cms/AddUser.vue'
-import PermissionPanel from '@/components/cms/PermissionPanel.vue'
-import BoardList from '@/components/cms/BoardList.vue'
-import AddBoard from '@/components/cms/AddBoard.vue'
-
 export default {
   name: 'CMS',
   components: {
-    Header,
-    UserList,
-    AddUser,
-    PermissionPanel,
-    BoardList,
-    AddBoard
+    Header
   },
   data () {
     return {
-      selectedPanel: 'userList'
+      selectedPanel: ''
     }
   },
-  created () {
-    // Users with no access token are forwarded
-    if (!window.localStorage.getItem('mnb_atok')) { this.$router.push({ name: 'Home' }) }
+  created: function () {
+    switch (this.$route.path) {
+      case '/cms/users/list':
+        this.selectedPanel = 'userList'
+        break
+      case '/cms/users/add':
+        this.selectedPanel = 'registration'
+        break
+      case '/cms/boards/list':
+        this.selectedPanel = 'noticeBoards'
+        break
+      case '/cms/boards/add':
+        this.selectedPanel = 'newBoard'
+        break
+    }
   }
 }
 </script>
@@ -98,11 +66,17 @@ export default {
   }
 
   .cms-nav {
-    display: grid;
-    grid-template-columns: minmax(160px, 16vw) 1fr;
-    min-width: 180px;
-    min-height: calc(98vh - 28px);
-    max-height: 100%;
+    height: 100%;
+    width: 240px;
+    position: fixed;
+    color: #EEE;
+    overflow-x: hidden;
+    padding: 20px 8px 0 8px;
+  }
+
+  .cms-content {
+    margin-left: 240px;
+    padding: 5vh 2vh 2vh 2vh;
   }
 
   .nav-header {

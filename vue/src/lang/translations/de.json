@@ -238,6 +238,5 @@
         "invalidLogin":"Email und Passwort stimmen nicht überein",
         "emailOrName": "Email oder Nutzername",
         "title":"Anmeldung"
-    },
-    "HelloWorld": "Hallo Welt!"
+    }
 }

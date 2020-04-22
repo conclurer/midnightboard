@@ -31,12 +31,13 @@
 
 <script>
 // @ is an alias to /src
-import axios from 'axios'
 import Board from '@/components/Board.vue'
 import Header from '@/components/Header.vue'
+import { axios } from '@/mixins/axios.js'
 
 export default {
   name: 'NoticeBoard',
+  mixins: [axios],
   components: {
     Header,
     Board
@@ -56,35 +57,10 @@ export default {
     this.reload()
   },
   methods: {
-    // Called to refresh the access token
-    refreshToken: function () {
-      axios
-        .post('http://localhost:1337/api/users/refresh', {
-          token: window.localStorage.getItem('mnb_rtok')
-        })
-        .then(response => {
-          window.localStorage.setItem('mnb_atok', response.data.accessToken)
-        })
-        .catch(err => {
-          switch (err.response.status) {
-            case 401:
-              this.$router.push({ name: 'Login' })
-              break
-            case 400:
-            case 500:
-            default:
-              this.$log.error(err)
-          }
-        })
-    },
     // This method is used to load the posts of a notice board from the database
     fetchPosts: async function () {
-      axios
-        .get('http://localhost:1337/api/posts/all/' + this.boardId, {
-          headers: {
-            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
-          }
-        })
+      const isAuthed = !!window.localStorage.getItem('mnb_rtok')
+      await this.axiosGET('api/posts/all/' + this.boardId, null, isAuthed, false)
         .then(response => { this.notes = response.data.posts })
         .catch(err => {
           switch (err.response.status) {
@@ -103,12 +79,8 @@ export default {
     },
     // This method is called to load notice board properties
     fetchBoard: async function () {
-      return await axios
-        .get('http://localhost:1337/api/boards/' + this.boardId, {
-          headers: {
-            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
-          }
-        })
+      const isAuthed = !!window.localStorage.getItem('mnb_rtok')
+      return await this.axiosGET('api/boards/' + this.boardId, null, isAuthed, isAuthed)
         .then(response => {
           this.boardTitle = response.data.boardName
           this.boardId = response.data.id
@@ -132,7 +104,6 @@ export default {
     },
     // Called after a note was created
     addNote: async function () {
-      this.refreshToken()
       this.fetchPosts()
       this.editorActive = false
     },
@@ -151,7 +122,6 @@ export default {
       this.notes = []
       if (window.localStorage.getItem('mnb_rtok')) { this.headerButtonsActive = true } else { this.headerButtonsActive = false }
       this.boardId = this.$route.params.boardId ? this.$route.params.boardId : 0
-      if (window.localStorage.getItem('mnb_rtok')) { this.refreshToken() }
       if (await this.fetchBoard()) { await this.fetchPosts() }
       this.loading = false
     }

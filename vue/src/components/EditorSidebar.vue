@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { axios } from '@/mixins/axios.js'
 import EditorHeader from '@/components/editors/EditorHeader'
 import FileUpload from '@/components/editors/FileUpload.vue'
 import ImageUpload from '@/components/editors/ImageUpload.vue'
@@ -39,7 +39,9 @@ import PollEditor from '@/components/editors/PollEditor.vue'
 import SurveyEditor from '@/components/editors/SurveyEditor.vue'
 
 export default {
-  name: 'BoardSidebar',
+  name: 'EditorSidebar',
+  props: ['boardId', 'editorId'],
+  mixins: [axios],
   components: {
     EditorHeader,
     NoteEditor,
@@ -55,7 +57,6 @@ export default {
       dueDate: null
     }
   },
-  props: ['boardId', 'editorId'],
   computed: {
     editorType () {
       switch (this.editorId) {
@@ -75,27 +76,6 @@ export default {
     }
   },
   methods: {
-    // Called to refresh the access token
-    refreshToken: async function () {
-      axios.defaults.headers = {
-        token: window.localStorage.getItem('mnb_rtok')
-      }
-      await axios
-        .post('http://localhost:1337/api/users/refresh')
-        .then(response => {
-          window.localStorage.setItem('mnb_atok', response.data.accessToken)
-        })
-        .catch(err => {
-          this.$log.error(err.response.config.token)
-          switch (err.response.status) {
-            case 500:
-              this.$log.error(err)
-              break
-            default:
-              this.$log.error(err)
-          }
-        })
-    },
     // Used to send a note to the backend
     createNote: async function (titleContent, jsonContent) {
       if (titleContent.length < 2) { return }
@@ -117,14 +97,7 @@ export default {
       }
 
       // Post request to api
-      this.refreshToken()
-      axios.defaults.headers = {
-        'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
-        'Content-Type': 'application/json',
-        'Accept-Language': window.localStorage.getItem('mnb_lang')
-      }
-      await axios
-        .post('http://localhost:1337/api/boards/' + this.boardId, jsonBody)
+      await this.axiosPOST('api/boards/' + this.boardId, jsonBody, true, true)
         .then(res => {})
         .catch(err => this.$log.error(err))
 
@@ -157,14 +130,7 @@ export default {
       }
 
       // Post request to api
-      this.refreshToken()
-      axios.defaults.headers = {
-        'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
-        'Content-Type': 'application/json',
-        'Accept-Language': window.localStorage.getItem('mnb_lang')
-      }
-      await axios
-        .post('http://localhost:1337/api/boards/' + this.boardId, jsonBody)
+      await this.axiosPOST('api/boards/' + this.boardId, jsonBody, true, true)
         .then(res => {})
         .catch(err => this.$log.error(err))
 
@@ -197,14 +163,7 @@ export default {
       }
 
       // Post request to api
-      this.refreshToken()
-      axios.defaults.headers = {
-        'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
-        'Content-Type': 'application/json',
-        'Accept-Language': window.localStorage.getItem('mnb_lang')
-      }
-      await axios
-        .post('http://localhost:1337/api/boards/' + this.boardId, jsonBody)
+      await this.axiosPOST('api/boards/' + this.boardId, jsonBody, true, true)
         .then(res => {})
         .catch(err => this.$log.error(err))
 
@@ -232,22 +191,14 @@ export default {
       }
 
       // Post request to api
-      this.refreshToken()
-      axios.defaults.headers = {
-        'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
-        'Content-Type': 'application/json',
-        'Accept-Language': window.localStorage.getItem('mnb_lang')
-      }
-      await axios
-        .post('http://localhost:1337/api/boards/' + this.boardId, jsonBodyNote)
+      await this.axiosPOST('api/boards/' + this.boardId, jsonBodyNote, true, true)
         .then(async postResponse => {
           const jsonBodyPoll = JSON.stringify({
             postId: postResponse.data.id,
             answerIds: answerIndices,
             answers: answerNames
           })
-          await axios
-            .post('http://localhost:1337/api/polls', jsonBodyPoll)
+          await this.axiosPOST('api/polls', jsonBodyPoll, true, false)
             .then(pollResponse => {})
             .catch(err => this.$log.error(err))
         })
@@ -267,14 +218,7 @@ export default {
       })
 
       // Post request to api
-      this.refreshToken()
-      axios.defaults.headers = {
-        'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
-        'Content-Type': 'application/json',
-        'Accept-Language': window.localStorage.getItem('mnb_lang')
-      }
-      await axios
-        .post('http://localhost:1337/api/boards/' + this.boardId, jsonBodyNote)
+      await this.axiosPOST('api/boards/' + this.boardId, jsonBodyNote, true, true)
         .then(async postResponse => {
           const jsonBodySurvey = JSON.stringify({
             postId: postResponse.data.id,
@@ -282,8 +226,7 @@ export default {
             questions: questions,
             answers: mcqAnswers
           })
-          await axios
-            .post('http://localhost:1337/api/surveys', jsonBodySurvey)
+          await this.axiosPOST('api/survey', jsonBodySurvey, true, false)
             .then(surveyResponse => {})
             .catch(err => this.$log.error(err))
         })
