@@ -95,13 +95,14 @@
 
 <script>
 import { i18n } from '@/main.js'
+import { axios } from '@/mixins/axios.js'
 import BoardSidebar from '@/components/BoardSidebar.vue'
 import { logoutUser } from '@/mixins/logoutUser.js'
 
 export default {
   name: 'Header',
   props: ['addActive', 'title'],
-  mixins: [logoutUser],
+  mixins: [logoutUser, axios],
   components: { BoardSidebar },
   data () {
     return {

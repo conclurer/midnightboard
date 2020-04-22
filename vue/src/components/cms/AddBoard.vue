@@ -35,7 +35,7 @@
               <b-form-radio v-model="selected" value="0">Default</b-form-radio>
             </b-form-radio-group>
           </b-form-group>
-          <b-tooltip target="tooltipIcon" variant="info" triggers="hover" placement="topright" html="true">
+          <b-tooltip target="tooltip-icon" variant="info" triggers="hover" placement="topright" html="true">
             {{$t('boards.accessInfo')}}
           </b-tooltip>
           <br>

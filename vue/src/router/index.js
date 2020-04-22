@@ -22,8 +22,8 @@ export default new Router({
         var lang = window.navigator.userLanguage || window.navigator.language
         if (!I18N_LANGUAGES.includes(lang)) { i18n.locale = 'en-GB' } else {
           if (i18n.locale !== lang) { i18n.locale = lang }
-          window.localStorage.setItem('mnb_lang', lang)
         }
+        window.localStorage.setItem('mnb_lang', lang)
       }
       return next()
     },
