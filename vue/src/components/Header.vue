@@ -264,7 +264,6 @@ export default {
         const userId = window.localStorage.getItem('mnb_uid')
         const boardId = this.$route.params.boardId ? this.$route.params.boardId : 0
         const suffix = '/' + userId + '/' + boardId
-          ? window.localStorage.getItem('mnb_lang') : this.selLanguage
         if (this.boardSubscribed) {
           // Unsubscribe
           this.axiosPUT('api/users/unsubscribe' + suffix, null, true, false)
