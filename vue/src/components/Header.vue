@@ -9,11 +9,17 @@
       class="m"
     >
       <b-navbar-brand href="#">
-        <img src="../../../configuration/logo.png" alt="Logo" class="nav-img" @click="logoClick">
+        <img src="../../../config/logo.png" alt="Logo" class="nav-img" @click="logoClick">
       </b-navbar-brand>
-      <b-nav-text id="nav-title">
+      <b-nav-text class="nav-title">
         {{ title }}
       </b-nav-text>
+      <b-navbar-item class="nav-sub" v-if="boardVisible && isLoggedIn()">
+        <b-button variant="link" @click="changeSubscriberMode()">
+          <font-awesome-icon v-if="!boardSubscribed" icon="bell-slash" size="lg" />
+          <font-awesome-icon v-else-if="boardSubscribed" icon="bell" size="lg" />
+        </b-button>
+      </b-navbar-item>
       <b-navbar-toggle target="navbar-toggle-collapse" >
         <template>
           <font-awesome-icon icon="caret-down" />
@@ -29,7 +35,7 @@
             <template v-slot:button-content>
               <b-avatar
                 variant="info"
-                class="p-0"
+                class="nav-avatar p-0"
                 button
                 :text="avatarText"
               />
@@ -101,7 +107,9 @@ export default {
     return {
       selLanguage: '',
       avatarText: '',
-      boardSidebarToggle: false
+      boardSidebarToggle: false,
+      boardVisible: false,
+      boardSubscribed: false
     }
   },
   created () {
@@ -114,6 +122,10 @@ export default {
         this.selLanguage = 'en'
     }
     this.avatarText = window.localStorage.getItem('mnb_inits')
+    this.isNoticeBoard()
+  },
+  updated () {
+    this.isNoticeBoard()
   },
   methods: {
     // Used to change the selected language to English
@@ -224,6 +236,63 @@ export default {
     // Finds out whether the user is an admin (Super-User)
     isLoggedInAsAdmin: function () {
       return window.localStorage.getItem('mnb_rid') === '0'
+    },
+    isSubscriber: async function () {
+      // Check if user has subscribed current board
+      if (this.isLoggedIn) {
+        this.axiosGET('api/users/subscriptions', null, true, false)
+          .then(async response => {
+            var brdId = parseInt(this.$route.params.boardId)
+            if (brdId) {
+              for (const boardId of response.data) {
+                if (boardId === brdId) {
+                  this.boardSubscribed = true
+                  return
+                }
+              }
+            }
+            this.boardSubscribed = false
+          })
+          .catch(err => {
+            this.$log.error(err)
+          })
+      }
+    },
+    changeSubscriberMode: async function () {
+      // (Un-)Subscribe user to current board
+      if (this.isLoggedIn) {
+        const userId = window.localStorage.getItem('mnb_uid')
+        const boardId = this.$route.params.boardId ? this.$route.params.boardId : 0
+        const suffix = '/' + userId + '/' + boardId
+        const language = window.localStorage.getItem('mnb_lang')
+          ? window.localStorage.getItem('mnb_lang') : this.selLanguage
+        if (this.boardSubscribed) {
+          // Unsubscribe
+          this.axiosPUT('api/users/unsubscribe' + suffix, null, true, false)
+            .then(response => {})
+            .catch(err => {
+              this.$log.error(err)
+            })
+        } else {
+          // Subscribe
+          this.axiosPUT('api/users/subscribe' + suffix, null, true, false)
+            .then(response => {})
+            .catch(err => {
+              this.$log.error(err)
+            })
+        }
+        this.boardSubscribed = !this.boardSubscribed
+      }
+    },
+    isNoticeBoard: function () {
+      // Check if a notice board is open and user is logged in
+      // Default board is not subscribable
+      if (this.$route.path.startsWith('/board') && this.isLoggedIn) {
+        this.boardVisible = true
+        this.isSubscriber()
+      } else {
+        this.boardVisible = false
+      }
     }
   }
 }
@@ -241,15 +310,36 @@ export default {
     height: 35px;
   }
 
+  .nav-title {
+    padding: 0 0 0 5vw;
+    color: white;
+    font-size: calc(12pt + 0.8vh);
+  }
+
+  .nav-sub {
+    padding: 0 0 0 1vw;
+    color: white;
+  }
+
+  .btn-link {
+    color: white;
+    background-color: transparent;
+    border: none;
+  }
+
+  .btn-link:hover {
+    color: red;
+  }
+
   .nav-item {
     margin-top: -5px;
     padding-right: 5px;
     font-size: calc(12pt + 0.75vw);
   }
 
-  #nav-title {
-    padding: 0 0 0 5vw;
-    color: white;
-    font-size: calc(12pt + 0.8vh);
+  .nav-avatar {
+    padding: 0px;
+    margin: 0px;
+    font-size: 0.9rem;
   }
 </style>

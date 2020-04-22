@@ -78,6 +78,12 @@ CREATE TABLE public.team_membership (
     member_id integer NOT NULL REFERENCES member (id) ON DELETE CASCADE
 );
 
+CREATE TABLE public.board_subscription (
+    id serial NOT NULL PRIMARY KEY,
+    board_id integer NOT NULL REFERENCES board (id) ON DELETE CASCADE,
+    member_id integer NOT NULL REFERENCES member (id) ON DELETE CASCADE
+);
+
 CREATE TABLE public.token (
     id serial NOT NULL PRIMARY KEY,
     created_at bigint NOT NULL,

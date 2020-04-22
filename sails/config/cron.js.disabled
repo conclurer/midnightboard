@@ -1,4 +1,4 @@
-import { DefaultDueDates } from '../../../../configuration/DefaultDisplayTimes';
+import { DefaultDueDates } from '../../../../config/default-display-times';
 export const cron = {
   cleanupOverduePosts: {
     schedule: '0 2 */1 * *',

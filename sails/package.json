@@ -10,6 +10,7 @@
         "core-js": "^3.6.4",
         "grunt": "^1.1.0",
         "jsonwebtoken": "^8.5.1",
+        "nodemailer": "6.4.6",
         "sails": "^1.2.4",
         "sails-hook-cron": "^3.0.1",
         "sails-hook-grunt": "^4.0.1",

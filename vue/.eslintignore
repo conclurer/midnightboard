@@ -2,3 +2,4 @@ assets/**
 config/**
 views/**
 node_modules/**
+dist/**

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { localRoute } from '@/../../configuration/config.js'
+import { localRoute } from '@/../../config/api.js'
 export const logoutUser = {
   methods: {
     logout: async function () {

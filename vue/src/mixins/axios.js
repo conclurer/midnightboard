@@ -1,5 +1,5 @@
 import axiosM from 'axios'
-import { localRoute } from '@/../../configuration/config.js'
+import { localRoute } from '@/../../config/api.js'
 import { refreshJWT } from '@/mixins/refreshJWT.js'
 
 export const axios = {
@@ -9,8 +9,11 @@ export const axios = {
       if (refresh && authorization) { await this.refreshToken() }
       var headers
       if (authorization) {
-        headers = { headers: { 'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok') }}
-      } else { headers = null }
+        headers = { headers: {
+          'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
+          'Accept-Language': window.localStorage.getItem('mnb_lang')
+        }}
+      } else { headers = { headers: { 'Accept-Language': window.localStorage.getItem('mnb_lang') }} }
 
       if (attributes !== null) {
         path += '?'
@@ -28,11 +31,15 @@ export const axios = {
         headers = {
           headers: {
             'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
+            'Accept-Language': window.localStorage.getItem('mnb_lang'),
             'Content-Type': 'application/json'
           }
         }
       } else {
-        headers = { headers: { 'Content-Type': 'application/json' }}
+        headers = { headers: {
+          'Content-Type': 'application/json',
+          'Accept-Language': window.localStorage.getItem('mnb_lang')
+        }}
       }
 
       return await axiosM.post(localRoute + '/' + path, body, headers)
@@ -45,11 +52,15 @@ export const axios = {
         headers = {
           headers: {
             'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
+            'Accept-Language': window.localStorage.getItem('mnb_lang'),
             'Content-Type': 'application/json'
           }
         }
       } else {
-        headers = { headers: { 'Content-Type': 'application/json' }}
+        headers = { headers: {
+          'Content-Type': 'application/json',
+          'Accept-Language': window.localStorage.getItem('mnb_lang')
+        }}
       }
 
       return await axiosM.put(localRoute + '/' + path, body, headers)
@@ -59,8 +70,11 @@ export const axios = {
       if (refresh && authorization) { await this.refreshToken() }
       var headers
       if (authorization) {
-        headers = { headers: { 'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok') }}
-      } else { headers = null }
+        headers = { headers: {
+          'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok'),
+          'Accept-Language': window.localStorage.getItem('mnb_lang')
+        }}
+      } else { headers = { headers: { 'Accept-Language': window.localStorage.getItem('mnb_lang') }} }
 
       if (attributes !== null) {
         path += '?'

@@ -76,6 +76,7 @@ export default {
     }
   },
   methods: {
+    // Used to send a note to the backend
     createNote: async function (titleContent, jsonContent) {
       if (titleContent.length < 2) { return }
 

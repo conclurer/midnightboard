@@ -1,1 +1,21 @@
-{}
+{
+	"email": {
+		"subscribe": {
+			"subject": "Erfolgreiches Abonnieren des schwarzen Brettes ",
+			"plainText": "Du wirst jetzt benachrichtigt, wenn neue Beiträge auf diesem schwarzen Brett erstellt werden.",
+			"htmlText": "<p>Du wirst jetzt benachrichtigt, wenn neue Beiträge auf diesem schwarzen Brett erstellt werden.</p>"
+		},
+		"unsubscribe": {
+			"subject": "Erfolgreiches Deabonnieren des schwarzen Brettes ",
+			"plainText": "Du erhältst keine Benachrichtigungen mehr für dieses schwarze Brett.",
+			"htmlText": "<p>Du erhältst keine Benachrichtigungen mehr für dieses schwarze Brett.</p>"
+		},
+		"create": {
+			"subject": "Es gibt neue Inhalte auf dem schwarzen Brett ",
+			"plainText1": "Jemand hat einen neuen Inhalt aufgehangen an das schwarze Brett ",
+			"plainText2": ". Schau ihn dir doch gleich mal an! Wenn Du den Newsletter abbestellen möchtest, benutze dazu einfach die Glocke auf der Seite des schwarzen Brettes!",
+			"htmlText1": "Jemand hat einen neuen Inhalt aufgehangen an das schwarze Brett ",
+			"htmlText2": ". Schau ihn dir doch gleich mal an!<br>Wenn Du den Newsletter abbestellen möchtest, benutze dazu einfach die Glocke auf der Seite des schwarzen Brettes!"
+		}
+	}
+}
