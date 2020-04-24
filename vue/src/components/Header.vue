@@ -264,17 +264,16 @@ export default {
       if (this.isLoggedIn) {
         const userId = window.localStorage.getItem('mnb_uid')
         const boardId = this.$route.params.boardId ? this.$route.params.boardId : 0
-        const suffix = '/' + userId + '/' + boardId
         if (this.boardSubscribed) {
           // Unsubscribe
-          this.axiosPUT('api/users/unsubscribe' + suffix, null, true, false)
+          this.axiosPUT('api/users/unsubscribe/' + boardId, null, true, false)
             .then(response => {})
             .catch(err => {
               this.$log.error(err)
             })
         } else {
           // Subscribe
-          this.axiosPUT('api/users/subscribe' + suffix, null, true, false)
+          this.axiosPUT('api/users/subscribe/' + boardId, null, true, false)
             .then(response => {})
             .catch(err => {
               this.$log.error(err)
