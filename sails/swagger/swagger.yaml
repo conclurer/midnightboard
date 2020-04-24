@@ -4,7 +4,7 @@ info:
   description: API for [midnightboard](https://github.com/conclurer/midnightboard).<br>
     Generated as JSON by [sails-hook-swagger-generator](https://github.com/theo4u/sails-hook-swagger-generator).<br>
     Converted to YAML by [Swagger Editor](https://editor.swagger.io).
-  version: 0.0.4
+  version: 0.0.5
   license:
     name: MIT License
     url: 'https://github.com/conclurer/midnightboard/blob/master/LICENSE'
@@ -21,6 +21,8 @@ tags:
     description: Members of the application
   - name: Poll
     description: Answers and their votes for a poll
+  - name: PollSurveyParticipant
+    description: Members who have participated on a poll or survey
   - name: Post
     description: Posts on a notice board
   - name: PostLocation
@@ -45,6 +47,8 @@ definitions:
       creatorId:
         type: string
       boardName:
+        type: string
+      boardType:
         type: string
     required:
       - boardName
@@ -96,7 +100,17 @@ definitions:
         type: string
       answerId:
         type: string
+      answer:
+        type: string
       votes:
+        type: string
+  pollsurveyparticipant:
+    properties:
+      id:
+        type: string
+      postId:
+        type: string
+      memberId:
         type: string
   post:
     properties:
@@ -148,6 +162,8 @@ definitions:
       postId:
         type: string
       questionId:
+        type: string
+      question:
         type: string
       answer:
         type: string
@@ -231,7 +247,7 @@ parameters:
     name: token
     required: false
     type: string
-    description: In case we want to send header information along our request
+    description: User access token
   IDPathParam:
     in: path
     name: id
@@ -258,10 +274,12 @@ paths:
       parameters:
         - $ref: '#/parameters/TokenHeaderParam'
       responses:
-        '200':
-          description: The requested resource
-        '404':
-          description: Resource not found
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+        '409':
+          description: Conflict
         '500':
           description: Internal server error
   /api/users/login:
@@ -278,11 +296,13 @@ paths:
         - $ref: '#/parameters/TokenHeaderParam'
       responses:
         '200':
-          description: The requested resource
-        '404':
-          description: Resource not found
+          description: OK
+        '400':
+          description: Bad Request
+        '403':
+          description: Forbidden
         '500':
-          description: Internal server error
+          description: Internal Server Error
   /api/users/logout:
     delete:
       summary: ''
@@ -297,11 +317,11 @@ paths:
         - $ref: '#/parameters/TokenHeaderParam'
       responses:
         '200':
-          description: The requested resource
-        '404':
-          description: Resource not found
-        '500':
-          description: Internal server error
+          description: OK
+        '400':
+          description: Bad Request
+        '403':
+          description: Forbidden
   /api/users/refresh:
     post:
       summary: ''
@@ -316,11 +336,11 @@ paths:
         - $ref: '#/parameters/TokenHeaderParam'
       responses:
         '200':
-          description: The requested resource
-        '404':
-          description: Resource not found
-        '500':
-          description: Internal server error
+          description: OK
+        '400':
+          description: Bad Request
+        '403':
+          description: Forbidden
   '/api/users/{userId}':
     get:
       summary: ''
@@ -340,11 +360,11 @@ paths:
         - $ref: '#/parameters/TokenHeaderParam'
       responses:
         '200':
-          description: The requested resource
+          description: OK
+        '400':
+          description: Bad Request
         '404':
-          description: Resource not found
-        '500':
-          description: Internal server error
+          description: Not Found
     delete:
       summary: ''
       description: ''
@@ -363,11 +383,15 @@ paths:
         - $ref: '#/parameters/TokenHeaderParam'
       responses:
         '200':
-          description: The requested resource
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
         '404':
-          description: Resource not found
-        '500':
-          description: Internal server error
+          description: Not Found
     put:
       summary: ''
       description: ''
@@ -392,11 +416,17 @@ paths:
             $ref: '#/definitions/member'
       responses:
         '200':
-          description: The requested resource
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
         '404':
-          description: Resource not found
-        '500':
-          description: Internal server error
+          description: Not Found
+        '409':
+          description: Conflict
   '/api/users/{userId}/updatepassword':
     put:
       summary: ''
@@ -416,11 +446,17 @@ paths:
         - $ref: '#/parameters/TokenHeaderParam'
       responses:
         '200':
-          description: The requested resource
+          description: OK
+        '400':
+          description: Bad Request
+        '403':
+          description: Forbidden
         '404':
-          description: Resource not found
+          description: Not Found
+        '409':
+          description: Conflict
         '500':
-          description: Internal server error
+          description: Internal Server Error
   '/api/users/{userId}/updateemail':
     put:
       summary: ''
@@ -440,12 +476,14 @@ paths:
         - $ref: '#/parameters/TokenHeaderParam'
       responses:
         '200':
-          description: The requested resource
+          description: OK
+        '400':
+          description: Bad Request
         '404':
-          description: Resource not found
-        '500':
-          description: Internal server error
-  /api/users/all:
+          description: Not Found
+        '409':
+          description: Conflict
+  /api/users:
     get:
       summary: ''
       description: ''
@@ -459,11 +497,109 @@ paths:
         - $ref: '#/parameters/TokenHeaderParam'
       responses:
         '200':
-          description: The requested resource
+          description: OK
         '404':
-          description: Resource not found
+          description: Not Found
+  /api/users/participations:
+    get:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/TokenHeaderParam'
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+  /api/users/subscriptions:
+    get:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/TokenHeaderParam'
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+  '/api/users/subscribe/{boardId}':
+    put:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          type: string
+          description: This is a path param for userId
+        - in: path
+          name: boardId
+          required: true
+          type: string
+          description: This is a path param for boardId
+        - $ref: '#/parameters/TokenHeaderParam'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
         '500':
-          description: Internal server error
+          description: Internal Server Error
+  '/api/users/unsubscribe/{boardId}':
+    put:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          type: string
+          description: This is a path param for userId
+        - in: path
+          name: boardId
+          required: true
+          type: string
+          description: This is a path param for boardId
+        - $ref: '#/parameters/TokenHeaderParam'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
   '/api/boards/{boardId}':
     get:
       summary: ''
@@ -483,11 +619,13 @@ paths:
         - $ref: '#/parameters/TokenHeaderParam'
       responses:
         '200':
-          description: The requested resource
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
         '404':
-          description: Resource not found
-        '500':
-          description: Internal server error
+          description: Not Found
     delete:
       summary: ''
       description: ''
@@ -506,11 +644,13 @@ paths:
         - $ref: '#/parameters/TokenHeaderParam'
       responses:
         '200':
-          description: The requested resource
+          description: OK
+        '400':
+          description: Bad Request
         '404':
-          description: Resource not found
-        '500':
-          description: Internal server error
+          description: Not Found
+        '409':
+          description: Conflict
     put:
       summary: ''
       description: ''
@@ -535,11 +675,9 @@ paths:
             $ref: '#/definitions/post'
       responses:
         '200':
-          description: The requested resource
-        '404':
-          description: Resource not found
-        '500':
-          description: Internal server error
+          description: OK
+        '400':
+          description: Bad Request
     post:
       summary: ''
       description: ''
@@ -563,12 +701,14 @@ paths:
           schema:
             $ref: '#/definitions/post'
       responses:
-        '200':
-          description: The requested resource
-        '404':
-          description: Resource not found
-        '500':
-          description: Internal server error
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
   /api/boards:
     post:
       summary: ''
@@ -589,11 +729,7 @@ paths:
             $ref: '#/definitions/board'
       responses:
         '200':
-          description: The requested resource
-        '404':
-          description: Resource not found
-        '500':
-          description: Internal server error
+          description: OK
   '/api/polls/{postId}':
     get:
       summary: ''
@@ -613,11 +749,11 @@ paths:
         - $ref: '#/parameters/TokenHeaderParam'
       responses:
         '200':
-          description: The requested resource
+          description: OK
+        '400':
+          description: Bad Request
         '404':
-          description: Resource not found
-        '500':
-          description: Internal server error
+          description: Not Found
   /api/polls:
     post:
       summary: ''
@@ -637,12 +773,14 @@ paths:
           schema:
             $ref: '#/definitions/poll'
       responses:
-        '200':
-          description: The requested resource
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
         '404':
-          description: Resource not found
+          description: Not Found
         '500':
-          description: Internal server error
+          description: Internal Server Error
     put:
       summary: ''
       description: ''
@@ -662,11 +800,15 @@ paths:
             $ref: '#/definitions/poll'
       responses:
         '200':
-          description: The requested resource
+          description: OK
+        '400':
+          description: Bad Request
+        '403':
+          description: Forbidden
         '404':
-          description: Resource not found
+          description: Not Found
         '500':
-          description: Internal server error
+          description: Internal Server Error
   '/api/posts/all/{boardId}':
     get:
       summary: ''
@@ -686,11 +828,13 @@ paths:
         - $ref: '#/parameters/TokenHeaderParam'
       responses:
         '200':
-          description: The requested resource
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
         '404':
-          description: Resource not found
-        '500':
-          description: Internal server error
+          description: Not Found
   '/api/posts/{postId}':
     get:
       summary: ''
@@ -710,11 +854,11 @@ paths:
         - $ref: '#/parameters/TokenHeaderParam'
       responses:
         '200':
-          description: The requested resource
+          description: OK
+        '400':
+          description: Bad Request
         '404':
-          description: Resource not found
-        '500':
-          description: Internal server error
+          description: Not Found
     delete:
       summary: ''
       description: ''
@@ -733,11 +877,11 @@ paths:
         - $ref: '#/parameters/TokenHeaderParam'
       responses:
         '200':
-          description: The requested resource
+          description: OK
+        '400':
+          description: Bad Request
         '404':
-          description: Resource not found
-        '500':
-          description: Internal server error
+          description: Not Found
     put:
       summary: ''
       description: ''
@@ -762,11 +906,90 @@ paths:
             $ref: '#/definitions/post'
       responses:
         '200':
-          description: The requested resource
+          description: OK
+        '400':
+          description: Bad Request
         '404':
-          description: Resource not found
+          description: Not Found
+  '/api/surveys/{postId}':
+    get:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          name: postId
+          required: true
+          type: string
+          description: This is a path param for postId
+        - $ref: '#/parameters/TokenHeaderParam'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+  /api/surveys:
+    post:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/TokenHeaderParam'
+        - name: body
+          in: body
+          required: true
+          description: 'An object defining our schema for '
+          schema:
+            $ref: '#/definitions/survey'
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
         '500':
-          description: Internal server error
+          description: Internal Server Error
+    put:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/TokenHeaderParam'
+        - name: body
+          in: body
+          required: true
+          description: 'An object defining our schema for '
+          schema:
+            $ref: '#/definitions/survey'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
   /*:
     post:
       summary: ''
@@ -780,12 +1003,18 @@ paths:
       parameters:
         - $ref: '#/parameters/TokenHeaderParam'
       responses:
-        '200':
-          description: The requested resource
-        '404':
-          description: Resource not found
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '409':
+          description: Conflict
         '500':
-          description: Internal server error
+          description: Internal Server Error
     get:
       summary: ''
       description: ''
@@ -799,11 +1028,17 @@ paths:
         - $ref: '#/parameters/TokenHeaderParam'
       responses:
         '200':
-          description: The requested resource
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
         '404':
-          description: Resource not found
+          description: Not Found
         '500':
-          description: Internal server error
+          description: Internal Server Error
     put:
       summary: ''
       description: ''
@@ -817,11 +1052,19 @@ paths:
         - $ref: '#/parameters/TokenHeaderParam'
       responses:
         '200':
-          description: The requested resource
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
         '404':
-          description: Resource not found
+          description: Not Found
+        '409':
+          description: Conflict
         '500':
-          description: Internal server error
+          description: Internal Server Error
     delete:
       summary: ''
       description: ''
@@ -835,26 +1078,16 @@ paths:
         - $ref: '#/parameters/TokenHeaderParam'
       responses:
         '200':
-          description: The requested resource
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
         '404':
-          description: Resource not found
+          description: Not Found
+        '409':
+          description: Conflict
         '500':
-          description: Internal server error
-    patch:
-      summary: ''
-      description: ''
-      tags:
-        - ''
-      produces:
-        - application/json
-      consumes:
-        - application/json
-      parameters:
-        - $ref: '#/parameters/TokenHeaderParam'
-      responses:
-        '200':
-          description: The requested resource
-        '404':
-          description: Resource not found
-        '500':
-          description: Internal server error
+          description: Internal Server Error

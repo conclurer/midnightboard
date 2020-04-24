@@ -55,7 +55,6 @@
 - Fixed date picker transparency
 - Added missing translations
 - Increased file upload limit
----
 
 <!--- Version of the docker image with hyperlink and date --->
 ## [v0.0.5](https://hub.docker.com/r/tvsjsdock/midnightboard-app/tags) (2020-04-22)
