@@ -62,11 +62,10 @@
 
 <!--- List of implemented features --->
 **Implemented features:**
-- User role can be set in the CMS
-- Users can be created & deleted in the CMS
 - Boards & users are listed in the CMS
 - Boards can be created & deleted in the CMS
 - Users can be created & deleted in the CMS
+- User role can be set in the CMS
 - Listed boards & users have a context menu for these changes (right click)
 - Boards can be set to be public visible
 - Boards can be set to be private (visible only for logged in users)
@@ -80,8 +79,9 @@
 - Each editor has a header with title and date picker
 - Editors can be closed via "x" button
 - Profile pages with user avatar (circle with initials)
-- Avatar icon on the header to view and edit the user profile and option to log out
+- Avatar icon on the header to view and edit the user profile and the option to log out
 - Administrators (Super-Users) have in addition the option to open the CMS via avatar icon
+- Super-Users now have full permissions
 - Background color is now applied globally instead of in each view (config folder)
 - Vue routing
 - Autocomplete fields for register, login and profile pages
@@ -101,9 +101,9 @@
 
 <!--- List of fixed bugs --->
 **Fixed bugs:**
-- Header component now work on smaller screens
+- Header component now works on smaller screens
 - HTTP status codes
-- Users could vote multiple times for polls
-- Due dates from editor's data pickers are used
+- Users were able to vote multiple times for polls
+- Due dates from editor's date pickers are used
 - Some translations
 ---
