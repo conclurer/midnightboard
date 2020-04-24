@@ -240,7 +240,7 @@ export default {
     },
     isSubscriber: async function () {
       // Check if user has subscribed current board
-      if (this.isLoggedIn) {
+      if (this.isLoggedIn()) {
         this.axiosGET('api/users/subscriptions', null, true, false)
           .then(async response => {
             var brdId = parseInt(this.$route.params.boardId)
@@ -261,7 +261,7 @@ export default {
     },
     changeSubscriberMode: async function () {
       // (Un-)Subscribe user to current board
-      if (this.isLoggedIn) {
+      if (this.isLoggedIn()) {
         const boardId = this.$route.params.boardId ? this.$route.params.boardId : 0
         if (this.boardSubscribed) {
           // Unsubscribe
@@ -284,7 +284,7 @@ export default {
     isNoticeBoard: function () {
       // Check if a notice board is open and user is logged in
       // Default board is not subscribable
-      if (this.$route.path.startsWith('/board') && this.isLoggedIn) {
+      if (this.$route.path.startsWith('/board') && this.isLoggedIn()) {
         this.boardVisible = true
         this.isSubscriber()
       } else {
