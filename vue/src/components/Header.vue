@@ -262,7 +262,6 @@ export default {
     changeSubscriberMode: async function () {
       // (Un-)Subscribe user to current board
       if (this.isLoggedIn) {
-        const userId = window.localStorage.getItem('mnb_uid')
         const boardId = this.$route.params.boardId ? this.$route.params.boardId : 0
         if (this.boardSubscribed) {
           // Unsubscribe
