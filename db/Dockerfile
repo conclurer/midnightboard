@@ -2,5 +2,5 @@
 FROM postgres:latest
 # Expose port 5432
 EXPOSE 5432
-# Copy backup.sql into docker-entrypoint-initdb.d
-COPY backup.sql /docker-entrypoint-initdb.d/
+# Copy setup.sql into docker-entrypoint-initdb.d
+COPY setup.sql /docker-entrypoint-initdb.d/

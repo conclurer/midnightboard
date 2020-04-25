@@ -39,7 +39,7 @@ module.exports.datastores = {
   *   -e POSTGRES_PASSWORD=secret2020 -e POSTGRES_DB=midnightboard -d postgres      *
   *                                                                                 *
   * - Restore backup                                                                *
-  * $ docker exec -i midnightboard-db psql -U dev midnightboard < db/backup.sql     *
+  * $ docker exec -i midnightboard-db psql -U dev midnightboard < db/setup.sql     *
   **********************************************************************************/
   /*************************************************************************************
   * Configuration moved to env/development.js and env/production.js                    *
@@ -52,10 +52,10 @@ module.exports.datastores = {
   * - Then run the image                                                                  *
   * $ docker run --name midnightboard-db -p 5432:5432 tvsjsdock/midnightboard-db:latest   *
   * - Restore backup                                                                      *
-  * $ docker exec -i midnightboard-db psql -U dev midnightboard < db/backup.sql           *
+  * $ docker exec -i midnightboard-db psql -U dev midnightboard < db/setup.sql           *
   ****************************************************************************************/
   /************************************************************************************
   * Backup tables with                                                                *   
-  * $ docker exec -it midnightboard-db pg_dump -U dev midnightboard > db/backup.sql   *
+  * $ docker exec -it midnightboard-db pg_dump -U dev midnightboard > db/setup.sql   *
   *************************************************************************************/
 };

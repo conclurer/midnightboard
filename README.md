@@ -24,7 +24,7 @@ Images for [application](https://hub.docker.com/r/tvsjsdock/midnightboard-app/ta
 
 ## Preparations
 Open the [configuration folder](https://github.com/conclurer/midnightboard/tree/master/config) and change
-api.js if you don't start this locally.  
+api.js if you don't start this locally (you can change socket(s) & port(s) in sails/config/env/production.js).  
 **You need to configure local.js (mailbox provider needed) and then copy it to sails/config/ 
 before you do the setup part!**
 
@@ -72,7 +72,7 @@ $ npm run sails-start-dev
 
 #### Open [http://localhost:1337/](http://localhost:1337/)
 
-##### Restart database (imports automatically changes on db/backup.sql)
+##### Restart database (imports automatically changes on db/setup.sql)
 
 ```bash
 $ docker-compose stop db && docker-compose rm -f -v db && docker-compose up --no-deps --build --force-recreate db
