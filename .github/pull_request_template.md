@@ -12,7 +12,7 @@ Important steps for creating and reviewing a pull request (PR):
 
 **Creator make sure that:**
 
-1. You have done your changes in a separate branch. Branches MUST have descriptive names that start with either the `feature/` or `fix/` prefixes. Good examples are: `feature/amazing-new-feature-1337` or `fix/name-of-issue-1338`.
+1. You have done your changes in a separate branch. Branches MUST have descriptive names that start with either the `feature/` or `hotfix/` prefixes. Good examples are: `feature/amazing-new-feature-1337` or `hotfix/name-of-issue-1338`.
 
 2. Check if your last commit has a :heavy_check_mark: (CircleCI could run tests without errors)
 
