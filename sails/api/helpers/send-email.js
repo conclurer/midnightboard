@@ -28,17 +28,6 @@ module.exports = {
     }
   },
 
-  exits: {
-    success: {
-      description: 'Email was send',
-      statusCode: 200
-    },
-    serverError: {
-      description: 'Mailbox server error',
-      statusCode: 500
-    }
-  },
-
   fn: async function(inputs, exits) {
     const senderMail = sails.config.mailbox.auth.user;
     // 1. Setup transportation
@@ -70,7 +59,7 @@ module.exports = {
     transporter.sendMail(message, (error) => {
       if(error) {
         sails.log.verbose(error.message);
-        return exits.serverError();
+        return exits.error();
       } else {
         return exits.success();
       }
