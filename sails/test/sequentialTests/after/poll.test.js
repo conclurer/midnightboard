@@ -4,8 +4,9 @@ var postId = 0;
 var boardId = 0;
 
 const adminLogin = {
-  userName: 'admin',
-  password: 'admin',
+  userName: 'JESTAdmin',
+  email: 'JEST.Admin@test.mail',
+  password: 'JESTAdminLogin_',
   token: null
 };
 

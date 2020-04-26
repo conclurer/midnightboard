@@ -2,8 +2,13 @@
 const fetch = require('node-fetch');
 const returnedData = {};
 
-const adminLoginToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJp'
-  + 'ZCI6MSwicm9sZSI6MCwiaWF0IjoxNTg1NDAwMDM2LCJleHAiOjE2MTY5MzYwMzZ9.ZeNk9pB6a4lEYyD2ihlAGocy5Q2RLzhc117_ZVDMgB0';
+const adminLogin = {
+  userName: 'JESTAdmin',
+  email: 'JEST.Admin@test.mail',
+  password: 'JESTAdminLogin_',
+  token: null
+};
+
 const validRegistrationData = {
   userName: 'JESTUser1',
   email: 'JEST@test.mail',
@@ -22,6 +27,24 @@ const updatedLoginData = {
   password: 'P@ssw0rdUp'
 };
 //#endregion
+
+beforeAll(() => {
+  // Init. Retrieve acces token via adminLogin
+  return fetch('http://localhost:1337/api/users/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(adminLogin)
+  })
+    .then(res => res.json())
+    .then((json) => {
+      adminLogin.token = json.accessToken;
+    })
+    .catch((err) => {
+      throw err;
+    });
+});
 
 //#region Register and Login
 test('TEST:USER::: Register user:  Valid user', () => {
@@ -195,7 +218,7 @@ test('TEST:USER::: Update user role using admin token', () => {
   return fetch('http://localhost:1337/api/users/' + returnedData.id, {
     method: 'PUT',
     headers: {
-      Authorization: 'Bearer ' + adminLoginToken,
+      Authorization: 'Bearer ' + adminLogin.token,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({

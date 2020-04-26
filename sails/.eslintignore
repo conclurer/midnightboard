@@ -3,4 +3,5 @@ config/**
 node_modules/**
 swagger/**
 views/**
-test/fetch.js
+test/sequential.test.js
+test/sequentialTests/**
