@@ -1,24 +1,43 @@
 <!-- Error 404 page. Displayed when the requested page can't be found -->
 <template>
-  <div class="p-404">
-    <h1><b>404</b></h1>
-    <h2><b>Page not found</b></h2>
+  <div class="m">
+    <div class="t">
+      <p>404</p>
+    </div>
+    <div class="b">
+      <h2><b>Page not found</b></h2>
+    </div>
   </div>
 </template>;
 
 <style scoped>
-  .p-404{
+  .m {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background-color: #FFF;
+  }
+
+  .t{
     height: 65vh;
-    padding: 10vh 0 0 0;
     background: #444;
   }
 
-  h1{
-    font-size: 60vh;
+  p {
+    font-size: 40vw;
+    height:40vw;
+    font-weight: bold;
     color: #FFF;
+    position: absolute;
+    bottom: 0;
+    left:0;
+    transform: translate(25%,-35vh);
   }
 
   h2{
-    font-size: 8vh;
+    margin-top: 5vw;
+    font-size: 80px;
   }
 </style>
