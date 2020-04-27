@@ -3,5 +3,3 @@ config/**
 node_modules/**
 swagger/**
 views/**
-test/sequential.test.js
-test/sequentialTests/**

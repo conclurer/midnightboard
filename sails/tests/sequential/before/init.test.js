@@ -29,8 +29,6 @@ test('TEST:INIT::: Registering first user (Admin User)', () => {
     });
 });
 
-
-
 test('TEST:INIT::: Checking if default board has been created', () => {
   return fetch('http://localhost:1337/api/boards', {
     method: 'GET',

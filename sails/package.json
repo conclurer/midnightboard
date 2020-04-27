@@ -28,12 +28,12 @@
     "scripts": {
         "start-dev": "env NODE_ENV=development node app.js",
         "start-prod": "env NODE_ENV=production node app.js",
-        "test": "npm run lint && npm run test-sequential-before && npm run test-sequential-after",
+        "test": "npm run lint && npm run sequential-tests-before && npm run sequential-tests-after",
         "lint": "eslint .",
         "lint-fix": "eslint . --fix",
-        "test-non-sequential": "jest --runInBand nonSequentialTests/*",
-        "test-sequential-before": "jest --runInBand sequentialTests/before/*",
-        "test-sequential-after": "jest --runInBand sequentialTests/after/*"
+        "sequential-tests-before": "jest --runInBand sequential/before/*",
+        "sequential-tests-after": "jest --runInBand sequential/after/*",
+        "parallel-tests": "jest --runInBand parallel/*"
     },
     "main": "app.js",
     "repository": {
