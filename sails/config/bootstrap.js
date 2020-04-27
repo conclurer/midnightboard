@@ -2,7 +2,8 @@
  * Bootstrap configuration
  * (sails.config.bootstrap)
  *
- * Bootsrap functions are executed before the app is lifted.
+ * Bootstrap functions are executed before the app is lifted.
+ * Do not get confused by this name, no similarities with the CSS framework!
  *
  * For more information, see:
  * https://sailsjs.com/documentation/reference/configuration/sails-config-bootstrap
