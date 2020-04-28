@@ -3,8 +3,9 @@ const fetch = require('node-fetch');
 const returnedData = {};
 
 const adminLogin = {
-  userName: 'admin',
-  password: 'admin',
+  userName: 'JESTAdmin',
+  email: 'JEST.Admin@test.mail',
+  password: 'JESTAdminLogin_',
   token: null
 };
 

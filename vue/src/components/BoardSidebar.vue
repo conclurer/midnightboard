@@ -98,7 +98,7 @@ export default {
   methods: {
     // Used to load the all boards accessible for the user
     fetchBoards: async function () {
-      await this.axiosGET('api/boards/all', null, true, true)
+      await this.axiosGET('api/boards', null, true, true)
         .then(response => {
           this.boardList = response.data.boards
           this.boardListPublic = response.data.public

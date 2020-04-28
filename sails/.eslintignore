@@ -3,4 +3,3 @@ config/**
 node_modules/**
 swagger/**
 views/**
-test/fetch.js

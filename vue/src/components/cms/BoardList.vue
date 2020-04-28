@@ -169,7 +169,7 @@ export default {
     // This method loads all public and private notice boards
     loadBoardData: async function () {
       this.loading = true
-      await this.axiosGET('api/boards/all', null, true, true)
+      await this.axiosGET('api/boards', null, true, true)
         .then(response => {
           this.boards = []
           this.boards.push(response.data.default)

@@ -24,6 +24,10 @@ module.exports = {
       description: 'Missing parameters',
       statusCode: 400
     },
+    unauthorized: {
+      description: 'Unauthorized request',
+      statusCode: 401
+    },
     nonExistent: {
       description: 'User or board does not exist',
       statusCode: 404
@@ -35,10 +39,13 @@ module.exports = {
   },
 
   fn: async function(inputs, exits) {
-    if(!inputs.userId || !inputs.boardId) {
+    if(!this.req.me['id']) {
+      return exits.unauthorized();
+    }
+    if(!inputs.boardId) {
       return exits.missingParams();
     }
-    const userId = inputs.userId;
+    const userId = this.req.me['id'];
     const boardId = inputs.boardId;
     sails.log.verbose('USER_PUT::: Subscribing user #' + userId + ' to board #' + boardId);
     var usr = await Member.findOne({id: userId});

@@ -61,7 +61,7 @@ module.exports.routes = {
         action: 'update-email',
         skipAssets: true
     },
-    'GET    /api/users/all': {
+    'GET    /api/users': {
         controller: 'users',
         action: 'get-all',
         skipAssets: true
@@ -76,12 +76,12 @@ module.exports.routes = {
         action: 'get-subscriptions',
         skipAssets: true
     },
-    'PUT    /api/users/subscribe/:userId/:boardId': {
+    'PUT    /api/users/subscribe/:boardId': {
         controller: 'users',
         action: 'subscribe-board',
         skipAssets: true
     },
-    'PUT    /api/users/unsubscribe/:userId/:boardId': {
+    'PUT    /api/users/unsubscribe/:boardId': {
         controller: 'users',
         action: 'unsubscribe-board',
         skipAssets: true
@@ -93,7 +93,7 @@ module.exports.routes = {
         action: 'get',
         skipAssets: true
     },
-    'GET    /api/boards/all': {
+    'GET    /api/boards': {
         controller: 'boards',
         action: 'get-all',
         skipAssets: true

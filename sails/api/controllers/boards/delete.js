@@ -39,7 +39,7 @@ module.exports = {
       return exits.cannotDeleteDefault('Default Board may not be deleted');
     }
 
-    sails.log.info('BOARD_DELETE::: Trying to delete board ' + inputs.boardId);
+    sails.log.verbose('BOARD_DELETE::: Trying to delete board ' + inputs.boardId);
     var deletedBoard = await Board.destroyOne({id: inputs.boardId});
     if(!deletedBoard) {
       return exits.nonExistent();

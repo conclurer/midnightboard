@@ -1,7 +1,7 @@
 {
     "name": "midnightboard-backend",
     "private": true,
-    "version": "0.0.4",
+    "version": "0.0.5",
     "description": "Backend of application midnightboard",
     "keywords": [],
     "dependencies": {
@@ -28,10 +28,12 @@
     "scripts": {
         "start-dev": "env NODE_ENV=development node app.js",
         "start-prod": "env NODE_ENV=production node app.js",
-        "test": "npm run lint && npm run custom-tests",
+        "test": "npm run lint && npm run sequential-tests-before && npm run sequential-tests-after",
         "lint": "eslint .",
         "lint-fix": "eslint . --fix",
-        "custom-tests": "jest --runInBand"
+        "sequential-tests-before": "jest --runInBand sequential/before/*",
+        "sequential-tests-after": "jest --runInBand sequential/after/*",
+        "parallel-tests": "jest --runInBand parallel/*"
     },
     "main": "app.js",
     "repository": {

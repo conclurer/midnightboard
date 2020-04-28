@@ -222,7 +222,7 @@ export default {
     loadUserData: async function () {
       this.loading = true
 
-      await this.axiosGET('api/users/all', { skipAvatar: true }, true, true)
+      await this.axiosGET('api/users', { skipAvatar: true }, true, true)
         .then(response => {
           this.members = response.data
         })
