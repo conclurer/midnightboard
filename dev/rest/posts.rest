@@ -1,0 +1,31 @@
+POST http://localhost:1337/api/boards HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJpZCI6NiwiaWF0IjoxNTgzNTk1NTE1LCJleHAiOjE2MTUxMzE1MTV9.BJWN4VCoHEpvEG4SKWZeyGCOPvqdqmUZHQol7fwiSyY
+content-type: application/json
+
+{
+  "boardName": "TEST BOARD"
+}
+###
+POST http://localhost:1337/api/boards/21 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJpZCI6NiwiaWF0IjoxNTgzNTk1NTE1LCJleHAiOjE2MTUxMzE1MTV9.BJWN4VCoHEpvEG4SKWZeyGCOPvqdqmUZHQol7fwiSyY
+content-type: application/json
+
+{
+  "title": "Note 3",
+  "typeOfPost": "application/note",
+  "dueDate": 1609498800000,
+  "content": "<h2>Note 2</h2>"
+}
+###
+GET http://localhost:1337/api/posts/all/21?limit=256 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJpZCI6NiwiaWF0IjoxNTgzNTk1NTE1LCJleHAiOjE2MTUxMzE1MTV9.BJWN4VCoHEpvEG4SKWZeyGCOPvqdqmUZHQol7fwiSyY
+
+###
+DELETE http://localhost:1337/api/posts/49 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJpZCI6NiwiaWF0IjoxNTgzNTk1NTE1LCJleHAiOjE2MTUxMzE1MTV9.BJWN4VCoHEpvEG4SKWZeyGCOPvqdqmUZHQol7fwiSyY
+
+###
+DELETE http://localhost:1337/api/boards/19 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJpZCI6NiwiaWF0IjoxNTgzNTk1NTE1LCJleHAiOjE2MTUxMzE1MTV9.BJWN4VCoHEpvEG4SKWZeyGCOPvqdqmUZHQol7fwiSyY
+
+###

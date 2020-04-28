@@ -72,8 +72,14 @@ module.exports = {
         const refreshToken = jwt.sign(tokenData, sails.config.jwts.REFRESH_TOKEN_SECRET);
         await RefreshToken.create({uid: usr.id, refreshToken: refreshToken}); // Save refresh token to database
 
-        return exits.success({accessToken: accessToken, refreshToken: refreshToken,
-          expiresIn: sails.config.jwts.EXPIRATION_TIME});
+        return exits.success({
+          accessToken: accessToken,
+          refreshToken: refreshToken,
+          expiresIn: sails.config.jwts.EXPIRATION_TIME,
+          uid: usr.id,
+          rid: usr.role,
+          initials: usr.firstName.charAt(0).toUpperCase() + usr.lastName.charAt(0).toUpperCase()
+        });
       } else {
         return exits.invalidLogin('Incorrect username or password');
       }

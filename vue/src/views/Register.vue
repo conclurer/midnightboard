@@ -1,169 +1,217 @@
+<!-- Registration page. Used to create new user accounts-->
 <template>
-  <div
-    class="register"
-  >
+  <div class="register">
     <Header
       id="titlebar"
-      :title="$t('ui.register')"
-      @change-language="changeLanguage"
-      :english="english"
-      :buttonsActive=false
+      :title="$t('register.title')"
     />
+
     <b-card
-      class="loginBox"
+      class="login-box"
       align="center"
       bg-variant="dark"
       text-variant="white"
     >
       <br>
-      <form>
-        <h2 v-html="$t('ui.createAccount')"></h2>
-        <br>
-        <input type="text" id="fname" name="fname" v-model="fname" required
-          minlength="3" maxlength="20" :placeholder="$t('profile.firstName')" size="36">
-        <p v-if="err.includes(107)" style="color: #E22">{{$t('register.malFirstName')}}</p>
-        <div
-          v-else>
-          <br>
-        </div>
-        <input type="text" id="lname" name="lname" v-model="lname" required
-          minlength="3" maxlength="20" :placeholder="$t('profile.lastName')" size="36">
-        <p v-if="err.includes(106)" style="color: #E22">{{$t('register.malLastName')}}</p>
-        <div
-          v-else>
-          <br>
-        </div>
-        <input type="text" id="email" name="email" v-model="email" required
-          minlength="3"  maxlength="127" :placeholder="$t('profile.email')" size="36">
-        <p v-if="err.includes(104)" style="color: #E22">{{$t('register.malEmail')}}</p>
-        <div
-          v-else>
-          <br>
-        </div>
-        <input type="text" id="dispname" name="dispname" v-model="dispname" required
-          minlength="3" maxlength="30" :placeholder="$t('profile.displayname')" size="36">
-        <p v-if="err.includes(105)" style="color: #E22">{{$t('register.malUsername')}}</p>
-        <p v-else-if="err.includes(101)" style="color: #E22">{{$t('register.nameTaken')}}</p>
-        <div
-          v-else>
-          <br>
-        </div>
-        <input type="password" id="passwd" name="passwd" v-model="passwd" required
-          minlength="8" maxlength="127" autocomplete="new-password"
-          :placeholder="$t('profile.password')" size="36">
-        <br>
-        <input type="password" id="passwd2" name="passwd2" v-model="passwd2" required
-          inlength="8" maxlength="127" autocomplete="new-password"
-          :placeholder="$t('profile.confirmPassword')" size="36">
-        <p v-if="err.includes(103)" style="color: #E22">{{$t('register.malPassword')}}</p>
-        <p v-else-if="err.includes(110)" style="color: #E22">{{$t('register.passwordMissmatch')}}</p>
-        <p v-else-if="err.includes(102)" style="color: #E22">{{$t('register.missingForms')}}</p>
-        <div
-          v-else>
-          <br>
-        </div>
-        <button v-on:click.prevent="submit">{{$t('ui.signUp')}}</button>
-        <br>
-        <br>
-        <router-link
-          to="/login"
+      <h4 v-html="$t('ui.createAccount')"></h4>
+      <br>
+      <div>
+        <b-overlay
+          :show="loading"
+          variant="light"
+          opacity="0.6"
+          blur="2px"
+          rounded="sm"
         >
-          {{$t('ui.toLogin')}}
-        </router-link>
-      </form>
+          <b-form @submit="onSubmit" @reset="onReset">
+            <b-form-input
+              id="fname"
+              v-model="fname"
+              :state="fnameState"
+              :placeholder="$t('profile.firstName')"
+              trim
+              autocomplete="given-name"
+            ></b-form-input>
+            <b-tooltip target="fname" variant="info" triggers="hover">
+              {{$t('register.malFirstName')}}
+            </b-tooltip>
+            <br>
+
+            <b-form-input
+              id="lname"
+              v-model="lname"
+              :state="lnameState"
+              :placeholder="$t('profile.lastName')"
+              trim
+              autocomplete="family-name"
+            ></b-form-input>
+            <b-tooltip target="lname" variant="info" triggers="hover">
+              {{$t('register.malLastName')}}
+            </b-tooltip>
+            <br>
+
+            <b-form-input
+              id="uname"
+              v-model="uname"
+              :state="unameState"
+              :placeholder="$t('profile.username')"
+              trim
+            ></b-form-input>
+            <b-tooltip target="uname" variant="info" triggers="hover">
+              {{$t('register.malUsername')}}
+            </b-tooltip>
+            <br>
+
+            <b-form-input
+              id="email"
+              v-model="email"
+              :state="emailState"
+              :placeholder="$t('profile.email')"
+              trim
+              autocomplete="email"
+            ></b-form-input>
+            <b-tooltip target="email" variant="info" triggers="hover">
+              {{$t('register.malEmail')}}
+            </b-tooltip>
+            <br>
+
+            <b-form-input
+              id="passwd"
+              v-model="passwd"
+              :state="passwdState"
+              :placeholder="$t('profile.password')"
+              type="password"
+              trim
+              autocomplete="new-password"
+            ></b-form-input>
+            <b-tooltip target="passwd" variant="info" triggers="hover">
+              {{$t('register.malPassword')}}
+            </b-tooltip>
+            <br>
+
+            <b-button-group>
+              <b-button type="submit" variant="primary" :disabled="!finalState">{{$t('ui.submit')}}</b-button>
+              <b-button type="reset" variant="danger">{{$t('ui.reset')}}</b-button>
+            </b-button-group>
+            <br>
+
+          </b-form>
+        </b-overlay>
+      </div>
+      <br>
+
+      <!-- Registered users can click here and log in -->
+      <router-link to="/login">
+        {{$t('ui.toLogin')}}
+      </router-link>
     </b-card>
+
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import axios from 'axios'
+import { axios } from '@/mixins/axios.js'
 import Header from '@/components/Header.vue'
-import { i18n } from '@/main.js'
 
 export default {
-  name: 'NoticeBoard',
+  name: 'Register',
+  mixins: [axios],
   components: {
     Header
   },
   data () {
     return {
-      fname: '',
-      lname: '',
-      dispname: '',
+      loading: false,
+      uname: '',
       email: '',
       passwd: '',
-      passwd2: '',
-      english: true,
-      err: []
+      fname: '',
+      lname: ''
     }
   },
-  created () {
-    switch (i18n.locale.substring(0, 2)) {
-      case 'en':
-        this.english = true
-        break
-      case 'de':
-        this.english = false
-        break
-      default:
-        this.english = true
+  // Computed values show whether the input strings are valid
+  computed: {
+    fnameState () {
+      return /^[\'\-\. a-zA-ZŠŽšžŸÀ-ÖÙ-öù-ÿ]{2,20}$/.test(this.fname)
+    },
+    lnameState () {
+      return /^[\'\-\. a-zA-ZŠŽšžŸÀ-ÖÙ-öù-ÿ]{2,20}$/.test(this.lname)
+    },
+    emailState () {
+      return /^(?=[a-zA-Z0-9][a-zA-Z0-9@._%+-]{5,253}$)[a-zA-Z0-9._%+-]{1,64}@(?:(?=[a-zA-Z0-9-]{1,63}\.)[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*\.){1,8}[a-zA-Z]{2,63}$/.test(this.email)
+    },
+    unameState () {
+      return /^[a-zA-Z0-9]{5,30}$/.test(this.uname)
+    },
+    passwdState () {
+      return /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]|.*[\-=._#§@$!%*?&])[A-Za-z0-9\-=._#§@$!%*?&]{8,}$/.test(this.passwd)
+    },
+    finalState () {
+      return (this.passwdState && this.unameState && this.emailState && this.lnameState && this.fnameState)
     }
   },
   methods: {
-    validate () {
-      var usernameRegex = new RegExp('^[a-zA-Z0-9]{5,30}$')
-      var realnameRegex = new RegExp('^[\'\-\. a-zA-ZŠŽšžŸÀ-ÖÙ-öù-ÿ]{2,20}$')
-      var passwordRegex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]|.*[\-=._#§@$!%*?&])[A-Za-z0-9\-=._#§@$!%*?&]{8,}$')
-      var emailRegex = new RegExp('^(?=[a-zA-Z0-9][a-zA-Z0-9@._%+-]{5,253}$)[a-zA-Z0-9._%+-]{1,64}@(?:(?=[a-zA-Z0-9-]{1,63}\.)[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*\.){1,8}[a-zA-Z]{2,63}$')
+    // Sends user input to the backend to create a new account
+    onSubmit (event) {
+      event.preventDefault()
+      if (!this.finalState) { return }
+      this.loading = true
 
-      this.err = []
-      if (!emailRegex.test(this.email)) { this.err.push(104) }
-      if (!usernameRegex.test(this.dispname)) { this.err.push(105) }
-      if (!passwordRegex.test(this.passwd)) { this.err.push(103) }
-      if (!realnameRegex.test(this.fname)) { this.err.push(107) }
-      if (!realnameRegex.test(this.lname)) { this.err.push(106) }
-      if (this.passwd !== this.passwd2) { this.err.push(110) }
-    },
-    submit () {
-      this.validate()
-      if (this.err.length !== 0) { return }
-      axios
-        .post('http://localhost:1337/api/users/register', {
-          userName: this.dispname,
-          email: this.email,
-          password: this.passwd,
-          firstName: this.fname,
-          lastName: this.lname
-        })
+      this.axiosPOST('api/users/register',
+        {
+          'userName': this.uname,
+          'email': this.email,
+          'password': this.passwd,
+          'firstName': this.fname,
+          'lastName': this.lname
+        }
+      )
         .then(response => {
-          window.localStorage.setItem('mnb_uid', response.data.id)
-          window.location = '/login'
+          this.directLogin()
         })
-        .catch(error => {
-          switch (error.response.status) {
+        .catch(err => {
+          this.loading = false
+          switch (err.response.status) {
             case 400:
-            case 409:
-              this.err.push(error.response.data.error.code)
-              break
             case 500:
-              // TODO redirect to err500 page
-              this.$log.error(error)
-              break
             default:
-              this.$log.error(error)
+              this.$log.error(err)
           }
         })
     },
-    changeLanguage () {
-      this.english = !this.english
-      if (this.english) {
-        i18n.locale = 'en-GB'
-      } else {
-        i18n.locale = 'de-DE'
-      }
-      // TODO: Change user settings
-      // User system does not exist yet.
+    // Used to reset the input fields
+    onReset (event) {
+      event.preventDefault()
+      this.uname = ''
+      this.email = ''
+      this.passwd = ''
+      this.fname = ''
+      this.lname = ''
+    },
+    directLogin () {
+      this.axiosPOST('api/users/login', {
+        email: this.email,
+        password: this.passwd
+      })
+        .then(response => {
+          window.localStorage.setItem('mnb_atok', response.data.accessToken)
+          window.localStorage.setItem('mnb_rtok', response.data.refreshToken)
+          window.localStorage.setItem('mnb_uid', response.data.uid)
+          window.localStorage.setItem('mnb_rid', response.data.rid)
+          window.localStorage.setItem('mnb_inits', response.data.initials)
+          this.$router.push({ name: 'Home' })
+        })
+        .catch(err => {
+          switch (err.response.status) {
+            case 400:
+            case 403:
+              break
+            case 500:
+            default:
+              this.$log.error(err)
+          }
+        })
+      this.loading = false
     }
   }
 }
@@ -174,19 +222,9 @@ export default {
     color: var(--link);
   }
 
-  .register {
-    position: relative;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    background: var(--background-board);
-    height: 100vh;
-    display: grid;
-    grid-template-rows: 70px auto;
-  }
-
-  .loginBox {
+  .login-box {
     width: 400px;
     height: auto;
-    margin: 20px auto auto auto;
+    margin: 7vh auto auto auto;
   }
 </style>

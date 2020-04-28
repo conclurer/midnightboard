@@ -64,7 +64,7 @@ module.exports = {
   },
 
   fn: async function(inputs, exits) {
-    var DefaultDueDates = require('../../../../configuration/DefaultDisplayTimes');
+    var DefaultDueDates = require('../../../../config/default-display-times');
     let titleRegex = new RegExp(sails.config.custom.POSTTITLE_REGEX);
 
     /*if(!this.req.me) {
@@ -76,6 +76,7 @@ module.exports = {
     if(!titleRegex.test(inputs.title)) {
       return exits.invalidParams('Title is too long/short or contains illegal characters');
     }
+    const boardId = inputs.boardId;
 
     // Validate type
     if(![
@@ -191,7 +192,7 @@ module.exports = {
     }
 
 
-    var boardExists = await Board.findOne({id: inputs.boardId});
+    var boardExists = await Board.findOne({id: boardId});
     if(!boardExists) {
       return exits.nonExistent();
     }
@@ -209,10 +210,30 @@ module.exports = {
 
     var createdPost = await Post.create(createData).fetch();
     await PostLocation.create({
-      boardId: inputs.boardId,
+      boardId: boardId,
       postId: createdPost.id
-
     });
+
+    // Send notifications to all subscribed members
+    const subject = sails.__('email.create.subject') + boardExists.boardName;
+    const plainText = sails.__('email.create.plainText1') + boardExists.boardName
+      + sails.__('email.create.plainText2');
+    const htmlText = sails.__('email.create.htmlText1') + boardExists.boardName
+      + sails.__('email.create.htmlText2');
+    const subscribers = await BoardSubscription.find({boardId: boardId});
+    for(const subscriber of subscribers) {
+      const member = await Member.findOne({id: subscriber.memberId});
+      if(member) {
+        await sails.helpers.sendEmail(member.email, subject, plainText, htmlText) // Later, recipent -> member.email
+          .then(() => {
+            sails.log.verbose('POSTS_CREATE::: Send notification to user #' + member.id);
+          })
+          .catch(() => {
+            sails.log.error('POSTS_CREATE::: Failed to send notification to user #' + member.id);
+          });
+      }
+    }
+
 
     if(inputs.skipReturn && inputs.skipReturn === true) {
       return exits.success();

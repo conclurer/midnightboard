@@ -1,0 +1,33 @@
+:root {
+    --background-board: #7b8895;
+    --accent: #f9a618;
+    --link: #007bff;
+}
+
+a {
+    color: #fff;
+}
+
+a:visited {
+    color: #fff;
+}
+
+a:hover {
+    color: var(--accent);
+}
+
+a:active {
+    color: var(--accent);
+}
+
+a.dropdown-item {
+    color: #000;
+}
+
+.dropdown-menu {
+    min-width: 3rem;
+}
+
+body {
+    background-color: var(--background-board);
+}

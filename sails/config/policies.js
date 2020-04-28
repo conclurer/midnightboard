@@ -11,11 +11,15 @@
 module.exports.policies = {
     '*': true,
 
-    'boards/*': 'is-logged-in',
+    'boards/get': true,
+    'boards/get-all': true,
+    'boards/create': 'is-logged-in',
     'boards/delete': 'is-board-owner',
     'boards/update': 'is-board-owner',
 
-    'posts/*': 'is-logged-in',
+    'posts/get-all': true,
+    'posts/get': 'is-logged-in',
+    'posts/create': 'is-logged-in',
     'posts/delete': 'is-post-owner',
     'posts/update': 'is-post-owner',
 
@@ -26,6 +30,8 @@ module.exports.policies = {
     'users/update-password': 'is-self',
 
     'polls/*': 'is-logged-in',
+
+    'surveys/*': 'is-logged-in',
     
     'authentication/*': true
 };

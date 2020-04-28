@@ -34,7 +34,9 @@ import {
   faPlus,
   faUser,
   faUserCircle,
+  faTimes,
   faTimesCircle,
+  faTrashAlt,
   faBold,
   faItalic,
   faStrikethrough,
@@ -51,13 +53,22 @@ import {
   faFileWord,
   faFileExcel,
   faFilePowerpoint,
-  faMinus
+  faMinus,
+  faCaretDown,
+  faCaretUp,
+  faUnlock,
+  faLockOpen,
+  faQuestionCircle,
+  faBell,
+  faBellSlash
 } from '@fortawesome/free-solid-svg-icons'
 library.add(
   faPlus,
   faUser,
   faUserCircle,
+  faTimes,
   faTimesCircle,
+  faTrashAlt,
   faBold,
   faItalic,
   faStrikethrough,
@@ -74,7 +85,14 @@ library.add(
   faFileWord,
   faFileExcel,
   faFilePowerpoint,
-  faMinus
+  faMinus,
+  faCaretDown,
+  faCaretUp,
+  faUnlock,
+  faLockOpen,
+  faQuestionCircle,
+  faBell,
+  faBellSlash
 )
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
@@ -88,7 +106,7 @@ import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css'
 Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker)
 
 // Import own stylesheet
-import '../../configuration/styles.css'
+import '../../config/styles.css'
 
 import VueLogger from 'vuejs-logger'
 const isProduction = process.env.NODE_ENV === 'production'

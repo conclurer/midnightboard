@@ -1,4 +1,21 @@
 {
-  "Welcome": "Welcome",
-  "A brand new app.": "A brand new app."
+	"email": {
+		"subscribe": {
+			"subject": "Successfully subscribed to board ",
+			"plainText": "You will get now notifications if new posts get created on this board.",
+			"htmlText": "<p>You will get now notifications if new posts get created on this board.</p>"
+		},
+		"unsubscribe": {
+			"subject": "Successfully unsubscribed to board ",
+			"plainText": "You will get no longer notifications for this board.",
+			"htmlText": "<p>You will get no longer notifications for this board.</p>"
+		},
+		"create": {
+			"subject": "New post on board ",
+			"plainText1": "Someone has created a new post on board ",
+			"plainText2": ". Check it out! If you want to unsubscribe use the bell on the board!",
+			"htmlText1": "Someone has created a new post on board ",
+			"htmlText2": ". Check it out!<br>If you want to unsubscribe use the bell on the board!"
+		}
+	}
 }

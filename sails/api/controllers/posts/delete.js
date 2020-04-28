@@ -30,7 +30,7 @@ module.exports = {
     if(!inputs.postId) {
       return exits.missingParams();
     }
-    sails.log.info('POST_DELETE::: Trying to delete post ' + inputs.postId);
+    sails.log.verbose('POST_DELETE::: Trying to delete post ' + inputs.postId);
     var deletedPost = await Post.destroyOne({id: inputs.postId});
     if(!deletedPost) {
       return exits.nonExistent();

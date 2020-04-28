@@ -1,3 +1,4 @@
+<!-- The main class of the website. All views and components are rendered inside of this one -->
 <template>
   <div id="app">
     <router-view />
@@ -13,6 +14,7 @@
   body {
     overflow-x: hidden;
     overflow-y: scroll;
+    padding-top: calc(28px + 2vh);
   }
 
   a {

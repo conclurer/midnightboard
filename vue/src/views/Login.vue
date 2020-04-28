@@ -1,56 +1,64 @@
+<!-- Login page. Users can log in with their e-mail addresses or usernames -->
 <template>
-  <div
-    class="login"
-  >
-    <Header
-      id="titlebar"
-      title="Login"
-      @change-language="changeLanguage"
-      :english="english"
-      :buttonsActive=false
-    />
-    <b-card
-      class="loginBox"
-      align="center"
-      bg-variant="dark"
-      text-variant="white"
-    >
-      <br>
-      <form>
+  <div class="login">
+    <Header id="titlebar" :title="$t('login.title')" />
+
+    <!-- Loading circle displayed while system is sending user data to the backend -->
+    <b-overlay :show="loading" variant="light" opacity="0.6" blur="2px" rounded="sm">
+      <b-card class="login-box" align="center" bg-variant="dark" text-variant="white">
+        <br>
         <h2>{{$t('ui.welcome')}}</h2>
         <br>
-        <input type="text" id="email" name="email" v-model="email"
-        minlength="3" maxlength="127" required
-        :placeholder="$t('profile.email')" size="36">
+        <b-form @submit="onSubmit">
+          <b-form-input
+            id="email"
+            v-model="email"
+            :state="loginState"
+            :placeholder="$t('login.emailOrName')"
+            trim
+            autocomplete="email"
+          >
+          </b-form-input>
+          <br>
+          <b-form-input
+            type="password"
+            id="passwd"
+            v-model="passwd"
+            :state="loginState"
+            :placeholder="$t('profile.password')"
+            trim
+            autocomplete="current-password"
+          >
+          </b-form-input>
+          <b-tooltip
+            :show.sync="tooltipState"
+            target="passwd"
+            variant="danger"
+            placement="bottom"
+            v-if="loginState === false"
+            triggers="blur"
+          >
+            {{$t('login.invalidLogin')}}
+          </b-tooltip>
+          <br>
+          <b-button type="submit" variant="primary">{{$t('ui.submit')}}</b-button>
+        </b-form>
         <br>
-        <br>
-        <input type="password" id="passwd" name="passwd" v-model="passwd"
-        minlength="8" maxlength="127" autocomplete="current-password" required
-        :placeholder="$t('profile.password')" size="36">
-        <p v-if="inval" style="color: #E22">{{$t('login.invalidLogin')}}</p>
-        <br>
-        <br>
-        <button v-on:click.prevent="submit">{{$t('ui.login')}}</button>
-        <br>
-        <br>
-        <router-link
-          to="/register"
-        >
-          {{$t('ui.toSignUp')}}
-        </router-link>
-      </form>
-    </b-card>
+        <!-- Users who don't have an account yet can register here -->
+        <router-link to="/register">{{$t('ui.toSignUp')}}</router-link>
+      </b-card>
+    </b-overlay>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import axios from 'axios'
+import { axios } from '@/mixins/axios.js'
 import Header from '@/components/Header.vue'
-import { i18n } from '@/main.js'
 
 export default {
-  name: 'NoticeBoard',
+  name: 'Login',
+  mixins: [axios],
   components: {
     Header
   },
@@ -58,79 +66,60 @@ export default {
     return {
       email: '',
       passwd: '',
-      english: true,
-      inval: false
-    }
-  },
-  created () {
-    switch (i18n.locale.substring(0, 2)) {
-      case 'en':
-        this.english = true
-        break
-      case 'de':
-        this.english = false
-        break
-      default:
-        this.english = true
+      loginState: null,
+      tooltipState: false,
+      loading: false,
+      loginData: {}
     }
   },
   methods: {
-    submit () {
-      this.inval = false
-      axios
-        .post('http://localhost:1337/api/users/login', {
-          email: this.email,
-          password: this.passwd
-        })
+    // Sends user input to the backend to check if credentials are valid
+    onSubmit (event) {
+      event.preventDefault()
+      this.loginState = null
+      this.loading = true
+      this.loginData.password = this.passwd;
+      /.*\@.*\..*/.test(this.email)
+        ? (this.loginData.email = this.email)
+        : (this.loginData.userName = this.email)
+
+      this.axiosPOST('api/users/login', this.loginData)
         .then(response => {
+          this.loginState = true
+          this.loading = false
           window.localStorage.setItem('mnb_atok', response.data.accessToken)
           window.localStorage.setItem('mnb_rtok', response.data.refreshToken)
-          window.location = '/'
+          window.localStorage.setItem('mnb_uid', response.data.uid)
+          window.localStorage.setItem('mnb_rid', response.data.rid)
+          window.localStorage.setItem('mnb_inits', response.data.initials)
+          this.$router.push({ name: 'Home' })
         })
         .catch(err => {
+          this.loading = false
           switch (err.response.status) {
             case 400:
             case 403:
-              this.$log.debug(err)
-              this.inval = true
+              this.loginState = false
+              this.tooltipState = true
               break
             case 500:
             default:
               this.$log.error(err)
           }
         })
-    },
-    changeLanguage () {
-      this.english = !this.english
-      if (this.english) {
-        i18n.locale = 'en-GB'
-      } else {
-        i18n.locale = 'de-DE'
-      }
-      // TODO: Change user settings
-      // User system does not exist yet.
+      this.loginData = {}
     }
   }
 }
 </script>
 
 <style scoped>
-  a {
-    color: var(--link);
-  }
+a {
+  color: var(--link);
+}
 
-  .login {
-    position: relative;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    background: var(--background-board);
-    height: 100vh;
-    display: grid;
-    grid-template-rows: 70px auto;
-  }
-
-  .loginBox {
-    width: 400px;
-    margin: 20px auto auto auto;
-  }
+.login-box {
+  width: 400px;
+  margin: 10vh auto auto auto;
+}
 </style>
