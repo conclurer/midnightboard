@@ -34,7 +34,7 @@ module.exports = {
       statusCode: 401
     },
     insufficientAuth: {
-      description: 'insufficient permission',
+      description: 'Insufficient permission',
       statusCode: 403
     }
   },
