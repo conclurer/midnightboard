@@ -280,6 +280,10 @@ paths:
           description: Bad Request
         '409':
           description: Conflict
+        '200':
+          description: The requested resource
+        '404':
+          description: Resource not found
         '500':
           description: Internal server error
   /api/users/login:
@@ -303,6 +307,11 @@ paths:
           description: Forbidden
         '500':
           description: Internal Server Error
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
   /api/users/logout:
     delete:
       summary: ''
@@ -322,6 +331,11 @@ paths:
           description: Bad Request
         '403':
           description: Forbidden
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
   /api/users/refresh:
     post:
       summary: ''
@@ -341,6 +355,11 @@ paths:
           description: Bad Request
         '403':
           description: Forbidden
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
   '/api/users/{userId}':
     get:
       summary: ''
@@ -556,6 +575,12 @@ paths:
           type: string
           description: This is a path param for boardId
         - $ref: '#/parameters/TokenHeaderParam'
+        - name: body
+          in: body
+          required: true
+          description: 'An object defining our schema for '
+          schema:
+            $ref: '#/definitions/member'
       responses:
         '200':
           description: OK
@@ -569,6 +594,57 @@ paths:
           description: Internal Server Error
   '/api/users/unsubscribe/{boardId}':
     put:
+          description: Internal server error
+  '/api/users/{userId}/updatepassword':
+    put:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          type: string
+          description: This is a path param for userId
+        - $ref: '#/parameters/TokenHeaderParam'
+      responses:
+        '200':
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+  '/api/users/{userId}/updateemail':
+    put:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          type: string
+          description: This is a path param for userId
+        - $ref: '#/parameters/TokenHeaderParam'
+      responses:
+        '200':
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+  /api/users/all:
+    get:
       summary: ''
       description: ''
       tags:
@@ -765,6 +841,11 @@ paths:
       consumes:
         - application/json
       parameters:
+        - in: path
+          name: boardId
+          required: true
+          type: string
+          description: This is a path param for boardId
         - $ref: '#/parameters/TokenHeaderParam'
         - name: body
           in: body
@@ -820,11 +901,36 @@ paths:
       consumes:
         - application/json
       parameters:
+        - $ref: '#/parameters/TokenHeaderParam'
+        - name: body
+          in: body
+          required: true
+          description: 'An object defining our schema for '
+          schema:
+            $ref: '#/definitions/board'
+      responses:
+        '200':
+          description: The requested resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+  '/api/polls/{postId}':
+    get:
+      summary: ''
+      description: ''
+      tags:
+        - ''
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
         - in: path
-          name: boardId
+          name: postId
           required: true
           type: string
-          description: This is a path param for boardId
+          description: This is a path param for postId
         - $ref: '#/parameters/TokenHeaderParam'
       responses:
         '200':
@@ -847,10 +953,10 @@ paths:
         - application/json
       parameters:
         - in: path
-          name: postId
+          name: boardId
           required: true
           type: string
-          description: This is a path param for postId
+          description: This is a path param for boardId
         - $ref: '#/parameters/TokenHeaderParam'
       responses:
         '200':
@@ -928,6 +1034,12 @@ paths:
           type: string
           description: This is a path param for postId
         - $ref: '#/parameters/TokenHeaderParam'
+        - name: body
+          in: body
+          required: true
+          description: 'An object defining our schema for '
+          schema:
+            $ref: '#/definitions/post'
       responses:
         '200':
           description: OK

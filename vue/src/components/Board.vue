@@ -45,6 +45,7 @@
 <script>
 import PostPanel from '@/components/PostPanel.vue'
 import EditorSidebar from '@/components/EditorSidebar.vue'
+import pdf from 'vue-pdf'
 
 export default {
   name: 'Board',

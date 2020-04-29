@@ -44,7 +44,7 @@
 **Implemented features:**
 - PDF upload and display
 - Office file upload and display
-- Create, display & submit interactive polls
+- Interactive polls
 - CMS page
 - Login and registration page
 - Language selection dropdown

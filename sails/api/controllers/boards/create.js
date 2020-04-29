@@ -80,6 +80,18 @@ module.exports = {
     if(boardData.boardType === 0) {
       sails.log.info('NOTICE::: Default baord has been set to be #' + inputs.boardId);
     }
+    if(!this.req.me) {
+      return exits.noAuth('Authentication required');
+    }
+
+    sails.log.verbose('BOARD_CREATE::: Trying to create board ' + inputs.boardName);
+    var createdBoard = await Board.create(
+      {
+        boardName: inputs.boardName,
+        creatorId: this.req.me['id']
+      }).fetch();
+    delete createdBoard['createdAt'];
+
     return exits.success(createdBoard);
   }
 };

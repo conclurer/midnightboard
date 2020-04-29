@@ -18,7 +18,7 @@
       class="content-editor"
       :editor="contentEditor"
     />
-    <br>
+    <div class="lowerGap" />
 
     <!-- Formatting tools -->
     <editor-menu-bar
@@ -158,6 +158,7 @@
     >
       {{$t('editor.note.create')}}
     </b-button>
+    <br><br>
   </div>
 </template>
 
