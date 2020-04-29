@@ -10,7 +10,12 @@ Please also see: [contributing](https://github.com/conclurer/midnightboard/blob/
 
 ![Docker Architecture](https://user-images.githubusercontent.com/12168640/80148370-41ef5480-85b5-11ea-8c20-8567f3fafeaa.png)
 
-Images for [application](https://hub.docker.com/r/tvsjsdock/midnightboard-app/tags) & [database](https://hub.docker.com/r/tvsjsdock/midnightboard-db/tags)
+Images for [application](https://hub.docker.com/r/tvsjsdock/midnightboard-app/tags) & [database](https://hub.docker.com/r/tvsjsdock/midnightboard-db/tags), can be used with the following commands:
+
+```bash
+$ docker pull tvsjsdock/midnightboard-app:latest && docker pull tvsjsdock/midnightboard-db:latest
+$ docker-compose up
+```
 
 ---
 
