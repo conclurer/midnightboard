@@ -1,32 +1,43 @@
+<!-- Parent component for all notice boards. Essential data is saved here -->
 <template>
-  <div
-    class="home"
-  >
+  <div class="home">
     <Header
       id="titlebar"
-      title="Quality Assurance"
-      @plus-clicked="plusClicked"
-      @change-language="changeLanguage"
-      :english="english"
-      :buttonsActive=true
+      :title="boardTitle"
+      @select-editor="selectEditor"
+      @board-changed="reload"
+      :addActive="headerButtonsActive"
     />
-    <Board
-      @add-note="addNote"
-      :notes="notes"
-      :editorActive="editorActive"
-    />
+    <b-overlay
+      :show="loading"
+      variant="light"
+      opacity="0.6"
+      blur="2px"
+      rounded="sm"
+      class="loading-overlay"
+    >
+      <Board
+        @add-note="addNote"
+        @reload-board="reload"
+        @close="close"
+        :notes="notes"
+        :boardId="boardId"
+        :editorActive="editorActive"
+        :editorId="editorId"
+      />
+    </b-overlay>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import axios from 'axios'
 import Board from '@/components/Board.vue'
 import Header from '@/components/Header.vue'
-import { i18n } from '@/main.js'
+import { axios } from '@/mixins/axios.js'
 
 export default {
   name: 'NoticeBoard',
+  mixins: [axios],
   components: {
     Header,
     Board
@@ -34,120 +45,95 @@ export default {
   data () {
     return {
       notes: [],
-      boardId: 1,
       editorActive: false,
-      english: true
+      editorId: 0,
+      boardId: 1,
+      boardTitle: '',
+      loading: false,
+      headerButtonsActive: false
     }
   },
   created () {
-    if (!window.localStorage.getItem('mnb_atok')) { window.location = '/login' }
-
-    this.refreshToken()
-
-    axios
-      .get('http://localhost:1337/api/posts/all/' + this.boardId, {
-        headers: {
-          'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
-        }
-      })
-      .then(response => { this.notes = response.data.posts })
-      .catch(err => {
-        switch (err.response.status) {
-          case 400:
-            window.location = '/login'
-            break
-          case 401:
-            break
-          case 500:
-          default:
-            this.$log.error(err)
-        }
-      })
-
-    switch (i18n.locale.substring(0, 2)) {
-      case 'en':
-        this.english = true
-        break
-      case 'de':
-        this.english = false
-        break
-      default:
-        this.english = true
-    }
+    this.reload()
   },
   methods: {
-    refreshToken () {
-      axios
-        .post('http://localhost:1337/api/users/refresh', {
-          token: window.localStorage.getItem('mnb_rtok')
-        })
-        .then(response => {
-          window.localStorage.setItem('mnb_atok', response.data.accessToken)
-        })
-        .catch(err => {
-          this.$log.error(err.response.config.token)
-          switch (err.response.status) {
-            case 500:
-              this.$log.error(err)
-              break
-            default:
-              this.$log.error(err)
-          }
-        })
-    },
-    addNote () {
-      // Refresh notice board
-      if (!window.localStorage.getItem('mnb_atok')) { window.location = '/login' }
-      this.refreshToken()
-      axios
-        .get('http://localhost:1337/api/posts/all/' + this.boardId, {
-          headers: {
-            'Authorization': 'Bearer ' + window.localStorage.getItem('mnb_atok')
-          }
-        })
+    // This method is used to load the posts of a notice board from the database
+    fetchPosts: async function () {
+      const isAuthed = !!window.localStorage.getItem('mnb_rtok')
+      await this.axiosGET('api/posts/all/' + this.boardId, null, isAuthed, false)
         .then(response => { this.notes = response.data.posts })
         .catch(err => {
           switch (err.response.status) {
-            case 400:
-              window.location = '/login'
-              break
             case 401:
+              this.$router.push({ name: 'Login' })
+              break
+            case 404:
+              this.$router.push({ name: 'NotFound' })
               break
             case 500:
+            case 400:
             default:
               this.$log.error(err)
           }
         })
-
+    },
+    // This method is called to load notice board properties
+    fetchBoard: async function () {
+      const isAuthed = !!window.localStorage.getItem('mnb_rtok')
+      return await this.axiosGET('api/boards/' + this.boardId, null, isAuthed, isAuthed)
+        .then(response => {
+          this.boardTitle = response.data.boardName
+          this.boardId = response.data.id
+          return true
+        })
+        .catch(err => {
+          switch (err.response.status) {
+            case 401:
+              this.$router.push({ name: 'Login' })
+              return false
+            case 404:
+              this.$router.push({ name: 'NotFound' })
+              return false
+            case 500:
+            case 400:
+            default:
+              this.$log.error(err)
+              return false
+          }
+        })
+    },
+    // Called after a note was created
+    addNote: async function () {
+      this.fetchPosts()
       this.editorActive = false
     },
-    plusClicked () {
-      // Show/hide editor sidebar
-      this.editorActive = !this.editorActive
+    // Sets the editor id which is used in the editor sidebar
+    selectEditor: function (selection) {
+      this.editorActive = true
+      this.editorId = selection
     },
-    changeLanguage () {
-      this.english = !this.english
-      if (this.english) {
-        i18n.locale = 'en-GB'
-      } else {
-        i18n.locale = 'de-DE'
-      }
-      // TODO: Change user settings
-      // User system does not exist yet.
+    // Used to close the editor sidebar
+    close: function () {
+      this.editorActive = false
+    },
+    // Used to update the note array in data
+    reload: async function () {
+      this.loading = true
+      this.notes = []
+      if (window.localStorage.getItem('mnb_rtok')) { this.headerButtonsActive = true } else { this.headerButtonsActive = false }
+      this.boardId = this.$route.params.boardId ? this.$route.params.boardId : 0
+      if (await this.fetchBoard()) { await this.fetchPosts() }
+      this.loading = false
     }
   }
 }
 </script>
 
 <style scoped>
-  .home {
-    position: relative;
-    display: grid;
-    grid-template-rows: 70px 1fr;
-  }
-
-  .smooth-vuebar {
-    max-height: 100vh;
-    max-width: 100vw;
+  .loading-overlay {
+    top:0;
+    left:0;
+    min-height: 95vh;
+    width: 100vw;
   }
 </style>

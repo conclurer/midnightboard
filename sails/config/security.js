@@ -40,7 +40,7 @@ module.exports.security = {
         allowRequestMethods: 'GET, POST, PUT, DELETE',
         allowCredentials: true,
         allowAnyOriginWithCredentialsUnsafe: true,
-        allowRequestHeaders: 'origin, x-requested-with, content-type, accept, authorization'
+        allowRequestHeaders: 'origin, x-requested-with, content-type, accept, authorization, accept-language'
     }
 
     /****************************************************************************

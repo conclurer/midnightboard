@@ -41,29 +41,49 @@ module.exports.routes = {
         action: 'get',
         skipAssets: true
     },
-    'DELETE   /api/users/:userId': {
+    'DELETE    /api/users/:userId': {
         controller: 'users',
         action: 'delete',
         skipAssets: true
     },
-    'PUT   /api/users/:userId': {
+    'PUT    /api/users/:userId': {
         controller: 'users',
         action: 'update',
         skipAssets: true
     },
-    'PUT   /api/users/:userId/updatepassword': {
+    'PUT    /api/users/:userId/updatepassword': {
         controller: 'users',
         action: 'update-password',
         skipAssets: true
     },
-    'PUT   /api/users/:userId/updateemail': {
+    'PUT    /api/users/:userId/updateemail': {
         controller: 'users',
         action: 'update-email',
         skipAssets: true
     },
-    'GET    /api/users/all': {
+    'GET    /api/users': {
         controller: 'users',
         action: 'get-all',
+        skipAssets: true
+    },
+    'GET    /api/users/participations': {
+        controller: 'users',
+        action: 'get-participations',
+        skipAssets: true
+    },
+    'GET    /api/users/subscriptions': {
+        controller: 'users',
+        action: 'get-subscriptions',
+        skipAssets: true
+    },
+    'PUT    /api/users/subscribe/:boardId': {
+        controller: 'users',
+        action: 'subscribe-board',
+        skipAssets: true
+    },
+    'PUT    /api/users/unsubscribe/:boardId': {
+        controller: 'users',
+        action: 'unsubscribe-board',
         skipAssets: true
     },
 
@@ -71,6 +91,11 @@ module.exports.routes = {
     'GET    /api/boards/:boardId': {
         controller: 'boards',
         action: 'get',
+        skipAssets: true
+    },
+    'GET    /api/boards': {
+        controller: 'boards',
+        action: 'get-all',
         skipAssets: true
     },
     'POST   /api/boards': {
@@ -129,6 +154,23 @@ module.exports.routes = {
     },
     'PUT   /api/posts/:postId': {
         controller: 'posts',
+        action: 'update',
+        skipAssets: true
+    },
+
+    //SURVEYS
+    'GET    /api/surveys/:postId': {
+        controller: 'surveys',
+        action: 'get',
+        skipAssets: true
+    },
+    'POST   /api/surveys': {
+        controller: 'surveys',
+        action: 'create',
+        skipAssets: true
+    },
+    'PUT   /api/surveys': {
+        controller: 'surveys',
         action: 'update',
         skipAssets: true
     },

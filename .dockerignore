@@ -1,6 +1,7 @@
 **/.circleci
 **/.classpath
 **/.dockerignore
+**/dev
 **/.env
 **/.git
 **/.gitignore
@@ -25,6 +26,7 @@
 **/swagger
 **/test
 **/values.dev.yaml
+dangerfile.js
 CHANGELOG.md
 CONTRIBUTING.md
 CONVENTIONS.md

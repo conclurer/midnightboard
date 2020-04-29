@@ -20,9 +20,13 @@ module.exports = {
       description: 'Missing parameters',
       statusCode: 400
     },
+    cannotDeleteDefault: {
+      description: 'Default board cannot be deleted',
+      statusCode: 409
+    },
     nonExistent: {
       description: 'Board does not exist in database',
-      statusCode: 400
+      statusCode: 404
     }
   },
 
@@ -30,7 +34,12 @@ module.exports = {
     if(!inputs.boardId) {
       return exits.missingParams();
     }
-    sails.log.info('BOARD_DELETE::: Trying to delete board ' + inputs.boardId);
+    var isDefaultBoard = await Board.findOne({id: inputs.boardId});
+    if(isDefaultBoard.boardType === 0) {
+      return exits.cannotDeleteDefault('Default Board may not be deleted');
+    }
+
+    sails.log.verbose('BOARD_DELETE::: Trying to delete board ' + inputs.boardId);
     var deletedBoard = await Board.destroyOne({id: inputs.boardId});
     if(!deletedBoard) {
       return exits.nonExistent();
@@ -38,4 +47,3 @@ module.exports = {
     return exits.success();
   }
 };
-

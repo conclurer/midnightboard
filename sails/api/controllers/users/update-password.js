@@ -26,7 +26,7 @@ module.exports = {
     },
     invalidPassword: {
       description: 'Invalid password',
-      statusCode: 401
+      statusCode: 403
     },
     invalidParams: {
       description: 'One or more parameters do not match pre-defined regex',
@@ -35,6 +35,10 @@ module.exports = {
     missingParams: {
       description: 'Missing parameters',
       statusCode: 400
+    },
+    similarPassword: {
+      description: 'Old and new passwords too similar',
+      statusCode: 409
     },
     serverError: {
       description: 'Unexpected server error',
@@ -54,11 +58,21 @@ module.exports = {
       return exits.missingParams();
     }
     if(!passwordRegex.test(inputs.newPassword)) {
-      return exits.invalidParams('Password must be atleast 8 characters long,'
-          + ' and must contain one uppercase letter, one lowercase letter, and 1 number or special character');
+      return exits.invalidParams({
+        error: {
+          code: 103,
+          message: 'Password must be at least 8 characters long,'
+          + ' and must contain one uppercase letter, one lowercase letter, and 1 number or special character'
+        }
+      });
     }
     if(inputs.oldPassword.toUpperCase() === inputs.newPassword.toUpperCase()) {
-      return exits.invalidParams('Old and new passwords too similar');
+      return exits.similarPassword({
+        error: {
+          code: 110,
+          message: 'Old and new passwords too similar'
+        }
+      });
     }
 
     sails.log.verbose('USER::: Trying to update password for user #' + inputs.userId);

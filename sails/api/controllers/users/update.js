@@ -32,6 +32,10 @@ module.exports = {
     avatar: {
       description: 'New Avatar. Must be base64 encoded',
       type: 'ref'
+    },
+    role: {
+      description: 'User role within the system.',
+      type: 'number'
     }
   },
 
@@ -40,21 +44,25 @@ module.exports = {
       responseType: '',
       statusCode: 200
     },
-    missingParams: {
-      description: 'Missing parameters',
-      statusCode: 400
-    },
     invalidParams: {
       description: 'Invalid parameters',
       statusCode: 400
     },
     nameTaken: {
       description: 'Username already in use',
-      statusCode: 400
+      statusCode: 409
+    },
+    noSelfDemote: {
+      description: 'Cannot promote/demote self',
+      statusCode: 409
     },
     nonExistent: {
       description: 'User does not exist',
       statusCode: 404
+    },
+    unauthorized: {
+      description: 'Unauthorized request',
+      statusCode: 401
     }
   },
 
@@ -70,34 +78,67 @@ module.exports = {
       if(['en', 'de'].includes(inputs.languagePreference)) {
         valuesToChange.languagePreference = inputs.languagePreference;
       } else {
-        return exits.invalidParams('Invalid langaugePreference');
+        return exits.invalidParams({
+          error: {
+            code: 109,
+            message: 'Invalid language preference'
+          }
+        });
       }
     }
     if(inputs.firstName) {
       if(realnameRegex.test(inputs.firstName)) {
         valuesToChange.firstName = inputs.firstName;
       } else {
-        return exits.invalidParams('Invalid first name');
+        return exits.invalidParams({
+          error: {
+            code: 107,
+            message: 'First name is too short/long or contains illegal characters'
+          }
+        });
       }
     }
     if(inputs.lastName) {
       if(realnameRegex.test(inputs.lastName)) {
         valuesToChange.lastName = inputs.lastName;
       } else {
-        return exits.invalidParams('Invalid last name');
+        return exits.invalidParams({
+          error: {
+            code: 106,
+            message: 'Last name is too short/long or contains illegal characters'
+          }
+        });
       }
     }
     if(inputs.userName) {
       if(usernameRegex.test(inputs.userName)) {
         valuesToChange.userName = inputs.userName;
       } else {
-        return exits.invalidParams('Invalid username');
+        return exits.invalidParams({
+          error: {
+            code: 105,
+            message: 'Username is too short/long or contains illegal characters'
+          }
+        });
       }
     }
     if(inputs.avatar) {
       // TODO Validate avatar
-      valuesToChange.avatar = inputs.avatar;
+      // valuesToChange.avatar = inputs.avatar;
     }
+
+    if([0, 1].includes(inputs.role)) {
+      if(!this.req.me['role'] === 0) {
+        return exits.unauthorized();
+      }
+      if(inputs.userId === this.req.me['id']) {
+        return exits.noSelfDemote('Cannot promote/demote self');
+      }
+      valuesToChange.role = inputs.role;
+    } else if(inputs.role) {
+      return exits.invalidParams('Invalid user role');
+    }
+
 
     try {
       var updatedUser = await Member.updateOne({ id: inputs.userId })

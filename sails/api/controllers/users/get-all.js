@@ -25,11 +25,15 @@ module.exports = {
   fn: async function(inputs, exits) {
     sails.log.verbose('USER_GET::: Retrieving all users.');
 
-    var selectAttributes = ['id', 'createdAt', 'lastSeen', 'userName', 'firstName', 'lastName', 'email', 'avatar'];
+    var selectAttributes = ['id', 'createdAt', 'lastSeen', 'userName', 'firstName', 'lastName', 'email'];
 
-    if(inputs.skipAvatar) {
-      selectAttributes.pop();
+    if(!inputs.skipAvatar) {
+      selectAttributes.push('avatar');
     }
+    if(this.req.me['privReq']) {
+      selectAttributes.push('role');
+    }
+
     var usr = await Member.find({
       select: selectAttributes
     });

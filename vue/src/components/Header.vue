@@ -1,149 +1,342 @@
+<!-- This header is displayed on top of every view. Some buttons can be set visible or invisible -->
 <template>
-  <header
-    class="header"
-  >
-    <!-- Bootstrap-Vue navbar -->
-    <b-navbar variant="dark" type="white" fixed="top">
+  <div>
+    <b-navbar
+      variant="dark"
+      type="dark"
+      toggleable="sm"
+      fixed="top"
+      class="m"
+    >
       <b-navbar-brand href="#">
-        <img src="../../../configuration/logo.png" height="40px" alt="Logo">
+        <img src="../../../config/logo.png" alt="Logo" class="nav-img" @click="logoClick">
       </b-navbar-brand>
-      <b-nav-text>
-        |
-      </b-nav-text>
-      <b-nav-text>
+      <b-nav-text class="nav-title">
         {{ title }}
       </b-nav-text>
-      <b-navbar-nav class="ml-auto">
-        <div
-          v-if="buttonsActive"
-        >
-          <b-nav-item>
-            <span
-              class="unselectable"
-              unselectable="on"
-            ><a @click="plusClicked"><font-awesome-icon icon="plus" /> {{$t('ui.add')}}</a></span>
-          </b-nav-item>
-          <b-nav-item>
-            <span
-              class="unselectable"
-              unselectable="on"
-            ><font-awesome-icon icon="user-circle" /> {{$t('ui.profile')}}</span>
-          </b-nav-item>
+      <b-navbar-item class="nav-sub" v-if="boardVisible && isLoggedIn()">
+        <b-button variant="link" @click="changeSubscriberMode()">
+          <font-awesome-icon v-if="!boardSubscribed" icon="bell-slash" size="lg" />
+          <font-awesome-icon v-else-if="boardSubscribed" icon="bell" size="lg" />
+        </b-button>
+      </b-navbar-item>
+      <b-navbar-toggle target="navbar-toggle-collapse" >
+        <template>
+          <font-awesome-icon icon="caret-down" />
+        </template>
+      </b-navbar-toggle>
+      <b-collapse id="navbar-toggle-collapse" is-nav >
+        <b-navbar-nav class="ml-auto">
           <b-nav-item-dropdown
-            v-if="english"
-            id="flag"
-            class="unselectable"
-            unselectable="on"
-            right
+              class="nav-item"
+              right
+              no-caret
           >
             <template v-slot:button-content>
+              <b-avatar
+                variant="info"
+                class="nav-avatar p-0"
+                button
+                :text="avatarText"
+              />
+            </template>
+            <b-dropdown-item v-if="isLoggedIn()" @click="avatarProfile">{{$t('ui.profile')}}</b-dropdown-item>
+            <b-dropdown-item v-if="isLoggedIn()" @click="avatarEdit">{{$t('ui.edit')}}</b-dropdown-item>
+            <b-dropdown-item v-if="isLoggedIn()" @click="avatarLogout">{{$t('ui.logout')}}</b-dropdown-item>
+
+            <b-dropdown-item v-if="!isLoggedIn()" @click="avatarLogin">{{$t('ui.login')}}</b-dropdown-item>
+            <b-dropdown-item v-if="!isLoggedIn()" @click="avatarRegister">{{$t('ui.register')}}</b-dropdown-item>
+
+            <b-dropdown-divider v-if="isLoggedInAsAdmin()"/>
+            <b-dropdown-item v-if="isLoggedInAsAdmin()" @click="avatarCMS">{{$t('cms.title')}}</b-dropdown-item>
+          </b-nav-item-dropdown>
+
+          <b-nav-item-dropdown
+            v-if="addActive"
+            class="nav-item"
+            right
+            no-caret
+          >
+            <template v-slot:button-content>
+              <font-awesome-icon icon="plus" />
+            </template>
+            <b-dropdown-item @click="selectEditor('text')">{{$t('type.text')}}</b-dropdown-item>
+            <b-dropdown-item @click="selectEditor('image')">{{$t('type.image')}}</b-dropdown-item>
+            <b-dropdown-item @click="selectEditor('file')">{{$t('type.file')}}</b-dropdown-item>
+            <b-dropdown-item @click="selectEditor('poll')">{{$t('type.poll')}}</b-dropdown-item>
+            <b-dropdown-item @click="selectEditor('survey')">{{$t('type.survey')}}</b-dropdown-item>
+          </b-nav-item-dropdown>
+
+          <b-nav-item-dropdown
+            class="nav-item pr-3"
+            right
+            no-caret
+          >
+            <template v-if="selLanguage === 'en'" v-slot:button-content>
               &#127468;&#127463;
             </template>
-            <b-dropdown-item>&#127468;&#127463;</b-dropdown-item>
-            <b-dropdown-item @click="changeLanguage">&#127465;&#127466;</b-dropdown-item>
-          </b-nav-item-dropdown>
-          <b-nav-item-dropdown
-            v-if="!english"
-            id="flag"
-            class="unselectable"
-            unselectable="on"
-            right
-          >
-            <template v-slot:button-content>
+            <template v-else-if="selLanguage === 'de'" v-slot:button-content>
               &#127465;&#127466;
             </template>
-            <b-dropdown-item @click="changeLanguage">&#127468;&#127463;</b-dropdown-item>
-            <b-dropdown-item>&#127465;&#127466;</b-dropdown-item>
+            <b-dropdown-item @click="cToEN" variant="secondary">&#127468;&#127463;</b-dropdown-item>
+            <b-dropdown-item @click="cToDE" variant="secondary">&#127465;&#127466;</b-dropdown-item>
           </b-nav-item-dropdown>
-        </div>
-        <div
-          v-else
-        >
-          <b-nav-item-dropdown
-            v-if="english"
-            id="flag"
-            class="unselectable"
-            unselectable="on"
-            right
-          >
-            <template v-slot:button-content>
-              &#127468;&#127463;
-            </template>
-            <b-dropdown-item>&#127468;&#127463;</b-dropdown-item>
-            <b-dropdown-item @click="changeLanguage">&#127465;&#127466;</b-dropdown-item>
-          </b-nav-item-dropdown>
-          <b-nav-item-dropdown
-            v-if="!english"
-            id="flag"
-            class="unselectable"
-            unselectable="on"
-            right
-          >
-            <template v-slot:button-content>
-              &#127465;&#127466;
-            </template>
-            <b-dropdown-item @click="changeLanguage">&#127468;&#127463;</b-dropdown-item>
-            <b-dropdown-item>&#127465;&#127466;</b-dropdown-item>
-          </b-nav-item-dropdown>
-        </div>
-      </b-navbar-nav>
+        </b-navbar-nav>
+      </b-collapse>
     </b-navbar>
-  </header>
+    <keep-alive>
+      <BoardSidebar
+        v-if="boardSidebarToggle"
+        @board-changed="boardChanged"
+      />
+    </keep-alive>
+  </div>
 </template>
 
 <script>
+import { i18n } from '@/main.js'
+import { axios } from '@/mixins/axios.js'
+import BoardSidebar from '@/components/BoardSidebar.vue'
+import { logoutUser } from '@/mixins/logoutUser.js'
+
 export default {
   name: 'Header',
-  props: ['english', 'buttonsActive', 'title'],
+  props: ['addActive', 'title'],
+  mixins: [logoutUser, axios],
+  components: { BoardSidebar },
+  data () {
+    return {
+      selLanguage: '',
+      avatarText: '',
+      boardSidebarToggle: false,
+      boardVisible: false,
+      boardSubscribed: false
+    }
+  },
+  created () {
+    switch (i18n.locale.substring(0, 2)) {
+      case 'de':
+        this.selLanguage = 'de'
+        break
+      case 'en':
+      default:
+        this.selLanguage = 'en'
+    }
+    this.avatarText = window.localStorage.getItem('mnb_inits')
+    this.isNoticeBoard()
+  },
+  updated () {
+    this.isNoticeBoard()
+  },
   methods: {
-    plusClicked (e) {
+    // Used to change the selected language to English
+    cToEN: function (e) {
       e.preventDefault()
-
-      // Send up to parent
-      this.$emit('plus-clicked')
+      if (this.selLanguage === 'en') { return }
+      window.localStorage.setItem('mnb_lang', 'en-GB')
+      this.selLanguage = 'en'
+      i18n.locale = 'en-GB'
     },
-    changeLanguage (e) {
+    // Used to change the selected language to German
+    cToDE: function (e) {
       e.preventDefault()
-
-      // Send up to parent
-      this.$emit('change-language')
+      if (this.selLanguage === 'de') { return }
+      window.localStorage.setItem('mnb_lang', 'de-DE')
+      this.selLanguage = 'de'
+      i18n.locale = 'de-DE'
+    },
+    // This method is called when the user selects an editor from the drop-down and emits the editor id to the NoticeBoard view
+    selectEditor: function (selection) {
+      switch (selection) {
+        case 'text':
+          this.$emit('select-editor', 0)
+          break
+        case 'image':
+          this.$emit('select-editor', 1)
+          break
+        case 'file':
+          this.$emit('select-editor', 2)
+          break
+        case 'poll':
+          this.$emit('select-editor', 3)
+          break
+        case 'survey':
+          this.$emit('select-editor', 4)
+          break
+        default:
+      }
+    },
+    // This method forwards the user to his profile page
+    avatarProfile: function () {
+      if (this.$route.params.userId === window.localStorage.getItem('mnb_uid')) {
+        this.$emit('profile-changed-to-view')
+        return
+      }
+      this.$router.push({
+        name: 'Profile',
+        params: {
+          userId: window.localStorage.getItem('mnb_uid'),
+          editable: false
+        }
+      })
+        .then(() => this.$emit('profile-changed'))
+    },
+    // Used to get to the profile page in editing mode
+    avatarEdit: function () {
+      if (this.$route.params.userId === window.localStorage.getItem('mnb_uid')) {
+        this.$emit('profile-changed-to-edit')
+        return
+      }
+      this.$router.push({
+        name: 'Profile',
+        params: {
+          userId: window.localStorage.getItem('mnb_uid'),
+          editable: true
+        }
+      })
+        .then(() => this.$emit('profile-changed'))
+    },
+    // Called when users want to log out
+    avatarLogout: function () {
+      this.logout()
+    },
+    // This method forwards the user to the login page
+    avatarLogin: function () {
+      if (this.$route.path === '/login') { return }
+      this.$router.push({
+        name: 'Login'
+      })
+    },
+    // This method forwards the user to the registration page
+    avatarRegister: function () {
+      if (this.$route.path === '/register') { return }
+      this.$router.push({
+        name: 'Register'
+      })
+    },
+    // This method forwards the user to the CMS page
+    avatarCMS: function () {
+      if (this.$route.path === '/cms') { return }
+      this.$router.push({
+        name: 'CMS'
+      })
+    },
+    // When the user clicks at the logo the board sidebar is displayed/hidden
+    logoClick: function () {
+      this.boardSidebarToggle = !this.boardSidebarToggle
+    },
+    // Called when the notice board was changed
+    boardChanged: function () {
+      this.boardSidebarToggle = false
+      this.$emit('board-changed')
+    },
+    // Finds out whether the user is logged in
+    isLoggedIn: function () {
+      return !!window.localStorage.getItem('mnb_rtok')
+    },
+    // Finds out whether the user is an admin (Super-User)
+    isLoggedInAsAdmin: function () {
+      return window.localStorage.getItem('mnb_rid') === '0'
+    },
+    isSubscriber: async function () {
+      // Check if user has subscribed current board
+      if (this.isLoggedIn()) {
+        this.axiosGET('api/users/subscriptions', null, true, false)
+          .then(async response => {
+            var brdId = parseInt(this.$route.params.boardId)
+            if (brdId) {
+              for (const boardId of response.data) {
+                if (boardId === brdId) {
+                  this.boardSubscribed = true
+                  return
+                }
+              }
+            }
+            this.boardSubscribed = false
+          })
+          .catch(err => {
+            this.$log.error(err)
+          })
+      }
+    },
+    changeSubscriberMode: async function () {
+      // (Un-)Subscribe user to current board
+      if (this.isLoggedIn()) {
+        const boardId = this.$route.params.boardId ? this.$route.params.boardId : 0
+        if (this.boardSubscribed) {
+          // Unsubscribe
+          this.axiosPUT('api/users/unsubscribe/' + boardId, null, true, false)
+            .then(response => {})
+            .catch(err => {
+              this.$log.error(err)
+            })
+        } else {
+          // Subscribe
+          this.axiosPUT('api/users/subscribe/' + boardId, null, true, false)
+            .then(response => {})
+            .catch(err => {
+              this.$log.error(err)
+            })
+        }
+        this.boardSubscribed = !this.boardSubscribed
+      }
+    },
+    isNoticeBoard: function () {
+      // Check if a notice board is open and user is logged in
+      // Default board is not subscribable
+      if (this.$route.path.startsWith('/board') && this.isLoggedIn()) {
+        this.boardVisible = true
+        this.isSubscriber()
+      } else {
+        this.boardVisible = false
+      }
     }
   }
 }
 </script>
 
 <style scoped>
-  li {
-    display: inline-block;
-    margin: 0 10px;
+  .m {
+    padding: 0;
+    border-bottom: 1px black solid;
+    position: fixed;
   }
 
-  .dropdown-menu {
-    min-width: 3rem;
+  .nav-img {
+    padding-left: 1vw;
+    height: 35px;
   }
 
-  .header {
-    width: 100%;
-    max-height: 72px;
-    color: #fff;
-    font-size: 20pt;
+  .nav-title {
+    padding: 0 0 0 5vw;
+    color: white;
+    font-size: calc(12pt + 0.8vh);
   }
 
-  .unselectable {
-    -moz-user-select: none;
-    -webkit-user-select: none;
+  .nav-sub {
+    padding: 0 0 0 1vw;
+    color: white;
   }
 
-  #flag {
-    font-size: 25px;
+  .btn-link {
+    color: white;
+    background-color: transparent;
+    border: none;
   }
 
-  /* Alternative highlight styles:
+  .btn-link:hover {
+    color: red;
+  }
 
-   padding: 5px;
-   border: 2px solid var(--accent);
-   border-style: none none solid none;
+  .nav-item {
+    margin-top: -5px;
+    padding-right: 5px;
+    font-size: calc(12pt + 0.75vw);
+  }
 
-   text-shadow: 1px 1px #aaa;
-  */
+  .nav-avatar {
+    padding: 0px;
+    margin: 0px;
+    font-size: 0.9rem;
+  }
 </style>
